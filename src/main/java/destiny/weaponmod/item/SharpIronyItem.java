@@ -277,11 +277,6 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
             }
         }
 
-        if (!stack.getTag().getBoolean(AMMO_COUNT)){
-            stack.getOrCreateTag().putBoolean(IS_OPEN, true);
-            stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
-        }
-
         super.inventoryTick(stack, level, entity, i, b);
     }
 }
