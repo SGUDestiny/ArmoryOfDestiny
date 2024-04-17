@@ -1,0 +1,28 @@
+{
+  "sharp_irony_open": {
+    "subtitle": "sounds.weaponmod.sharp_irony_open",
+    "sounds":
+    [
+      "weaponmod:sharp_irony_open"
+    ]
+  },
+  "sharp_irony_close": {
+    "subtitle": "sounds.weaponmod.sharp_irony_close",
+    "sounds":
+    [
+      "weaponmod:sharp_irony_close"
+    ]
+  },
+  "sharp_irony_throw": {
+    "subtitle": "sounds.weaponmod.sharp_irony_throw",
+    "sounds":
+    [
+      "weaponmod:sharp_irony_throw_1",
+      "weaponmod:sharp_irony_throw_2",
+      "weaponmod:sharp_irony_throw_3",
+      "weaponmod:sharp_irony_throw_4",
+      "weaponmod:sharp_irony_throw_5",
+      "weaponmod:sharp_irony_throw_6"
+    ]
+  }
+}

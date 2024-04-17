@@ -1,0 +1,36 @@
+{
+  "parent": "weaponmod:snowdrop",
+  "display": {
+    "icon": {
+      "item": "weaponmod:icicle"
+    },
+    "title": {
+      "translate": "advancements.weaponmod.icicle.title"
+    },
+    "description": {
+      "translate": "advancements.weaponmod.icicle.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "weaponmod:icicle"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

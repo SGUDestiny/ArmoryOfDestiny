@@ -1,0 +1,36 @@
+{
+  "parent": "weaponmod:murasama",
+  "display": {
+    "icon": {
+      "item": "weaponmod:kafkas_katana"
+    },
+    "title": {
+      "translate": "advancements.weaponmod.kafkas_katana.title"
+    },
+    "description": {
+      "translate": "advancements.weaponmod.kafkas_katana.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "weaponmod:kafkas_katana"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

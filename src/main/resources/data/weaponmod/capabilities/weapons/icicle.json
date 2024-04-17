@@ -1,0 +1,10 @@
+{
+  "type": "epicfight:spear",
+  "attributes": {
+    "two_hand": {
+      "armor_negotiation": 25.0,
+      "impact": 9.5,
+      "max_strikes": 4
+    }
+  }
+}

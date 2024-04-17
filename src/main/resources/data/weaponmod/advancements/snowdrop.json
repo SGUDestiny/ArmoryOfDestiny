@@ -1,0 +1,36 @@
+{
+  "parent": "weaponmod:murasama",
+  "display": {
+    "icon": {
+      "item": "weaponmod:snowdrop"
+    },
+    "title": {
+      "translate": "advancements.weaponmod.snowdrop.title"
+    },
+    "description": {
+      "translate": "advancements.weaponmod.snowdrop.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "weaponmod:snowdrop"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

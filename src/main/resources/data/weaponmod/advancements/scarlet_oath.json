@@ -1,0 +1,36 @@
+{
+  "parent": "weaponmod:murasama",
+  "display": {
+    "icon": {
+      "item": "weaponmod:scarlet_oath"
+    },
+    "title": {
+      "translate": "advancements.weaponmod.scarlet_oath.title"
+    },
+    "description": {
+      "translate": "advancements.weaponmod.scarlet_oath.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "weaponmod:scarlet_oath"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

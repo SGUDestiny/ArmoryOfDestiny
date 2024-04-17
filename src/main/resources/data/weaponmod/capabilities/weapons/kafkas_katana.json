@@ -1,0 +1,10 @@
+{
+  "type": "epicfight:uchigatana",
+  "attributes": {
+    "two_hand": {
+      "armor_negotiation": 20.0,
+      "impact": 6.0,
+      "max_strikes": 4
+    }
+  }
+}
