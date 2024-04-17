@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BR ",
+    "RBR",
+    " RN"
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:netherite_sword"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "B": {
+      "item": "minecraft:redstone_block"
+    }
+  },
+  "result": {
+    "item": "weaponmod:scarlet_oath"
+  }
+}

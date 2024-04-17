@@ -1,0 +1,36 @@
+{
+  "parent": "weaponmod:icicle",
+  "display": {
+    "icon": {
+      "item": "weaponmod:metallic_feather"
+    },
+    "title": {
+      "translate": "advancements.weaponmod.metallic_feather.title"
+    },
+    "description": {
+      "translate": "advancements.weaponmod.metallic_feather.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "weaponmod:metallic_feather"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}
