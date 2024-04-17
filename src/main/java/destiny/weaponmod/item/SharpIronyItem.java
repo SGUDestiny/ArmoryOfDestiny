@@ -63,11 +63,13 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
 
     private float attackDamage;
     private double attackSpeed;
+    private float attackKnockback;
 
     public SharpIronyItem(Item.Properties build) {
         super(Tiers.NETHERITE, 0, 0.0F, build);
         this.attackDamage = 12;
         this.attackSpeed = -0.4F;
+        this.attackKnockback = 6.0F;
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
@@ -277,6 +279,7 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
             builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", this.attackSpeed, AttributeModifier.Operation.ADDITION));
+            builder.put(Attributes.ATTACK_KNOCKBACK, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", this.attackKnockback, AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
 
