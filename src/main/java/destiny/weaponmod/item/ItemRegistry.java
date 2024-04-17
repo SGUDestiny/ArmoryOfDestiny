@@ -43,17 +43,17 @@ public class ItemRegistry {
                     .durability(-1)
             )));
 
-    public static final RegistryObject<Item> SMOKENADE = CreativeTabs.addToTab(ITEMS.register("smokenade",
+    public static final RegistryObject<Item> SMOKENADE = ITEMS.register("smokenade",
             () -> new Item(basicItem()
                     .rarity(Rarity.EPIC)
                     .durability(-1)
-            )));
+            ));
 
-    public static final RegistryObject<Item> SHARP_IRONY = CreativeTabs.addToTab(ITEMS.register("sharp_irony",
+    public static final RegistryObject<Item> SHARP_IRONY = ITEMS.register("sharp_irony",
             () -> new SharpIronyItem(basicItem()
                     .rarity(Rarity.EPIC)
                     .durability(-1)
-            )));
+            ));
 
     public static final RegistryObject<Item> METALLIC_FEATHER = CreativeTabs.addToTab(ITEMS.register("metallic_feather",
             () -> new Item(new Item.Properties().stacksTo(64)

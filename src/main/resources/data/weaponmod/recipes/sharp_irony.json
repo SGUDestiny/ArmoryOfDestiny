@@ -17,6 +17,7 @@
     }
   },
   "result": {
-    "item": "weaponmod:sharp_irony"
+    "item": "weaponmod:sharp_irony",
+    "nbt": "{is_open:1b, feathers:5, values_set:1b}"
   }
 }

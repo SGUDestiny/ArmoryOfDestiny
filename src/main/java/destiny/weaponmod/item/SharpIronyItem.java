@@ -29,10 +29,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
+import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.DataTicket;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.ClientUtils;
 import software.bernie.geckolib.util.GeckoLibUtil;
@@ -46,8 +48,9 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
     private static final RawAnimation SHARP_IRONY_THROW = RawAnimation.begin().thenPlay("sharp_irony.throw");
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public static final String AMMO_COUNT = "5";
-    private static final String IS_OPEN = "true";
+    public static final String AMMO_COUNT = "feathers";
+    public static final String IS_OPEN = "is_open";
+    public static final String VALUES_SET = "values_set";
     private static Boolean firstLoad = true;
 
 
@@ -84,9 +87,29 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
         });
     }
 
+    public static final DataTicket<Boolean> INITIAL_ANIMATION_PLAYED = new DataTicket<>("initial_animation_played", Boolean.class);
+
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "sharp_irony_controller", 0, state -> PlayState.STOP)
+        controllers.add(new AnimationController<>(this, "sharp_irony_controller", 0, state -> {
+//            if(state.getData(INITIAL_ANIMATION_PLAYED) == null){
+//                CompoundTag tag = state.getData(DataTickets.ITEMSTACK).getTag();
+//
+//                if (tag != null){
+//                    boolean is_open = tag.getBoolean(IS_OPEN);
+//
+//                    if (is_open){
+//                        state.getController().setAnimation(SHARP_IRONY_OPEN);
+//                    }
+//                    else {
+//                        state.getController().setAnimation(SHARP_IRONY_CLOSE);
+//                    }
+//                    state.setData(INITIAL_ANIMATION_PLAYED, true);
+//                    return PlayState.CONTINUE;
+//                }
+//            }
+            return PlayState.STOP;
+        })
                 .triggerableAnim("open", SHARP_IRONY_OPEN)
                 .triggerableAnim("close", SHARP_IRONY_CLOSE)
                 .triggerableAnim("throw", SHARP_IRONY_THROW)
@@ -260,10 +283,21 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
         return super.getAttributeModifiers(slot, stack);
     }
 
-
-
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean b) {
+        CompoundTag tag = stack.getTag();
+
+        if (tag == null) {
+            stack.getOrCreateTag().putBoolean(IS_OPEN, true);
+            stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
+            stack.getOrCreateTag().putBoolean(VALUES_SET, true);
+        }
+        else if (!stack.getTag().getBoolean(VALUES_SET)){
+            stack.getOrCreateTag().putBoolean(IS_OPEN, true);
+            stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
+            stack.getOrCreateTag().putBoolean(VALUES_SET, true);
+        }
+
         if (firstLoad){
             firstLoad = false;
             if (level instanceof ServerLevel serverLevel) {
@@ -276,7 +310,6 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
                 }
             }
         }
-
         super.inventoryTick(stack, level, entity, i, b);
     }
 }
