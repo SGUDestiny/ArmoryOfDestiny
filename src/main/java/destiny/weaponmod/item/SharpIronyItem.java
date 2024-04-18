@@ -6,6 +6,7 @@ import destiny.weaponmod.EntityRegistry;
 import destiny.weaponmod.SoundRegistry;
 import destiny.weaponmod.client.SharpIronyItemRenderer;
 import destiny.weaponmod.entity.MetallicFeatherEntity;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -166,6 +167,37 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
                 }
                 level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_CLOSE.get(), SoundSource.PLAYERS, 1, 1);
             }
+        } else if (Screen.hasControlDown()) {
+            if (stack.getOrCreateTag().getBoolean(IS_OPEN)){
+                if (stack.getOrCreateTag().getInt(AMMO_COUNT) > 0) {
+                    int ammo = stack.getOrCreateTag().getInt(AMMO_COUNT);
+
+                    if (level instanceof ServerLevel serverLevel){
+                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "throw");
+                    }
+                    level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_THROW.get(), SoundSource.PLAYERS, 1, 1);
+
+                    if(!level.isClientSide) {
+                        float YRot;
+
+                        if(ammo % 2 == 0) {
+                            YRot = player.getYRot() - (float) (ammo * 5) / 2 + 2.5F;
+                        } else {
+                            YRot = player.getYRot() - (float) (ammo * 5) / 2;
+                        }
+
+                        for (int i = 0; i < ammo; i++){
+                            MetallicFeatherEntity feather = new MetallicFeatherEntity(EntityRegistry.METALLIC_FEATHER.get(), player, level);
+                            feather.setDeltaMovement(0, 0, 1);
+                            feather.shootFromRotation(player, player.getXRot(), YRot, 0.0F, 5.0F, 1.0F);
+                            level.addFreshEntity(feather);
+                            YRot += 5;
+                        }
+                    }
+                    player.getCooldowns().addCooldown(stack.getItem(), 30);
+                    stack.getOrCreateTag().putInt(AMMO_COUNT, stack.getOrCreateTag().getInt(AMMO_COUNT) - ammo);
+                }
+            }
         } else {
             if (stack.getOrCreateTag().getBoolean(IS_OPEN)){
                 if (stack.getOrCreateTag().getInt(AMMO_COUNT) > 0) {
@@ -184,7 +216,13 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
                 } else {
                     ItemStack feather_stack = findAmmo(player);
                     int feather_stack_amount = getAmmoCount(player);
-                    if(feather_stack_amount > 0) {
+                    if (player.isCreative()){
+                        stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
+                        if (level instanceof ServerLevel serverLevel) {
+                            triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "open");
+                        }
+                        level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_OPEN.get(), SoundSource.PLAYERS, 1, 1);
+                    } else if(feather_stack_amount > 0) {
                         if (feather_stack_amount >= 5) {
                             feather_stack.shrink(5);
                             stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
@@ -193,13 +231,6 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
                             feather_stack.shrink(feather_stack_amount);
                             stack.getOrCreateTag().putInt(AMMO_COUNT, feather_stack_amount);
                         }
-                        if (level instanceof ServerLevel serverLevel) {
-                            triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "open");
-                        }
-                        level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_OPEN.get(), SoundSource.PLAYERS, 1, 1);
-                    }
-                    else if (player.isCreative()){
-                        stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
                         if (level instanceof ServerLevel serverLevel) {
                             triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "open");
                         }

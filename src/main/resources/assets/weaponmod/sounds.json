@@ -24,5 +24,12 @@
       "weaponmod:sharp_irony_throw_5",
       "weaponmod:sharp_irony_throw_6"
     ]
+  },
+  "metallic_feather_hit": {
+    "subtitle": "sounds.weaponmod.metallic_feather_hit",
+    "sounds":
+    [
+      "weaponmod:metallic_feather_hit"
+    ]
   }
 }
