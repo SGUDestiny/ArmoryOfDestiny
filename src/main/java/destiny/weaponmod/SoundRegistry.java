@@ -18,6 +18,8 @@ public class SoundRegistry {
 
     public static RegistryObject<SoundEvent> METALLIC_FEATHER_HIT = registerSoundEvent("metallic_feather_hit");
 
+    public static RegistryObject<SoundEvent> SHARP_IRONY_THROW_SPECIAL = registerSoundEvent("sharp_irony_throw_special");
+
     private static RegistryObject<SoundEvent> registerSoundEvent(String sound)
     {
         return SOUNDS.register(sound, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(WeaponMod.MODID, sound)));

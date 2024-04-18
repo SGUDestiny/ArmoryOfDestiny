@@ -177,22 +177,23 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
                     }
                     level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_THROW.get(), SoundSource.PLAYERS, 1, 1);
 
-                    if(!level.isClientSide) {
-                        float YRot;
+                    float YRot;
 
-                        if(ammo % 2 == 0) {
-                            YRot = player.getYRot() - (float) (ammo * 5) / 2 + 2.5F;
-                        } else {
-                            YRot = player.getYRot() - (float) (ammo * 5) / 2;
-                        }
+                    if(ammo % 2 == 0) {
+                        YRot = player.getYRot() - (float) (ammo * 5) / 2 + 2.5F;
+                    } else {
+                        YRot = player.getYRot() - (float) (ammo * 5) / 2;
+                    }
 
-                        for (int i = 0; i < ammo; i++){
+                    for (int i = 0; i < ammo; i++){
+                        if(!level.isClientSide) {
                             MetallicFeatherEntity feather = new MetallicFeatherEntity(EntityRegistry.METALLIC_FEATHER.get(), player, level);
                             feather.setDeltaMovement(0, 0, 1);
                             feather.shootFromRotation(player, player.getXRot(), YRot, 0.0F, 5.0F, 1.0F);
                             level.addFreshEntity(feather);
                             YRot += 5;
                         }
+                        level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_THROW_SPECIAL.get(), SoundSource.PLAYERS, 1, 1);
                     }
                     player.getCooldowns().addCooldown(stack.getItem(), 30);
                     stack.getOrCreateTag().putInt(AMMO_COUNT, stack.getOrCreateTag().getInt(AMMO_COUNT) - ammo);

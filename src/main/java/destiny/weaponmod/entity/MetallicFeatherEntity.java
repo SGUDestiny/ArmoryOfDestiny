@@ -45,7 +45,7 @@ public class MetallicFeatherEntity extends AbstractArrow {
             Entity entity = hitResult.getEntity();
             Entity attacker = this.getOwner();
 
-            entity.hurt(level().damageSources().generic(), 20.0F);
+            entity.hurt(level().damageSources().generic(), 25.0F);
         }
     }
 
