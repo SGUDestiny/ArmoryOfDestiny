@@ -20,6 +20,16 @@ public class SoundRegistry {
 
     public static RegistryObject<SoundEvent> SHARP_IRONY_THROW_SPECIAL = registerSoundEvent("sharp_irony_throw_special");
 
+    public static RegistryObject<SoundEvent> DOUBLE_TROUBLE_OPEN = registerSoundEvent("double_trouble_open");
+
+    public static RegistryObject<SoundEvent> DOUBLE_TROUBLE_CLOSE = registerSoundEvent("double_trouble_close");
+
+    public static RegistryObject<SoundEvent> DOUBLE_TROUBLE_RELOAD = registerSoundEvent("double_trouble_reload");
+
+    public static RegistryObject<SoundEvent> DOUBLE_TROUBLE_SHOOT = registerSoundEvent("double_trouble_shoot");
+
+    public static RegistryObject<SoundEvent> DOUBLE_TROUBLE_EMPTY = registerSoundEvent("double_trouble_empty");
+
     private static RegistryObject<SoundEvent> registerSoundEvent(String sound)
     {
         return SOUNDS.register(sound, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(WeaponMod.MODID, sound)));

@@ -59,4 +59,15 @@ public class ItemRegistry {
             () -> new Item(new Item.Properties().stacksTo(64)
                     .rarity(Rarity.EPIC)
             )));
+
+    public static final RegistryObject<Item> DOUBLE_TROUBLE = ITEMS.register("double_trouble",
+            () -> new DoubleTroubleItem(basicItem()
+                    .rarity(Rarity.EPIC)
+                    .durability(-1)
+            ));
+
+    public static final RegistryObject<Item> SHELL = CreativeTabs.addToTab(ITEMS.register("shell",
+            () -> new Item(new Item.Properties().stacksTo(64)
+                    .rarity(Rarity.EPIC)
+            )));
 }

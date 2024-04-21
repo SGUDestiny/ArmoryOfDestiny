@@ -1,54 +1,62 @@
 package destiny.weaponmod.entity;
 
-import destiny.weaponmod.SoundRegistry;
-import destiny.weaponmod.item.ItemRegistry;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.network.NetworkHooks;
 
-public class MetallicFeatherEntity extends AbstractArrow {
+public class PelletEntity extends AbstractArrow {
+
     @Override
     protected ItemStack getPickupItem() {
-        ItemStack itemStack = new ItemStack(ItemRegistry.METALLIC_FEATHER.get());
-        return itemStack;
+        return ItemStack.EMPTY;
     }
 
-    public MetallicFeatherEntity(EntityType<MetallicFeatherEntity> entityType, Level world) {
+    public PelletEntity(EntityType<PelletEntity> entityType, Level world) {
         super(entityType, world);
     }
 
-    public MetallicFeatherEntity(EntityType<MetallicFeatherEntity> entityType, double x, double y, double z, Level world) {
+    public PelletEntity(EntityType<PelletEntity> entityType, double x, double y, double z, Level world) {
         super(entityType, x, y, z, world);
     }
 
-    public MetallicFeatherEntity(EntityType<MetallicFeatherEntity> entityType, LivingEntity shooter, Level world) {
+    public PelletEntity(EntityType<PelletEntity> entityType, LivingEntity shooter, Level world) {
         super(entityType, shooter, world);
     }
 
     @Override
     protected void onHitEntity(EntityHitResult hitResult) {
-        super.onHitEntity(hitResult);
-
         if(!this.level().isClientSide()){
             Entity entity = hitResult.getEntity();
             Entity attacker = this.getOwner();
 
+            entity.invulnerableTime = 0;
             entity.hurt(level().damageSources().generic(), 25.0F);
+            this.discard();
         }
+        super.onHitEntity(hitResult);
+    }
+
+    @Override
+    protected void onHitBlock(BlockHitResult hitResult) {
+        this.discard();
     }
 
     @Override
     protected SoundEvent getDefaultHitGroundSoundEvent() {
-        return SoundRegistry.METALLIC_FEATHER_HIT.get();
+        return SoundEvents.EMPTY;
     }
+
+
 
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {

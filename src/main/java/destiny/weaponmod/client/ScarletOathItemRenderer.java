@@ -11,5 +11,6 @@ public class ScarletOathItemRenderer extends GeoItemRenderer<ScarletOathItem> {
     public ScarletOathItemRenderer() {
         super(new DefaultedItemGeoModel<>(new ResourceLocation(WeaponMod.MODID, "scarlet_oath")));
         //addRenderLayer(new AutoGlowingGeoLayer<>(this));
+
     }
 }

@@ -38,5 +38,40 @@
     [
       "weaponmod:sharp_irony_throw_special"
     ]
+  },
+  "double_trouble_open": {
+    "subtitle": "sounds.weaponmod.double_trouble_open",
+    "sounds":
+    [
+      "weaponmod:double_trouble_open"
+    ]
+  },
+  "double_trouble_close": {
+    "subtitle": "sounds.weaponmod.double_trouble_close",
+    "sounds":
+    [
+      "weaponmod:double_trouble_close"
+    ]
+  },
+  "double_trouble_reload": {
+    "subtitle": "sounds.weaponmod.double_trouble_reload",
+    "sounds":
+    [
+      "weaponmod:double_trouble_reload"
+    ]
+  },
+  "double_trouble_shoot": {
+    "subtitle": "sounds.weaponmod.double_trouble_shoot",
+    "sounds":
+    [
+      "weaponmod:double_trouble_shoot"
+    ]
+  },
+  "double_trouble_empty": {
+    "subtitle": "sounds.weaponmod.double_trouble_empty",
+    "sounds":
+    [
+      "weaponmod:double_trouble_empty"
+    ]
   }
 }

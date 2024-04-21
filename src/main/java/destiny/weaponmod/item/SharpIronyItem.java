@@ -54,10 +54,6 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
     public static final String VALUES_SET = "values_set";
     private static Boolean firstLoad = true;
 
-
-    public static Integer AMMO = 0;
-    public static Boolean STATE = false;
-
     public static final Predicate<ItemStack> IS_METALLIC_FEATHER = (stack) -> {
         return stack.getItem() == ItemRegistry.METALLIC_FEATHER.get();
     };
@@ -90,7 +86,7 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
         });
     }
 
-    public static final DataTicket<Boolean> INITIAL_ANIMATION_PLAYED = new DataTicket<>("initial_animation_played", Boolean.class);
+    //public static final DataTicket<Boolean> INITIAL_ANIMATION_PLAYED = new DataTicket<>("initial_animation_played", Boolean.class);
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
@@ -290,19 +286,6 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
     @Override
     public int getBarColor(ItemStack p_150901_) {
         return Mth.hsvToRgb(0.0F, 0.0F, 90.0F);
-    }
-
-    @Override
-    public void onCraftedBy(ItemStack stack, Level level, Player player) {
-        stack.getOrCreateTag().putBoolean(IS_OPEN, true);
-        stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
-
-        super.onCraftedBy(stack, level, player);
-    }
-
-    @Override
-    public void verifyTagAfterLoad(CompoundTag tag) {
-        super.verifyTagAfterLoad(tag);
     }
 
     @Override

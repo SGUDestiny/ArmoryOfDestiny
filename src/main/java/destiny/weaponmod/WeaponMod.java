@@ -2,6 +2,7 @@ package destiny.weaponmod;
 
 import com.mojang.logging.LogUtils;
 import destiny.weaponmod.client.MetallicFeatherRenderer;
+import destiny.weaponmod.client.PelletRenderer;
 import destiny.weaponmod.item.CreativeTabs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -97,6 +98,7 @@ public class WeaponMod
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
 
             EntityRenderers.register(EntityRegistry.METALLIC_FEATHER.get(), MetallicFeatherRenderer::new);
+            EntityRenderers.register(EntityRegistry.PELLET.get(), PelletRenderer::new);
         }
     }
 }
