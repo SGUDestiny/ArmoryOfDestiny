@@ -22,12 +22,14 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
+import yesman.epicfight.api.animation.AnimationManager;
 
 import java.util.Random;
 import java.util.Timer;
@@ -141,6 +143,7 @@ public class DoubleTroubleItem extends Item implements GeoItem {
                         }, 670);
                     } else if (leftBarrel >= 2) {
                         triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "open_right");
+
                         timer.schedule(new TimerTask() {
                             @Override
                             public void run() {
