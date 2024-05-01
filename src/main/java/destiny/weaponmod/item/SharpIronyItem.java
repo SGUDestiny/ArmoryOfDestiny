@@ -52,6 +52,7 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
     public static final String AMMO_COUNT = "feathers";
     public static final String IS_OPEN = "is_open";
     public static final String VALUES_SET = "values_set";
+
     private static Boolean firstLoad = true;
 
     public static final Predicate<ItemStack> IS_METALLIC_FEATHER = (stack) -> {
@@ -127,6 +128,7 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        Item item = stack.getItem();
 
         if (player.isShiftKeyDown()) {
             if (!stack.getOrCreateTag().getBoolean(IS_OPEN)) {
@@ -156,12 +158,16 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
                     triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "open");
                 }
                 level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_OPEN.get(), SoundSource.PLAYERS, 1, 1);
+
+                player.getCooldowns().addCooldown(item, 5);
             } else {
                 stack.getOrCreateTag().putBoolean(IS_OPEN, false);
                 if (level instanceof ServerLevel serverLevel) {
                     triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "close");
                 }
                 level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_CLOSE.get(), SoundSource.PLAYERS, 1, 1);
+
+                player.getCooldowns().addCooldown(item, 5);
             }
         } else if (Screen.hasControlDown()) {
             if (stack.getOrCreateTag().getBoolean(IS_OPEN)){
@@ -193,6 +199,8 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
                     }
                     player.getCooldowns().addCooldown(stack.getItem(), 30);
                     stack.getOrCreateTag().putInt(AMMO_COUNT, stack.getOrCreateTag().getInt(AMMO_COUNT) - ammo);
+
+                    player.getCooldowns().addCooldown(item, 5);
                 }
             }
         } else {
@@ -210,6 +218,8 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
                         feather.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 5.0F, 1.0F);
                         level.addFreshEntity(feather);
                     }
+
+                    player.getCooldowns().addCooldown(item, 5);
                 } else {
                     ItemStack feather_stack = findAmmo(player);
                     int feather_stack_amount = getAmmoCount(player);
@@ -232,6 +242,8 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
                             triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "open");
                         }
                         level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_OPEN.get(), SoundSource.PLAYERS, 1, 1);
+
+                        player.getCooldowns().addCooldown(item, 5);
                     }
                 }
             }
