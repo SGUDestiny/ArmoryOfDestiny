@@ -19,7 +19,7 @@ modId="armoryofdestiny" #mandatory
 # The version number of the mod
 version="1.0" #mandatory
 # A display name for the mod
-displayName="Armory of Destiny" #mandatory
+displayName="§6§nArmory of Destiny§r" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://docs.minecraftforge.net/en/latest/misc/updatechecker/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
@@ -39,7 +39,7 @@ authors="Destiny" #optional
 #displayTest="MATCH_VERSION" # MATCH_VERSION is the default if nothing is specified (#optional)
 
 # The description text for the mod (multi line!) (#mandatory)
-description='''${mod_description}'''
+description='''§oArmory of Destiny is a mod that adds various weapons, ranging from swords, to firearms, to even throwing knife fans.\nAll weapons have own high-quality 3D models, and some of them have unique in-depth mechanics, with more to come in the future.§r\n\n§4Forge your own destiny.§r'''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.armoryofdestiny]] #optional
     # the modid of the dependency
