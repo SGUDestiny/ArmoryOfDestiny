@@ -13,6 +13,24 @@ public class ItemRegistry {
         return new Item.Properties().stacksTo(1);
     }
 
+    public static final RegistryObject<Item> SHARP_IRONY = ITEMS.register("sharp_irony",
+            () -> new SharpIronyItem(basicItem()
+                    .rarity(Rarity.EPIC)
+                    .durability(-1)
+            ));
+
+    public static final RegistryObject<Item> DOUBLE_TROUBLE = ITEMS.register("double_trouble",
+            () -> new DoubleTroubleItem(basicItem()
+                    .rarity(Rarity.EPIC)
+                    .durability(-1)
+            ));
+
+    public static final RegistryObject<Item> DRAGONSLAYER = CreativeTabs.addToTab(ITEMS.register("dragonslayer",
+            () -> new DragonslayerItem(basicItem()
+                    .rarity(Rarity.EPIC)
+                    .durability(-1)
+            )));
+
     public static final RegistryObject<Item> MURASAMA = CreativeTabs.addToTab(ITEMS.register("murasama",
             () -> new MurasamaItem(basicItem()
                     .rarity(Rarity.EPIC)
@@ -49,22 +67,10 @@ public class ItemRegistry {
                     .durability(-1)
             ));
 
-    public static final RegistryObject<Item> SHARP_IRONY = ITEMS.register("sharp_irony",
-            () -> new SharpIronyItem(basicItem()
-                    .rarity(Rarity.EPIC)
-                    .durability(-1)
-            ));
-
     public static final RegistryObject<Item> METALLIC_FEATHER = CreativeTabs.addToTab(ITEMS.register("metallic_feather",
             () -> new Item(new Item.Properties().stacksTo(64)
                     .rarity(Rarity.EPIC)
             )));
-
-    public static final RegistryObject<Item> DOUBLE_TROUBLE = ITEMS.register("double_trouble",
-            () -> new DoubleTroubleItem(basicItem()
-                    .rarity(Rarity.EPIC)
-                    .durability(-1)
-            ));
 
     public static final RegistryObject<Item> SHELL = CreativeTabs.addToTab(ITEMS.register("shell",
             () -> new Item(new Item.Properties().stacksTo(64)

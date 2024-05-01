@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IN ",
+    "NIN",
+    " NB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "N": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "result": {
+    "item": "weaponmod:double_trouble",
+    "nbt": "{is_open:0b, left_barrel:2, right_barrel:2, values_set:1b}"
+  }
+}
