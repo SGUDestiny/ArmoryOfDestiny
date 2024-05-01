@@ -57,7 +57,6 @@ public class DoubleTroubleItem extends Item implements GeoItem {
     public static final String RIGHT_BARREL = "right_barrel";
     public static final String IS_OPEN = "is_open";
     public static final String VALUES_SET = "values_set";
-    private static final String DELAY = "delay";
     private static Boolean firstLoad = true;
 
     private static final Timer timer = new Timer();
@@ -114,11 +113,10 @@ public class DoubleTroubleItem extends Item implements GeoItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        Item item = stack.getItem();
 
-        if (stack.getTag().getInt(DELAY) == 0) {
-            if (player.isShiftKeyDown()) {
+        if (player.isShiftKeyDown()) {
                 if (stack.getTag().getBoolean(IS_OPEN)) {
-                    stack.getOrCreateTag().putInt(DELAY, 7);
                     if (level instanceof ServerLevel serverLevel) {
                         triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "close");
                     }
@@ -129,12 +127,13 @@ public class DoubleTroubleItem extends Item implements GeoItem {
                             level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_CLOSE.get(), SoundSource.PLAYERS, 1, 1);
                         }
                     }, 170);
+
+                    player.getCooldowns().addCooldown(item, 7);
                 } else {
                     int leftBarrel = stack.getTag().getInt(LEFT_BARREL);
                     int rightBarrel = stack.getTag().getInt(RIGHT_BARREL);
 
                     if (level instanceof ServerLevel serverLevel) {
-                        stack.getOrCreateTag().putInt(DELAY, 14);
                         if (leftBarrel >= 2 && rightBarrel >= 2) {
                             triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "open_none");
                         } else if (leftBarrel <= 1 && rightBarrel >= 2) {
@@ -164,6 +163,8 @@ public class DoubleTroubleItem extends Item implements GeoItem {
                                 }
                             }, 670);
                         }
+
+                        player.getCooldowns().addCooldown(item, 14);
                     }
 
                     timer.schedule(new TimerTask() {
@@ -175,70 +176,105 @@ public class DoubleTroubleItem extends Item implements GeoItem {
                     }, 170);
                 }
             } else if (Screen.hasControlDown()) {
-                if (!stack.getTag().getBoolean(IS_OPEN)) {
-                    int leftBarrel = stack.getTag().getInt(LEFT_BARREL);
-                    int rightBarrel = stack.getTag().getInt(RIGHT_BARREL);
-                    //Prepare RNG values for recoil
-                    float XRNG = random.nextInt(10, 20);
-                    float YRNG = random.nextInt(-10, 10);
+            if (!stack.getTag().getBoolean(IS_OPEN)) {
+                int leftBarrel = stack.getTag().getInt(LEFT_BARREL);
+                int rightBarrel = stack.getTag().getInt(RIGHT_BARREL);
+                //Prepare RNG values for recoil
+                float XRNG = random.nextInt(10, 20);
+                float YRNG = random.nextInt(-10, 10);
 
-                    if (leftBarrel >= 2) {
-                        stack.getOrCreateTag().putInt(LEFT_BARREL, 1);
-                        stack.getOrCreateTag().putInt(DELAY, 10);
-                        if (level instanceof ServerLevel serverLevel) {
-                            triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "shoot_left");
-                        }
-                        //Pellet spawn logic
-                        for (int i = 0; i < 6; i++) {
-                            int PelletXRNG = random.nextInt(-5, 5);
-                            int PelletYRNG = random.nextInt(-5, 5);
+                if (leftBarrel >= 2) {
+                    stack.getOrCreateTag().putInt(LEFT_BARREL, 1);
+                    if (level instanceof ServerLevel serverLevel) {
+                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "shoot_left");
+                    }
+                    //Pellet spawn logic
+                    for (int i = 0; i < 6; i++) {
+                        int PelletXRNG = random.nextInt(-5, 5);
+                        int PelletYRNG = random.nextInt(-5, 5);
 
-                            if (!level.isClientSide) {
-                                PelletEntity pellet = new PelletEntity(EntityRegistry.PELLET.get(), player, level);
-                                pellet.shootFromRotation(player, player.getXRot() + PelletXRNG, player.getYRot() + PelletYRNG, 0.0F, 5.0F, 1.0F);
-                                level.addFreshEntity(pellet);
-                            }
+                        if (!level.isClientSide) {
+                            PelletEntity pellet = new PelletEntity(EntityRegistry.PELLET.get(), player, level);
+                            pellet.shootFromRotation(player, player.getXRot() + PelletXRNG, player.getYRot() + PelletYRNG, 0.0F, 5.0F, 1.0F);
+                            level.addFreshEntity(pellet);
                         }
                     }
 
-                    if (rightBarrel >= 2) {
-                        stack.getOrCreateTag().putInt(RIGHT_BARREL, 1);
-                        stack.getOrCreateTag().putInt(DELAY, 10);
-                        if (level instanceof ServerLevel serverLevel) {
-                            triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "shoot_right");
-                        }
-                        //Pellet spawn logic
-                        for (int i = 0; i < 6; i++) {
-                            int PelletXRNG = random.nextInt(-5, 5);
-                            int PelletYRNG = random.nextInt(-5, 5);
-
-                            if (!level.isClientSide) {
-                                PelletEntity pellet = new PelletEntity(EntityRegistry.PELLET.get(), player, level);
-                                pellet.shootFromRotation(player, player.getXRot() + PelletXRNG, player.getYRot() + PelletYRNG, 0.0F, 5.0F, 1.0F);
-                                level.addFreshEntity(pellet);
-                            }
-                        }
-                    }
-
-                    if (leftBarrel < 2 && rightBarrel < 2) {
-                        stack.getOrCreateTag().putInt(DELAY, 5);
-                        if (level instanceof ServerLevel serverLevel) {
-                            triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "empty");
-                        }
-                        level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_EMPTY.get(), SoundSource.PLAYERS, 1, 1);
-                    } else {
-                        level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_SHOOT.get(), SoundSource.PLAYERS, 1, 1);
-                        //Set player's head rotation to recoil
-                        player.setXRot(player.getXRot() - XRNG);
-                        player.setYRot(player.getYRot() + YRNG);
-                    }
+                    player.getCooldowns().addCooldown(item, 10);
                 }
-            } else {
-                if (stack.getTag().getBoolean(IS_OPEN)) {
-                    if (!(stack.getTag().getInt(LEFT_BARREL) >= 1 && stack.getTag().getInt(RIGHT_BARREL) >= 1)) {
-                        if (player.isCreative()) {
-                            stack.getOrCreateTag().putInt(DELAY, 20);
 
+                if (rightBarrel >= 2) {
+                    stack.getOrCreateTag().putInt(RIGHT_BARREL, 1);
+                    if (level instanceof ServerLevel serverLevel) {
+                            triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "shoot_right");
+                    }
+                    //Pellet spawn logic
+                    for (int i = 0; i < 6; i++) {
+                        int PelletXRNG = random.nextInt(-5, 5);
+                        int PelletYRNG = random.nextInt(-5, 5);
+
+                        if (!level.isClientSide) {
+                            PelletEntity pellet = new PelletEntity(EntityRegistry.PELLET.get(), player, level);
+                            pellet.shootFromRotation(player, player.getXRot() + PelletXRNG, player.getYRot() + PelletYRNG, 0.0F, 5.0F, 1.0F);
+                            level.addFreshEntity(pellet);
+                        }
+                    }
+
+                    player.getCooldowns().addCooldown(item, 10);
+                }
+
+                if (leftBarrel < 2 && rightBarrel < 2) {
+                    if (level instanceof ServerLevel serverLevel) {
+                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "empty");
+                    }
+                    level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_EMPTY.get(), SoundSource.PLAYERS, 1, 1);
+
+                    player.getCooldowns().addCooldown(item, 5);
+                } else {
+                    level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_SHOOT.get(), SoundSource.PLAYERS, 1, 1);
+                    //Set player's head rotation to recoil
+                    player.setXRot(player.getXRot() - XRNG);
+                    player.setYRot(player.getYRot() + YRNG);
+
+                    player.getCooldowns().addCooldown(item, 5);
+                }
+            }
+        } else {
+            if (stack.getTag().getBoolean(IS_OPEN)) {
+                if (!(stack.getTag().getInt(LEFT_BARREL) >= 1 && stack.getTag().getInt(RIGHT_BARREL) >= 1)) {
+                    if (player.isCreative()) {
+
+                        if (level instanceof ServerLevel serverLevel) {
+                            triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "reload");
+                        }
+
+                        timer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                if (stack.getTag().getInt(LEFT_BARREL) <= 0) {
+                                    stack.getOrCreateTag().putInt(LEFT_BARREL, 2);
+                                    level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_RELOAD.get(), SoundSource.PLAYERS, 1, 1);
+                                } else if (stack.getTag().getInt(RIGHT_BARREL) <= 0) {
+                                    stack.getOrCreateTag().putInt(RIGHT_BARREL, 2);
+                                    level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_RELOAD.get(), SoundSource.PLAYERS, 1, 1);
+                                }
+                            }
+                        }, 250);
+
+                        timer.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                if (level instanceof ServerLevel serverLevel) {
+                                    triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "open_idle");
+                                }
+                            }
+                        }, 1000);
+
+                        player.getCooldowns().addCooldown(item, 10);
+                    } else {
+                        ItemStack shell_stack = findAmmo(player);
+                        int shell_stack_amount = getAmmoCount(player);
+                        if (shell_stack_amount > 0) {
                             if (level instanceof ServerLevel serverLevel) {
                                 triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "reload");
                             }
@@ -248,9 +284,11 @@ public class DoubleTroubleItem extends Item implements GeoItem {
                                 public void run() {
                                     if (stack.getTag().getInt(LEFT_BARREL) <= 0) {
                                         stack.getOrCreateTag().putInt(LEFT_BARREL, 2);
+                                        shell_stack.shrink(1);
                                         level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_RELOAD.get(), SoundSource.PLAYERS, 1, 1);
                                     } else if (stack.getTag().getInt(RIGHT_BARREL) <= 0) {
                                         stack.getOrCreateTag().putInt(RIGHT_BARREL, 2);
+                                        shell_stack.shrink(1);
                                         level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_RELOAD.get(), SoundSource.PLAYERS, 1, 1);
                                     }
                                 }
@@ -260,102 +298,73 @@ public class DoubleTroubleItem extends Item implements GeoItem {
                                 @Override
                                 public void run() {
                                     if (level instanceof ServerLevel serverLevel) {
-                                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "open_idle");
+                                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "close_idle");
                                     }
                                 }
                             }, 1000);
-                        } else {
-                            stack.getOrCreateTag().putInt(DELAY, 20);
+                        }
 
-                            ItemStack shell_stack = findAmmo(player);
-                            int shell_stack_amount = getAmmoCount(player);
-                            if (shell_stack_amount > 0) {
-                                if (level instanceof ServerLevel serverLevel) {
-                                    triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "reload");
-                                }
+                        player.getCooldowns().addCooldown(item, 10);
+                    }
+                }
+            } else {
+                int leftBarrel = stack.getTag().getInt(LEFT_BARREL);
+                int rightBarrel = stack.getTag().getInt(RIGHT_BARREL);
+                //Prepare RNG values for recoil
+                float XRNG = random.nextInt(10, 20);
+                float YRNG = random.nextInt(-10, 10);
 
-                                timer.schedule(new TimerTask() {
-                                    @Override
-                                    public void run() {
-                                        if (stack.getTag().getInt(LEFT_BARREL) <= 0) {
-                                            stack.getOrCreateTag().putInt(LEFT_BARREL, 2);
-                                            shell_stack.shrink(1);
-                                            level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_RELOAD.get(), SoundSource.PLAYERS, 1, 1);
-                                        } else if (stack.getTag().getInt(RIGHT_BARREL) <= 0) {
-                                            stack.getOrCreateTag().putInt(RIGHT_BARREL, 2);
-                                            shell_stack.shrink(1);
-                                            level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_RELOAD.get(), SoundSource.PLAYERS, 1, 1);
-                                        }
-                                    }
-                                }, 250);
+                if (leftBarrel >= 2) {
+                    stack.getOrCreateTag().putInt(LEFT_BARREL, 1);
+                    if (level instanceof ServerLevel serverLevel) {
+                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "shoot_left");
+                    }
+                    //Pellet spawn logic
+                    for (int i = 0; i < 6; i++) {
+                        int PelletXRNG = random.nextInt(-5, 5);
+                        int PelletYRNG = random.nextInt(-5, 5);
 
-                                timer.schedule(new TimerTask() {
-                                    @Override
-                                    public void run() {
-                                        if (level instanceof ServerLevel serverLevel) {
-                                            triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "close_idle");
-                                        }
-                                    }
-                                }, 1000);
-                            }
+                        if (!level.isClientSide) {
+                            PelletEntity pellet = new PelletEntity(EntityRegistry.PELLET.get(), player, level);
+                            pellet.shootFromRotation(player, player.getXRot() + PelletXRNG, player.getYRot() + PelletYRNG, 0.0F, 5.0F, 1.0F);
+                            level.addFreshEntity(pellet);
                         }
                     }
+                    level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_SHOOT.get(), SoundSource.PLAYERS, 1, 1);
+                    //Set player's head rotation to recoil
+                    player.setXRot(player.getXRot() - XRNG);
+                    player.setYRot(player.getYRot() + YRNG);
+
+                    player.getCooldowns().addCooldown(item, 10);
+                } else if (rightBarrel >= 2) {
+                    stack.getOrCreateTag().putInt(RIGHT_BARREL, 1);
+                    if (level instanceof ServerLevel serverLevel) {
+                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "shoot_right");
+                    }
+                    //Pellet spawn logic
+                    for (int i = 0; i < 6; i++) {
+                        int PelletXRNG = random.nextInt(-5, 5);
+                        int PelletYRNG = random.nextInt(-5, 5);
+
+                        if (!level.isClientSide) {
+                            PelletEntity pellet = new PelletEntity(EntityRegistry.PELLET.get(), player, level);
+                            pellet.shootFromRotation(player, player.getXRot() + PelletXRNG, player.getYRot() + PelletYRNG, 0.0F, 5.0F, 1.0F);
+                            level.addFreshEntity(pellet);
+                        }
+                    }
+                    level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_SHOOT.get(), SoundSource.PLAYERS, 1, 1);
+                    //Set player's head rotation to recoil
+                    player.setXRot(player.getXRot() - XRNG);
+                    player.setYRot(player.getYRot() + YRNG);
+
+                    player.getCooldowns().addCooldown(item, 10);
                 } else {
-                    int leftBarrel = stack.getTag().getInt(LEFT_BARREL);
-                    int rightBarrel = stack.getTag().getInt(RIGHT_BARREL);
-                    //Prepare RNG values for recoil
-                    float XRNG = random.nextInt(10, 20);
-                    float YRNG = random.nextInt(-10, 10);
-
-                    if (leftBarrel >= 2) {
-                        stack.getOrCreateTag().putInt(LEFT_BARREL, 1);
-                        stack.getOrCreateTag().putInt(DELAY, 10);
-                        if (level instanceof ServerLevel serverLevel) {
-                            triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "shoot_left");
-                        }
-                        //Pellet spawn logic
-                        for (int i = 0; i < 6; i++) {
-                            int PelletXRNG = random.nextInt(-5, 5);
-                            int PelletYRNG = random.nextInt(-5, 5);
-
-                            if (!level.isClientSide) {
-                                PelletEntity pellet = new PelletEntity(EntityRegistry.PELLET.get(), player, level);
-                                pellet.shootFromRotation(player, player.getXRot() + PelletXRNG, player.getYRot() + PelletYRNG, 0.0F, 5.0F, 1.0F);
-                                level.addFreshEntity(pellet);
-                            }
-                        }
-                        level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_SHOOT.get(), SoundSource.PLAYERS, 1, 1);
-                        //Set player's head rotation to recoil
-                        player.setXRot(player.getXRot() - XRNG);
-                        player.setYRot(player.getYRot() + YRNG);
-                    } else if (rightBarrel >= 2) {
-                        stack.getOrCreateTag().putInt(RIGHT_BARREL, 1);
-                        stack.getOrCreateTag().putInt(DELAY, 10);
-                        if (level instanceof ServerLevel serverLevel) {
-                            triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "shoot_right");
-                        }
-                        //Pellet spawn logic
-                        for (int i = 0; i < 6; i++) {
-                            int PelletXRNG = random.nextInt(-5, 5);
-                            int PelletYRNG = random.nextInt(-5, 5);
-
-                            if (!level.isClientSide) {
-                                PelletEntity pellet = new PelletEntity(EntityRegistry.PELLET.get(), player, level);
-                                pellet.shootFromRotation(player, player.getXRot() + PelletXRNG, player.getYRot() + PelletYRNG, 0.0F, 5.0F, 1.0F);
-                                level.addFreshEntity(pellet);
-                            }
-                        }
-                        level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_SHOOT.get(), SoundSource.PLAYERS, 1, 1);
-                        //Set player's head rotation to recoil
-                        player.setXRot(player.getXRot() - XRNG);
-                        player.setYRot(player.getYRot() + YRNG);
-                    } else {
-                        stack.getOrCreateTag().putInt(DELAY, 5);
-                        if (level instanceof ServerLevel serverLevel) {
-                            triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "empty");
-                        }
-                        level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_EMPTY.get(), SoundSource.PLAYERS, 1, 1);
+                    if (level instanceof ServerLevel serverLevel) {
+                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "empty");
                     }
+                    level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_EMPTY.get(), SoundSource.PLAYERS, 1, 1);
+
+                    player.getCooldowns().addCooldown(item, 5);
                 }
             }
         }
@@ -426,14 +435,12 @@ public class DoubleTroubleItem extends Item implements GeoItem {
             stack.getOrCreateTag().putBoolean(IS_OPEN, false);
             stack.getOrCreateTag().putInt(LEFT_BARREL, 2);
             stack.getOrCreateTag().putInt(RIGHT_BARREL, 2);
-            stack.getOrCreateTag().putInt(DELAY, 0);
             stack.getOrCreateTag().putBoolean(VALUES_SET, true);
         }
         else if (!stack.getTag().getBoolean(VALUES_SET)){
             stack.getOrCreateTag().putBoolean(IS_OPEN, false);
             stack.getOrCreateTag().putInt(LEFT_BARREL, 2);
             stack.getOrCreateTag().putInt(RIGHT_BARREL, 2);
-            stack.getOrCreateTag().putInt(DELAY, 0);
             stack.getOrCreateTag().putBoolean(VALUES_SET, true);
         }
 
@@ -448,10 +455,6 @@ public class DoubleTroubleItem extends Item implements GeoItem {
                     }
                 }
             }
-        }
-
-        if(stack.getOrCreateTag().getInt(DELAY) != 0){
-            stack.getOrCreateTag().putInt(DELAY, stack.getOrCreateTag().getInt(DELAY) - 1);
         }
         super.inventoryTick(stack, level, entity, i, b);
     }
