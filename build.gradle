@@ -19,10 +19,10 @@ plugins {
 }
 
 version = '1.20.1-1.0'
-group = 'destiny.weaponmod'
+group = 'destiny.armoryofdestiny'
 
 base {
-    archivesName = 'weaponmod'
+    archivesName = 'armoryofdestiny'
 }
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
@@ -88,7 +88,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                "${weaponmod}" {
+                "${armoryofdestiny}" {
                     source sourceSets.main
                 }
             }
@@ -187,7 +187,7 @@ tasks.named('processResources', ProcessResources).configure {
 tasks.named('jar', Jar).configure {
     manifest {
         attributes([
-                'Specification-Title'     : "Weapon Mod",
+                'Specification-Title'     : "Armory of Destiny",
                 'Specification-Vendor'    : "Destiny",
                 'Specification-Version'   : '1', // We are version 1 of ourselves
                 'Implementation-Title'    : project.name,

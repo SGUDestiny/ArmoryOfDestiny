@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FFF",
+    "FNF",
+    "NIN"
+  ],
+  "key": {
+    "F": {
+      "item": "weaponmod:metallic_feather"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "N": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "result": {
+    "item": "armoryofdestiny:sharp_irony",
+    "nbt": "{is_open:1b, feathers:5, values_set:1b}"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "item": "armoryofdestiny:murasama"
+    },
+    "title": {
+      "translate": "advancements.armoryofdestiny.murasama.title"
+    },
+    "description": {
+      "translate": "advancements.armoryofdestiny.murasama.description"
+    },
+    "background": "armoryofdestiny:textures/gui/advancements/backgrounds/cherry_planks.png",
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:murasama"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}
