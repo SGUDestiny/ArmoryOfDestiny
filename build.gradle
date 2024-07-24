@@ -97,11 +97,15 @@ minecraft {
         client {
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             property 'forge.enabledGameTestNamespaces', 'mod_id'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
 
         server {
             property 'forge.enabledGameTestNamespaces', 'mod_id'
             args '--nogui'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
 
         // This run config launches GameTestServer and runs all registered gametests, then exits.
@@ -129,10 +133,15 @@ repositories {
         name = 'GeckoLib'
         url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
         content {
-            includeGroupByRegex("software\\.bernie.*")
-            includeGroup("com.eliotlash.mclib")
+            includeGroup("software.bernie.geckolib")
         }
     }
+    maven {
+        name "KosmX's maven"
+        url 'https://maven.kosmx.dev/'
+    }
+    maven { url 'https://api.modrinth.com/maven' }
+    maven { url "https://maven.shedaniel.me/" }
     maven { url "https://cursemaven.com" }
 }
 
@@ -146,7 +155,13 @@ dependencies {
 
     implementation fg.deobf("curse.maven:geckolib-388172:4756691")
 
-    implementation fg.deobf("curse.maven:epic-fight-mod-405076:4922094")
+    //implementation fg.deobf("curse.maven:epic-fight-mod-405076:4922094")
+
+    //implementation fg.deobf("dev.kosmx.player-anim:player-animation-lib-forge:1.0.2-rc1+1.20")
+
+    //implementation fg.deobf('maven.modrinth:better-combat:1.8.5+1.20.1-forge')
+
+    //implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:13.0.121")
 
     // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime

@@ -39,7 +39,7 @@ public class DragonslayerItem extends SwordItem implements GeoItem {
     public DragonslayerItem(Item.Properties build) {
         super(Tiers.NETHERITE, 0, 0, build);
         this.attackDamage = 27.0F;
-        this.attackSpeed = -2.7F;
+        this.attackSpeed = -3.2F;
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }

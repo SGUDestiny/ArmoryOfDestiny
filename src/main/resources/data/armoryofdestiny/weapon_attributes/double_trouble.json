@@ -1,0 +1,7 @@
+{
+  "attributes": {
+    "pose": "bettercombat:pose_two_handed_bow",
+    "two_handed": false,
+    "category": "double_trouble"
+  }
+}
