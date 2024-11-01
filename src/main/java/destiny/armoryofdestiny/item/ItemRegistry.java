@@ -13,6 +13,16 @@ public class ItemRegistry {
         return new Item.Properties().stacksTo(1);
     }
 
+    public static final RegistryObject<Item> WINGED_VENGEANCE = CreativeTabs.addToTab(ITEMS.register("winged_vengeance",
+            () -> new WingedVengeanceItem(
+                    ArmorMaterials.NETHERITE,
+                    ArmorItem.Type.CHESTPLATE,
+                    basicItem()
+                            .rarity(Rarity.EPIC)
+                            .durability(1000)
+                            .fireResistant()
+            )));
+
     public static final RegistryObject<Item> SHARP_IRONY = ITEMS.register("sharp_irony",
             () -> new SharpIronyItem(basicItem()
                     .rarity(Rarity.EPIC)

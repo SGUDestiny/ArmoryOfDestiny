@@ -294,7 +294,7 @@ public class DoubleTroubleItem extends Item implements GeoItem {
                                 @Override
                                 public void run() {
                                     if (level instanceof ServerLevel serverLevel) {
-                                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "close_idle");
+                                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "open_idle");
                                     }
                                 }
                             }, 500);

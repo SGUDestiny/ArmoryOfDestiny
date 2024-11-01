@@ -1,20 +1,20 @@
 {
   "sharp_irony_open": {
-    "subtitle": "sounds.armoryofdestiny.sharp_irony_open",
+    "subtitle": "sound.armoryofdestiny.sharp_irony_open",
     "sounds":
     [
       "armoryofdestiny:sharp_irony_open"
     ]
   },
   "sharp_irony_close": {
-    "subtitle": "sounds.armoryofdestiny.sharp_irony_close",
+    "subtitle": "sound.armoryofdestiny.sharp_irony_close",
     "sounds":
     [
       "armoryofdestiny:sharp_irony_close"
     ]
   },
   "sharp_irony_throw": {
-    "subtitle": "sounds.armoryofdestiny.sharp_irony_throw",
+    "subtitle": "sound.armoryofdestiny.sharp_irony_throw",
     "sounds":
     [
       "armoryofdestiny:sharp_irony_throw_1",
@@ -26,49 +26,49 @@
     ]
   },
   "metallic_feather_hit": {
-    "subtitle": "sounds.armoryofdestiny.metallic_feather_hit",
+    "subtitle": "sound.armoryofdestiny.metallic_feather_hit",
     "sounds":
     [
       "armoryofdestiny:metallic_feather_hit"
     ]
   },
   "sharp_irony_throw_special": {
-    "subtitle": "sounds.armoryofdestiny.sharp_irony_throw_special",
+    "subtitle": "sound.armoryofdestiny.sharp_irony_throw_special",
     "sounds":
     [
       "armoryofdestiny:sharp_irony_throw_special"
     ]
   },
   "double_trouble_open": {
-    "subtitle": "sounds.armoryofdestiny.double_trouble_open",
+    "subtitle": "sound.armoryofdestiny.double_trouble_open",
     "sounds":
     [
       "armoryofdestiny:double_trouble_open"
     ]
   },
   "double_trouble_close": {
-    "subtitle": "sounds.armoryofdestiny.double_trouble_close",
+    "subtitle": "sound.armoryofdestiny.double_trouble_close",
     "sounds":
     [
       "armoryofdestiny:double_trouble_close"
     ]
   },
   "double_trouble_reload": {
-    "subtitle": "sounds.armoryofdestiny.double_trouble_reload",
+    "subtitle": "sound.armoryofdestiny.double_trouble_reload",
     "sounds":
     [
       "armoryofdestiny:double_trouble_reload"
     ]
   },
   "double_trouble_shoot": {
-    "subtitle": "sounds.armoryofdestiny.double_trouble_shoot",
+    "subtitle": "sound.armoryofdestiny.double_trouble_shoot",
     "sounds":
     [
       "armoryofdestiny:double_trouble_shoot"
     ]
   },
   "double_trouble_empty": {
-    "subtitle": "sounds.armoryofdestiny.double_trouble_empty",
+    "subtitle": "sound.armoryofdestiny.double_trouble_empty",
     "sounds":
     [
       "armoryofdestiny:double_trouble_empty"

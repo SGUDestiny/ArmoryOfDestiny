@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "FFF",
-    "FNF",
-    "NIN"
+    "FBF",
+    "FIF",
+    "ISI"
   ],
   "key": {
     "F": {
@@ -12,12 +12,14 @@
     "I": {
       "item": "minecraft:iron_ingot"
     },
-    "N": {
-      "item": "minecraft:iron_nugget"
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "S": {
+      "item": "minecraft:string"
     }
   },
   "result": {
-    "item": "armoryofdestiny:sharp_irony",
-    "nbt": "{is_open:1b, feathers:5, values_set:1b}"
+    "item": "armoryofdestiny:winged_vengeance"
   }
 }

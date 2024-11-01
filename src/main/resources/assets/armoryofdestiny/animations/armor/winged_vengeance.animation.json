@@ -1,0 +1,109 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"idle": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"Wing": {
+					"rotation": {
+						"vector": [-70, -30, 0]
+					}
+				},
+				"WingSubPart1": {
+					"rotation": {
+						"vector": [44, 0, 0]
+					}
+				},
+				"WingSubPart2": {
+					"rotation": {
+						"vector": [-44, 0, 0]
+					}
+				},
+				"Feathers": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"Wing2": {
+					"rotation": {
+						"vector": [-70, 30, 0]
+					}
+				},
+				"Feathers2": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"WingSubPart3": {
+					"rotation": {
+						"vector": [44, 0, 0]
+					}
+				},
+				"WingSubPart4": {
+					"rotation": {
+						"vector": [-44, 0, 0]
+					}
+				}
+			}
+		},
+		"flying": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"Wing": {
+					"rotation": {
+						"0.0": {
+							"vector": [70, -40, -30]
+						},
+						"0.5": {
+							"vector": [70, 10, -150],
+							"easing": "easeInOutQuad"
+						},
+						"1.0": {
+							"vector": [70, -40, -30],
+							"easing": "easeInOutQuad"
+						}
+					}
+				},
+				"WingSubPart1": {
+					"rotation": {
+						"vector": [-20, 0, 0]
+					}
+				},
+				"WingSubPart2": {
+					"rotation": {
+						"vector": [20, 0, 0],
+						"easing": "easeInOutQuad"
+					}
+				},
+				"Wing2": {
+					"rotation": {
+						"0.0": {
+							"vector": [70, 40, 30]
+						},
+						"0.5": {
+							"vector": [70, -10, 150],
+							"easing": "easeInOutQuad"
+						},
+						"1.0": {
+							"vector": [70, 40, 30],
+							"easing": "easeInOutQuad"
+						}
+					}
+				},
+				"WingSubPart3": {
+					"rotation": {
+						"vector": [-20, 0, 0]
+					}
+				},
+				"WingSubPart4": {
+					"rotation": {
+						"vector": [20, 0, 0],
+						"easing": "easeInOutQuad"
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

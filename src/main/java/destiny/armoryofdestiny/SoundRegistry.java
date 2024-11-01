@@ -10,7 +10,7 @@ public class SoundRegistry {
 
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ArmoryOfDestiny.MODID);
 
-    public static RegistryObject<SoundEvent> SHARP_IRONY_OPEN = registerSoundEvent("sharp_irony_open");
+        public static RegistryObject<SoundEvent> SHARP_IRONY_OPEN = registerSoundEvent("sharp_irony_open");
 
     public static RegistryObject<SoundEvent> SHARP_IRONY_CLOSE = registerSoundEvent("sharp_irony_close");
 
