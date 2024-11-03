@@ -49,6 +49,7 @@ public class Spas12Item extends Item implements GeoItem {
     private static final RawAnimation INSERT_SEMI = RawAnimation.begin().thenPlayAndHold("insert_semi");
     private static final RawAnimation SHOOT_PUMP = RawAnimation.begin().thenPlayAndHold("shoot_pump");
     private static final RawAnimation SHOOT_SEMI = RawAnimation.begin().thenPlayAndHold("shoot_semi");
+    private static final RawAnimation SHOOT_SEMI_FAIL = RawAnimation.begin().thenPlayAndHold("shoot_semi_fail");
     private static final RawAnimation PUMP = RawAnimation.begin().thenPlayAndHold("pump");
     private static final RawAnimation EMPTY_PUMP = RawAnimation.begin().thenPlayAndHold("empty_pump");
     private static final RawAnimation EMPTY_SEMI = RawAnimation.begin().thenPlayAndHold("empty_semi");
@@ -133,6 +134,7 @@ public class Spas12Item extends Item implements GeoItem {
                 .triggerableAnim("insert_semi", INSERT_SEMI)
                 .triggerableAnim("shoot_pump", SHOOT_PUMP)
                 .triggerableAnim("shoot_semi", SHOOT_SEMI)
+                .triggerableAnim("shoot_semi_fail", SHOOT_SEMI_FAIL)
                 .triggerableAnim("pump", PUMP)
                 .triggerableAnim("empty_pump", EMPTY_PUMP)
                 .triggerableAnim("empty_semi", EMPTY_SEMI)
@@ -235,7 +237,7 @@ public class Spas12Item extends Item implements GeoItem {
         int tube = stack.getTag().getInt(SHELL_TUBE);
         String state = stack.getTag().getString(STATE);
 
-        if (chamber == 1) {
+        if (chamber == 1 && state.equals("idle_pump")) {
             triggerAnim(level, player, stack, "controller", "pump");
             level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_PUMP.get(), SoundSource.PLAYERS, 1, 1);
             if (tube > 0) {
@@ -245,7 +247,7 @@ public class Spas12Item extends Item implements GeoItem {
                 stack.getOrCreateTag().putInt(CHAMBER, 0);
             }
             player.getCooldowns().addCooldown(item, 10);
-        } else if (chamber < 1) {
+        } else if (chamber == 0) {
             if (state.equals("idle_pump")) {
                 triggerAnim(level, player, stack, "controller", "empty_pump");
 
@@ -268,11 +270,25 @@ public class Spas12Item extends Item implements GeoItem {
                 player.getCooldowns().addCooldown(item, 5);
             }
             level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_EMPTY.get(), SoundSource.PLAYERS, 1, 1);
-        } else {
-            if (state.equals("idle_pump")) {
+        } else if (chamber == 2) {
+            if (stack.getTag().getString(SHELL_TYPE).equals("incendiary_shell") || stack.getTag().getString(SHELL_TYPE).equals("explosive_slug_shell") && state.equals("idle_semi")) {
+                shoot(level, player, stack, item);
+                triggerAnim(level, player, stack, "controller", "shoot_semi_fail");
+                stack.getOrCreateTag().putInt(CHAMBER, 1);
+                level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 0.7f, 1);
+
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        triggerAnim(level, player, stack, "controller", "idle_semi");
+                    }
+                }, 500);
+                player.getCooldowns().addCooldown(item, 10);
+            } else if (state.equals("idle_pump")) {
+                shoot(level, player, stack, item);
                 triggerAnim(level, player, stack, "controller", "shoot_pump");
                 stack.getOrCreateTag().putInt(CHAMBER, 1);
-                level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 1, 1);
+                level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 0.7f, 1);
 
                 timer.schedule(new TimerTask() {
                     @Override
@@ -282,6 +298,7 @@ public class Spas12Item extends Item implements GeoItem {
                 }, 500);
                 player.getCooldowns().addCooldown(item, 10);
             } else if (state.equals("idle_semi")) {
+                shoot(level, player, stack, item);
                 triggerAnim(level, player, stack, "controller", "shoot_semi");
                 if (tube > 0) {
                     stack.getOrCreateTag().putInt(CHAMBER, 2);
@@ -289,7 +306,7 @@ public class Spas12Item extends Item implements GeoItem {
                 } else {
                     stack.getOrCreateTag().putInt(CHAMBER, 0);
                 }
-                level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 1, 1);
+                level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 0.7f, 1);
 
                 timer.schedule(new TimerTask() {
                     @Override
@@ -299,59 +316,6 @@ public class Spas12Item extends Item implements GeoItem {
                 }, 500);
                 player.getCooldowns().addCooldown(item, 10);
             }
-            String shell_type = stack.getTag().getString(SHELL_TYPE);
-
-            switch (shell_type) {
-                case "buckshot_shell" -> {
-                    for (int i = 0; i < 16; i++) {
-                        int X = random.nextInt(-5, 5);
-                        int Y = random.nextInt(-5, 5);
-
-                        if (!level.isClientSide) {
-                            BuckshotEntity buckshot = new BuckshotEntity(EntityRegistry.BUCKSHOT.get(), player, level);
-                            buckshot.shootFromRotation(player, player.getXRot() + X, player.getYRot() + Y, 0.0F, 5.0F, 1.0F);
-                            level.addFreshEntity(buckshot);
-                        }
-                    }
-                }
-                case "slug_shell" -> {
-                    int X = random.nextInt(-1, 1);
-                    int Y = random.nextInt(-1, 1);
-
-                    if (!level.isClientSide) {
-                        SlugEntity slug = new SlugEntity(EntityRegistry.SLUG.get(), player, level);
-                        slug.shootFromRotation(player, player.getXRot() + X, player.getYRot() + Y, 0.0F, 5.0F, 1.0F);
-                        level.addFreshEntity(slug);
-                    }
-                }
-                case "incendiary_shell" -> {
-                    for (int i = 0; i < 8; i++) {
-                        int X = random.nextInt(-7, 7);
-                        int Y = random.nextInt(-7, 7);
-
-                        if (!level.isClientSide) {
-                            SparkEntity spark = new SparkEntity(EntityRegistry.SPARK.get(), player, level);
-                            spark.shootFromRotation(player, player.getXRot() + X, player.getYRot() + Y, 0.0F, 5.0F, 1.0F);
-                            level.addFreshEntity(spark);
-                        }
-                    }
-                }
-                case "explosive_slug_shell" -> {
-                    int X = random.nextInt(-1, 1);
-                    int Y = random.nextInt(-1, 1);
-
-                    if (!level.isClientSide) {
-                        ExplosiveSlugEntity slug = new ExplosiveSlugEntity(EntityRegistry.EXPLOSIVE_SLUG.get(), player, level);
-                        slug.shootFromRotation(player, player.getXRot() + X, player.getYRot() + Y, 0.0F, 5.0F, 1.0F);
-                        level.addFreshEntity(slug);
-                    }
-                }
-            }
-            float recoilX = random.nextInt(-8, 8);
-            float recoilY = random.nextInt(-8, 8);
-
-            player.setXRot(player.getXRot() - recoilX);
-            player.setYRot(player.getYRot() + recoilY);
         }
     }
 
@@ -484,6 +448,62 @@ public class Spas12Item extends Item implements GeoItem {
         if (level instanceof ServerLevel serverLevel) {
             triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), controller, name);
         }
+    }
+
+    public void shoot(Level level, Player player, ItemStack stack, Item item) {
+        String shell_type = stack.getTag().getString(SHELL_TYPE);
+
+        switch (shell_type) {
+            case "buckshot_shell" -> {
+                for (int i = 0; i < 16; i++) {
+                    int X = random.nextInt(-5, 5);
+                    int Y = random.nextInt(-5, 5);
+
+                    if (!level.isClientSide) {
+                        BuckshotEntity buckshot = new BuckshotEntity(EntityRegistry.BUCKSHOT.get(), player, level);
+                        buckshot.shootFromRotation(player, player.getXRot() + X, player.getYRot() + Y, 0.0F, 5.0F, 1.0F);
+                        level.addFreshEntity(buckshot);
+                    }
+                }
+            }
+            case "slug_shell" -> {
+                int X = random.nextInt(-1, 1);
+                int Y = random.nextInt(-1, 1);
+
+                if (!level.isClientSide) {
+                    SlugEntity slug = new SlugEntity(EntityRegistry.SLUG.get(), player, level);
+                    slug.shootFromRotation(player, player.getXRot() + X, player.getYRot() + Y, 0.0F, 5.0F, 1.0F);
+                    level.addFreshEntity(slug);
+                }
+            }
+            case "incendiary_shell" -> {
+                for (int i = 0; i < 8; i++) {
+                    int X = random.nextInt(-7, 7);
+                    int Y = random.nextInt(-7, 7);
+
+                    if (!level.isClientSide) {
+                        SparkEntity spark = new SparkEntity(EntityRegistry.SPARK.get(), player, level);
+                        spark.shootFromRotation(player, player.getXRot() + X, player.getYRot() + Y, 0.0F, 5.0F, 1.0F);
+                        level.addFreshEntity(spark);
+                    }
+                }
+            }
+            case "explosive_slug_shell" -> {
+                int X = random.nextInt(-1, 1);
+                int Y = random.nextInt(-1, 1);
+
+                if (!level.isClientSide) {
+                    ExplosiveSlugEntity slug = new ExplosiveSlugEntity(EntityRegistry.EXPLOSIVE_SLUG.get(), player, level);
+                    slug.shootFromRotation(player, player.getXRot() + X, player.getYRot() + Y, 0.0F, 5.0F, 1.0F);
+                    level.addFreshEntity(slug);
+                }
+            }
+        }
+        float recoilX = random.nextInt(-8, 8);
+        float recoilY = random.nextInt(-8, 8);
+
+        player.setXRot(player.getXRot() - recoilX);
+        player.setYRot(player.getYRot() + recoilY);
     }
 
     @Override

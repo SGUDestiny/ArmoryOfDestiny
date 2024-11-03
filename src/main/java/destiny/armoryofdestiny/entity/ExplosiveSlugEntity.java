@@ -46,7 +46,7 @@ public class ExplosiveSlugEntity extends AbstractArrow {
         if(!this.level().isClientSide())
         {
             boolean canDestroy = ForgeEventFactory.getMobGriefingEvent(this.level(), this.getOwner());
-            this.level().explode((Entity)this.getOwner(), this.getX(), this.getY(), this.getZ(), 1, canDestroy,
+            this.level().explode((Entity)this.getOwner(), this.getX(), this.getY(), this.getZ(), 2, canDestroy,
                     canDestroy ? Level.ExplosionInteraction.TNT : Level.ExplosionInteraction.NONE);
             this.discard();
         }
