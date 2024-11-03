@@ -1,13 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "NNN",
-    "NGN",
-    "III"
+    "IN ",
+    "NIN",
+    " NB"
   ],
   "key": {
-    "G": {
-      "item": "minecraft:gunpowder"
+    "B": {
+      "item": "minecraft:iron_bars"
     },
     "I": {
       "item": "minecraft:iron_ingot"
@@ -17,7 +17,7 @@
     }
   },
   "result": {
-    "item": "armoryofdestiny:shell",
-    "count": 16
+    "item": "armoryofdestiny:spas12",
+    "nbt": "{chamber:0, shellTube:0, state:\"idle_pump\", shellType:\"buckshot_shell\"}"
   }
 }

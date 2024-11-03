@@ -88,8 +88,23 @@ public class ItemRegistry {
                     .rarity(Rarity.EPIC)
             )));
 
-    public static final RegistryObject<Item> SHELL = CreativeTabs.addToTab(ITEMS.register("shell",
+    public static final RegistryObject<Item> BUCKSHOT_SHELL = CreativeTabs.addToTab(ITEMS.register("buckshot_shell",
             () -> new Item(new Item.Properties().stacksTo(64)
+                    .rarity(Rarity.EPIC)
+            )));
+
+    public static final RegistryObject<Item> SLUG_SHELL = CreativeTabs.addToTab(ITEMS.register("slug_shell",
+            () -> new Item(new Item.Properties().stacksTo(32)
+                    .rarity(Rarity.EPIC)
+            )));
+
+    public static final RegistryObject<Item> INCENDIARY_SHELL = CreativeTabs.addToTab(ITEMS.register("incendiary_shell",
+            () -> new Item(new Item.Properties().stacksTo(16)
+                    .rarity(Rarity.EPIC)
+            )));
+
+    public static final RegistryObject<Item> EXPLOSIVE_SLUG_SHELL = CreativeTabs.addToTab(ITEMS.register("explosive_slug_shell",
+            () -> new Item(new Item.Properties().stacksTo(16)
                     .rarity(Rarity.EPIC)
             )));
 }

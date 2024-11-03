@@ -73,5 +73,36 @@
     [
       "armoryofdestiny:double_trouble_empty"
     ]
+  },
+  "spas12_insert": {
+    "subtitle": "sound.armoryofdestiny.spas12_insert",
+    "sounds":
+    [
+      "armoryofdestiny:spas12_insert_1",
+      "armoryofdestiny:spas12_insert_2",
+      "armoryofdestiny:spas12_insert_3"
+    ]
+  },
+  "spas12_pump": {
+    "subtitle": "sound.armoryofdestiny.spas12_pump",
+    "sounds":
+    [
+      "armoryofdestiny:spas12_pump"
+    ]
+  },
+  "spas12_shoot": {
+    "subtitle": "sound.armoryofdestiny.spas12_shoot",
+    "sounds": [
+      "armoryofdestiny:spas12_shoot_1",
+      "armoryofdestiny:spas12_shoot_2"
+    ]
+  },
+  "spas12_switch": {
+    "subtitle": "sound.armoryofdestiny.spas12_switch",
+    "sounds": [
+      "armoryofdestiny:spas12_switch_1",
+      "armoryofdestiny:spas12_switch_2",
+      "armoryofdestiny:spas12_switch_3"
+    ]
   }
 }

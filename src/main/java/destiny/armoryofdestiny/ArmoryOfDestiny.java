@@ -3,6 +3,10 @@ package destiny.armoryofdestiny;
 import com.mojang.logging.LogUtils;
 import destiny.armoryofdestiny.client.MetallicFeatherRenderer;
 import destiny.armoryofdestiny.client.PelletRenderer;
+import destiny.armoryofdestiny.client.render.BuckshotRenderer;
+import destiny.armoryofdestiny.client.render.ExplosiveSlugRenderer;
+import destiny.armoryofdestiny.client.render.SlugRenderer;
+import destiny.armoryofdestiny.client.render.SparkRenderer;
 import destiny.armoryofdestiny.item.CreativeTabs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -99,6 +103,10 @@ public class ArmoryOfDestiny
 
             EntityRenderers.register(EntityRegistry.METALLIC_FEATHER.get(), MetallicFeatherRenderer::new);
             EntityRenderers.register(EntityRegistry.PELLET.get(), PelletRenderer::new);
+            EntityRenderers.register(EntityRegistry.BUCKSHOT.get(), BuckshotRenderer::new);
+            EntityRenderers.register(EntityRegistry.SLUG.get(), SlugRenderer::new);
+            EntityRenderers.register(EntityRegistry.SPARK.get(), SparkRenderer::new);
+            EntityRenderers.register(EntityRegistry.EXPLOSIVE_SLUG.get(), ExplosiveSlugRenderer::new);
         }
     }
 }

@@ -3,6 +3,7 @@ package destiny.armoryofdestiny.item;
 import destiny.armoryofdestiny.EntityRegistry;
 import destiny.armoryofdestiny.SoundRegistry;
 import destiny.armoryofdestiny.client.DoubleTroubleItemRenderer;
+import destiny.armoryofdestiny.entity.BuckshotEntity;
 import destiny.armoryofdestiny.entity.PelletEntity;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -60,7 +61,7 @@ public class DoubleTroubleItem extends Item implements GeoItem {
     private static final Random random = new Random();
 
     public static final Predicate<ItemStack> IS_SHELL = (stack) -> {
-        return stack.getItem() == ItemRegistry.SHELL.get();
+        return stack.getItem() == ItemRegistry.BUCKSHOT_SHELL.get();
     };
 
     public DoubleTroubleItem(Item.Properties build) {
@@ -185,14 +186,14 @@ public class DoubleTroubleItem extends Item implements GeoItem {
                         triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "shoot_left");
                     }
                     //Pellet spawn logic
-                    for (int i = 0; i < 6; i++) {
+                    for (int i = 0; i < 16; i++) {
                         int PelletXRNG = random.nextInt(-5, 5);
                         int PelletYRNG = random.nextInt(-5, 5);
 
                         if (!level.isClientSide) {
-                            PelletEntity pellet = new PelletEntity(EntityRegistry.PELLET.get(), player, level);
-                            pellet.shootFromRotation(player, player.getXRot() + PelletXRNG, player.getYRot() + PelletYRNG, 0.0F, 5.0F, 1.0F);
-                            level.addFreshEntity(pellet);
+                            BuckshotEntity buckshot = new BuckshotEntity(EntityRegistry.BUCKSHOT.get(), player, level);
+                            buckshot.shootFromRotation(player, player.getXRot() + PelletXRNG, player.getYRot() + PelletYRNG, 0.0F, 5.0F, 1.0F);
+                            level.addFreshEntity(buckshot);
                         }
                     }
 
@@ -205,14 +206,14 @@ public class DoubleTroubleItem extends Item implements GeoItem {
                             triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "double_trouble_controller", "shoot_right");
                     }
                     //Pellet spawn logic
-                    for (int i = 0; i < 6; i++) {
+                    for (int i = 0; i < 16; i++) {
                         int PelletXRNG = random.nextInt(-5, 5);
                         int PelletYRNG = random.nextInt(-5, 5);
 
                         if (!level.isClientSide) {
-                            PelletEntity pellet = new PelletEntity(EntityRegistry.PELLET.get(), player, level);
-                            pellet.shootFromRotation(player, player.getXRot() + PelletXRNG, player.getYRot() + PelletYRNG, 0.0F, 5.0F, 1.0F);
-                            level.addFreshEntity(pellet);
+                            BuckshotEntity buckshot = new BuckshotEntity(EntityRegistry.BUCKSHOT.get(), player, level);
+                            buckshot.shootFromRotation(player, player.getXRot() + PelletXRNG, player.getYRot() + PelletYRNG, 0.0F, 5.0F, 1.0F);
+                            level.addFreshEntity(buckshot);
                         }
                     }
 
