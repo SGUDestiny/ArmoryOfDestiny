@@ -322,7 +322,7 @@ public class DoubleTroubleItem extends Item implements GeoItem {
                         int PelletYRNG = random.nextInt(-5, 5);
 
                         if (!level.isClientSide) {
-                            PelletEntity pellet = new PelletEntity(EntityRegistry.PELLET.get(), player, level);
+                            BuckshotEntity pellet = new BuckshotEntity(EntityRegistry.BUCKSHOT.get(), player, level);
                             pellet.shootFromRotation(player, player.getXRot() + PelletXRNG, player.getYRot() + PelletYRNG, 0.0F, 5.0F, 1.0F);
                             level.addFreshEntity(pellet);
                         }
@@ -344,7 +344,7 @@ public class DoubleTroubleItem extends Item implements GeoItem {
                         int PelletYRNG = random.nextInt(-5, 5);
 
                         if (!level.isClientSide) {
-                            PelletEntity pellet = new PelletEntity(EntityRegistry.PELLET.get(), player, level);
+                            BuckshotEntity pellet = new BuckshotEntity(EntityRegistry.BUCKSHOT.get(), player, level);
                             pellet.shootFromRotation(player, player.getXRot() + PelletXRNG, player.getYRot() + PelletYRNG, 0.0F, 5.0F, 1.0F);
                             level.addFreshEntity(pellet);
                         }

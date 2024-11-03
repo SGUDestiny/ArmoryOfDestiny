@@ -119,7 +119,7 @@ public class Spas12Item extends Item implements GeoItem {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "controller", 0, state -> PlayState.STOP)
+        controllers.add(new AnimationController<>(this, "controller", 0, state -> PlayState.CONTINUE)
                 .triggerableAnim("idle_pump", IDLE_PUMP)
                 .triggerableAnim("idle_semi", IDLE_SEMI)
                 .triggerableAnim("idle_reload_pump", IDLE_RELOAD_PUMP)
@@ -539,26 +539,31 @@ public class Spas12Item extends Item implements GeoItem {
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean b) {
         CompoundTag tag = stack.getTag();
 
+        if (firstLoad){
+            firstLoad = false;
+            if (entity instanceof Player player) {
+                if (stack.getTag().getString(STATE).equals("idle_pump")) {
+                    triggerAnim(level, player, stack, "controller", "idle_pump");
+                } else if (stack.getTag().getString(STATE).equals("idle_semi")) {
+                    triggerAnim(level, player, stack, "controller", "idle_semi");
+                } else if (stack.getTag().getString(STATE).equals("idle_reload_pump")) {
+                    triggerAnim(level, player, stack, "controller", "idle_reload_pump");
+                } else if (stack.getTag().getString(STATE).equals("idle_reload_semi")) {
+                    triggerAnim(level, player, stack, "controller", "idle_reload_semi");
+                }
+            }
+        }
+
         if (tag == null) {
             stack.getOrCreateTag().putInt(CHAMBER, 0);
             stack.getOrCreateTag().putInt(SHELL_TUBE, 0);
             stack.getOrCreateTag().putString(STATE, "idle_pump");
         }
 
-        if (firstLoad){
-            firstLoad = false;
-            if (level instanceof ServerLevel serverLevel) {
-                if (entity instanceof Player player) {
-                    if (stack.getTag().getString(STATE).equals("idle_pump")) {
-                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "controller", "idle_pump");
-                    } else if (stack.getTag().getString(STATE).equals("idle_semi")) {
-                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "controller", "idle_semi");
-                    } else if (stack.getTag().getString(STATE).equals("idle_reload_pump")) {
-                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "controller", "idle_reload_pump");
-                    } else if (stack.getTag().getString(STATE).equals("idle_reload_semi")) {
-                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "controller", "idle_reload_semi");
-                    }
-                }
+        if (stack.getTag().getString(STATE).isEmpty()) {
+            stack.getOrCreateTag().putString(STATE, "idle_pump");
+            if (entity instanceof Player player) {
+                triggerAnim(level, player, stack, "controller", "idle_pump");
             }
         }
     }
