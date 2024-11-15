@@ -246,6 +246,16 @@ public class Spas12Item extends Item implements GeoItem {
             } else {
                 stack.getOrCreateTag().putInt(CHAMBER, 0);
             }
+
+            if (!player.getBlockStateOn().isAir()) {
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        level.playSound(player, player.blockPosition(), SoundRegistry.SHELL_TINK.get(), SoundSource.PLAYERS, 1.0f, 1);
+                    }
+                }, 500);
+            }
+
             player.getCooldowns().addCooldown(item, 10);
         } else if (chamber == 0) {
             if (state.equals("idle_pump")) {
@@ -312,6 +322,9 @@ public class Spas12Item extends Item implements GeoItem {
                     @Override
                     public void run() {
                         triggerAnim(level, player, stack, "controller", "idle_semi");
+                        if (!player.getBlockStateOn().isAir()) {
+                            level.playSound(player, player.blockPosition(), SoundRegistry.SHELL_TINK.get(), SoundSource.PLAYERS, 1.0f, 1);
+                        }
                     }
                 }, 500);
                 player.getCooldowns().addCooldown(item, 10);

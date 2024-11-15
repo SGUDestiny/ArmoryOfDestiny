@@ -27,6 +27,7 @@ public class SoundRegistry {
     public static RegistryObject<SoundEvent> SPAS12_SHOOT = registerSoundEvent("spas12_shoot");
     public static RegistryObject<SoundEvent> SPAS12_SWITCH = registerSoundEvent("spas12_switch");
 
+    public static RegistryObject<SoundEvent> SHELL_TINK = registerSoundEvent("shell_tink");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String sound)
     {

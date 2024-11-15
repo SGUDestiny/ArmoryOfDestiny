@@ -104,5 +104,13 @@
       "armoryofdestiny:spas12_switch_2",
       "armoryofdestiny:spas12_switch_3"
     ]
+  },
+  "shell_tink": {
+    "subtitle": "sound.armoryofdestiny.shell_tink",
+    "sounds": [
+      "armoryofdestiny:shell_tink_1",
+      "armoryofdestiny:shell_tink_2",
+      "armoryofdestiny:shell_tink_3"
+    ]
   }
 }
