@@ -16,9 +16,11 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -26,6 +28,7 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
+import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -271,71 +274,103 @@ public class Spas12Item extends Item implements GeoItem {
         int chamber = stack.getTag().getInt(CHAMBER);
         int tube = stack.getTag().getInt(SHELL_TUBE);
 
-        if (chamber == 1) {
-            triggerAnim(level, player, stack, "controller", "pump");
-            level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_PUMP.get(), SoundSource.PLAYERS, 1, 1);
-            if (tube > 0) {
-                stack.getOrCreateTag().putInt(CHAMBER, 2);
-                stack.getOrCreateTag().putInt(SHELL_TUBE, tube-1);
-            } else {
-                stack.getOrCreateTag().putInt(CHAMBER, 0);
-            }
+        if (getFireMode(stack).equals("pump")) {
+            if (chamber == 1) {
+                triggerAnim(level, player, stack, "controller", "pump");
+                level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_PUMP.get(), SoundSource.PLAYERS, 1, 1);
+                if (tube > 0) {
+                    stack.getOrCreateTag().putInt(CHAMBER, 2);
+                    stack.getOrCreateTag().putInt(SHELL_TUBE, tube-1);
+                } else {
+                    stack.getOrCreateTag().putInt(CHAMBER, 0);
+                }
 
-            if (!player.getBlockStateOn().isAir()) {
+                if (!player.getBlockStateOn().isAir()) {
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            level.playSound(player, player.blockPosition(), SoundRegistry.SHELL_TINK.get(), SoundSource.PLAYERS, 1.0f, 1);
+                        }
+                    }, 500);
+                }
+
+                player.getCooldowns().addCooldown(item, 10);
+            } else if (chamber < 1) {
+                triggerAnim(level, player, stack, "controller", "shoot_fail");
+
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        level.playSound(player, player.blockPosition(), SoundRegistry.SHELL_TINK.get(), SoundSource.PLAYERS, 1.0f, 1);
+                        triggerAnim(level, player, stack, "controller", "idle");
+                    }
+                }, 250);
+                player.getCooldowns().addCooldown(item, 5);
+                level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_EMPTY.get(), SoundSource.PLAYERS, 1, 1);
+            } else {
+                shoot(level, player, stack, item);
+                triggerAnim(level, player, stack, "controller", "shoot_pump");
+                stack.getOrCreateTag().putInt(CHAMBER, 1);
+                level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 0.7f, 1);
+
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        triggerAnim(level, player, stack, "controller", "idle");
                     }
                 }, 500);
+                player.getCooldowns().addCooldown(item, 10);
             }
-
-            player.getCooldowns().addCooldown(item, 10);
-        } else if (chamber < 1) {
-            triggerAnim(level, player, stack, "controller", "shoot_fail");
-
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    triggerAnim(level, player, stack, "controller", "idle_pump");
-                }
-            }, 250);
-            player.getCooldowns().addCooldown(item, 5);
-            level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_EMPTY.get(), SoundSource.PLAYERS, 1, 1);
-        } else if (getFireMode(stack).equals("pump")) {
-            shoot(level, player, stack, item);
-            triggerAnim(level, player, stack, "controller", "shoot_pump");
-            stack.getOrCreateTag().putInt(CHAMBER, 1);
-            level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 0.7f, 1);
-
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    triggerAnim(level, player, stack, "controller", "idle");
-                }
-            }, 500);
-            player.getCooldowns().addCooldown(item, 10);
         } else if (getFireMode(stack).equals("semi")) {
-            shoot(level, player, stack, item);
-            triggerAnim(level, player, stack, "controller", "shoot_semi");
-            if (tube > 0) {
-                stack.getOrCreateTag().putInt(CHAMBER, 2);
-                stack.getOrCreateTag().putInt(SHELL_TUBE, tube-1);
-            } else {
-                stack.getOrCreateTag().putInt(CHAMBER, 0);
-            }
-            level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 0.7f, 1);
+            if (chamber <= 1) {
+                triggerAnim(level, player, stack, "controller", "shoot_fail");
 
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    triggerAnim(level, player, stack, "controller", "idle");
-                    if (!player.getBlockStateOn().isAir()) {
-                        level.playSound(player, player.blockPosition(), SoundRegistry.SHELL_TINK.get(), SoundSource.PLAYERS, 1.0f, 1);
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        triggerAnim(level, player, stack, "controller", "idle");
                     }
+                }, 250);
+                player.getCooldowns().addCooldown(item, 5);
+                level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_EMPTY.get(), SoundSource.PLAYERS, 1, 1);
+            } else {
+                String type = (stack.getOrCreateTag().getString(SHELL_TYPE));
+
+                if (type.equals("incendiary_shell") || type.equals("explosive_slug_shell")) {
+                    shoot(level, player, stack, item);
+                    triggerAnim(level, player, stack, "controller", "shoot_semi_rechamber_fail");
+                    stack.getOrCreateTag().putInt(CHAMBER, 1);
+                    level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 0.7f, 1);
+
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            triggerAnim(level, player, stack, "controller", "idle");
+                        }
+                    }, 500);
+                    player.getCooldowns().addCooldown(item, 10);
+                } else {
+                    shoot(level, player, stack, item);
+                    triggerAnim(level, player, stack, "controller", "shoot_semi");
+                    if (tube > 0) {
+                        stack.getOrCreateTag().putInt(CHAMBER, 2);
+                        stack.getOrCreateTag().putInt(SHELL_TUBE, tube-1);
+                    } else {
+                        stack.getOrCreateTag().putInt(CHAMBER, 0);
+                    }
+                    level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 0.7f, 1);
+
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            triggerAnim(level, player, stack, "controller", "idle");
+                            if (!player.getBlockStateOn().isAir()) {
+                                level.playSound(player, player.blockPosition(), SoundRegistry.SHELL_TINK.get(), SoundSource.PLAYERS, 1.0f, 1);
+                            }
+                        }
+                    }, 500);
+                    player.getCooldowns().addCooldown(item, 10);
                 }
-            }, 500);
-            player.getCooldowns().addCooldown(item, 10);
+            }
         }
     }
 
@@ -514,6 +549,11 @@ public class Spas12Item extends Item implements GeoItem {
     @Override
     public int getBarColor(ItemStack stack) {
         return Mth.hsvToRgb(0.0F, 0.0F, 5.0F);
+    }
+
+    @Override
+    public boolean isPerspectiveAware() {
+        return true;
     }
 
     @Override
