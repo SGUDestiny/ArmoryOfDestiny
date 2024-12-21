@@ -41,7 +41,7 @@ public class SparkEntity extends AbstractArrow {
 
             entity.invulnerableTime = 0;
             entity.hurt(level().damageSources().inFire(), 5.0F);
-            entity.setRemainingFireTicks(60);
+            entity.setRemainingFireTicks(300);
             entity.isOnFire();
             this.discard();
         }

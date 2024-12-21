@@ -59,8 +59,8 @@ public class ExplosiveSlugEntity extends AbstractArrow {
             Entity attacker = this.getOwner();
 
             entity.invulnerableTime = 0;
-            entity.hurt(level().damageSources().generic(), 10.0F);
-            entity.setRemainingFireTicks(60);
+            entity.hurt(level().damageSources().generic(), 30.0F);
+            entity.setRemainingFireTicks(600);
             entity.isOnFire();
 
             this.discard();

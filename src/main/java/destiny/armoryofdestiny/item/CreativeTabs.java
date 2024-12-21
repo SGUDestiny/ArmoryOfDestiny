@@ -40,6 +40,8 @@ public class CreativeTabs {
                 if (spas12.getItem() instanceof Spas12Item){
                     spas12.getOrCreateTag().putInt(CHAMBER, 0);
                     spas12.getOrCreateTag().putInt(SHELL_TUBE, 0);
+                    spas12.getOrCreateTag().putString(STATE, "idle");
+                    spas12.getOrCreateTag().putString(FIRING_MODE, "pump");
                     output.accept(spas12);
                 }
                 if (doubleTrouble.getItem() instanceof DoubleTroubleItem){

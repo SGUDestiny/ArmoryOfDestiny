@@ -4,9 +4,13 @@ import destiny.armoryofdestiny.EntityRegistry;
 import destiny.armoryofdestiny.SoundRegistry;
 import destiny.armoryofdestiny.client.render.Spas12ItemRenderer;
 import destiny.armoryofdestiny.entity.*;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -16,8 +20,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -27,6 +33,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,33 +42,30 @@ import java.util.function.Predicate;
 
 public class Spas12Item extends Item implements GeoItem {
 
-    private static final RawAnimation IDLE_PUMP = RawAnimation.begin().thenPlayAndHold("idle_pump");
-    private static final RawAnimation IDLE_SEMI = RawAnimation.begin().thenPlayAndHold("idle_semi");
-    private static final RawAnimation IDLE_RELOAD_PUMP = RawAnimation.begin().thenPlayAndHold("idle_reload_pump");
-    private static final RawAnimation IDLE_RELOAD_SEMI = RawAnimation.begin().thenPlayAndHold("idle_reload_semi");
-    private static final RawAnimation RECHAMBER_PUMP = RawAnimation.begin().thenPlayAndHold("rechamber_pump");
-    private static final RawAnimation RECHAMBER_SEMI = RawAnimation.begin().thenPlayAndHold("rechamber_semi");
-    private static final RawAnimation RELOAD_READY_PUMP = RawAnimation.begin().thenPlayAndHold("reload_ready_pump");
-    private static final RawAnimation RELOAD_READY_SEMI = RawAnimation.begin().thenPlayAndHold("reload_ready_semi");
-    private static final RawAnimation RELOAD_CANCEL_PUMP = RawAnimation.begin().thenPlayAndHold("reload_cancel_pump");
-    private static final RawAnimation RELOAD_CANCEL_SEMI = RawAnimation.begin().thenPlayAndHold("reload_cancel_semi");
-    private static final RawAnimation INSERT_PUMP = RawAnimation.begin().thenPlayAndHold("insert_pump");
-    private static final RawAnimation INSERT_SEMI = RawAnimation.begin().thenPlayAndHold("insert_semi");
+    private static final RawAnimation IDLE = RawAnimation.begin().thenPlayAndHold("idle");
+    private static final RawAnimation IDLE_RELOAD = RawAnimation.begin().thenPlayAndHold("idle_reload");
+    private static final RawAnimation RECHAMBER = RawAnimation.begin().thenPlayAndHold("rechamber");
+    private static final RawAnimation RELOAD_READY = RawAnimation.begin().thenPlayAndHold("reload_ready");
+    private static final RawAnimation RELOAD_CANCEL = RawAnimation.begin().thenPlayAndHold("reload_cancel");
+    private static final RawAnimation INSERT = RawAnimation.begin().thenPlayAndHold("insert");
     private static final RawAnimation SHOOT_PUMP = RawAnimation.begin().thenPlayAndHold("shoot_pump");
     private static final RawAnimation SHOOT_SEMI = RawAnimation.begin().thenPlayAndHold("shoot_semi");
-    private static final RawAnimation SHOOT_SEMI_FAIL = RawAnimation.begin().thenPlayAndHold("shoot_semi_fail");
+    private static final RawAnimation SHOOT_SEMI_RECHAMBER_FAIL = RawAnimation.begin().thenPlayAndHold("shoot_semi_rechamber_fail");
+    private static final RawAnimation SHOOT_FAIL = RawAnimation.begin().thenPlayAndHold("shoot_fail");
     private static final RawAnimation PUMP = RawAnimation.begin().thenPlayAndHold("pump");
-    private static final RawAnimation EMPTY_PUMP = RawAnimation.begin().thenPlayAndHold("empty_pump");
-    private static final RawAnimation EMPTY_SEMI = RawAnimation.begin().thenPlayAndHold("empty_semi");
     private static final RawAnimation MODE_TO_PUMP = RawAnimation.begin().thenPlayAndHold("mode_to_pump");
     private static final RawAnimation MODE_TO_SEMI = RawAnimation.begin().thenPlayAndHold("mode_to_semi");
+    private static final RawAnimation SAFETY_ON = RawAnimation.begin().thenPlayAndHold("safety_on");
+    private static final RawAnimation SAFETY_IDLE = RawAnimation.begin().thenPlayAndHold("safety_idle");
+    private static final RawAnimation SAFETY_OFF = RawAnimation.begin().thenPlayAndHold("safety_off");
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public static final String CHAMBER = "chamber";
     public static final String SHELL_TUBE = "shellTube";
-    public static final String STATE = "state";
     public static final String SHELL_TYPE = "shellType";
+    public static final String STATE = "state";
+    public static final String FIRING_MODE = "firing_mode";
     private static Boolean firstLoad = true;
 
     private static final Timer timer = new Timer();
@@ -120,24 +124,23 @@ public class Spas12Item extends Item implements GeoItem {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 0, state -> PlayState.CONTINUE)
-                .triggerableAnim("idle_pump", IDLE_PUMP)
-                .triggerableAnim("idle_semi", IDLE_SEMI)
-                .triggerableAnim("idle_reload_pump", IDLE_RELOAD_PUMP)
-                .triggerableAnim("idle_reload_semi", IDLE_RELOAD_SEMI)
-                .triggerableAnim("rechamber_pump", RECHAMBER_PUMP)
-                .triggerableAnim("rechamber_semi", RECHAMBER_SEMI)
-                .triggerableAnim("reload_ready_pump", RELOAD_READY_PUMP)
-                .triggerableAnim("reload_ready_semi", RELOAD_READY_SEMI)
-                .triggerableAnim("reload_cancel_pump", RELOAD_CANCEL_PUMP)
-                .triggerableAnim("reload_cancel_semi", RELOAD_CANCEL_SEMI)
-                .triggerableAnim("insert_pump", INSERT_PUMP)
-                .triggerableAnim("insert_semi", INSERT_SEMI)
+                .triggerableAnim("idle", IDLE)
+                .triggerableAnim("idle_reload", IDLE_RELOAD)
+                .triggerableAnim("rechamber", RECHAMBER)
+                .triggerableAnim("reload_ready", RELOAD_READY)
+                .triggerableAnim("reload_cancel", RELOAD_CANCEL)
+                .triggerableAnim("insert", INSERT)
                 .triggerableAnim("shoot_pump", SHOOT_PUMP)
                 .triggerableAnim("shoot_semi", SHOOT_SEMI)
-                .triggerableAnim("shoot_semi_fail", SHOOT_SEMI_FAIL)
+                .triggerableAnim("shoot_semi_rechamber_fail", SHOOT_SEMI_RECHAMBER_FAIL)
+                .triggerableAnim("shoot_fail", SHOOT_FAIL)
                 .triggerableAnim("pump", PUMP)
-                .triggerableAnim("empty_pump", EMPTY_PUMP)
-                .triggerableAnim("empty_semi", EMPTY_SEMI)
+                .triggerableAnim("safety_on", SAFETY_ON)
+                .triggerableAnim("safety_idle", SAFETY_IDLE)
+                .triggerableAnim("safety_off", SAFETY_OFF)
+        );
+
+        controllers.add(new AnimationController<>(this, "mode_controller", 0, state -> PlayState.CONTINUE)
                 .triggerableAnim("mode_to_pump", MODE_TO_PUMP)
                 .triggerableAnim("mode_to_semi", MODE_TO_SEMI)
         );
@@ -148,21 +151,45 @@ public class Spas12Item extends Item implements GeoItem {
         return this.cache;
     }
 
+    public boolean isShift (Level level) {
+        if (level instanceof ClientLevel clientLevel) {
+            return Screen.hasShiftDown();
+        }
+
+        return Screen.hasShiftDown();
+    }
+
+    public boolean isControl (Level level) {
+        if (level instanceof ClientLevel clientLevel) {
+            return Screen.hasControlDown();
+        }
+
+        return Screen.hasControlDown();
+    }
+
+    public boolean isAlt (Level level) {
+        if (level instanceof ClientLevel clientLevel) {
+            return Screen.hasAltDown();
+        }
+
+        return Screen.hasAltDown();
+    }
+
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
 
-        if (player.isShiftKeyDown()) {
+        if (isAlt(level)) {
+            safetyHandling(level, player, stack, item);
+        } else if (isShift(level)) {
             positionHandling(level, player, stack, item);
-        } else if (Screen.hasControlDown()) {
+        } else if (isControl(level)) {
             fireModeHandling(level, player, stack);
         } else {
-            String state = stack.getTag().getString(STATE);
-
-            if (state.equals("idle_pump") || state.equals("idle_semi")) {
+            if (getState(stack).equals("idle")) {
                 shootHandling(level, player, stack, item);
-            } else if (state.equals("idle_reload_pump") || state.equals("idle_reload_semi")) {
+            } else if (getState(stack).equals("reload")) {
                 reloadHandling(level, player, stack, item);
             }
         }
@@ -170,74 +197,81 @@ public class Spas12Item extends Item implements GeoItem {
         return InteractionResultHolder.pass(stack);
     }
 
-    public void positionHandling(Level level, Player player, ItemStack stack, Item item) {
-        String state = stack.getTag().getString(STATE);
-
-        if (state.equals("idle_reload_pump")) {
-            triggerAnim(level, player, stack, "controller", "reload_cancel_pump");
-            stack.getOrCreateTag().putString(STATE, "idle_pump");
+    public void safetyHandling(Level level, Player player, ItemStack stack, Item item) {
+        if (getState(stack).equals("idle")) {
+            triggerAnim(level, player, stack, "controller", "safety_on");
+            setState(stack, "safety");
 
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    triggerAnim(level, player, stack, "controller", "idle_pump");
+                    triggerAnim(level, player, stack, "controller", "safety_idle");
                 }
-            }, 250);
-        } else if (state.equals("idle_reload_semi")) {
-            triggerAnim(level, player, stack, "controller", "reload_cancel_semi");
-            stack.getOrCreateTag().putString(STATE, "idle_semi");
+            }, 500);
+            player.getCooldowns().addCooldown(item, 10);
+            level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SWITCH.get(), SoundSource.PLAYERS, 1, 1);
+        } else if (getState(stack).equals("safety")) {
+            triggerAnim(level, player, stack, "controller", "safety_off");
+            setState(stack, "idle");
 
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    triggerAnim(level, player, stack, "controller", "idle_semi");
+                    triggerAnim(level, player, stack, "controller", "idle");
                 }
-            }, 250);
-        } else if (state.equals("idle_pump")) {
-            triggerAnim(level, player, stack, "controller", "reload_ready_pump");
-            stack.getOrCreateTag().putString(STATE, "idle_reload_pump");
-
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    triggerAnim(level, player, stack, "controller", "idle_reload_pump");
-                }
-            }, 250);
-        } else if (state.equals("idle_semi")) {
-            triggerAnim(level, player, stack, "controller", "reload_ready_semi");
-            stack.getOrCreateTag().putString(STATE, "idle_reload_semi");
-
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    triggerAnim(level, player, stack, "controller", "idle_reload_semi");
-                }
-            }, 250);
+            }, 500);
+            player.getCooldowns().addCooldown(item, 10);
+            level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SWITCH.get(), SoundSource.PLAYERS, 1, 1);
         }
-        player.getCooldowns().addCooldown(item, 5);
-        level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SWITCH.get(), SoundSource.PLAYERS, 1, 1);
+    }
+
+    public void positionHandling(Level level, Player player, ItemStack stack, Item item) {
+        if (getState(stack).equals("reload")) {
+            triggerAnim(level, player, stack, "controller", "reload_cancel");
+            setState(stack, "idle");
+
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    triggerAnim(level, player, stack, "controller", "idle");
+                }
+            }, 250);
+            player.getCooldowns().addCooldown(item, 5);
+            level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SWITCH.get(), SoundSource.PLAYERS, 1, 1);
+        } else if (getState(stack).equals("idle")) {
+            triggerAnim(level, player, stack, "controller", "reload_ready");
+            setState(stack, "reload");
+
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    triggerAnim(level, player, stack, "controller", "idle_reload");
+                }
+            }, 250);
+            player.getCooldowns().addCooldown(item, 5);
+            level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SWITCH.get(), SoundSource.PLAYERS, 1, 1);
+        }
     }
 
     public void fireModeHandling(Level level, Player player, ItemStack stack) {
-        String state = stack.getTag().getString(STATE);
-
-        if (state.equals("idle_pump")) {
-            triggerAnim(level, player, stack, "controller", "mode_to_semi");
-            stack.getOrCreateTag().putString(STATE, "idle_semi");
-            level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SWITCH.get(), SoundSource.PLAYERS, 1, 1);
-        } else if (state.equals("idle_semi")) {
-            triggerAnim(level, player, stack, "controller", "mode_to_pump");
-            stack.getOrCreateTag().putString(STATE, "idle_pump");
-            level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SWITCH.get(), SoundSource.PLAYERS, 1, 1);
+        if (getState(stack).equals("idle")) {
+            if (getFireMode(stack).equals("pump")) {
+                triggerAnim(level, player, stack, "mode_controller", "mode_to_semi");
+                setFireMode(stack, "semi");
+                level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SWITCH.get(), SoundSource.PLAYERS, 1, 1);
+            } else if (getFireMode(stack).equals("semi")) {
+                triggerAnim(level, player, stack, "mode_controller", "mode_to_pump");
+                setFireMode(stack, "pump");
+                level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SWITCH.get(), SoundSource.PLAYERS, 1, 1);
+            }
         }
     }
 
     public void shootHandling(Level level, Player player, ItemStack stack, Item item) {
         int chamber = stack.getTag().getInt(CHAMBER);
         int tube = stack.getTag().getInt(SHELL_TUBE);
-        String state = stack.getTag().getString(STATE);
 
-        if (chamber == 1 && state.equals("idle_pump")) {
+        if (chamber == 1) {
             triggerAnim(level, player, stack, "controller", "pump");
             level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_PUMP.get(), SoundSource.PLAYERS, 1, 1);
             if (tube > 0) {
@@ -257,202 +291,120 @@ public class Spas12Item extends Item implements GeoItem {
             }
 
             player.getCooldowns().addCooldown(item, 10);
-        } else if (chamber == 0) {
-            if (state.equals("idle_pump")) {
-                triggerAnim(level, player, stack, "controller", "empty_pump");
+        } else if (chamber < 1) {
+            triggerAnim(level, player, stack, "controller", "shoot_fail");
 
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        triggerAnim(level, player, stack, "controller", "idle_pump");
-                    }
-                }, 250);
-                player.getCooldowns().addCooldown(item, 5);
-            } else if (state.equals("idle_semi")) {
-                triggerAnim(level, player, stack, "controller", "empty_semi");
-
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        triggerAnim(level, player, stack, "controller", "idle_semi");
-                    }
-                }, 250);
-                player.getCooldowns().addCooldown(item, 5);
-            }
-            level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_EMPTY.get(), SoundSource.PLAYERS, 1, 1);
-        } else if (chamber == 2) {
-            if (stack.getTag().getString(SHELL_TYPE).equals("incendiary_shell") || stack.getTag().getString(SHELL_TYPE).equals("explosive_slug_shell") && state.equals("idle_semi")) {
-                shoot(level, player, stack, item);
-                triggerAnim(level, player, stack, "controller", "shoot_semi_fail");
-                stack.getOrCreateTag().putInt(CHAMBER, 1);
-                level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 0.7f, 1);
-
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        triggerAnim(level, player, stack, "controller", "idle_semi");
-                    }
-                }, 500);
-                player.getCooldowns().addCooldown(item, 10);
-            } else if (state.equals("idle_pump")) {
-                shoot(level, player, stack, item);
-                triggerAnim(level, player, stack, "controller", "shoot_pump");
-                stack.getOrCreateTag().putInt(CHAMBER, 1);
-                level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 0.7f, 1);
-
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        triggerAnim(level, player, stack, "controller", "idle_pump");
-                    }
-                }, 500);
-                player.getCooldowns().addCooldown(item, 10);
-            } else if (state.equals("idle_semi")) {
-                shoot(level, player, stack, item);
-                triggerAnim(level, player, stack, "controller", "shoot_semi");
-                if (tube > 0) {
-                    stack.getOrCreateTag().putInt(CHAMBER, 2);
-                    stack.getOrCreateTag().putInt(SHELL_TUBE, tube-1);
-                } else {
-                    stack.getOrCreateTag().putInt(CHAMBER, 0);
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    triggerAnim(level, player, stack, "controller", "idle_pump");
                 }
-                level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 0.7f, 1);
+            }, 250);
+            player.getCooldowns().addCooldown(item, 5);
+            level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_EMPTY.get(), SoundSource.PLAYERS, 1, 1);
+        } else if (getFireMode(stack).equals("pump")) {
+            shoot(level, player, stack, item);
+            triggerAnim(level, player, stack, "controller", "shoot_pump");
+            stack.getOrCreateTag().putInt(CHAMBER, 1);
+            level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 0.7f, 1);
 
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        triggerAnim(level, player, stack, "controller", "idle_semi");
-                        if (!player.getBlockStateOn().isAir()) {
-                            level.playSound(player, player.blockPosition(), SoundRegistry.SHELL_TINK.get(), SoundSource.PLAYERS, 1.0f, 1);
-                        }
-                    }
-                }, 500);
-                player.getCooldowns().addCooldown(item, 10);
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    triggerAnim(level, player, stack, "controller", "idle");
+                }
+            }, 500);
+            player.getCooldowns().addCooldown(item, 10);
+        } else if (getFireMode(stack).equals("semi")) {
+            shoot(level, player, stack, item);
+            triggerAnim(level, player, stack, "controller", "shoot_semi");
+            if (tube > 0) {
+                stack.getOrCreateTag().putInt(CHAMBER, 2);
+                stack.getOrCreateTag().putInt(SHELL_TUBE, tube-1);
+            } else {
+                stack.getOrCreateTag().putInt(CHAMBER, 0);
             }
+            level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SHOOT.get(), SoundSource.PLAYERS, 0.7f, 1);
+
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    triggerAnim(level, player, stack, "controller", "idle");
+                    if (!player.getBlockStateOn().isAir()) {
+                        level.playSound(player, player.blockPosition(), SoundRegistry.SHELL_TINK.get(), SoundSource.PLAYERS, 1.0f, 1);
+                    }
+                }
+            }, 500);
+            player.getCooldowns().addCooldown(item, 10);
         }
     }
 
     public void reloadHandling(Level level, Player player, ItemStack stack, Item item) {
         int chamber = stack.getTag().getInt(CHAMBER);
         int tube = stack.getTag().getInt(SHELL_TUBE);
-        String state = stack.getTag().getString(STATE);
 
         ItemStack shell_stack = findAmmo(player);
         int shell_stack_amount = getAmmoCount(player);
 
-        if (chamber < 1 && shell_stack_amount > 0) {
-            stack.getOrCreateTag().putString(SHELL_TYPE, shell_stack.getItem().toString());
+        if (getState(stack).equals("reload")) {
+            if (shell_stack_amount > 0) {
+                if (chamber < 1) {
+                    stack.getOrCreateTag().putString(SHELL_TYPE, shell_stack.getItem().toString());
 
-            if (state.equals("idle_reload_pump")) {
-                triggerAnim(level, player, stack, "controller", "rechamber_pump");
+                    triggerAnim(level, player, stack, "controller", "rechamber");
 
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_OPEN.get(), SoundSource.PLAYERS, 1, 1);
-                    }
-                }, 380);
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_OPEN.get(), SoundSource.PLAYERS, 1, 1);
+                        }
+                    }, 380);
 
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        shell_stack.shrink(1);
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            shell_stack.shrink(1);
 
-                        stack.getOrCreateTag().putInt(CHAMBER, 2);
-                        level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_INSERT.get(), SoundSource.PLAYERS, 1, 1);
-                    }
-                }, 1250);
+                            stack.getOrCreateTag().putInt(CHAMBER, 2);
+                            level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_INSERT.get(), SoundSource.PLAYERS, 1, 1);
+                        }
+                    }, 1250);
 
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_CLOSE.get(), SoundSource.PLAYERS, 1, 1);
-                    }
-                }, 1500);
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_CLOSE.get(), SoundSource.PLAYERS, 1, 1);
+                        }
+                    }, 1500);
 
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        triggerAnim(level, player, stack, "controller", "idle_reload_pump");
-                    }
-                }, 2000);
-                player.getCooldowns().addCooldown(item, 40);
-            } else if (state.equals("idle_reload_semi")) {
-                triggerAnim(level, player, stack, "controller", "rechamber_semi");
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            triggerAnim(level, player, stack, "controller", "idle_reload");
+                        }
+                    }, 2000);
+                    player.getCooldowns().addCooldown(item, 40);
+                } else if (tube < 7 && stack.getTag().getString(SHELL_TYPE).equals(shell_stack.getItem().toString())) {
+                    triggerAnim(level, player, stack, "controller", "insert");
 
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_OPEN.get(), SoundSource.PLAYERS, 1, 1);
-                    }
-                }, 380);
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            shell_stack.shrink(1);
 
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        shell_stack.shrink(1);
+                            stack.getOrCreateTag().putInt(SHELL_TUBE, tube+1);
+                            level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_INSERT.get(), SoundSource.PLAYERS, 1, 1);
+                        }
+                    }, 500);
 
-                        stack.getOrCreateTag().putInt(CHAMBER, 2);
-                        level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_INSERT.get(), SoundSource.PLAYERS, 1, 1);
-                    }
-                }, 1250);
-
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        level.playSound(player, player.blockPosition(), SoundRegistry.DOUBLE_TROUBLE_CLOSE.get(), SoundSource.PLAYERS, 1, 1);
-                    }
-                }, 1500);
-
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        triggerAnim(level, player, stack, "controller", "idle_reload_semi");
-                    }
-                }, 2000);
-                player.getCooldowns().addCooldown(item, 40);
-            }
-        } else if (tube < 7 && shell_stack_amount > 0 && stack.getTag().getString(SHELL_TYPE).equals(shell_stack.getItem().toString())) {
-            if (state.equals("idle_reload_pump")) {
-                triggerAnim(level, player, stack, "controller", "insert_pump");
-
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        shell_stack.shrink(1);
-
-                        stack.getOrCreateTag().putInt(SHELL_TUBE, tube+1);
-                        level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_INSERT.get(), SoundSource.PLAYERS, 1, 1);
-                    }
-                }, 500);
-
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        triggerAnim(level, player, stack, "controller", "idle_reload_pump");
-                    }
-                }, 750);
-                player.getCooldowns().addCooldown(item, 15);
-            } else if (state.equals("idle_reload_semi")) {
-                triggerAnim(level, player, stack, "controller", "insert_semi");
-
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        shell_stack.shrink(1);
-
-                        stack.getOrCreateTag().putInt(SHELL_TUBE, tube+1);
-                        level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_INSERT.get(), SoundSource.PLAYERS, 1, 1);
-                    }
-                }, 500);
-
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        triggerAnim(level, player, stack, "controller", "idle_reload_semi");
-                    }
-                }, 750);
-                player.getCooldowns().addCooldown(item, 15);
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            triggerAnim(level, player, stack, "controller", "idle_reload");
+                        }
+                    }, 750);
+                    player.getCooldowns().addCooldown(item, 15);
+                }
             }
         }
     }
@@ -519,6 +471,22 @@ public class Spas12Item extends Item implements GeoItem {
         player.setYRot(player.getYRot() + recoilY);
     }
 
+    public void setState(ItemStack stack, String state) {
+        stack.getOrCreateTag().putString(STATE, state);
+    }
+
+    public String getState(ItemStack stack) {
+        return stack.getOrCreateTag().getString(STATE);
+    }
+
+    public void setFireMode(ItemStack stack, String mode) {
+        stack.getOrCreateTag().putString(FIRING_MODE, mode);
+    }
+
+    public String getFireMode(ItemStack stack) {
+        return stack.getOrCreateTag().getString(FIRING_MODE);
+    }
+
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
         return false;
@@ -549,20 +517,45 @@ public class Spas12Item extends Item implements GeoItem {
     }
 
     @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
+        if(!stack.getTag().isEmpty()) {
+            int sum = stack.getTag().getInt(SHELL_TUBE);
+            if (stack.getOrCreateTag().getInt(CHAMBER) >= 2) {
+                sum++;
+            }
+
+            MutableComponent shells = Component.literal("Shells: ").withStyle(ChatFormatting.GRAY);
+            shells.append(Component.literal(sum + "").withStyle(ChatFormatting.GRAY));
+
+            MutableComponent mode = Component.literal("Fire Mode: ").withStyle(ChatFormatting.GRAY);
+            mode.append(Component.literal(stack.getOrCreateTag().getString(FIRING_MODE)).withStyle(ChatFormatting.GRAY));
+
+            MutableComponent state = Component.literal("State: ").withStyle(ChatFormatting.GRAY);
+            state.append(Component.literal(stack.getOrCreateTag().getString(STATE)).withStyle(ChatFormatting.GRAY));
+
+            components.add(shells);
+            components.add(mode);
+            components.add(state);
+        }
+    }
+
+    @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean b) {
         CompoundTag tag = stack.getTag();
 
         if (firstLoad){
             firstLoad = false;
             if (entity instanceof Player player) {
-                if (stack.getTag().getString(STATE).equals("idle_pump")) {
-                    triggerAnim(level, player, stack, "controller", "idle_pump");
-                } else if (stack.getTag().getString(STATE).equals("idle_semi")) {
-                    triggerAnim(level, player, stack, "controller", "idle_semi");
-                } else if (stack.getTag().getString(STATE).equals("idle_reload_pump")) {
-                    triggerAnim(level, player, stack, "controller", "idle_reload_pump");
-                } else if (stack.getTag().getString(STATE).equals("idle_reload_semi")) {
-                    triggerAnim(level, player, stack, "controller", "idle_reload_semi");
+                if (getState(stack).equals("idle")) {
+                    triggerAnim(level, player, stack, "controller", "idle");
+                } else if (getState(stack).equals("reload")) {
+                    triggerAnim(level, player, stack, "controller", "idle_reload");
+                }
+
+                if (getFireMode(stack).equals("pump")) {
+                    triggerAnim(level, player, stack, "mode_controller", "pump");
+                } else if (getFireMode(stack).equals("semi")) {
+                    triggerAnim(level, player, stack, "mode_controller", "semi");
                 }
             }
         }
@@ -570,13 +563,14 @@ public class Spas12Item extends Item implements GeoItem {
         if (tag == null) {
             stack.getOrCreateTag().putInt(CHAMBER, 0);
             stack.getOrCreateTag().putInt(SHELL_TUBE, 0);
-            stack.getOrCreateTag().putString(STATE, "idle_pump");
+            stack.getOrCreateTag().putString(STATE, "idle");
+            stack.getOrCreateTag().putString(FIRING_MODE, "pump");
         }
 
         if (stack.getTag().getString(STATE).isEmpty()) {
-            stack.getOrCreateTag().putString(STATE, "idle_pump");
+            stack.getOrCreateTag().putString(STATE, "idle");
             if (entity instanceof Player player) {
-                triggerAnim(level, player, stack, "controller", "idle_pump");
+                triggerAnim(level, player, stack, "general_controller", "idle");
             }
         }
     }
