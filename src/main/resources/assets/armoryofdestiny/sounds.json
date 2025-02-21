@@ -112,5 +112,75 @@
       "armoryofdestiny:shell_tink_2",
       "armoryofdestiny:shell_tink_3"
     ]
+  },
+  "murasama_insert": {
+    "subtitle": "sound.armoryofdestiny.murasama_insert",
+    "sounds": [
+      "armoryofdestiny:murasama_insert_1",
+      "armoryofdestiny:murasama_insert_2"
+    ]
+  },
+  "murasama_select": {
+    "subtitle": "sound.armoryofdestiny.murasama_select",
+    "sounds": [
+      "armoryofdestiny:murasama_select_1",
+      "armoryofdestiny:murasama_select_2",
+      "armoryofdestiny:murasama_select_3"
+    ]
+  },
+  "murasama_shoot": {
+    "subtitle": "sound.armoryofdestiny.murasama_shoot",
+    "sounds": [
+      "armoryofdestiny:murasama_shoot_1",
+      "armoryofdestiny:murasama_shoot_2"
+    ]
+  },
+  "murasama_special_hit": {
+    "subtitle": "sound.armoryofdestiny.murasama_special_hit",
+    "sounds": [
+      "armoryofdestiny:murasama_special_hit_1",
+      "armoryofdestiny:murasama_special_hit_2"
+    ]
+  },
+  "murasama_sheath": {
+    "sounds": [
+      "armoryofdestiny:murasama_sheath_1",
+      "armoryofdestiny:murasama_sheath_2",
+      "armoryofdestiny:murasama_sheath_3",
+      "armoryofdestiny:murasama_sheath_4"
+    ]
+  },
+  "originium_catalyst_activate": {
+    "subtitle": "sound.armoryofdestiny.originium_catalyst_activate",
+    "sounds": [
+      "armoryofdestiny:originium_catalyst_activate_1",
+      "armoryofdestiny:originium_catalyst_activate_2"
+    ]
+  },
+  "punisher_activate": {
+    "subtitle": "sound.armoryofdestiny.punisher_activate",
+    "sounds": [
+      "armoryofdestiny:punisher_activate"
+    ]
+  },
+  "punisher_deactivate": {
+    "subtitle": "sound.armoryofdestiny.punisher_deactivate",
+    "sounds": [
+      "armoryofdestiny:punisher_deactivate"
+    ]
+  },
+  "punisher_attack": {
+    "subtitle": "sound.armoryofdestiny.punisher_attack",
+    "sounds": [
+      "armoryofdestiny:punisher_attack_1",
+      "armoryofdestiny:punisher_attack_2",
+      "armoryofdestiny:punisher_attack_3",
+      "armoryofdestiny:punisher_attack_4",
+      "armoryofdestiny:punisher_attack_5",
+      "armoryofdestiny:punisher_attack_6",
+      "armoryofdestiny:punisher_attack_7",
+      "armoryofdestiny:punisher_attack_8",
+      "armoryofdestiny:punisher_attack_9"
+    ]
   }
 }

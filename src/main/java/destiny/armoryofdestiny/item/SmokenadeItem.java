@@ -48,7 +48,7 @@ public class SmokenadeItem extends Item implements GeoItem {
                 .triggerableAnim("idle", SMOKENADE_ANIM)
                 // We've marked the "box_open" animation as being triggerable from the server
                 .setSoundKeyframeHandler(state -> {
-                    // Use helper method to avoid client-code in common class
+                    // Use helper method to avoid client-code in event class
                     Player player = ClientUtils.getClientPlayer();
                 }));
     }

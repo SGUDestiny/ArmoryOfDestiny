@@ -2,16 +2,16 @@ package destiny.armoryofdestiny.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import destiny.armoryofdestiny.EntityRegistry;
-import destiny.armoryofdestiny.SoundRegistry;
-import destiny.armoryofdestiny.client.SharpIronyItemRenderer;
+import destiny.armoryofdestiny.item.utility.ItemTiers;
+import destiny.armoryofdestiny.item.utility.TooltipSwordItem;
+import destiny.armoryofdestiny.registry.EntityRegistry;
+import destiny.armoryofdestiny.registry.ItemRegistry;
+import destiny.armoryofdestiny.registry.SoundRegistry;
+import destiny.armoryofdestiny.client.render.item.SharpIronyItemRenderer;
 import destiny.armoryofdestiny.entity.MetallicFeatherEntity;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -20,10 +20,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -33,21 +30,19 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.ClientUtils;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class SharpIronyItem extends SwordItem implements GeoItem {
+public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
     private static final RawAnimation SHARP_IRONY_OPEN = RawAnimation.begin().thenPlay("sharp_irony.open");
     private static final RawAnimation SHARP_IRONY_CLOSE = RawAnimation.begin().thenPlay("sharp_irony.close");
     private static final RawAnimation SHARP_IRONY_THROW = RawAnimation.begin().thenPlay("sharp_irony.throw");
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public static final String AMMO_COUNT = "feathers";
-    public static final String IS_OPEN = "is_open";
-    public static final String VALUES_SET = "values_set";
+    public static final String AMMO_COUNT = "ammoCount";
+    public static final String IS_OPEN = "isOpen";
 
     private static Boolean firstLoad = true;
 
@@ -57,13 +52,11 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
 
     private float attackDamage;
     private double attackSpeed;
-    private float attackKnockback;
 
     public SharpIronyItem(Item.Properties build) {
-        super(Tiers.NETHERITE, 0, 0.0F, build);
-        this.attackDamage = 12;
+        super(ItemTiers.SHARP_IRONY, 0, 0.0F, build);
+        this.attackDamage = 5;
         this.attackSpeed = -0.4F;
-        this.attackKnockback = 6.0F;
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
@@ -87,33 +80,11 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "sharp_irony_controller", 0, state -> {
-//            if(state.getData(INITIAL_ANIMATION_PLAYED) == null){
-//                CompoundTag tag = state.getData(DataTickets.ITEMSTACK).getTag();
-//
-//                if (tag != null){
-//                    boolean is_open = tag.getBoolean(IS_OPEN);
-//
-//                    if (is_open){
-//                        state.getController().setAnimation(SHARP_IRONY_OPEN);
-//                    }
-//                    else {
-//                        state.getController().setAnimation(SHARP_IRONY_CLOSE);
-//                    }
-//                    state.setData(INITIAL_ANIMATION_PLAYED, true);
-//                    return PlayState.CONTINUE;
-//                }
-//            }
-            return PlayState.STOP;
-        })
+        controllers.add(new AnimationController<>(this, "sharp_irony_controller", 0, state -> {return PlayState.STOP;})
                 .triggerableAnim("open", SHARP_IRONY_OPEN)
                 .triggerableAnim("close", SHARP_IRONY_CLOSE)
                 .triggerableAnim("throw", SHARP_IRONY_THROW)
-                // We've marked the "box_open" animation as being triggerable from the server
-                .setSoundKeyframeHandler(state -> {
-                    // Use helper method to avoid client-code in common class
-                    Player player = ClientUtils.getClientPlayer();
-                }));
+        );
     }
 
     @Override
@@ -126,125 +97,142 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
 
-        if (player.isShiftKeyDown()) {
-            if (!stack.getOrCreateTag().getBoolean(IS_OPEN)) {
-                if (stack.getOrCreateTag().getInt(AMMO_COUNT) < 5) {
-                    ItemStack feather_stack = findAmmo(player);
-                    int feather_stack_amount = getAmmoCount(player);
-                    int feather_stored = stack.getOrCreateTag().getInt(AMMO_COUNT);
+        if (stack.getTag() == null) {
+            stack.getOrCreateTag().putBoolean(IS_OPEN, true);
+            stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
+        }
 
-                    if (!player.isCreative()) {
-                        if (feather_stack_amount > 0) {
-                            if (5 >= feather_stack_amount + feather_stored) {
-                                feather_stack.shrink(feather_stack_amount);
-                                stack.getOrCreateTag().putInt(AMMO_COUNT, feather_stored + feather_stack_amount);
-                            } else if (5 < feather_stack_amount + feather_stored) {
-                                feather_stack.shrink(5 - feather_stored);
-                                stack.getOrCreateTag().putInt(AMMO_COUNT, feather_stored + 5 - feather_stored);
-                            }
-                        }
-                    }
-                    else {
-                        stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
-                    }
-                }
-                stack.getOrCreateTag().putBoolean(IS_OPEN, true);
+        boolean isOpen = stack.getOrCreateTag().getBoolean(IS_OPEN);
+        int ammoCount = getFanAmmo(stack);
 
-                if (level instanceof ServerLevel serverLevel) {
-                    triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "open");
-                }
-                level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_OPEN.get(), SoundSource.PLAYERS, 1, 1);
-
-                player.getCooldowns().addCooldown(item, 5);
+        if (isShift(level)) {
+            if (isOpen) {
+                closeFan(level, player, stack, item);
             } else {
-                stack.getOrCreateTag().putBoolean(IS_OPEN, false);
-                if (level instanceof ServerLevel serverLevel) {
-                    triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "close");
+                if (ammoCount < 5) {
+                    reload(level, player, stack, item);
+                } else {
+                    openFan(level, player, stack, item);
                 }
-                level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_CLOSE.get(), SoundSource.PLAYERS, 1, 1);
-
-                player.getCooldowns().addCooldown(item, 5);
             }
-        } else if (Screen.hasControlDown()) {
-            if (stack.getOrCreateTag().getBoolean(IS_OPEN)){
-                if (stack.getOrCreateTag().getInt(AMMO_COUNT) > 0) {
-                    int ammo = stack.getOrCreateTag().getInt(AMMO_COUNT);
-
-                    if (level instanceof ServerLevel serverLevel){
-                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "throw");
-                    }
-                    level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_THROW.get(), SoundSource.PLAYERS, 1, 1);
-
-                    float YRot;
-
-                    if(ammo % 2 == 0) {
-                        YRot = player.getYRot() - (float) (ammo * 5) / 2 + 2.5F;
-                    } else {
-                        YRot = player.getYRot() - (float) (ammo * 5) / 2;
-                    }
-
-                    for (int i = 0; i < ammo; i++){
-                        if(!level.isClientSide) {
-                            MetallicFeatherEntity feather = new MetallicFeatherEntity(EntityRegistry.METALLIC_FEATHER.get(), player, level);
-                            feather.setDeltaMovement(0, 0, 1);
-                            feather.shootFromRotation(player, player.getXRot(), YRot, 0.0F, 5.0F, 1.0F);
-                            level.addFreshEntity(feather);
-                            YRot += 5;
-                        }
-                        level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_THROW_SPECIAL.get(), SoundSource.PLAYERS, 1, 1);
-                    }
-                    player.getCooldowns().addCooldown(stack.getItem(), 30);
-                    stack.getOrCreateTag().putInt(AMMO_COUNT, stack.getOrCreateTag().getInt(AMMO_COUNT) - ammo);
-
-                    player.getCooldowns().addCooldown(item, 5);
-                }
+        } else if (isControl(level)) {
+            if (isOpen){
+                throwAll(level, player, stack, item);
             }
         } else {
-            if (stack.getOrCreateTag().getBoolean(IS_OPEN)){
-                if (stack.getOrCreateTag().getInt(AMMO_COUNT) > 0) {
-                    stack.getOrCreateTag().putInt(AMMO_COUNT, stack.getOrCreateTag().getInt(AMMO_COUNT) - 1);
-                    if (level instanceof ServerLevel serverLevel) {
-                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "throw");
-                    }
-                    level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_THROW.get(), SoundSource.PLAYERS, 1, 1);
-
-                    if(!level.isClientSide) {
-                        MetallicFeatherEntity feather = new MetallicFeatherEntity(EntityRegistry.METALLIC_FEATHER.get(), player, level);
-                        feather.setDeltaMovement(0, 0, 1);
-                        feather.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 5.0F, 1.0F);
-                        level.addFreshEntity(feather);
-                    }
-
-                    player.getCooldowns().addCooldown(item, 5);
+            if (isOpen) {
+                throwFeather(level, player, stack, item, player.getXRot(), player.getYRot());
+            } else {
+                if (ammoCount < 5) {
+                    reload(level, player, stack, item);
                 } else {
-                    ItemStack feather_stack = findAmmo(player);
-                    int feather_stack_amount = getAmmoCount(player);
-                    if (player.isCreative()){
-                        stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
-                        if (level instanceof ServerLevel serverLevel) {
-                            triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "open");
-                        }
-                        level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_OPEN.get(), SoundSource.PLAYERS, 1, 1);
-                    } else if(feather_stack_amount > 0) {
-                        if (feather_stack_amount >= 5) {
-                            feather_stack.shrink(5);
-                            stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
-                        }
-                        else {
-                            feather_stack.shrink(feather_stack_amount);
-                            stack.getOrCreateTag().putInt(AMMO_COUNT, feather_stack_amount);
-                        }
-                        if (level instanceof ServerLevel serverLevel) {
-                            triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "open");
-                        }
-                        level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_OPEN.get(), SoundSource.PLAYERS, 1, 1);
-
-                        player.getCooldowns().addCooldown(item, 5);
-                    }
+                    openFan(level, player, stack, item);
                 }
             }
         }
-        return super.use(level, player, hand);
+        return InteractionResultHolder.pass(stack);
+    }
+
+    public void throwFeather(Level level, Player player, ItemStack stack, Item item, float XRot, float YRot) {
+        int ammoCount = stack.getOrCreateTag().getInt(AMMO_COUNT);
+
+        if (ammoCount > 0) {
+            if (!level.isClientSide) {
+                MetallicFeatherEntity feather = new MetallicFeatherEntity(EntityRegistry.METALLIC_FEATHER.get(), player, level);
+                feather.setDeltaMovement(0, 0, 1);
+                feather.shootFromRotation(player, XRot, YRot, 0.0F, 5.0F, 1.0F);
+                level.addFreshEntity(feather);
+            }
+            stack.getOrCreateTag().putInt(AMMO_COUNT, ammoCount - 1);
+
+            if (!player.isCreative()) {
+                stack.setDamageValue(stack.getDamageValue() + 1);
+            }
+
+            triggerAnim(level, player, stack, "sharp_irony_controller", "throw");
+            level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_THROW.get(), SoundSource.PLAYERS, 1, 1);
+
+            player.getCooldowns().addCooldown(item, 5);
+        } else {
+            reload(level, player, stack, item);
+        }
+    }
+
+    public void throwAll(Level level, Player player, ItemStack stack, Item item) {
+        int ammoCount = stack.getOrCreateTag().getInt(AMMO_COUNT);
+
+        if (ammoCount > 0) {
+            float YRot;
+
+            if(ammoCount % 2 == 0) {
+                YRot = player.getYRot() - (float) (ammoCount * 5) / 2 + 2.5F;
+            } else {
+                YRot = player.getYRot() - (float) (ammoCount * 5) / 2;
+            }
+
+            for (int i = 0; i < ammoCount; i++){
+                throwFeather(level, player, stack, item, player.getXRot(), YRot);
+                YRot += 5;
+
+                if (!player.isCreative()) {
+                    stack.setDamageValue(stack.getDamageValue() + 1);
+                }
+            }
+            stack.getOrCreateTag().putInt(AMMO_COUNT, 0);
+
+            level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_THROW_SPECIAL.get(), SoundSource.PLAYERS, 1, 1);
+            triggerAnim(level, player, stack, "sharp_irony_controller", "throw");
+
+            player.getCooldowns().addCooldown(item, 30);
+        }
+    }
+
+    public void reload(Level level, Player player, ItemStack stack, Item item) {
+        int ammoCount = getFanAmmo(stack);
+
+        if (ammoCount < 5) {
+            ItemStack feather_stack = findAmmo(player);
+            int feather_stack_amount = getAmmoCount(player);
+
+            if (!player.isCreative()) {
+                if (feather_stack_amount > 0) {
+                    if (5 >= feather_stack_amount + ammoCount) {
+                        feather_stack.shrink(feather_stack_amount);
+                        stack.getOrCreateTag().putInt(AMMO_COUNT, ammoCount + feather_stack_amount);
+                    } else if (5 < feather_stack_amount + ammoCount) {
+                        feather_stack.shrink(5 - ammoCount);
+                        stack.getOrCreateTag().putInt(AMMO_COUNT, ammoCount + 5 - ammoCount);
+                    }
+                }
+            }
+            else {
+                stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
+            }
+
+            openFan(level, player, stack, item);
+        }
+    }
+
+    public int getFanAmmo(ItemStack stack) {
+        return stack.getOrCreateTag().getInt(AMMO_COUNT);
+    }
+
+    public void openFan(Level level, Player player, ItemStack stack, Item item) {
+        stack.getOrCreateTag().putBoolean(IS_OPEN, true);
+
+        triggerAnim(level, player, stack, "sharp_irony_controller", "open");
+        level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_OPEN.get(), SoundSource.PLAYERS, 1, 1);
+
+        player.getCooldowns().addCooldown(item, 5);
+    }
+
+    public void closeFan(Level level, Player player, ItemStack stack, Item item) {
+        stack.getOrCreateTag().putBoolean(IS_OPEN, false);
+
+        triggerAnim(level, player, stack, "sharp_irony_controller", "close");
+        level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_CLOSE.get(), SoundSource.PLAYERS, 1, 1);
+
+        player.getCooldowns().addCooldown(item, 5);
     }
 
     public ItemStack findAmmo(Player player){
@@ -271,29 +259,15 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
         return 0;
     }
 
+    public void triggerAnim(Level level, Player player, ItemStack stack, String controller, String name) {
+        if (level instanceof ServerLevel serverLevel) {
+            triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), controller, name);
+        }
+    }
+
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
         return false;
-    }
-
-    @Override
-    public boolean isBarVisible(ItemStack stack) {
-        if (stack.getOrCreateTag().getBoolean(IS_OPEN)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    @Override
-    public int getBarWidth(ItemStack stack) {
-        return (int) (stack.getOrCreateTag().getInt(AMMO_COUNT) * 2.5);
-    }
-
-    @Override
-    public int getBarColor(ItemStack p_150901_) {
-        return Mth.hsvToRgb(0.0F, 0.0F, 90.0F);
     }
 
     @Override
@@ -302,7 +276,6 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", this.attackDamage, AttributeModifier.Operation.ADDITION));
             builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", this.attackSpeed, AttributeModifier.Operation.ADDITION));
-            builder.put(Attributes.ATTACK_KNOCKBACK, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", this.attackKnockback, AttributeModifier.Operation.ADDITION));
             return builder.build();
         }
 
@@ -310,32 +283,28 @@ public class SharpIronyItem extends SwordItem implements GeoItem {
     }
 
     @Override
+    public String getItemRarity(ItemStack stack) {
+        return "unique";
+    }
+
+    @Override
+    public String getTriviaType() {
+        return "throwing_fan";
+    }
+
+    @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean b) {
-        CompoundTag tag = stack.getTag();
-
-        if (tag == null) {
-            stack.getOrCreateTag().putBoolean(IS_OPEN, true);
-            stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
-            stack.getOrCreateTag().putBoolean(VALUES_SET, true);
-        }
-        else if (!stack.getTag().getBoolean(VALUES_SET)){
-            stack.getOrCreateTag().putBoolean(IS_OPEN, true);
-            stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
-            stack.getOrCreateTag().putBoolean(VALUES_SET, true);
-        }
-
-        if (firstLoad){
-            firstLoad = false;
-            if (level instanceof ServerLevel serverLevel) {
+        if (stack.getTag() != null) {
+            if (firstLoad) {
                 if (entity instanceof Player player) {
-                    if (!stack.getOrCreateTag().getBoolean(IS_OPEN)) {
-                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "close");
+                    if (stack.getOrCreateTag().getBoolean(IS_OPEN)) {
+                        triggerAnim(level, player, stack, "sharp_irony_controller", "open");
                     } else {
-                        triggerAnim(player, GeoItem.getOrAssignId(stack, serverLevel), "sharp_irony_controller", "open");
+                        triggerAnim(level, player, stack, "sharp_irony_controller", "close");
                     }
                 }
+                firstLoad = false;
             }
         }
-        super.inventoryTick(stack, level, entity, i, b);
     }
 }

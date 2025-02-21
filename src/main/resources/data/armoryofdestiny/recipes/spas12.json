@@ -18,6 +18,6 @@
   },
   "result": {
     "item": "armoryofdestiny:spas12",
-    "nbt": "{chamber:0, shellTube:0, state:\"idle_pump\", shellType:\"buckshot_shell\"}"
+    "nbt": "{chamber:0, shellTube:0, state:\"idle\", fireMode:\"pump\"}"
   }
 }

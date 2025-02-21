@@ -90,8 +90,5 @@
         0.5
       ]
     }
-  },
-  "textures": {
-    "particle": "item/spas-12"
   }
 }

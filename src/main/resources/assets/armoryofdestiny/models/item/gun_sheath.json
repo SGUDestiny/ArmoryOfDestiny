@@ -1,0 +1,23 @@
+{
+	"loader": "forge:separate_transforms",
+	"gui_light": "front",
+	"base":
+	{
+		"parent": "armoryofdestiny:item/gun_sheath_third_person"
+	},
+	"perspectives":
+	{
+		"gui":
+		{
+			"parent": "armoryofdestiny:item/gun_sheath_inventory"
+		},
+		"fixed":
+		{
+			"parent": "armoryofdestiny:item/gun_sheath_inventory"
+		},
+		"ground":
+		{
+			"parent": "armoryofdestiny:item/gun_sheath_inventory"
+		}
+	}
+}

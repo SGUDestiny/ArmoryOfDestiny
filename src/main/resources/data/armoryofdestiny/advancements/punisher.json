@@ -1,0 +1,36 @@
+{
+  "parent": "armoryofdestiny:murasama",
+  "display": {
+    "icon": {
+      "item": "armoryofdestiny:punisher"
+    },
+    "title": {
+      "translate": "advancements.armoryofdestiny.punisher.title"
+    },
+    "description": {
+      "translate": "advancements.armoryofdestiny.punisher.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:punisher"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

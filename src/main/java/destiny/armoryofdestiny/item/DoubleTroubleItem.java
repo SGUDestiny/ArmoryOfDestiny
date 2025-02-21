@@ -1,10 +1,10 @@
 package destiny.armoryofdestiny.item;
 
-import destiny.armoryofdestiny.EntityRegistry;
-import destiny.armoryofdestiny.SoundRegistry;
+import destiny.armoryofdestiny.registry.EntityRegistry;
+import destiny.armoryofdestiny.registry.ItemRegistry;
+import destiny.armoryofdestiny.registry.SoundRegistry;
 import destiny.armoryofdestiny.client.DoubleTroubleItemRenderer;
 import destiny.armoryofdestiny.entity.BuckshotEntity;
-import destiny.armoryofdestiny.entity.PelletEntity;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.nbt.CompoundTag;
@@ -111,6 +111,13 @@ public class DoubleTroubleItem extends Item implements GeoItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
+
+        if (stack.getTag() == null) {
+            stack.getOrCreateTag().putBoolean(IS_OPEN, false);
+            stack.getOrCreateTag().putInt(LEFT_BARREL, 2);
+            stack.getOrCreateTag().putInt(RIGHT_BARREL, 2);
+            stack.getOrCreateTag().putBoolean(VALUES_SET, true);
+        }
 
         if (player.isShiftKeyDown()) {
                 if (stack.getTag().getBoolean(IS_OPEN)) {
@@ -399,10 +406,9 @@ public class DoubleTroubleItem extends Item implements GeoItem {
 
     @Override
     public boolean isBarVisible(ItemStack stack) {
-        if (!stack.getOrCreateTag().getBoolean(IS_OPEN)) {
-            return true;
-        }
-        else {
+        if (stack.getTag() != null) {
+            return !stack.getOrCreateTag().getBoolean(IS_OPEN);
+        } else {
             return false;
         }
     }
@@ -453,8 +459,5 @@ public class DoubleTroubleItem extends Item implements GeoItem {
                 }
             }
         }
-        super.inventoryTick(stack, level, entity, i, b);
     }
-
-
 }

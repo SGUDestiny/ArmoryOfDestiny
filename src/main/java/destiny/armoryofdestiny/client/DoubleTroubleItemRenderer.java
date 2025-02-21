@@ -5,6 +5,7 @@ import destiny.armoryofdestiny.item.DoubleTroubleItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import software.bernie.geckolib.model.DefaultedItemGeoModel;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 
 import static destiny.armoryofdestiny.item.DoubleTroubleItem.LEFT_BARREL;
@@ -16,7 +17,7 @@ public class DoubleTroubleItemRenderer extends GeoItemRenderer<DoubleTroubleItem
     private final ResourceLocation DOUBLE_TROUBLE_LEFT = new ResourceLocation(ArmoryOfDestiny.MODID, "textures/item/double_trouble/double_trouble_left.png");
     private final ResourceLocation DOUBLE_TROUBLE_EMPTY = new ResourceLocation(ArmoryOfDestiny.MODID, "textures/item/double_trouble/double_trouble_empty.png");
     public DoubleTroubleItemRenderer() {
-        super(new DoubleTroubleItemModel());
+        super(new DefaultedItemGeoModel<>(new ResourceLocation(ArmoryOfDestiny.MODID, "double_trouble")));
     }
 
     @Override

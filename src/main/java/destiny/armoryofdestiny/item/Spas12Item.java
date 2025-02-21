@@ -1,10 +1,15 @@
 package destiny.armoryofdestiny.item;
 
-import destiny.armoryofdestiny.EntityRegistry;
-import destiny.armoryofdestiny.SoundRegistry;
-import destiny.armoryofdestiny.client.render.Spas12ItemRenderer;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import destiny.armoryofdestiny.ArmoryOfDestiny;
+import destiny.armoryofdestiny.registry.EntityRegistry;
+import destiny.armoryofdestiny.registry.ItemRegistry;
+import destiny.armoryofdestiny.registry.SoundRegistry;
+import destiny.armoryofdestiny.client.render.item.Spas12ItemRenderer;
 import destiny.armoryofdestiny.entity.*;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -16,19 +21,25 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
-import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -43,7 +54,21 @@ import java.util.TimerTask;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+@Mod.EventBusSubscriber(modid = ArmoryOfDestiny.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class Spas12Item extends Item implements GeoItem {
+
+    private double attackSpeed;
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
+        if (slot == EquipmentSlot.MAINHAND) {
+            ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
+            builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", this.attackSpeed, AttributeModifier.Operation.ADDITION));
+            return builder.build();
+        }
+
+        return super.getAttributeModifiers(slot, stack);
+    }
 
     private static final RawAnimation IDLE = RawAnimation.begin().thenPlayAndHold("idle");
     private static final RawAnimation IDLE_RELOAD = RawAnimation.begin().thenPlayAndHold("idle_reload");
@@ -68,7 +93,7 @@ public class Spas12Item extends Item implements GeoItem {
     public static final String SHELL_TUBE = "shellTube";
     public static final String SHELL_TYPE = "shellType";
     public static final String STATE = "state";
-    public static final String FIRING_MODE = "firing_mode";
+    public static final String FIRING_MODE = "fireMode";
     private static Boolean firstLoad = true;
 
     private static final Timer timer = new Timer();
@@ -105,6 +130,7 @@ public class Spas12Item extends Item implements GeoItem {
 
     public Spas12Item(Item.Properties build) {
         super(build);
+        this.attackSpeed = 1024F;
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
@@ -158,7 +184,6 @@ public class Spas12Item extends Item implements GeoItem {
         if (level instanceof ClientLevel clientLevel) {
             return Screen.hasShiftDown();
         }
-
         return Screen.hasShiftDown();
     }
 
@@ -166,7 +191,6 @@ public class Spas12Item extends Item implements GeoItem {
         if (level instanceof ClientLevel clientLevel) {
             return Screen.hasControlDown();
         }
-
         return Screen.hasControlDown();
     }
 
@@ -174,7 +198,6 @@ public class Spas12Item extends Item implements GeoItem {
         if (level instanceof ClientLevel clientLevel) {
             return Screen.hasAltDown();
         }
-
         return Screen.hasAltDown();
     }
 
@@ -183,18 +206,21 @@ public class Spas12Item extends Item implements GeoItem {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
 
+        if (stack.getTag() == null) {
+            stack.getOrCreateTag().putInt(CHAMBER, 2);
+            stack.getOrCreateTag().putInt(SHELL_TUBE, 6);
+            stack.getOrCreateTag().putString(STATE, "idle");
+            stack.getOrCreateTag().putString(FIRING_MODE, "pump");
+        }
+
         if (isAlt(level)) {
             safetyHandling(level, player, stack, item);
         } else if (isShift(level)) {
             positionHandling(level, player, stack, item);
         } else if (isControl(level)) {
             fireModeHandling(level, player, stack);
-        } else {
-            if (getState(stack).equals("idle")) {
-                shootHandling(level, player, stack, item);
-            } else if (getState(stack).equals("reload")) {
-                reloadHandling(level, player, stack, item);
-            }
+        } else if (getState(stack).equals("reload")) {
+            reloadHandling(level, player, stack, item);
         }
 
         return InteractionResultHolder.pass(stack);
@@ -268,6 +294,37 @@ public class Spas12Item extends Item implements GeoItem {
                 level.playSound(player, player.blockPosition(), SoundRegistry.SPAS12_SWITCH.get(), SoundSource.PLAYERS, 1, 1);
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerInteract(PlayerInteractEvent.LeftClickEmpty event) {
+        Player player = event.getEntity();
+        Level level = event.getLevel();
+        ItemStack stack = player.getMainHandItem();
+        Item item = stack.getItem();
+
+        if (item instanceof Spas12Item spas) {
+            if (spas.getState(stack).equals("idle") && !player.getCooldowns().isOnCooldown(spas) && level instanceof ServerLevel serverLevel) {
+                spas.shootHandling(serverLevel, player, stack, spas);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onMouseClick(InputEvent.InteractionKeyMappingTriggered event) {
+        Minecraft mc = Minecraft.getInstance();
+        Player player = mc.player;
+        ItemStack itemStack = player.getMainHandItem();
+
+        if(itemStack.getItem() instanceof Spas12Item && event.isAttack()) {
+            event.setSwingHand(false);
+            event.setCanceled(true);
+        }
+    }
+
+    @Override
+    public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
+        return true;
     }
 
     public void shootHandling(Level level, Player player, ItemStack stack, Item item) {
@@ -529,10 +586,9 @@ public class Spas12Item extends Item implements GeoItem {
 
     @Override
     public boolean isBarVisible(ItemStack stack) {
-        if (stack.getTag().getInt(CHAMBER) > 0) {
-            return true;
-        }
-        else {
+        if (stack.getTag() != null) {
+            return stack.getTag().getInt(CHAMBER) > 0;
+        } else {
             return false;
         }
     }
@@ -558,7 +614,7 @@ public class Spas12Item extends Item implements GeoItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        if(!stack.getTag().isEmpty()) {
+        if(stack.getTag() != null) {
             int sum = stack.getTag().getInt(SHELL_TUBE);
             if (stack.getOrCreateTag().getInt(CHAMBER) >= 2) {
                 sum++;
@@ -580,16 +636,21 @@ public class Spas12Item extends Item implements GeoItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean b) {
-        CompoundTag tag = stack.getTag();
+    public void onCraftedBy(ItemStack stack, Level level, Player player) {
+        triggerAnim(level, player, stack, "controller", "idle");
+    }
 
-        if (firstLoad){
+    @Override
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean b) {
+        if (stack.getTag() != null) {
             firstLoad = false;
             if (entity instanceof Player player) {
                 if (getState(stack).equals("idle")) {
                     triggerAnim(level, player, stack, "controller", "idle");
                 } else if (getState(stack).equals("reload")) {
                     triggerAnim(level, player, stack, "controller", "idle_reload");
+                } else if (getState(stack).equals("safety")) {
+                    triggerAnim(level, player, stack, "controller", "safety_idle");
                 }
 
                 if (getFireMode(stack).equals("pump")) {
@@ -597,20 +658,6 @@ public class Spas12Item extends Item implements GeoItem {
                 } else if (getFireMode(stack).equals("semi")) {
                     triggerAnim(level, player, stack, "mode_controller", "semi");
                 }
-            }
-        }
-
-        if (tag == null) {
-            stack.getOrCreateTag().putInt(CHAMBER, 0);
-            stack.getOrCreateTag().putInt(SHELL_TUBE, 0);
-            stack.getOrCreateTag().putString(STATE, "idle");
-            stack.getOrCreateTag().putString(FIRING_MODE, "pump");
-        }
-
-        if (stack.getTag().getString(STATE).isEmpty()) {
-            stack.getOrCreateTag().putString(STATE, "idle");
-            if (entity instanceof Player player) {
-                triggerAnim(level, player, stack, "general_controller", "idle");
             }
         }
     }

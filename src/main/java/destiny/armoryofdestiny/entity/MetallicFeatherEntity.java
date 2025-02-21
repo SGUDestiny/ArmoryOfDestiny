@@ -1,7 +1,7 @@
 package destiny.armoryofdestiny.entity;
 
-import destiny.armoryofdestiny.SoundRegistry;
-import destiny.armoryofdestiny.item.ItemRegistry;
+import destiny.armoryofdestiny.registry.SoundRegistry;
+import destiny.armoryofdestiny.registry.ItemRegistry;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundEvent;
@@ -41,7 +41,7 @@ public class MetallicFeatherEntity extends AbstractArrow {
             Entity entity = hitResult.getEntity();
             Entity attacker = this.getOwner();
 
-            entity.hurt(level().damageSources().generic(), 25.0F);
+            entity.hurt(level().damageSources().generic(), 12.0F);
         }
     }
 

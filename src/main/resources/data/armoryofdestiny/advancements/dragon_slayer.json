@@ -1,0 +1,36 @@
+{
+  "parent": "armoryofdestiny:murasama",
+  "display": {
+    "icon": {
+      "item": "armoryofdestiny:dragon_slayer"
+    },
+    "title": {
+      "translate": "advancements.armoryofdestiny.dragon_slayer.title"
+    },
+    "description": {
+      "translate": "advancements.armoryofdestiny.dragon_slayer.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:dragon_slayer"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

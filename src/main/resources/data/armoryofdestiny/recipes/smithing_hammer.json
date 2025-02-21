@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ISI",
+    "ITI",
+    " T "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "T": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "armoryofdestiny:smithing_hammer"
+  }
+}

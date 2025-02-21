@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "armoryofdestiny:item/blueprint",
+    "layer1": "armoryofdestiny:item/blueprint_markings"
+  }
+}

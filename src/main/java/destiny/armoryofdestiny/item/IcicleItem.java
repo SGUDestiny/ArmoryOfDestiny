@@ -68,7 +68,7 @@ public class IcicleItem extends SwordItem implements GeoItem {
                 .triggerableAnim("idle", ICICLE_ANIM)
                 // We've marked the "box_open" animation as being triggerable from the server
                 .setSoundKeyframeHandler(state -> {
-                    // Use helper method to avoid client-code in common class
+                    // Use helper method to avoid client-code in event class
                     Player player = ClientUtils.getClientPlayer();
                 }));
     }

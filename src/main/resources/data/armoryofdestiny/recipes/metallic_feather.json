@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " N ",
-    "NIN",
-    " F "
+    " II",
+    "IFI",
+    "NI "
   ],
   "key": {
     "F": {
@@ -18,6 +18,6 @@
   },
   "result": {
     "item": "armoryofdestiny:metallic_feather",
-    "count": 15
+    "count": 32
   }
 }

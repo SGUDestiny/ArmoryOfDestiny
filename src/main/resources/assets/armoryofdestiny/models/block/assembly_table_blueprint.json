@@ -1,0 +1,70 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"render_type": "cutout",
+	"texture_size": [64, 48],
+	"textures": {
+		"table": "armoryofdestiny:block/assembly_table",
+		"markings": "armoryofdestiny:block/assembly_table_blueprint_markings",
+		"blueprint": "armoryofdestiny:block/assembly_table_blueprint",
+		"particle": "armoryofdestiny:block/assembly_table"
+	},
+	"elements": [
+		{
+			"name": "markings",
+			"from": [0, 12.05, 0],
+			"to": [16, 16.05, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [14, 0.05, 0]},
+			"faces": {
+				"north": {"uv": [4, 5.33333, 8, 6.66667], "texture": "#markings"},
+				"east": {"uv": [0, 5.33333, 4, 6.66667], "texture": "#markings"},
+				"south": {"uv": [12, 5.33333, 16, 6.66667], "texture": "#markings"},
+				"west": {"uv": [8, 5.33333, 12, 6.66667], "texture": "#markings"},
+				"up": {"uv": [8, 5.33333, 4, 0], "texture": "#markings"},
+				"down": {"uv": [12, 0, 8, 5.33333], "texture": "#markings"}
+			}
+		},
+		{
+			"name": "blueprint",
+			"from": [0, 12.025, 0],
+			"to": [16, 16.025, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [14, 0.025, 0]},
+			"faces": {
+				"north": {"uv": [4, 5.33333, 8, 6.66667], "texture": "#blueprint", "tintindex": 0 },
+				"east": {"uv": [0, 5.33333, 4, 6.66667], "texture": "#blueprint", "tintindex": 0 },
+				"south": {"uv": [12, 5.33333, 16, 6.66667], "texture": "#blueprint", "tintindex": 0 },
+				"west": {"uv": [8, 5.33333, 12, 6.66667], "texture": "#blueprint", "tintindex": 0 },
+				"up": {"uv": [8, 5.33333, 4, 0], "texture": "#blueprint", "tintindex": 0 },
+				"down": {"uv": [12, 0, 8, 5.33333], "texture": "#blueprint", "tintindex": 0 }
+			}
+		},
+		{
+			"name": "table",
+			"from": [0, 12, 0],
+			"to": [16, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [14, 0, 0]},
+			"faces": {
+				"north": {"uv": [4, 5.33333, 8, 6.66667], "texture": "#table"},
+				"east": {"uv": [0, 5.33333, 4, 6.66667], "texture": "#table"},
+				"south": {"uv": [12, 5.33333, 16, 6.66667], "texture": "#table"},
+				"west": {"uv": [8, 5.33333, 12, 6.66667], "texture": "#table"},
+				"up": {"uv": [8, 5.33333, 4, 0], "texture": "#table"},
+				"down": {"uv": [12, 0, 8, 5.33333], "texture": "#table"}
+			}
+		},
+		{
+			"name": "legs",
+			"from": [0, 0, 0],
+			"to": [16, 12, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [14, -4, 0]},
+			"faces": {
+				"north": {"uv": [4, 12, 8, 16], "texture": "#table"},
+				"east": {"uv": [0, 12, 4, 16], "texture": "#table"},
+				"south": {"uv": [12, 12, 16, 16], "texture": "#table"},
+				"west": {"uv": [8, 12, 12, 16], "texture": "#table"},
+				"up": {"uv": [8, 12, 4, 6.66667], "texture": "#table"},
+				"down": {"uv": [12, 6.66667, 8, 12], "texture": "#table"}
+			}
+		}
+	]
+}

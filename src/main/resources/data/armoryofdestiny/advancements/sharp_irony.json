@@ -1,0 +1,36 @@
+{
+  "parent": "armoryofdestiny:murasama",
+  "display": {
+    "icon": {
+      "item": "armoryofdestiny:sharp_irony"
+    },
+    "title": {
+      "translate": "advancements.armoryofdestiny.sharp_irony.title"
+    },
+    "description": {
+      "translate": "advancements.armoryofdestiny.sharp_irony.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:sharp_irony"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

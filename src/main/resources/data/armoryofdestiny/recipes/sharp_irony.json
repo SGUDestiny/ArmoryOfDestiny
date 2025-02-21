@@ -2,8 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "FFF",
-    "FNF",
-    "NIN"
+    "FIF",
+    "INI"
   ],
   "key": {
     "F": {
@@ -13,11 +13,11 @@
       "item": "minecraft:iron_ingot"
     },
     "N": {
-      "item": "minecraft:iron_nugget"
+      "item": "minecraft:netherite_scrap"
     }
   },
   "result": {
     "item": "armoryofdestiny:sharp_irony",
-    "nbt": "{is_open:1b, feathers:5, values_set:1b}"
+    "nbt": "{isOpen:1b, ammoCount:5}"
   }
 }

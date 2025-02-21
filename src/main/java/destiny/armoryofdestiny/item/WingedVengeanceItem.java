@@ -1,10 +1,8 @@
 package destiny.armoryofdestiny.item;
 
 import com.google.common.collect.Multimap;
-import com.mojang.datafixers.util.Pair;
 import destiny.armoryofdestiny.ArmoryOfDestiny;
-import destiny.armoryofdestiny.client.render.WingedVengeanceRenderProperties;
-import destiny.armoryofdestiny.client.render.WingedVengeanceRenderer;
+import destiny.armoryofdestiny.client.render.item.WingedVengeanceRenderer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -22,7 +20,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
-import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
