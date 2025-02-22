@@ -1,8 +1,8 @@
 package destiny.armoryofdestiny.event;
 
 import com.mojang.logging.LogUtils;
-import destiny.armoryofdestiny.block.AssemblyTableBlock;
-import destiny.armoryofdestiny.client.render.blockentity.AssemblyTableRenderer;
+import destiny.armoryofdestiny.block.ArmorersAssemblyTableBlock;
+import destiny.armoryofdestiny.client.render.blockentity.ArmorersAssemblyTableRenderer;
 import destiny.armoryofdestiny.item.BlueprintItem;
 import destiny.armoryofdestiny.registry.BlockEntityRegistry;
 import destiny.armoryofdestiny.registry.BlockRegistry;
@@ -28,11 +28,11 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onBlockColors(RegisterColorHandlersEvent.Block event) {
         LOGGER.info("Loaded block colors");
-        event.register((blockState, blockAndTintGetter, blockPos, colorIn) -> colorIn != 0 ? -1 : AssemblyTableBlock.getBlueprintColor(Minecraft.getInstance().level, blockPos), BlockRegistry.ASSEMBLY_TABLE.get());
+        event.register((blockState, blockAndTintGetter, blockPos, colorIn) -> colorIn != 0 ? -1 : ArmorersAssemblyTableBlock.getBlueprintColor(Minecraft.getInstance().level, blockPos), BlockRegistry.ARMORERS_ASSEMBLY_TABLE.get());
     }
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(BlockEntityRegistry.ASSEMBLY_TABLE.get(), AssemblyTableRenderer::new);
+        event.registerBlockEntityRenderer(BlockEntityRegistry.ASSEMBLY_TABLE.get(), ArmorersAssemblyTableRenderer::new);
     }
 }

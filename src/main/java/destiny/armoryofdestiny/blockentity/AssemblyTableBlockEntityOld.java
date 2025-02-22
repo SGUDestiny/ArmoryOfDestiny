@@ -286,7 +286,7 @@ public class AssemblyTableBlockEntityOld extends BaseContainerBlockEntity implem
         };
 
         for (BlockPos pos : checkPositions) {
-            if (level.getBlockState(pos).getBlock() == BlockRegistry.SMITHING_CRAFTING_TABLE.get()) {
+            if (level.getBlockState(pos).getBlock() == BlockRegistry.ARMORERS_CRAFTING_TABLE.get()) {
                 return true;
             }
         }

@@ -4,8 +4,8 @@
 	"render_type": "cutout",
 	"texture_size": [64, 52],
 	"textures": {
-		"0": "armoryofdestiny:block/smithing_crafting_table",
-		"particle": "armoryofdestiny:block/smithing_crafting_table"
+		"0": "armoryofdestiny:block/armorers_crafting_table",
+		"particle": "armoryofdestiny:block/armorers_crafting_table"
 	},
 	"elements": [
 		{

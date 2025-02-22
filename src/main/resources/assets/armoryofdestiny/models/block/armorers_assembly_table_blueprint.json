@@ -4,10 +4,10 @@
 	"render_type": "cutout",
 	"texture_size": [64, 48],
 	"textures": {
-		"particle": "armoryofdestiny:block/assembly_table",
-		"table": "armoryofdestiny:block/assembly_table",
-		"markings": "armoryofdestiny:block/assembly_table_blueprint_markings",
-		"blueprint": "armoryofdestiny:block/assembly_table_blueprint"
+		"particle": "armoryofdestiny:block/armorers_assembly_table",
+		"table": "armoryofdestiny:block/armorers_assembly_table",
+		"markings": "armoryofdestiny:block/armorers_assembly_table_blueprint_markings",
+		"blueprint": "armoryofdestiny:block/armorers_assembly_table_blueprint"
 	},
 	"elements": [
 		{

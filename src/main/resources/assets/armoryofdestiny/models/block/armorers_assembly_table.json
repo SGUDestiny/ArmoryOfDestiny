@@ -4,8 +4,8 @@
 	"render_type": "cutout",
 	"texture_size": [64, 48],
 	"textures": {
-		"table": "armoryofdestiny:block/assembly_table",
-		"particle": "armoryofdestiny:block/assembly_table"
+		"table": "armoryofdestiny:block/armorers_assembly_table",
+		"particle": "armoryofdestiny:block/armorers_assembly_table"
 	},
 	"elements": [
 		{

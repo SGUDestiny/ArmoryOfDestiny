@@ -9,7 +9,6 @@ import destiny.armoryofdestiny.registry.SoundRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -40,12 +39,12 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-import static destiny.armoryofdestiny.block.AssemblyTableBlock.HAS_BLUEPRINT;
+import static destiny.armoryofdestiny.block.ArmorersAssemblyTableBlock.HAS_BLUEPRINT;
 import static destiny.armoryofdestiny.item.SharpIronyItem.AMMO_COUNT;
 import static destiny.armoryofdestiny.item.SharpIronyItem.IS_OPEN;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
-public class AssemblyTableBlockEntity extends BlockEntity {
+public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     private final ItemStackHandler inventory;
@@ -61,13 +60,13 @@ public class AssemblyTableBlockEntity extends BlockEntity {
     private ItemStack wantItemStack = ItemStack.EMPTY;
     private int craftingProgress = -1;
 
-    public AssemblyTableBlockEntity(BlockPos pos, BlockState state) {
+    public ArmorersAssemblyTableBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.ASSEMBLY_TABLE.get(), pos, state);
         inventory = createHandler();
         inputHandler = LazyOptional.of(() -> inventory);
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, AssemblyTableBlockEntity table) {
+    public static void tick(Level level, BlockPos pos, BlockState state, ArmorersAssemblyTableBlockEntity table) {
         if (!level.isClientSide) {
             if (table.hasBlueprint()) {
                 //Begin crafting
@@ -94,11 +93,13 @@ public class AssemblyTableBlockEntity extends BlockEntity {
                 int remainingIngredients = recipeIngredients.size();
 
                 if (remainingIngredients > 1) {
-                    recipeIngredients.remove(currentIngredientIndex);
-                    currentIngredientIndex = level.random.nextInt(recipeIngredients.size());
                     craftingProgress++;
 
+                    recipeIngredients.remove(currentIngredientIndex);
+                    currentIngredientIndex = level.random.nextInt(recipeIngredients.size());
                     wantItemStack = stringToItemStack(recipeIngredients.get(currentIngredientIndex));
+
+                    markUpdated();
                 } else if (remainingIngredients == 1) {
                     //Else finish crafting
 
@@ -116,6 +117,8 @@ public class AssemblyTableBlockEntity extends BlockEntity {
                     level.setBlockAndUpdate(pos, getBlockState().setValue(HAS_BLUEPRINT, false));
 
                     level.playSound(null, pos, SoundEvents.ANVIL_DESTROY, SoundSource.BLOCKS, 0.5F, 1);
+
+                    markUpdated();
                 }
 
                 if (!player.isCreative()) {
@@ -123,8 +126,6 @@ public class AssemblyTableBlockEntity extends BlockEntity {
                 }
 
                 level.playSound(null, pos, SoundRegistry.SMITHING_HAMMER_HIT.get(), SoundSource.BLOCKS, 1, 1);
-
-                markUpdated();
             }
         }
     }
@@ -292,7 +293,7 @@ public class AssemblyTableBlockEntity extends BlockEntity {
             BlockPos pos = worldPosition.relative(facing.getClockWise());
             pos.north(1);
 
-            boolean bool = level.getBlockState(pos).getBlock() == BlockRegistry.SMITHING_CRAFTING_TABLE.get() && facing == level.getBlockState(pos).getValue(HORIZONTAL_FACING);
+            boolean bool = level.getBlockState(pos).getBlock() == BlockRegistry.ARMORERS_CRAFTING_TABLE.get() && facing == level.getBlockState(pos).getValue(HORIZONTAL_FACING);
             return bool;
         }
         return false;
@@ -364,6 +365,10 @@ public class AssemblyTableBlockEntity extends BlockEntity {
         ItemStack stack = new ItemStack(item);
 
         return stack;
+    }
+
+    public void clearRecipeIngredients() {
+        recipeIngredients.clear();
     }
 
     private void markUpdated() {

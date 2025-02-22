@@ -1,7 +1,6 @@
 package destiny.armoryofdestiny.registry;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
-import destiny.armoryofdestiny.item.utility.TooltipItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -38,8 +37,8 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.METALLIC_FEATHER.get());
 
                 output.accept(ItemRegistry.SMITHING_HAMMER.get());
-                output.accept(BlockRegistry.SMITHING_CRAFTING_TABLE.get());
-                output.accept(BlockRegistry.ASSEMBLY_TABLE.get());
+                output.accept(BlockRegistry.ARMORERS_CRAFTING_TABLE.get());
+                output.accept(BlockRegistry.ARMORERS_ASSEMBLY_TABLE.get());
 
                 output.accept(createBlueprint(ItemRegistry.MURASAMA.get(), "legendary"));
                 output.accept(createBlueprint(ItemRegistry.GUN_SHEATH.get(), "legendary"));

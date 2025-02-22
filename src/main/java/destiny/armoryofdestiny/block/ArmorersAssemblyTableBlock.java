@@ -1,6 +1,7 @@
 package destiny.armoryofdestiny.block;
 
-import destiny.armoryofdestiny.blockentity.AssemblyTableBlockEntity;
+import destiny.armoryofdestiny.block.utility.TooltipBaseEntityBlock;
+import destiny.armoryofdestiny.blockentity.ArmorersAssemblyTableBlockEntity;
 import destiny.armoryofdestiny.item.BlueprintItem;
 import destiny.armoryofdestiny.item.SmithingHammerItem;
 import destiny.armoryofdestiny.registry.BlockEntityRegistry;
@@ -13,7 +14,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.WritableBookItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -29,10 +29,10 @@ import org.jetbrains.annotations.Nullable;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
-public class AssemblyTableBlock extends BaseEntityBlock {
+public class ArmorersAssemblyTableBlock extends TooltipBaseEntityBlock {
     public static final BooleanProperty HAS_BLUEPRINT = BooleanProperty.create("has_blueprint");
 
-    public AssemblyTableBlock(Properties properties) {
+    public ArmorersAssemblyTableBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(HAS_BLUEPRINT, false).setValue(HORIZONTAL_FACING, Direction.NORTH));
     }
@@ -45,7 +45,7 @@ public class AssemblyTableBlock extends BaseEntityBlock {
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tileEntity = level.getBlockEntity(pos);
-            if (tileEntity instanceof AssemblyTableBlockEntity table) {
+            if (tileEntity instanceof ArmorersAssemblyTableBlockEntity table) {
                 Containers.dropContents(level, pos, table.getDroppableInventory());
                 level.updateNeighbourForOutputSignal(pos, this);
             }
@@ -68,7 +68,7 @@ public class AssemblyTableBlock extends BaseEntityBlock {
         ItemStack heldItem = player.getItemInHand(hand);
 
         //Check if block entity is present
-        if (level.getBlockEntity(pos) instanceof AssemblyTableBlockEntity table) {
+        if (level.getBlockEntity(pos) instanceof ArmorersAssemblyTableBlockEntity table) {
             //If shifting, take blueprint if can
             if (player.isShiftKeyDown()) {
                 if (table.hasBlueprint()) {
@@ -76,11 +76,13 @@ public class AssemblyTableBlock extends BaseEntityBlock {
                     player.addItem(stack);
                     table.setItem(0, ItemStack.EMPTY);
 
+                    table.clearRecipeIngredients();
+
                     level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
                     level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
 
                     BlockEntity tileEntity = level.getBlockEntity(pos);
-                    if (tileEntity instanceof AssemblyTableBlockEntity tableTile) {
+                    if (tileEntity instanceof ArmorersAssemblyTableBlockEntity tableTile) {
                         Containers.dropContents(level, pos.above(), tableTile.getDroppableInventory());
                     }
 
@@ -107,10 +109,19 @@ public class AssemblyTableBlock extends BaseEntityBlock {
                     //Else if player is holding book and quill, try copying blueprint
                 } else if (heldItem.getItem() instanceof WritableBookItem) {
                     ItemStack blueprint = table.getItem(0).copy();
-                    blueprint.setCount(1);
+                    blueprint.setCount(2);
 
                     player.addItem(blueprint);
                     heldItem.shrink(1);
+                    table.setItem(0, ItemStack.EMPTY);
+
+                    table.clearRecipeIngredients();
+                    level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
+
+                    BlockEntity tileEntity = level.getBlockEntity(pos);
+                    if (tileEntity instanceof ArmorersAssemblyTableBlockEntity tableTile) {
+                        Containers.dropContents(level, pos.above(), tableTile.getDroppableInventory());
+                    }
 
                     level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
 
@@ -162,7 +173,7 @@ public class AssemblyTableBlock extends BaseEntityBlock {
     }
 
     public static int getBlueprintColor(Level level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof AssemblyTableBlockEntity table) {
+        if (level.getBlockEntity(pos) instanceof ArmorersAssemblyTableBlockEntity table) {
             String blueprintItem = table.getItemFromBlueprint();
 
             switch (blueprintItem) {
@@ -190,6 +201,16 @@ public class AssemblyTableBlock extends BaseEntityBlock {
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntity) {
-        return createTickerHelper(blockEntity, BlockEntityRegistry.ASSEMBLY_TABLE.get(), AssemblyTableBlockEntity::tick);
+        return createTickerHelper(blockEntity, BlockEntityRegistry.ASSEMBLY_TABLE.get(), ArmorersAssemblyTableBlockEntity::tick);
+    }
+
+    @Override
+    public String getTriviaType() {
+        return "armorers_assembly_table";
+    }
+
+    @Override
+    public String getItemRarity(ItemStack stack) {
+        return "armorers_workshop_part";
     }
 }

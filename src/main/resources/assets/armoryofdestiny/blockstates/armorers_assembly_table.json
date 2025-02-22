@@ -2,47 +2,47 @@
   "variants": {
     "facing=north,has_blueprint=true": [
       {
-        "model": "armoryofdestiny:block/assembly_table_blueprint"
+        "model": "armoryofdestiny:block/armorers_assembly_table_blueprint"
       }
     ],
     "facing=south,has_blueprint=true": [
       {
-        "model": "armoryofdestiny:block/assembly_table_blueprint",
+        "model": "armoryofdestiny:block/armorers_assembly_table_blueprint",
         "y": 180
       }
     ],
     "facing=west,has_blueprint=true": [
       {
-        "model": "armoryofdestiny:block/assembly_table_blueprint",
+        "model": "armoryofdestiny:block/armorers_assembly_table_blueprint",
         "y": 270
       }
     ],
     "facing=east,has_blueprint=true": [
       {
-        "model": "armoryofdestiny:block/assembly_table_blueprint",
+        "model": "armoryofdestiny:block/armorers_assembly_table_blueprint",
         "y": 90
       }
     ],
     "facing=north,has_blueprint=false": [
       {
-        "model": "armoryofdestiny:block/assembly_table"
+        "model": "armoryofdestiny:block/armorers_assembly_table"
       }
     ],
     "facing=south,has_blueprint=false": [
       {
-        "model": "armoryofdestiny:block/assembly_table",
+        "model": "armoryofdestiny:block/armorers_assembly_table",
         "y": 180
       }
     ],
     "facing=west,has_blueprint=false": [
       {
-        "model": "armoryofdestiny:block/assembly_table",
+        "model": "armoryofdestiny:block/armorers_assembly_table",
         "y": 270
       }
     ],
     "facing=east,has_blueprint=false": [
       {
-        "model": "armoryofdestiny:block/assembly_table",
+        "model": "armoryofdestiny:block/armorers_assembly_table",
         "y": 90
       }
     ]

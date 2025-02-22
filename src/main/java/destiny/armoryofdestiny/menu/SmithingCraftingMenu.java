@@ -13,7 +13,6 @@ import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 
 import java.util.Optional;
 
@@ -106,7 +105,7 @@ public class SmithingCraftingMenu extends RecipeBookMenu<CraftingContainer> {
     }
 
     public boolean stillValid(Player p_39368_) {
-        return stillValid(this.access, p_39368_, BlockRegistry.SMITHING_CRAFTING_TABLE.get());
+        return stillValid(this.access, p_39368_, BlockRegistry.ARMORERS_CRAFTING_TABLE.get());
     }
 
     public ItemStack quickMoveStack(Player p_39391_, int p_39392_) {

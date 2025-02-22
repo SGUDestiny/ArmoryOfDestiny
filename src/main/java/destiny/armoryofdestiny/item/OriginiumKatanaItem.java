@@ -7,7 +7,6 @@ import destiny.armoryofdestiny.item.utility.ItemTiers;
 import destiny.armoryofdestiny.item.utility.TooltipSwordItem;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.util.Mth;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;

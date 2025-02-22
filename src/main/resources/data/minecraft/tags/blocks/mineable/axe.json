@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "armoryofdestiny:smithing_crafting_table",
-    "armoryofdestiny:assembly_table"
+    "armoryofdestiny:armorers_crafting_table",
+    "armoryofdestiny:armorers_assembly_table"
   ]
 }

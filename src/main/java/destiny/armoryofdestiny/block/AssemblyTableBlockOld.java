@@ -1,6 +1,6 @@
 package destiny.armoryofdestiny.block;
 
-import destiny.armoryofdestiny.blockentity.AssemblyTableBlockEntity;
+import destiny.armoryofdestiny.blockentity.ArmorersAssemblyTableBlockEntity;
 import destiny.armoryofdestiny.blockentity.AssemblyTableBlockEntityOld;
 import destiny.armoryofdestiny.item.BlueprintItem;
 import destiny.armoryofdestiny.registry.BlockEntityRegistry;
@@ -108,7 +108,7 @@ public class AssemblyTableBlockOld extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : createTickerHelper(type, BlockEntityRegistry.ASSEMBLY_TABLE.get(), AssemblyTableBlockEntity::tick);
+        return level.isClientSide ? null : createTickerHelper(type, BlockEntityRegistry.ASSEMBLY_TABLE.get(), ArmorersAssemblyTableBlockEntity::tick);
     }
 
     public boolean isControl (Level level) {
