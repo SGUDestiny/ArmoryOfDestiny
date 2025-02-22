@@ -94,7 +94,7 @@ public class AssemblyTableBlock extends BaseEntityBlock {
 
     public static int getBlueprintColor(Level level, BlockPos pos) {
         if (level.getBlockEntity(pos) instanceof AssemblyTableBlockEntity table) {
-            String blueprintItem = table.getBlueprintItem();
+            String blueprintItem = table.getItemFromBlueprint();
 
             switch (blueprintItem) {
                 case "murasama":

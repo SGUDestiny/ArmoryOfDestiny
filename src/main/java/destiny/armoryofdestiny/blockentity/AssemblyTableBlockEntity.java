@@ -27,6 +27,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.capabilities.Capability;
@@ -43,7 +44,7 @@ import java.util.List;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
-public class AssemblyTableBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
+public class AssemblyTableBlockEntity extends BlockEntity {
     private final ItemStackHandler inventory;
     private final LazyOptional<IItemHandler> inputHandler;
     //First slot reserved for blueprint
@@ -109,121 +110,19 @@ public class AssemblyTableBlockEntity extends BaseContainerBlockEntity implement
         }
     }
 
-    @Override
-    public int[] getSlotsForFace(Direction p_19238_) {
-        return slotsTop;
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int p_19235_, ItemStack p_19236_, @Nullable Direction p_19237_) {
-        return true;
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int p_19239_, ItemStack p_19240_, Direction p_19241_) {
-        return false;
-    }
-
-    @Override
-    public Component getDisplayName() {
-        return getDefaultName();
-    }
-
-    @Override
-    protected Component getDefaultName() {
-        return Component.translatable("block.armoryofdestiny.assembly_table");
-    }
-
-    //Creates a menu?
-    @Override
-    protected AbstractContainerMenu createMenu(int p_58627_, Inventory p_58628_) {
-        return null;
-    }
-
-    //Gets container size
-    @Override
-    public int getContainerSize() {
-        return inventory.getSlots();
-    }
-
-    //Gets if container is empty
-    @Override
-    public boolean isEmpty() {
-        for (int i = 0; i < getContainerSize(); i++) {
-            if (!getItem(i).isEmpty()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     //Gets stack from index
-    @Override
     public ItemStack getItem(int index) {
         if (!inventory.getStackInSlot(index).isEmpty()) {
             ItemStack itemStack = inventory.getStackInSlot(index);
-            markUpdated();
             return itemStack;
         }
         return ItemStack.EMPTY;
     }
 
-    //Used to remove only a certain amount of stack at index
-    @Override
-    public ItemStack removeItem(int index, int count) {
-        if (!inventory.getStackInSlot(index).isEmpty()) {
-            ItemStack itemstack;
-
-            if (inventory.getStackInSlot(index).getCount() <= count) {
-                itemstack = inventory.getStackInSlot(index);
-                inventory.setStackInSlot(index, ItemStack.EMPTY);
-                return itemstack;
-            } else {
-                itemstack = inventory.getStackInSlot(index).split(count);
-
-                if (inventory.getStackInSlot(index).isEmpty()) {
-                    inventory.setStackInSlot(index, ItemStack.EMPTY);
-                }
-
-                return itemstack;
-            }
-        } else {
-            return ItemStack.EMPTY;
-        }
-    }
-
-    //Used to completely remove a stack at index
-    @Override
-    public ItemStack removeItemNoUpdate(int index) {
-        ItemStack stack = inventory.getStackInSlot(index);
-        if (stack.isEmpty()) {
-            return ItemStack.EMPTY;
-        } else {
-            inventory.setStackInSlot(index, ItemStack.EMPTY);
-            return stack;
-        }
-    }
-
     //Sets index to given stack
-    @Override
     public void setItem(int index, ItemStack stack) {
         stack.setCount(1);
         inventory.setStackInSlot(index, stack);
-        markUpdated();
-    }
-
-    //No idea
-    @Override
-    public boolean stillValid(Player player) {
-        return true;
-    }
-
-    //Clears the stacks completely
-    @Override
-    public void clearContent() {
-        for (int i = 0; inventory.getSlots() > i; i++) {
-            inventory.setStackInSlot(i, ItemStack.EMPTY);
-        }
     }
 
     public boolean hasBlueprint() {
@@ -236,7 +135,7 @@ public class AssemblyTableBlockEntity extends BaseContainerBlockEntity implement
         if (blueprint.getTag() != null) {
             return blueprint.getOrCreateTag().getString("blueprintItem");
         }
-        return null;
+        return "";
     }
 
     public List<ItemStack> getIngredientsFromRecipe(String recipeID) {
@@ -341,11 +240,6 @@ public class AssemblyTableBlockEntity extends BaseContainerBlockEntity implement
 
     public ItemStack getWantItem() {
         return wantItemStack;
-    }
-
-    public String getBlueprintItem() {
-        markUpdated();
-        return getItem(0).getOrCreateTag().getString("blueprintItem");
     }
 
     @Override
