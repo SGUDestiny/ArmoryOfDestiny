@@ -24,14 +24,21 @@ public class AssemblyRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public boolean matches(SimpleContainer container, Level level) {
+        if(level.isClientSide())
+            return false;
+
         return itemStackMatches(container);
     }
 
     public boolean itemStackMatches(SimpleContainer container) {
         ItemStack stack = container.getItem(1);
-        ItemStack recipeResult = ItemStack.of(stack.getTag().getCompound("blueprintItem"));
 
-        return result == recipeResult;
+        if (stack.getTag() != null) {
+            ItemStack recipeResult = ItemStack.of(stack.getTag().getCompound("blueprintItem"));
+
+            return result == recipeResult;
+        }
+        return false;
     }
 
     @Override
