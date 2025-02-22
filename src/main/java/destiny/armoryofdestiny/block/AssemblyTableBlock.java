@@ -1,8 +1,9 @@
 package destiny.armoryofdestiny.block;
 
-import com.mojang.logging.LogUtils;
 import destiny.armoryofdestiny.blockentity.AssemblyTableBlockEntity;
 import destiny.armoryofdestiny.item.BlueprintItem;
+import destiny.armoryofdestiny.item.SmithingHammerItem;
+import destiny.armoryofdestiny.registry.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -12,16 +13,19 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.WritableBookItem;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
@@ -75,8 +79,14 @@ public class AssemblyTableBlock extends BaseEntityBlock {
                     level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
                     level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
 
+                    BlockEntity tileEntity = level.getBlockEntity(pos);
+                    if (tileEntity instanceof AssemblyTableBlockEntity tableTile) {
+                        Containers.dropContents(level, pos.above(), tableTile.getDroppableInventory());
+                    }
+
                     return InteractionResult.SUCCESS;
                 }
+                //Else if player is holding a blueprint, try taking it
             } else if (heldItem.getItem() instanceof BlueprintItem) {
                 if (table.getItem(0).isEmpty()) {
                     table.setItem(0, heldItem.copy());
@@ -87,6 +97,65 @@ public class AssemblyTableBlock extends BaseEntityBlock {
 
                     return InteractionResult.SUCCESS;
                 }
+                //If table has a blueprint, proceed
+            } else if (table.hasBlueprint()) {
+                //Else if player is holding a smithing hammer, try advancing crafting
+                if (heldItem.getItem() instanceof SmithingHammerItem) {
+                    table.advanceCrafting(level, pos, player, heldItem);
+
+                    return InteractionResult.SUCCESS;
+                    //Else if player is holding book and quill, try copying blueprint
+                } else if (heldItem.getItem() instanceof WritableBookItem) {
+                    ItemStack blueprint = table.getItem(0).copy();
+                    blueprint.setCount(1);
+
+                    player.addItem(blueprint);
+                    heldItem.shrink(1);
+
+                    level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
+
+                    return InteractionResult.SUCCESS;
+                    //Else if hand isn't empty, try putting the item in
+                } else if (!heldItem.isEmpty()) {
+                    int craftingProgress = table.getCraftingProgress();
+
+                    if (table.getItem(craftingProgress).isEmpty()) {
+                        ItemStack stack = heldItem.copy();
+                        stack.setCount(1);
+
+                        table.setItem(craftingProgress, stack);
+
+                        if (!player.isCreative()) {
+                            heldItem.shrink(1);
+                        }
+
+                        level.playSound(null, pos, SoundEvents.GLOW_ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 1, 1);
+
+                        return InteractionResult.SUCCESS;
+                    }
+                    //Else if hand is empty, try taking current item
+                } else if (heldItem.isEmpty()) {
+                    int craftingProgress = table.getCraftingProgress();
+
+                    if (!table.getItem(craftingProgress).isEmpty()) {
+                        ItemStack stack = table.getItem(craftingProgress).copy();
+                        player.addItem(stack);
+                        table.setItem(craftingProgress, ItemStack.EMPTY);
+
+                        level.playSound(null, pos, SoundEvents.GLOW_ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 1, 1);
+
+                        return InteractionResult.SUCCESS;
+                    }
+                }
+                //Else if result slot isn't empty, try taking result item
+            } else if (!table.getItem(10).isEmpty()) {
+                ItemStack stack = table.getItem(10).copy();
+                player.addItem(stack);
+                table.setItem(10, ItemStack.EMPTY);
+
+                level.playSound(null, pos, SoundEvents.GLOW_ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 1, 1);
+
+                return InteractionResult.SUCCESS;
             }
         }
         return InteractionResult.PASS;
@@ -116,6 +185,11 @@ public class AssemblyTableBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new AssemblyTableBlockEntity(pos, state);
+        return BlockEntityRegistry.ASSEMBLY_TABLE.get().create(pos, state);
+    }
+
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntity) {
+        return createTickerHelper(blockEntity, BlockEntityRegistry.ASSEMBLY_TABLE.get(), AssemblyTableBlockEntity::tick);
     }
 }

@@ -38,10 +38,10 @@ public class ItemRegistry {
             () -> new DragonSlayerItem(basicItem().rarity(Rarity.EPIC).durability(2048)));
 
     public static final RegistryObject<Item> BLUEPRINT = ITEMS.register("blueprint",
-            () -> new BlueprintItem(new Item.Properties().stacksTo(64)));
+            () -> new BlueprintItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> SMITHING_HAMMER = ITEMS.register("smithing_hammer",
-            () -> new SmithingHammerItem(new Item.Properties().stacksTo(1).durability(128)));
+            () -> new SmithingHammerItem(new Item.Properties().stacksTo(1).durability(64)));
 
 
     public static final RegistryObject<Item> SPAS12 = ITEMS.register("spas12",

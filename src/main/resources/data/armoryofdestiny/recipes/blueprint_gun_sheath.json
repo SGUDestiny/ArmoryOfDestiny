@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PBP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "B": {
+      "type": "minecraft:item_nbt",
+      "item": "armoryofdestiny:blueprint",
+      "nbt": "{blueprintRarity:\"legendary\", blueprintItem:\"gun_sheath\"}"
+    }
+  },
+  "result": {
+    "item": "armoryofdestiny:blueprint",
+    "nbt": "{blueprintRarity:\"legendary\", blueprintItem:\"gun_sheath\"}"
+  }
+}

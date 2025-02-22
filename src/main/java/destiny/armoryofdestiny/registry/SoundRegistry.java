@@ -11,6 +11,8 @@ public class SoundRegistry {
 
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ArmoryOfDestiny.MODID);
 
+    public static RegistryObject<SoundEvent> SMITHING_HAMMER_HIT = registerSoundEvent("smithing_hammer_hit");
+
     public static RegistryObject<SoundEvent> PUNISHER_ATTACK = registerSoundEvent("punisher_attack");
     public static RegistryObject<SoundEvent> PUNISHER_DEACTIVATE = registerSoundEvent("punisher_deactivate");
     public static RegistryObject<SoundEvent> PUNISHER_ACTIVATE = registerSoundEvent("punisher_activate");

@@ -192,14 +192,14 @@ public class MurasamaItem extends TooltipSwordItem implements GeoItem {
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean b) {
         if (entity instanceof Player player) {
             //If item selected, play select sound
-            if (player.getMainHandItem() == stack) {
+/*            if (player.getMainHandItem() == stack) {
                 if (!played) {
                     level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundRegistry.MURASAMA_SELECT.get(), SoundSource.PLAYERS, 0.5F, 1, false);
                     played = true;
                 }
             } else if (played) {
                 played = false;
-            }
+            }*/
 
             //Ability ticker
             if (stack.getTag() != null) {

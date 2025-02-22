@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PBP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "B": {
+      "item": "armoryofdestiny:blueprint",
+      "nbt": "{blueprintRarity:\"legendary\", blueprintItem:\"murasama\"}"
+    }
+  },
+  "result": {
+    "item": "armoryofdestiny:blueprint",
+    "nbt": "{blueprintRarity:\"legendary\", blueprintItem:\"murasama\"}"
+  }
+}

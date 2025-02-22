@@ -4,7 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
 import destiny.armoryofdestiny.item.BlueprintItem;
-import destiny.armoryofdestiny.recipe.AssemblyRecipe;
 import destiny.armoryofdestiny.registry.BlockEntityRegistry;
 import destiny.armoryofdestiny.registry.BlockRegistry;
 import net.minecraft.core.*;

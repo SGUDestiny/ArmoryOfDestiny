@@ -19,11 +19,11 @@ public class BlockRegistry {
 
     public static final RegistryObject<Block> SMITHING_CRAFTING_TABLE = registerBlock("smithing_crafting_table",
             () -> new SmithingCraftingTableBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_GRAY).requiresCorrectToolForDrops().strength(2.5F).sound(SoundType.NETHER_WOOD).noOcclusion()));
+                    .mapColor(MapColor.COLOR_GRAY).strength(2.5F).sound(SoundType.NETHER_WOOD).noOcclusion()));
 
     public static final RegistryObject<Block> ASSEMBLY_TABLE = registerBlock("assembly_table",
             () -> new AssemblyTableBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_GRAY).requiresCorrectToolForDrops().strength(2.5F).sound(SoundType.NETHER_WOOD).noOcclusion()));
+                    .mapColor(MapColor.COLOR_GRAY).strength(2.5F).sound(SoundType.NETHER_WOOD).noOcclusion()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

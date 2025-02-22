@@ -7,8 +7,12 @@ import destiny.armoryofdestiny.item.utility.ItemTiers;
 import destiny.armoryofdestiny.item.utility.TooltipSwordItem;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -111,6 +115,12 @@ public class OriginiumKatanaItem extends TooltipSwordItem implements GeoItem {
     @Override
     public String getTriviaType() {
         return "katana";
+    }
+
+    @Override
+    public boolean hurtEnemy(ItemStack stack, LivingEntity entity, LivingEntity entity1) {
+        entity.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0));
+        return super.hurtEnemy(stack, entity, entity1);
     }
 
     @Override

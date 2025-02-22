@@ -182,5 +182,16 @@
       "armoryofdestiny:punisher_attack_8",
       "armoryofdestiny:punisher_attack_9"
     ]
+  },
+  "smithing_hammer_hit": {
+    "subtitle": "sound.armoryofdestiny.smithing_hammer_hit",
+    "sounds": [
+      "armoryofdestiny:smithing_hammer_hit_1",
+      "armoryofdestiny:smithing_hammer_hit_2",
+      "armoryofdestiny:smithing_hammer_hit_3",
+      "armoryofdestiny:smithing_hammer_hit_4",
+      "armoryofdestiny:smithing_hammer_hit_5",
+      "armoryofdestiny:smithing_hammer_hit_6"
+    ]
   }
 }

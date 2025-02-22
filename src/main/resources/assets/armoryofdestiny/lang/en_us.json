@@ -112,6 +112,10 @@
   "tooltip.line.ability.expanded": "Abilities",
   "tooltip.line.ability.cooldown": "Cooldown: ",
 
+  "_blocks": "Blocks",
+  "block.armoryofdestiny.assembly_table": "§7Assembly Table [WIP]",
+  "block.armoryofdestiny.smithing_crafting_table": "§7Smithing Crafting Table [WIP]",
+
   "item.armoryofdestiny.kafkas_katana": "\u00A75Kafka's Katana\u00A7r",
   "item.armoryofdestiny.scarlet_oath": "\u00A76Scarlet Oath\u00A7r",
   "item.armoryofdestiny.smokenade": "\u00A70Smoke Grenade\u00A7r",
@@ -172,6 +176,7 @@
   "sound.armoryofdestiny.punisher_activate": "Punisher ignites engines",
   "sound.armoryofdestiny.punisher_deactivate": "Punisher spools down",
   "sound.armoryofdestiny.punisher_attack": "Punisher smashes into something",
+  "sound.armoryofdestiny.smithing_hammer_hit": "Smithing Hammer hits an item",
 
   "_misc": "Misc",
   "itemGroup.armoryofdestiny.tab": "§nArmory of Destiny"

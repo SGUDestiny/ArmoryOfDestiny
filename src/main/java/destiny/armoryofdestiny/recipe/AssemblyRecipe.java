@@ -11,6 +11,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
+/*
 public class AssemblyRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation recipeID;
     private final NonNullList<Ingredient> ingredients;
@@ -81,4 +82,4 @@ public class AssemblyRecipe implements Recipe<SimpleContainer> {
     public NonNullList<Ingredient> getIngredients() {
         return this.ingredients;
     }
-}
+}*/
