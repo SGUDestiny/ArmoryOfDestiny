@@ -1,8 +1,5 @@
 package destiny.armoryofdestiny.recipe;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import cpw.mods.util.Lazy;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
@@ -14,23 +11,32 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 public class AssemblyRecipe implements Recipe<SimpleContainer> {
-    public AssemblyRecipe(Lazy<ItemStack> output) {
+    private final ResourceLocation recipeID;
+    private final NonNullList<Ingredient> ingredients;
+    private final ItemStack result;
 
+    public AssemblyRecipe(NonNullList<Ingredient> ingredients) {
+        this.recipeID = recipeID;
+        this.ingredients = ingredients;
+        this.result = result;
     }
 
     @Override
-    public boolean matches(SimpleContainer p_44002_, Level p_44003_) {
-        return false;
+    public boolean matches(SimpleContainer container, Level level) {
+        return itemStackMatches(container);
+    }
+
+    public boolean itemStackMatches(SimpleContainer container) {
+        ItemStack stack = container.getItem(1);
+        ItemStack recipeResult = ItemStack.of(stack.getTag().getCompound("blueprintItem"));
+
+        return result == recipeResult;
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer container, RegistryAccess access) {
-        return null;
+    public ItemStack assemble(SimpleContainer p_44001_, RegistryAccess p_267165_) {
+        return result.copy();
     }
 
     @Override
@@ -40,12 +46,12 @@ public class AssemblyRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public ItemStack getResultItem(RegistryAccess p_267052_) {
-        return null;
+        return result.copy();
     }
 
     @Override
     public ResourceLocation getId() {
-        return null;
+        return recipeID;
     }
 
     @Override
@@ -55,6 +61,17 @@ public class AssemblyRecipe implements Recipe<SimpleContainer> {
 
     @Override
     public RecipeType<?> getType() {
-        return null;
+        return Type.INSTANCE;
+    }
+
+    public static class Type implements RecipeType<AssemblyRecipe> {
+        private Type(){}
+        public static final Type INSTANCE = new Type();
+        public static final String ID = "assembly";
+    }
+
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+        return this.ingredients;
     }
 }

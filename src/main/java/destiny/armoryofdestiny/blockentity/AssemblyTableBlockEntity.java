@@ -219,6 +219,8 @@ public class AssemblyTableBlockEntity extends BlockEntity {
             BlockPos pos = worldPosition.relative(facing.getCounterClockWise());
             pos.north(1);
 
+            System.out.println("Checking block at " + pos);
+
             boolean bool = level.getBlockState(pos).getBlock() == BlockRegistry.SMITHING_CRAFTING_TABLE.get() && facing == level.getBlockState(pos).getValue(HORIZONTAL_FACING);
             return bool;
         }
