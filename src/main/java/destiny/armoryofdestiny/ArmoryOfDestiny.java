@@ -2,20 +2,17 @@ package destiny.armoryofdestiny;
 
 import com.mojang.logging.LogUtils;
 import destiny.armoryofdestiny.client.MetallicFeatherRenderer;
-import destiny.armoryofdestiny.client.render.blockentity.AssemblyTableRenderer;
 import destiny.armoryofdestiny.client.render.entity.PelletRenderer;
 import destiny.armoryofdestiny.client.render.entity.BuckshotRenderer;
 import destiny.armoryofdestiny.client.render.entity.ExplosiveSlugRenderer;
 import destiny.armoryofdestiny.client.render.entity.SlugRenderer;
 import destiny.armoryofdestiny.client.render.entity.SparkRenderer;
-import destiny.armoryofdestiny.event.ClientEvents;
 import destiny.armoryofdestiny.event.CommonEvents;
 import destiny.armoryofdestiny.item.utility.MurasamaItemProperty;
 import destiny.armoryofdestiny.item.utility.PunisherItemProperty;
 import destiny.armoryofdestiny.item.utility.SharpIronyItemProperty;
 import destiny.armoryofdestiny.registry.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -25,7 +22,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -96,7 +92,6 @@ public class ArmoryOfDestiny
             EntityRenderers.register(EntityRegistry.SLUG.get(), SlugRenderer::new);
             EntityRenderers.register(EntityRegistry.SPARK.get(), SparkRenderer::new);
             EntityRenderers.register(EntityRegistry.EXPLOSIVE_SLUG.get(), ExplosiveSlugRenderer::new);
-            //BlockEntityRenderers.register(BlockEntityRegistry.ASSEMBLY_TABLE.get(), AssemblyTableRenderer::new);
 
             event.enqueueWork(() -> {
                 ItemProperties.register(ItemRegistry.SHARP_IRONY.get(), new ResourceLocation(MODID, "is_open"), new SharpIronyItemProperty());

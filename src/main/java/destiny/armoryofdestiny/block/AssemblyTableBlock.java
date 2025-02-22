@@ -5,7 +5,6 @@ import destiny.armoryofdestiny.blockentity.AssemblyTableBlockEntity;
 import destiny.armoryofdestiny.item.BlueprintItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -38,15 +37,16 @@ public class AssemblyTableBlock extends BaseEntityBlock {
         blockStateBuilder.add(HAS_BLUEPRINT, HORIZONTAL_FACING);
     }
 
-    @SuppressWarnings("deprecated")
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState state1, boolean b) {
-        if (!state.is(state1.getBlock())) {
-            BlockEntity blockentity = level.getBlockEntity(pos);
-            if (blockentity instanceof Container) {
-                Containers.dropContents(level, pos, (Container) blockentity);
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity tileEntity = level.getBlockEntity(pos);
+            if (tileEntity instanceof AssemblyTableBlockEntity table) {
+                Containers.dropContents(level, pos, table.getDroppableInventory());
                 level.updateNeighbourForOutputSignal(pos, this);
             }
-            super.onRemove(state, level, pos, state1, b);
+
+            super.onRemove(state, level, pos, newState, isMoving);
         }
     }
 
@@ -63,15 +63,16 @@ public class AssemblyTableBlock extends BaseEntityBlock {
         if (level.getBlockEntity(pos) instanceof AssemblyTableBlockEntity table) {
             //If shifting, take blueprint if can
             if (player.isShiftKeyDown()) {
-                if (!table.getItem(1).isEmpty()) {
-                    player.addItem(table.getItem(1));
+                if (table.hasBlueprint()) {
+                    ItemStack stack = table.getItem(1).copy();
+                    player.addItem(stack);
                     table.setItem(1, ItemStack.EMPTY);
 
                     return InteractionResult.SUCCESS;
                 }
             } else if (heldItem.getItem() instanceof BlueprintItem) {
                 if (table.getItem(1).isEmpty()) {
-                    table.setItem(1, heldItem);
+                    table.setItem(1, heldItem.copy());
                     heldItem.shrink(1);
 
                     return InteractionResult.SUCCESS;
