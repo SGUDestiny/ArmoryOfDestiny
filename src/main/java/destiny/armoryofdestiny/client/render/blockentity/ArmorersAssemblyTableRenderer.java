@@ -30,14 +30,14 @@ public class ArmorersAssemblyTableRenderer implements BlockEntityRenderer<Armore
 
         //Check if blueprint is present
         if (table.getItem(0) != ItemStack.EMPTY) {
-            if (table.getWantItem() != ItemStack.EMPTY) {
-                ItemStack wantItem = table.getWantItem();
-
-                renderSpinningItem(level, wantItem, poseStack, partialTicks, bufferIn, combinedLightIn);
-            } else if (craftingProgress > 0 && !table.getItem(table.getCraftingProgress()).isEmpty()) {
+            if (craftingProgress > 0 && !table.getItem(table.getCraftingProgress()).isEmpty()) {
                 ItemStack currentItem = table.getItem(table.getCraftingProgress());
 
                 renderLyingItem(level, poseStack, currentItem, bufferIn, combinedLightIn, direction);
+            } else if (table.getWantItem() != ItemStack.EMPTY) {
+                ItemStack wantItem = table.getWantItem();
+
+                renderSpinningItem(level, wantItem, poseStack, partialTicks, bufferIn, combinedLightIn);
             }
             //Else if result item is present, render result item
         } else if (table.getItem(10) != ItemStack.EMPTY) {
