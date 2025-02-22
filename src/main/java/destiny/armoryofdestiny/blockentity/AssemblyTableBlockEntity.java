@@ -44,8 +44,6 @@ import java.util.List;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class AssemblyTableBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
-    private static final Logger LOGGER = LogUtils.getLogger();
-
     private final ItemStackHandler inventory;
     private final LazyOptional<IItemHandler> inputHandler;
     //First slot reserved for blueprint
@@ -69,10 +67,8 @@ public class AssemblyTableBlockEntity extends BaseContainerBlockEntity implement
         if (!level.isClientSide) {
             if (table.hasBlueprint()) {
                 //Begin crafting
-                LOGGER.info("Trying to begin to craft");
                 if (table.isSmithingCraftingTablePresent() && table.recipeIngredients.isEmpty()) {
                     String recipeID = table.getItemFromBlueprint();
-                    LOGGER.info("Beginning to craft");
                     table.recipeIngredients = table.getIngredientsFromRecipe(recipeID);
                     table.recipeResult = table.getResultItemFromRecipe(recipeID);
                     table.currentIngredientIndex = level.random.nextInt(table.recipeIngredients.size());
@@ -231,11 +227,11 @@ public class AssemblyTableBlockEntity extends BaseContainerBlockEntity implement
     }
 
     public boolean hasBlueprint() {
-        return !getItem(1).equals(ItemStack.EMPTY);
+        return !getItem(0).equals(ItemStack.EMPTY);
     }
 
     public String getItemFromBlueprint() {
-        ItemStack blueprint = getItem(1);
+        ItemStack blueprint = getItem(0);
 
         if (blueprint.getTag() != null) {
             return blueprint.getOrCreateTag().getString("blueprintItem");
@@ -325,10 +321,8 @@ public class AssemblyTableBlockEntity extends BaseContainerBlockEntity implement
             pos.north(1);
 
             boolean bool = level.getBlockState(pos).getBlock() == BlockRegistry.SMITHING_CRAFTING_TABLE.get() && facing == level.getBlockState(pos).getValue(HORIZONTAL_FACING);
-            LOGGER.info("Returning bool: " + bool);
             return bool;
         }
-        LOGGER.info("Returned false");
         return false;
     }
 
@@ -350,7 +344,8 @@ public class AssemblyTableBlockEntity extends BaseContainerBlockEntity implement
     }
 
     public String getBlueprintItem() {
-        return getItem(1).getOrCreateTag().getString("blueprintItem");
+        markUpdated();
+        return getItem(0).getOrCreateTag().getString("blueprintItem");
     }
 
     @Override

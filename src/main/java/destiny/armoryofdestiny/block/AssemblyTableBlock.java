@@ -5,6 +5,8 @@ import destiny.armoryofdestiny.blockentity.AssemblyTableBlockEntity;
 import destiny.armoryofdestiny.item.BlueprintItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -24,8 +26,6 @@ import org.slf4j.Logger;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class AssemblyTableBlock extends BaseEntityBlock {
-    private static final Logger LOGGER = LogUtils.getLogger();
-
     public static final BooleanProperty HAS_BLUEPRINT = BooleanProperty.create("has_blueprint");
 
     public AssemblyTableBlock(Properties properties) {
@@ -55,6 +55,10 @@ public class AssemblyTableBlock extends BaseEntityBlock {
         return this.defaultBlockState().setValue(HAS_BLUEPRINT, false).setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
     }
 
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack heldItem = player.getItemInHand(hand);
@@ -64,16 +68,22 @@ public class AssemblyTableBlock extends BaseEntityBlock {
             //If shifting, take blueprint if can
             if (player.isShiftKeyDown()) {
                 if (table.hasBlueprint()) {
-                    ItemStack stack = table.getItem(1).copy();
+                    ItemStack stack = table.getItem(0).copy();
                     player.addItem(stack);
-                    table.setItem(1, ItemStack.EMPTY);
+                    table.setItem(0, ItemStack.EMPTY);
+
+                    level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
+                    level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
 
                     return InteractionResult.SUCCESS;
                 }
             } else if (heldItem.getItem() instanceof BlueprintItem) {
-                if (table.getItem(1).isEmpty()) {
-                    table.setItem(1, heldItem.copy());
+                if (table.getItem(0).isEmpty()) {
+                    table.setItem(0, heldItem.copy());
                     heldItem.shrink(1);
+
+                    level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS, 1, 1);
+                    level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, true));
 
                     return InteractionResult.SUCCESS;
                 }
@@ -83,27 +93,25 @@ public class AssemblyTableBlock extends BaseEntityBlock {
     }
 
     public static int getBlueprintColor(Level level, BlockPos pos) {
-        int color = 0xFFFFFF;
         if (level.getBlockEntity(pos) instanceof AssemblyTableBlockEntity table) {
             String blueprintItem = table.getBlueprintItem();
 
             switch (blueprintItem) {
                 case "murasama":
-                    color = 0xE80000;
+                    return 0xE80000;
                 case "gun_sheath":
-                    color = 0xBDBDBD;
+                    return 0xBDBDBD;
                 case "dragon_slayer":
-                    color = 0x474747;
+                    return 0x474747;
                 case "originium_catalyst":
-                    color = 0xFFA82D;
+                    return 0xFFA82D;
                 case "punisher":
-                    color = 0x2FFFF8;
+                    return 0x2FFFF8;
                 case "sharp_irony":
-                    color = 0x4A5B7D;
+                    return 0x4A5B7D;
             }
         }
-        LOGGER.info("Blueprint color: " + color);
-        return color;
+        return 0xFFFFFF;
     }
 
     @Override
