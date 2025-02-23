@@ -72,11 +72,9 @@ public class ArmorersAssemblyTableBlock extends TooltipBaseEntityBlock {
             //If shifting, take blueprint if can
             if (player.isShiftKeyDown()) {
                 if (table.hasBlueprint()) {
-                    ItemStack stack = table.getItem(0).copy();
+                    ItemStack stack = table.getBlueprintItem().copy();
                     player.addItem(stack);
-                    table.setItem(0, ItemStack.EMPTY);
-
-                    table.clearRecipeIngredients();
+                    table.setBlueprintItem(ItemStack.EMPTY);
 
                     level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
                     level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
@@ -88,10 +86,10 @@ public class ArmorersAssemblyTableBlock extends TooltipBaseEntityBlock {
 
                     return InteractionResult.SUCCESS;
                 }
-                //Else if player is holding a blueprint, try taking it
+                //Else if player is holding a blueprint, try putting it
             } else if (heldItem.getItem() instanceof BlueprintItem) {
-                if (table.getItem(0).isEmpty()) {
-                    table.setItem(0, heldItem.copy());
+                if (table.getBlueprintItem().isEmpty()) {
+                    table.setBlueprintItem(heldItem);
                     heldItem.shrink(1);
 
                     level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS, 1, 1);
@@ -108,14 +106,13 @@ public class ArmorersAssemblyTableBlock extends TooltipBaseEntityBlock {
                     return InteractionResult.SUCCESS;
                     //Else if player is holding book and quill, try copying blueprint
                 } else if (heldItem.getItem() instanceof WritableBookItem) {
-                    ItemStack blueprint = table.getItem(0).copy();
+                    ItemStack blueprint = table.getBlueprintItem().copy();
                     blueprint.setCount(2);
 
                     player.addItem(blueprint);
                     heldItem.shrink(1);
-                    table.setItem(0, ItemStack.EMPTY);
+                    table.setBlueprintItem(ItemStack.EMPTY);
 
-                    table.clearRecipeIngredients();
                     level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
 
                     BlockEntity tileEntity = level.getBlockEntity(pos);
@@ -128,13 +125,11 @@ public class ArmorersAssemblyTableBlock extends TooltipBaseEntityBlock {
                     return InteractionResult.SUCCESS;
                     //Else if hand isn't empty, try putting the item in
                 } else if (!heldItem.isEmpty()) {
-                    int craftingProgress = table.getCraftingProgress();
-
-                    if (table.getItem(craftingProgress).isEmpty()) {
+                    if (table.getInputItem().isEmpty()) {
                         ItemStack stack = heldItem.copy();
                         stack.setCount(1);
 
-                        table.setItem(craftingProgress, stack);
+                        table.setInputItem(stack);
 
                         if (!player.isCreative()) {
                             heldItem.shrink(1);
@@ -146,12 +141,10 @@ public class ArmorersAssemblyTableBlock extends TooltipBaseEntityBlock {
                     }
                     //Else if hand is empty, try taking current item
                 } else if (heldItem.isEmpty()) {
-                    int craftingProgress = table.getCraftingProgress();
-
-                    if (!table.getItem(craftingProgress).isEmpty()) {
-                        ItemStack stack = table.getItem(craftingProgress).copy();
+                    if (!table.getInputItem().isEmpty()) {
+                        ItemStack stack = table.getInputItem().copy();
                         player.addItem(stack);
-                        table.setItem(craftingProgress, ItemStack.EMPTY);
+                        table.setInputItem(ItemStack.EMPTY);
 
                         level.playSound(null, pos, SoundEvents.GLOW_ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 1, 1);
 
@@ -159,10 +152,10 @@ public class ArmorersAssemblyTableBlock extends TooltipBaseEntityBlock {
                     }
                 }
                 //Else if result slot isn't empty, try taking result item
-            } else if (!table.getItem(10).isEmpty()) {
-                ItemStack stack = table.getItem(10).copy();
+            } else if (!table.getInputItem().isEmpty()) {
+                ItemStack stack = table.getInputItem().copy();
                 player.addItem(stack);
-                table.setItem(10, ItemStack.EMPTY);
+                table.setInputItem(ItemStack.EMPTY);
 
                 level.playSound(null, pos, SoundEvents.GLOW_ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 1, 1);
 

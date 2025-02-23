@@ -9,6 +9,7 @@ import destiny.armoryofdestiny.registry.SoundRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -16,6 +17,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
@@ -47,14 +49,13 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    private final ItemStackHandler inventory;
+    private final ItemStackHandler storedItems;
+    private final ItemStackHandler blueprintSlot;
+    private final ItemStackHandler inputSlot;
     private final LazyOptional<IItemHandler> inputHandler;
-    //First slot reserved for blueprint
-    //1-9 reserved for crafting ingredients
-    //10 reserved for crafting result
 
-    private static final int[] slotsTop = new int[]{0};
-    private List<String> recipeIngredients = new ArrayList<>(9);
+
+    private List<ItemStack> recipeIngredients;
     private ItemStack recipeResult = ItemStack.EMPTY;
     private int currentIngredientIndex = -1;
     private ItemStack wantItemStack = ItemStack.EMPTY;
@@ -62,8 +63,11 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
 
     public ArmorersAssemblyTableBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.ASSEMBLY_TABLE.get(), pos, state);
-        inventory = createHandler();
-        inputHandler = LazyOptional.of(() -> inventory);
+        storedItems = createHandler(9);
+        blueprintSlot = createHandler(1);
+        inputSlot = createHandler(1);
+        recipeIngredients = new ArrayList<>(9);
+        inputHandler = LazyOptional.of(() -> inputSlot);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ArmorersAssemblyTableBlockEntity table) {
@@ -77,7 +81,7 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
                         table.recipeResult = table.getResultItemFromRecipe(recipeID);
                         table.currentIngredientIndex = level.random.nextInt(0, table.recipeIngredients.size() - 1);
                         table.craftingProgress = 1;
-                        table.wantItemStack = table.stringToItemStack(table.recipeIngredients.get(table.currentIngredientIndex));
+                        table.wantItemStack = table.recipeIngredients.get(table.currentIngredientIndex);
                         table.markUpdated();
                     }
                 }
@@ -87,8 +91,8 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
 
     public void advanceCrafting(Level level, BlockPos pos, Player player, ItemStack heldItem) {
         if (isSmithingCraftingTablePresent()) {
-            //Check if item in indexed slot is current ingredient
-            if (getItem(craftingProgress).is(wantItemStack.getItem())) {
+            //Check if item in input slot is current ingredient
+            if (getInputItem().is(wantItemStack.getItem())) {
                 //Check if remaining ingredients is more than one
                 int remainingIngredients = recipeIngredients.size();
 
@@ -97,17 +101,26 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
 
                     recipeIngredients.remove(currentIngredientIndex);
                     currentIngredientIndex = level.random.nextInt(recipeIngredients.size());
-                    wantItemStack = stringToItemStack(recipeIngredients.get(currentIngredientIndex));
+                    wantItemStack = recipeIngredients.get(currentIngredientIndex);
+
+                    //Transfer input slot to next empty storage slot
+                    for (int i = 0; storedItems.getSlots() > i; i++) {
+                        if (storedItems.getStackInSlot(i).isEmpty()) {
+                            storedItems.setStackInSlot(i, inputSlot.getStackInSlot(0));
+                            inputSlot.setStackInSlot(0, ItemStack.EMPTY);
+                            break;
+                        }
+                    }
 
                     markUpdated();
                 } else if (remainingIngredients == 1) {
                     //Else finish crafting
 
                     //Set result slot to result item
-                    setItem(10, recipeResult);
-                    setItem(0, ItemStack.EMPTY);
-                    //Clear slots 2-10
-                    clearIngredientSlots();
+                    setInputItem(recipeResult);
+                    setBlueprintItem(ItemStack.EMPTY);
+                    //Clear stored items
+                    clearStoredItems();
                     //Clear ingredient list
                     recipeIngredients.clear();
                     //Reset variables
@@ -116,7 +129,7 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
                     wantItemStack = ItemStack.EMPTY;
                     level.setBlockAndUpdate(pos, getBlockState().setValue(HAS_BLUEPRINT, false));
 
-                    level.playSound(null, pos, SoundEvents.ANVIL_DESTROY, SoundSource.BLOCKS, 0.5F, 1);
+                    level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.5F, 1);
 
                     markUpdated();
                 }
@@ -125,31 +138,65 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
                     heldItem.setDamageValue(heldItem.getDamageValue() + 1);
                 }
 
+                if (level instanceof ServerLevel serverLevel) {
+                    serverLevel.sendParticles(ParticleTypes.CRIT, pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5, 8, 0.2, 0.1, 0.2, 0.05);
+                }
+
                 level.playSound(null, pos, SoundRegistry.SMITHING_HAMMER_HIT.get(), SoundSource.BLOCKS, 1, 1);
             }
         }
     }
 
-    //Gets stack from index
-    public ItemStack getItem(int index) {
-        if (!inventory.getStackInSlot(index).isEmpty()) {
-            ItemStack itemStack = inventory.getStackInSlot(index);
-            return itemStack;
+    public ItemStack getStoredItem(int index) {
+        if (!storedItems.getStackInSlot(index).isEmpty()) {
+            return storedItems.getStackInSlot(index).copy();
         }
         return ItemStack.EMPTY;
     }
 
-    //Sets index to given stack
-    public void setItem(int index, ItemStack stack) {
-        inventory.setStackInSlot(index, stack);
+    public void setStoredItem(int index, ItemStack stack) {
+        storedItems.setStackInSlot(index, stack.copy());
+    }
+
+    public ItemStack getInputItem() {
+        if (!inputSlot.getStackInSlot(0).isEmpty()) {
+            return inputSlot.getStackInSlot(0).copy();
+        }
+        return ItemStack.EMPTY;
+    }
+
+    public void setInputItem(ItemStack stack) {
+        inputSlot.setStackInSlot(0, stack.copy());
+    }
+
+    public ItemStack getBlueprintItem() {
+        if (!blueprintSlot.getStackInSlot(0).isEmpty()) {
+            return blueprintSlot.getStackInSlot(0);
+        }
+        return ItemStack.EMPTY;
+    }
+
+    public void setBlueprintItem(ItemStack stack) {
+        blueprintSlot.setStackInSlot(0, stack.copy());
+    }
+
+    public ItemStack getRecipeIngredient(int index) {
+        if (!recipeIngredients.get(index).isEmpty()) {
+            return recipeIngredients.get(index);
+        }
+        return ItemStack.EMPTY;
+    }
+
+    public void setRecipeIngredient(int index, ItemStack stack) {
+        recipeIngredients.set(index, stack.copy());
     }
 
     public boolean hasBlueprint() {
-        return !getItem(0).equals(ItemStack.EMPTY);
+        return !getBlueprintItem().isEmpty();
     }
 
     public String getItemFromBlueprint() {
-        ItemStack blueprint = getItem(0);
+        ItemStack blueprint = getBlueprintItem();
 
         if (blueprint.getTag() != null) {
             return blueprint.getOrCreateTag().getString("blueprintItem");
@@ -157,66 +204,66 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
         return "";
     }
 
-    public List<String> getIngredientsFromRecipe(String recipeID, List<String> ingredientList) {
-        ingredientList.clear();
+    public List<ItemStack> getIngredientsFromRecipe(String recipeID, List<ItemStack> ingredientList) {
+        clearRecipeIngredients();
 
         switch (recipeID) {
             case "murasama":
-                ingredientList.add(0, Items.ECHO_SHARD.toString());
-                ingredientList.add(1, Items.ECHO_SHARD.toString());
-                ingredientList.add(2, Items.ECHO_SHARD.toString());
-                ingredientList.add(3, Items.ECHO_SHARD.toString());
-                ingredientList.add(4, Items.REDSTONE_BLOCK.toString());
-                ingredientList.add(5, Items.REDSTONE_BLOCK.toString());
-                ingredientList.add(6, Items.IRON_BLOCK.toString());
+                ingredientList.add(0, itemStackFromItem(Items.ECHO_SHARD));
+                ingredientList.add(1, itemStackFromItem(Items.ECHO_SHARD));
+                ingredientList.add(2, itemStackFromItem(Items.ECHO_SHARD));
+                ingredientList.add(3, itemStackFromItem(Items.ECHO_SHARD));
+                ingredientList.add(4, itemStackFromItem(Items.REDSTONE_BLOCK));
+                ingredientList.add(5, itemStackFromItem(Items.REDSTONE_BLOCK));
+                ingredientList.add(6, itemStackFromItem(Items.IRON_BLOCK));
                 break;
             case "gun_sheath":
-                ingredientList.add(0, Items.IRON_BLOCK.toString());
-                ingredientList.add(1, Items.IRON_INGOT.toString());
-                ingredientList.add(2, Items.IRON_INGOT.toString());
-                ingredientList.add(3, Items.IRON_INGOT.toString());
-                ingredientList.add(4, Items.NETHERITE_INGOT.toString());
-                ingredientList.add(5, Items.FLINT_AND_STEEL.toString());
-                ingredientList.add(6, Items.TNT.toString());
+                ingredientList.add(0, itemStackFromItem(Items.IRON_BLOCK));
+                ingredientList.add(1, itemStackFromItem(Items.IRON_INGOT));
+                ingredientList.add(2, itemStackFromItem(Items.IRON_INGOT));
+                ingredientList.add(3, itemStackFromItem(Items.IRON_INGOT));
+                ingredientList.add(4, itemStackFromItem(Items.NETHERITE_INGOT));
+                ingredientList.add(5, itemStackFromItem(Items.FLINT_AND_STEEL));
+                ingredientList.add(6, itemStackFromItem(Items.TNT));
                 break;
             case "originium_catalyst":
-                ingredientList.add(0, Items.BLAZE_POWDER.toString());
-                ingredientList.add(1, Items.BLAZE_POWDER.toString());
-                ingredientList.add(2, Items.BLAZE_POWDER.toString());
-                ingredientList.add(3, Items.BLAZE_POWDER.toString());
-                ingredientList.add(4, Items.AMETHYST_SHARD.toString());
-                ingredientList.add(5, Items.AMETHYST_SHARD.toString());
-                ingredientList.add(6, Items.IRON_NUGGET.toString());
-                ingredientList.add(7, Items.IRON_NUGGET.toString());
-                ingredientList.add(8, Items.IRON_INGOT.toString());
+                ingredientList.add(0, itemStackFromItem(Items.BLAZE_POWDER));
+                ingredientList.add(1, itemStackFromItem(Items.BLAZE_POWDER));
+                ingredientList.add(2, itemStackFromItem(Items.BLAZE_POWDER));
+                ingredientList.add(3, itemStackFromItem(Items.BLAZE_POWDER));
+                ingredientList.add(4, itemStackFromItem(Items.AMETHYST_SHARD));
+                ingredientList.add(5, itemStackFromItem(Items.AMETHYST_SHARD));
+                ingredientList.add(6, itemStackFromItem(Items.IRON_NUGGET));
+                ingredientList.add(7, itemStackFromItem(Items.IRON_NUGGET));
+                ingredientList.add(8, itemStackFromItem(Items.IRON_INGOT));
                 break;
             case "dragon_slayer":
-                ingredientList.add(0, Items.IRON_BLOCK.toString());
-                ingredientList.add(1, Items.IRON_BLOCK.toString());
-                ingredientList.add(2, Items.IRON_INGOT.toString());
-                ingredientList.add(3, Items.IRON_INGOT.toString());
-                ingredientList.add(4, Items.OBSIDIAN.toString());
-                ingredientList.add(5, Items.OBSIDIAN.toString());
-                ingredientList.add(6, Items.NETHERITE_INGOT.toString());
+                ingredientList.add(0, itemStackFromItem(Items.IRON_BLOCK));
+                ingredientList.add(1, itemStackFromItem(Items.IRON_BLOCK));
+                ingredientList.add(2, itemStackFromItem(Items.IRON_INGOT));
+                ingredientList.add(3, itemStackFromItem(Items.IRON_INGOT));
+                ingredientList.add(4, itemStackFromItem(Items.OBSIDIAN));
+                ingredientList.add(5, itemStackFromItem(Items.OBSIDIAN));
+                ingredientList.add(6, itemStackFromItem(Items.NETHERITE_INGOT));
                 break;
             case "sharp_irony":
-                ingredientList.add(0, Items.NETHERITE_SCRAP.toString());
-                ingredientList.add(1, Items.IRON_INGOT.toString());
-                ingredientList.add(2, Items.IRON_INGOT.toString());
-                ingredientList.add(3, Items.IRON_INGOT.toString());
-                ingredientList.add(4, ItemRegistry.METALLIC_FEATHER.get().asItem().toString());
-                ingredientList.add(5, ItemRegistry.METALLIC_FEATHER.get().asItem().toString());
-                ingredientList.add(6, ItemRegistry.METALLIC_FEATHER.get().asItem().toString());
-                ingredientList.add(7, ItemRegistry.METALLIC_FEATHER.get().asItem().toString());
-                ingredientList.add(8, ItemRegistry.METALLIC_FEATHER.get().asItem().toString());
+                ingredientList.add(0, itemStackFromItem(Items.NETHERITE_SCRAP));
+                ingredientList.add(1, itemStackFromItem(Items.IRON_INGOT));
+                ingredientList.add(2, itemStackFromItem(Items.IRON_INGOT));
+                ingredientList.add(3, itemStackFromItem(Items.IRON_INGOT));
+                ingredientList.add(4, itemStackFromItem(ItemRegistry.METALLIC_FEATHER.get()));
+                ingredientList.add(5, itemStackFromItem(ItemRegistry.METALLIC_FEATHER.get()));
+                ingredientList.add(6, itemStackFromItem(ItemRegistry.METALLIC_FEATHER.get()));
+                ingredientList.add(7, itemStackFromItem(ItemRegistry.METALLIC_FEATHER.get()));
+                ingredientList.add(8, itemStackFromItem(ItemRegistry.METALLIC_FEATHER.get()));
                 break;
             case "punisher":
-                ingredientList.add(0, Items.IRON_BLOCK.toString());
-                ingredientList.add(1, Items.IRON_INGOT.toString());
-                ingredientList.add(2, Items.IRON_INGOT.toString());
-                ingredientList.add(3, Items.DIAMOND_BLOCK.toString());
-                ingredientList.add(4, Items.FIREWORK_ROCKET.toString());
-                ingredientList.add(5, Items.LEVER.toString());
+                ingredientList.add(0, itemStackFromItem(Items.IRON_BLOCK));
+                ingredientList.add(1, itemStackFromItem(Items.IRON_INGOT));
+                ingredientList.add(2, itemStackFromItem(Items.IRON_INGOT));
+                ingredientList.add(3, itemStackFromItem(Items.DIAMOND_BLOCK));
+                ingredientList.add(4, itemStackFromItem(Items.FIREWORK_ROCKET));
+                ingredientList.add(5, itemStackFromItem(Items.LEVER));
                 break;
         }
         return ingredientList;
@@ -251,14 +298,21 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
         return resultItem;
     }
 
+    public ItemStack itemStackFromItem(Item item) {
+        return new ItemStack(item, 1);
+    }
+
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
-        inventory.deserializeNBT(compound.getCompound("Inventory"));
+        storedItems.deserializeNBT(compound.getCompound("StoredItems"));
+        blueprintSlot.deserializeNBT(compound.getCompound("BlueprintSlot"));
+        inputSlot.deserializeNBT(compound.getCompound("InputSLot"));
+
         recipeIngredients.clear();
         ListTag ingredientsTag = compound.getList("RecipeIngredients", Tag.TAG_STRING);
         for (Tag tag : ingredientsTag) {
-            String ingredientString = tag.getAsString();
+            ItemStack ingredientString = stringToItemStack(tag.getAsString());
             recipeIngredients.add(ingredientString);
         }
         recipeResult = ItemStack.of(compound.getCompound("RecipeResult"));
@@ -270,10 +324,13 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
     @Override
     public void saveAdditional(CompoundTag compound) {
         super.saveAdditional(compound);
-        compound.put("Inventory", inventory.serializeNBT());
+        compound.put("StoredItems", storedItems.serializeNBT());
+        compound.put("BlueprintSlot", blueprintSlot.serializeNBT());
+        compound.put("InputSLot", inputSlot.serializeNBT());
+
         ListTag recipeIngredientList = new ListTag();
-        for (String ingredient : recipeIngredients) {
-            recipeIngredientList.add(StringTag.valueOf(ingredient));
+        for (ItemStack ingredient : recipeIngredients) {
+            recipeIngredientList.add(StringTag.valueOf(ingredient.getItem().toString()));
         }
         compound.put("RecipeIngredients", recipeIngredientList);
         compound.put("RecipeResult", recipeResult.save(new CompoundTag()));
@@ -293,8 +350,7 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
             BlockPos pos = worldPosition.relative(facing.getClockWise());
             pos.north(1);
 
-            boolean bool = level.getBlockState(pos).getBlock() == BlockRegistry.ARMORERS_CRAFTING_TABLE.get() && facing == level.getBlockState(pos).getValue(HORIZONTAL_FACING);
-            return bool;
+            return level.getBlockState(pos).getBlock() == BlockRegistry.ARMORERS_CRAFTING_TABLE.get() && facing == level.getBlockState(pos).getValue(HORIZONTAL_FACING);
         }
         return false;
     }
@@ -303,13 +359,14 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
         return craftingProgress;
     }
 
-    public void clearIngredientSlots() {
-        //- 1 to account for result slot
-        int size = inventory.getSlots() - 1;
-
-        for (int i = 1; size > i; i++) {
-            inventory.setStackInSlot(i, ItemStack.EMPTY);
+    public void clearStoredItems() {
+        for (int i = 0;  storedItems.getSlots() > i; i++) {
+            storedItems.setStackInSlot(i, ItemStack.EMPTY);
         }
+    }
+
+    public void clearRecipeIngredients() {
+        recipeIngredients.clear();
     }
 
     public ItemStack getWantItem() {
@@ -337,14 +394,23 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
 
     public NonNullList<ItemStack> getDroppableInventory() {
         NonNullList<ItemStack> drops = NonNullList.create();
-        for (int i = 0; i < inventory.getSlots(); ++i) {
-            drops.add(inventory.getStackInSlot(i));
+        for (int i = 0; i < storedItems.getSlots(); ++i) {
+            drops.add(storedItems.getStackInSlot(i));
+            storedItems.setStackInSlot(i, ItemStack.EMPTY);
+        }
+        for (int i = 0; i < blueprintSlot.getSlots(); i++) {
+            drops.add(blueprintSlot.getStackInSlot(i));
+            blueprintSlot.setStackInSlot(i, ItemStack.EMPTY);
+        }
+        for (int i = 0; i < inputSlot.getSlots(); i++) {
+            drops.add(inputSlot.getStackInSlot(i));
+            inputSlot.setStackInSlot(i, ItemStack.EMPTY);
         }
         return drops;
     }
 
-    private ItemStackHandler createHandler() {
-        return new ItemStackHandler(11)
+    private ItemStackHandler createHandler(int size) {
+        return new ItemStackHandler(size)
         {
             @Override
             protected void onContentsChanged(int slot) {
@@ -365,10 +431,6 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
         ItemStack stack = new ItemStack(item);
 
         return stack;
-    }
-
-    public void clearRecipeIngredients() {
-        recipeIngredients.clear();
     }
 
     private void markUpdated() {
