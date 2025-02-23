@@ -67,102 +67,129 @@ public class ArmorersAssemblyTableBlock extends TooltipBaseEntityBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack heldItem = player.getItemInHand(hand);
 
-        //Check if block entity is present
-        if (level.getBlockEntity(pos) instanceof ArmorersAssemblyTableBlockEntity table) {
-            //If shifting, take blueprint if can
-            if (player.isShiftKeyDown()) {
+        if (hit.getDirection() == Direction.UP) {
+            if (level.getBlockEntity(pos) instanceof ArmorersAssemblyTableBlockEntity table) {
                 if (table.hasBlueprint()) {
-                    ItemStack stack = table.getBlueprintItem().copy();
-                    player.addItem(stack);
-                    table.setBlueprintItem(ItemStack.EMPTY);
+                    if (heldItem.getItem() instanceof SmithingHammerItem) {
+                        table.advanceCrafting(level, pos, player, heldItem);
 
-                    level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
-                    level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
+                        return InteractionResult.SUCCESS;
+                    } else if (heldItem.getItem() instanceof WritableBookItem) {
+                        ItemStack blueprint = table.getBlueprintItem().copy();
+                        blueprint.setCount(1);
 
-                    BlockEntity tileEntity = level.getBlockEntity(pos);
-                    if (tileEntity instanceof ArmorersAssemblyTableBlockEntity tableTile) {
-                        Containers.dropContents(level, pos.above(), tableTile.getDroppableInventory());
-                    }
-
-                    return InteractionResult.SUCCESS;
-                }
-                //Else if player is holding a blueprint, try putting it
-            } else if (heldItem.getItem() instanceof BlueprintItem) {
-                if (table.getBlueprintItem().isEmpty()) {
-                    table.setBlueprintItem(heldItem);
-                    heldItem.shrink(1);
-
-                    level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS, 1, 1);
-                    level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, true));
-
-                    return InteractionResult.SUCCESS;
-                }
-                //If table has a blueprint, proceed
-            } else if (table.hasBlueprint()) {
-                //Else if player is holding a smithing hammer, try advancing crafting
-                if (heldItem.getItem() instanceof SmithingHammerItem) {
-                    table.advanceCrafting(level, pos, player, heldItem);
-
-                    return InteractionResult.SUCCESS;
-                    //Else if player is holding book and quill, try copying blueprint
-                } else if (heldItem.getItem() instanceof WritableBookItem) {
-                    ItemStack blueprint = table.getBlueprintItem().copy();
-                    blueprint.setCount(2);
-
-                    player.addItem(blueprint);
-                    heldItem.shrink(1);
-                    table.setBlueprintItem(ItemStack.EMPTY);
-
-                    level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
-
-                    BlockEntity tileEntity = level.getBlockEntity(pos);
-                    if (tileEntity instanceof ArmorersAssemblyTableBlockEntity tableTile) {
-                        Containers.dropContents(level, pos.above(), tableTile.getDroppableInventory());
-                    }
-
-                    level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
-
-                    return InteractionResult.SUCCESS;
-                    //Else if hand isn't empty, try putting the item in
-                } else if (!heldItem.isEmpty()) {
-                    if (table.getInputItem().isEmpty()) {
-                        ItemStack stack = heldItem.copy();
-                        stack.setCount(1);
-
-                        table.setInputItem(stack);
+                        player.addItem(blueprint);
+                        player.addItem(blueprint);
 
                         if (!player.isCreative()) {
                             heldItem.shrink(1);
                         }
 
-                        level.playSound(null, pos, SoundEvents.GLOW_ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 1, 1);
+                        table.setBlueprintItem(ItemStack.EMPTY);
+
+                        level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
+
+                        BlockEntity tileEntity = level.getBlockEntity(pos);
+                        if (tileEntity instanceof ArmorersAssemblyTableBlockEntity tableTile) {
+                            Containers.dropContents(level, pos.above(), tableTile.getDroppableInventory());
+                        }
+
+                        level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
+
+                        return InteractionResult.SUCCESS;
+                    } else if (player.getMainHandItem().isEmpty() && player.isShiftKeyDown()) {
+                        ItemStack stack = table.getBlueprintItem().copy();
+                        player.addItem(stack);
+                        table.setBlueprintItem(ItemStack.EMPTY);
+
+                        level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
+                        level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
+
+                        BlockEntity tileEntity = level.getBlockEntity(pos);
+                        if (tileEntity instanceof ArmorersAssemblyTableBlockEntity tableTile) {
+                            Containers.dropContents(level, pos.above(), tableTile.getDroppableInventory());
+                        }
+
+                        return InteractionResult.SUCCESS;
+                    } else if (table.getInputItem().isEmpty() && !player.getMainHandItem().isEmpty()) {
+                        putInputItem(table, level, player, pos, heldItem);
+
+                        return InteractionResult.SUCCESS;
+                    } else if (!table.getInputItem().isEmpty() && player.getMainHandItem().isEmpty()) {
+                        takeInputItem(table, level, player, pos);
 
                         return InteractionResult.SUCCESS;
                     }
-                    //Else if hand is empty, try taking current item
-                } else if (heldItem.isEmpty()) {
-                    if (!table.getInputItem().isEmpty()) {
-                        ItemStack stack = table.getInputItem().copy();
-                        player.addItem(stack);
-                        table.setInputItem(ItemStack.EMPTY);
+                } else {
+                    if (heldItem.getItem() instanceof BlueprintItem) {
+                        table.setBlueprintItem(heldItem);
+                        heldItem.shrink(1);
 
-                        level.playSound(null, pos, SoundEvents.GLOW_ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 1, 1);
+                        level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS, 1, 1);
+                        level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, true));
+
+                        return InteractionResult.SUCCESS;
+                    } else if (table.getInputItem().isEmpty() && !player.getMainHandItem().isEmpty()) {
+                        putInputItem(table, level, player, pos, heldItem);
+
+                        return InteractionResult.SUCCESS;
+                    } else if (!table.getInputItem().isEmpty() && player.getMainHandItem().isEmpty()) {
+                        takeInputItem(table, level, player, pos);
 
                         return InteractionResult.SUCCESS;
                     }
                 }
-                //Else if result slot isn't empty, try taking result item
-            } else if (!table.getInputItem().isEmpty()) {
-                ItemStack stack = table.getInputItem().copy();
-                player.addItem(stack);
-                table.setInputItem(ItemStack.EMPTY);
+            }
+        } else if (hit.getDirection() == state.getValue(HORIZONTAL_FACING)) {
+            if (level.getBlockEntity(pos) instanceof ArmorersAssemblyTableBlockEntity table) {
+                if (table.getHammerSlot().isEmpty()) {
+                    if (heldItem.getItem() instanceof SmithingHammerItem) {
+                        ItemStack stack = heldItem.copy();
+                        stack.setCount(1);
 
-                level.playSound(null, pos, SoundEvents.GLOW_ITEM_FRAME_ADD_ITEM, SoundSource.BLOCKS, 1, 1);
+                        table.setHammerSlot(stack);
 
-                return InteractionResult.SUCCESS;
+                        if (!player.isCreative()) {
+                            heldItem.shrink(1);
+                        }
+
+                        level.playSound(null, pos, SoundEvents.ITEM_FRAME_ROTATE_ITEM, SoundSource.BLOCKS, 1, 1);
+
+                        return InteractionResult.SUCCESS;
+                    }
+                } else if (player.getMainHandItem().isEmpty()) {
+                    ItemStack stack = table.getHammerSlot().copy();
+                    player.addItem(stack);
+                    table.setHammerSlot(ItemStack.EMPTY);
+
+                    level.playSound(null, pos, SoundEvents.ITEM_FRAME_ROTATE_ITEM, SoundSource.BLOCKS, 1, 1);
+
+                    return InteractionResult.SUCCESS;
+                }
             }
         }
         return InteractionResult.PASS;
+    }
+
+    public void takeInputItem(ArmorersAssemblyTableBlockEntity table, Level level, Player player, BlockPos pos) {
+        ItemStack stack = table.getInputItem().copy();
+        player.addItem(stack);
+        table.setInputItem(ItemStack.EMPTY);
+
+        level.playSound(null, pos, SoundEvents.ITEM_FRAME_ROTATE_ITEM, SoundSource.BLOCKS, 1, 1);
+    }
+
+    public void putInputItem(ArmorersAssemblyTableBlockEntity table, Level level, Player player, BlockPos pos, ItemStack heldItem) {
+        ItemStack stack = heldItem.copy();
+        stack.setCount(1);
+
+        table.setInputItem(stack);
+
+        if (!player.isCreative()) {
+            heldItem.shrink(1);
+        }
+
+        level.playSound(null, pos, SoundEvents.ITEM_FRAME_ROTATE_ITEM, SoundSource.BLOCKS, 1, 1);
     }
 
     public static int getBlueprintColor(Level level, BlockPos pos) {
@@ -189,12 +216,12 @@ public class ArmorersAssemblyTableBlock extends TooltipBaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return BlockEntityRegistry.ASSEMBLY_TABLE.get().create(pos, state);
+        return BlockEntityRegistry.ARMORERS_ASSEMBLY_TABLE.get().create(pos, state);
     }
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntity) {
-        return createTickerHelper(blockEntity, BlockEntityRegistry.ASSEMBLY_TABLE.get(), ArmorersAssemblyTableBlockEntity::tick);
+        return createTickerHelper(blockEntity, BlockEntityRegistry.ARMORERS_ASSEMBLY_TABLE.get(), ArmorersAssemblyTableBlockEntity::tick);
     }
 
     @Override

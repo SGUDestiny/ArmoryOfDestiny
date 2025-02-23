@@ -1,0 +1,51 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"render_type": "cutout",
+	"texture_size": [64, 52],
+	"textures": {
+		"0": "armoryofdestiny:block/armorers_crafting_table",
+		"1": "armoryofdestiny:block/armorers_crafting_table_drawer",
+		"particle": "armoryofdestiny:block/armorers_crafting_table"
+	},
+	"elements": [
+		{
+			"from": [0, 4, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [4, 4.92308, 8, 8.61538], "texture": "#0"},
+				"east": {"uv": [0, 4.92308, 4, 8.61538], "texture": "#0"},
+				"south": {"uv": [12, 4.92308, 16, 8.61538], "texture": "#0"},
+				"west": {"uv": [8, 4.92308, 12, 8.61538], "texture": "#0"},
+				"up": {"uv": [8, 4.92308, 4, 0], "texture": "#0"},
+				"down": {"uv": [12, 0, 8, 4.92308], "texture": "#0"}
+			}
+		},
+		{
+			"from": [2, 8, -8],
+			"to": [14, 12, 0],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, -16]},
+			"faces": {
+				"north": {"uv": [2, 2.46154, 5, 3.69231], "texture": "#1"},
+				"east": {"uv": [0, 2.46154, 2, 3.69231], "texture": "#1"},
+				"south": {"uv": [7, 2.46154, 10, 3.69231], "texture": "#1"},
+				"west": {"uv": [5, 2.46154, 7, 3.69231], "texture": "#1"},
+				"up": {"uv": [5, 2.46154, 2, 0], "texture": "#1"},
+				"down": {"uv": [8, 0, 5, 2.46154], "texture": "#1"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [16, 4, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -4, 0]},
+			"faces": {
+				"north": {"uv": [4, 14.76923, 8, 16], "texture": "#0"},
+				"east": {"uv": [0, 14.76923, 4, 16], "texture": "#0"},
+				"south": {"uv": [12, 14.76923, 16, 16], "texture": "#0"},
+				"west": {"uv": [8, 14.76923, 12, 16], "texture": "#0"},
+				"up": {"uv": [8, 14.76923, 4, 9.84615], "texture": "#0"},
+				"down": {"uv": [12, 9.84615, 8, 14.76923], "texture": "#0"}
+			}
+		}
+	]
+}

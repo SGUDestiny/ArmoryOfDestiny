@@ -33,6 +33,6 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(BlockEntityRegistry.ASSEMBLY_TABLE.get(), ArmorersAssemblyTableRenderer::new);
+        event.registerBlockEntityRenderer(BlockEntityRegistry.ARMORERS_ASSEMBLY_TABLE.get(), ArmorersAssemblyTableRenderer::new);
     }
 }

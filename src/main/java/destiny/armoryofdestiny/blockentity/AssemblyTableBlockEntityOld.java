@@ -52,7 +52,7 @@ public class AssemblyTableBlockEntityOld extends BaseContainerBlockEntity implem
     private int currentIngredientIndex = -1;
 
     public AssemblyTableBlockEntityOld(BlockPos pos, BlockState state) {
-        super(BlockEntityRegistry.ASSEMBLY_TABLE.get(), pos, state);
+        super(BlockEntityRegistry.ARMORERS_ASSEMBLY_TABLE.get(), pos, state);
     }
 
     // Region: Inventory Implementation

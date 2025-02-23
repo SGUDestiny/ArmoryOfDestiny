@@ -3,6 +3,7 @@ package destiny.armoryofdestiny.client.render.blockentity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import destiny.armoryofdestiny.blockentity.ArmorersAssemblyTableBlockEntity;
+import destiny.armoryofdestiny.registry.ItemRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -34,7 +35,16 @@ public class ArmorersAssemblyTableRenderer implements BlockEntityRenderer<Armore
             if (table.getInputItem() != ItemStack.EMPTY) {
                 ItemStack currentItem = table.getInputItem();
 
-                renderLyingItem(level, poseStack, currentItem, bufferIn, combinedLightIn, direction, table);
+                poseStack.pushPose();
+                ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+                boolean isBlockItem = itemRenderer.getModel(currentItem, table.getLevel(), null, 0).applyTransform(ItemDisplayContext.FIXED, poseStack, false).isGui3d();
+                poseStack.popPose();
+
+                if (isBlockItem) {
+                    renderLyingBlock(level, poseStack, currentItem, bufferIn, combinedLightIn, direction, table);
+                } else {
+                    renderLyingItem(level, poseStack, currentItem, bufferIn, combinedLightIn, direction, table);
+                }
             } else if (table.getWantItem() != ItemStack.EMPTY) {
                 ItemStack wantItem = table.getWantItem();
 
@@ -45,6 +55,12 @@ public class ArmorersAssemblyTableRenderer implements BlockEntityRenderer<Armore
             ItemStack resultItem = table.getInputItem();
 
             renderSpinningItem(level, resultItem, poseStack, partialTicks, bufferIn, combinedLightIn);
+        }
+
+        if (table.getHammerSlot() != ItemStack.EMPTY) {
+            ItemStack hammer = table.getHammerSlot();
+
+            renderHungHammer(level, poseStack, hammer, bufferIn, combinedLightIn, direction, table);
         }
     }
 
@@ -85,6 +101,46 @@ public class ArmorersAssemblyTableRenderer implements BlockEntityRenderer<Armore
         poseStack.scale(1, 1, 1);
 
         itemRenderer.renderStatic(stack, ItemDisplayContext.GROUND, combinedLightIn, OverlayTexture.NO_OVERLAY, poseStack, bufferIn, level, 0);
+        poseStack.popPose();
+    }
+
+    private void renderLyingBlock(Level level, PoseStack poseStack, ItemStack stack, MultiBufferSource bufferIn, int combinedLightIn, Direction direction, ArmorersAssemblyTableBlockEntity table) {
+        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+
+        poseStack.pushPose();
+        poseStack.translate(0.5, 0.95, 0.5);
+
+        float f = -direction.toYRot();
+        poseStack.mulPose(Axis.YP.rotationDegrees(f));
+
+        poseStack.scale(1, 1, 1);
+
+        itemRenderer.renderStatic(stack, ItemDisplayContext.GROUND, combinedLightIn, OverlayTexture.NO_OVERLAY, poseStack, bufferIn, level, 0);
+        poseStack.popPose();
+    }
+
+    private void renderHungHammer(Level level, PoseStack poseStack, ItemStack hammer, MultiBufferSource bufferIn, int combinedLightIn, Direction direction, ArmorersAssemblyTableBlockEntity table) {
+        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+
+        poseStack.pushPose();
+        if (direction == Direction.NORTH) {
+            poseStack.translate(0.4325, 0.72, -0.025);
+        } else if (direction == Direction.SOUTH) {
+            poseStack.translate(0.5675, 0.72, 1.025);
+        } else if (direction == Direction.WEST) {
+            poseStack.translate(-0.025, 0.72, 0.4325);
+        } else {
+            poseStack.translate(1.025, 0.72, 0.5675);
+        }
+
+        float f = direction.toYRot();
+        poseStack.mulPose(Axis.YP.rotationDegrees(f));
+
+        poseStack.mulPose(Axis.ZP.rotationDegrees(45));
+
+        poseStack.scale(1, 1, 1);
+
+        itemRenderer.renderStatic(hammer, ItemDisplayContext.GROUND, combinedLightIn, OverlayTexture.NO_OVERLAY, poseStack, bufferIn, level, 0);
         poseStack.popPose();
     }
 }

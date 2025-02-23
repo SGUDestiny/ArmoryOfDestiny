@@ -108,7 +108,7 @@ public class AssemblyTableBlockOld extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : createTickerHelper(type, BlockEntityRegistry.ASSEMBLY_TABLE.get(), ArmorersAssemblyTableBlockEntity::tick);
+        return level.isClientSide ? null : createTickerHelper(type, BlockEntityRegistry.ARMORERS_ASSEMBLY_TABLE.get(), ArmorersAssemblyTableBlockEntity::tick);
     }
 
     public boolean isControl (Level level) {

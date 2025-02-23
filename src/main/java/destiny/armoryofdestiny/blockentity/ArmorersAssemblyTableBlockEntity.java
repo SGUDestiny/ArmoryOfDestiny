@@ -52,6 +52,7 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
     private final ItemStackHandler storedItems;
     private final ItemStackHandler blueprintSlot;
     private final ItemStackHandler inputSlot;
+    private final ItemStackHandler hammerSlot;
     private final LazyOptional<IItemHandler> inputHandler;
 
 
@@ -62,10 +63,11 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
     private int craftingProgress = -1;
 
     public ArmorersAssemblyTableBlockEntity(BlockPos pos, BlockState state) {
-        super(BlockEntityRegistry.ASSEMBLY_TABLE.get(), pos, state);
+        super(BlockEntityRegistry.ARMORERS_ASSEMBLY_TABLE.get(), pos, state);
         storedItems = createHandler(9);
         blueprintSlot = createHandler(1);
         inputSlot = createHandler(1);
+        hammerSlot = createHandler(1);
         recipeIngredients = new ArrayList<>(9);
         inputHandler = LazyOptional.of(() -> inputSlot);
     }
@@ -147,17 +149,6 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
         }
     }
 
-    public ItemStack getStoredItem(int index) {
-        if (!storedItems.getStackInSlot(index).isEmpty()) {
-            return storedItems.getStackInSlot(index).copy();
-        }
-        return ItemStack.EMPTY;
-    }
-
-    public void setStoredItem(int index, ItemStack stack) {
-        storedItems.setStackInSlot(index, stack.copy());
-    }
-
     public ItemStack getInputItem() {
         if (!inputSlot.getStackInSlot(0).isEmpty()) {
             return inputSlot.getStackInSlot(0).copy();
@@ -180,15 +171,15 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
         blueprintSlot.setStackInSlot(0, stack.copy());
     }
 
-    public ItemStack getRecipeIngredient(int index) {
-        if (!recipeIngredients.get(index).isEmpty()) {
-            return recipeIngredients.get(index);
+    public ItemStack getHammerSlot() {
+        if (!hammerSlot.getStackInSlot(0).isEmpty()) {
+            return hammerSlot.getStackInSlot(0);
         }
         return ItemStack.EMPTY;
     }
 
-    public void setRecipeIngredient(int index, ItemStack stack) {
-        recipeIngredients.set(index, stack.copy());
+    public void setHammerSlot(ItemStack stack) {
+        hammerSlot.setStackInSlot(0, stack.copy());
     }
 
     public boolean hasBlueprint() {
@@ -308,6 +299,7 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
         storedItems.deserializeNBT(compound.getCompound("StoredItems"));
         blueprintSlot.deserializeNBT(compound.getCompound("BlueprintSlot"));
         inputSlot.deserializeNBT(compound.getCompound("InputSLot"));
+        hammerSlot.deserializeNBT(compound.getCompound("HammerSlot"));
 
         recipeIngredients.clear();
         ListTag ingredientsTag = compound.getList("RecipeIngredients", Tag.TAG_STRING);
@@ -327,6 +319,7 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
         compound.put("StoredItems", storedItems.serializeNBT());
         compound.put("BlueprintSlot", blueprintSlot.serializeNBT());
         compound.put("InputSLot", inputSlot.serializeNBT());
+        compound.put("HammerSlot", hammerSlot.serializeNBT());
 
         ListTag recipeIngredientList = new ListTag();
         for (ItemStack ingredient : recipeIngredients) {
@@ -405,6 +398,10 @@ public class ArmorersAssemblyTableBlockEntity extends BlockEntity {
         for (int i = 0; i < inputSlot.getSlots(); i++) {
             drops.add(inputSlot.getStackInSlot(i));
             inputSlot.setStackInSlot(i, ItemStack.EMPTY);
+        }
+        for (int i = 0; i < hammerSlot.getSlots(); i++) {
+            drops.add(hammerSlot.getStackInSlot(i));
+            hammerSlot.setStackInSlot(i, ItemStack.EMPTY);
         }
         return drops;
     }

@@ -4,8 +4,8 @@
 	"render_type": "cutout",
 	"texture_size": [64, 48],
 	"textures": {
-		"table": "armoryofdestiny:block/armorers_assembly_table",
-		"particle": "armoryofdestiny:block/armorers_assembly_table"
+		"particle": "armoryofdestiny:block/armorers_assembly_table",
+		"table": "armoryofdestiny:block/armorers_assembly_table"
 	},
 	"elements": [
 		{
@@ -32,6 +32,27 @@
 				"west": {"uv": [8, 12, 12, 16], "texture": "#table"},
 				"up": {"uv": [8, 12, 4, 6.66667], "texture": "#table", "cullface": "up"},
 				"down": {"uv": [12, 6.66667, 8, 12], "texture": "#table"}
+			}
+		},
+		{
+			"from": [6, 13, -1],
+			"to": [10, 15, 0],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 13, -2]},
+			"faces": {
+				"north": {"uv": [0.25, 0.33333, 1.25, 1], "texture": "#table"},
+				"east": {"uv": [0, 0.33333, 0.25, 1], "texture": "#table"},
+				"south": {"uv": [1.5, 0.33333, 2.5, 1], "texture": "#table"},
+				"west": {"uv": [1.25, 0.33333, 1.5, 1], "texture": "#table"},
+				"up": {"uv": [1.25, 0.33333, 0.25, 0], "texture": "#table"},
+				"down": {"uv": [2.25, 0, 1.25, 0.33333], "texture": "#table"}
+			}
+		},
+		{
+			"from": [6, 13, -1],
+			"to": [10, 13, 0],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 11, -2]},
+			"faces": {
+				"up": {"uv": [2.25, 0.33333, 1.25, 0], "texture": "#table"}
 			}
 		}
 	]
