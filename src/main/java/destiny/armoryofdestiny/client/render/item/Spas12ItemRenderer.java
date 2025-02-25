@@ -1,14 +1,14 @@
 package destiny.armoryofdestiny.client.render.item;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
-import destiny.armoryofdestiny.item.Spas12Item;
+import destiny.armoryofdestiny.server.item.Spas12Item;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import software.bernie.geckolib.model.DefaultedItemGeoModel;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 
-import static destiny.armoryofdestiny.item.Spas12Item.SHELL_TYPE;
+import static destiny.armoryofdestiny.server.item.Spas12Item.SHELL_TYPE;
 
 public class Spas12ItemRenderer extends GeoItemRenderer<Spas12Item> {
 

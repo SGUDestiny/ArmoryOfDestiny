@@ -1,4 +1,5 @@
 {
+  "parent": "armoryofdestiny:any_blueprint",
   "display": {
     "icon": {
       "item": "armoryofdestiny:murasama"
@@ -9,7 +10,6 @@
     "description": {
       "translate": "advancements.armoryofdestiny.murasama.description"
     },
-    "background": "armoryofdestiny:textures/gui/advancements/backgrounds/cherry_planks.png",
     "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,

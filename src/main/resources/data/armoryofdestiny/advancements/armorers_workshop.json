@@ -1,0 +1,65 @@
+{
+  "parent": "armoryofdestiny:root",
+  "display": {
+    "icon": {
+      "item": "armoryofdestiny:armorers_crafting_table"
+    },
+    "title": {
+      "translate": "advancements.armoryofdestiny.armorers_workshop.title"
+    },
+    "description": {
+      "translate": "advancements.armoryofdestiny.armorers_workshop.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "armorers_crafting_table": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:armorers_crafting_table"
+            ]
+          }
+        ]
+      }
+    },
+    "armorers_forging_table": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:armorers_forging_table"
+            ]
+          }
+        ]
+      }
+    },
+    "smithing_hammer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:smithing_hammer"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["armorers_crafting_table"],
+    ["armorers_forging_table"],
+    ["smithing_hammer"]
+  ],
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

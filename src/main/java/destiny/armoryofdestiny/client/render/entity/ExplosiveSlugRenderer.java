@@ -1,7 +1,7 @@
 package destiny.armoryofdestiny.client.render.entity;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
-import destiny.armoryofdestiny.entity.ExplosiveSlugEntity;
+import destiny.armoryofdestiny.server.entity.ExplosiveSlugEntity;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

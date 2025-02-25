@@ -2,8 +2,7 @@ package destiny.armoryofdestiny.client.render.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import destiny.armoryofdestiny.blockentity.ArmorersAssemblyTableBlockEntity;
-import destiny.armoryofdestiny.registry.ItemRegistry;
+import destiny.armoryofdestiny.server.block.blockentity.ArmorersTinkeringTableBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -19,16 +18,15 @@ import org.jetbrains.annotations.NotNull;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
-public class ArmorersAssemblyTableRenderer implements BlockEntityRenderer<ArmorersAssemblyTableBlockEntity> {
+public class ArmorersAssemblyTableRenderer implements BlockEntityRenderer<ArmorersTinkeringTableBlockEntity> {
     public ArmorersAssemblyTableRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
 
     }
 
     @Override
-    public void render(ArmorersAssemblyTableBlockEntity table, float partialTicks, @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(ArmorersTinkeringTableBlockEntity table, float partialTicks, @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
         Direction direction = table.getBlockState().getValue(HORIZONTAL_FACING);
         Level level = table.getLevel();
-        int craftingProgress = table.getCraftingProgress();
 
         //Check if blueprint is present
         if (table.getBlueprintItem() != ItemStack.EMPTY) {
@@ -79,7 +77,7 @@ public class ArmorersAssemblyTableRenderer implements BlockEntityRenderer<Armore
         poseStack.popPose();
     }
 
-    private void renderLyingItem(Level level, PoseStack poseStack, ItemStack stack, MultiBufferSource bufferIn, int combinedLightIn, Direction direction, ArmorersAssemblyTableBlockEntity table) {
+    private void renderLyingItem(Level level, PoseStack poseStack, ItemStack stack, MultiBufferSource bufferIn, int combinedLightIn, Direction direction, ArmorersTinkeringTableBlockEntity table) {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
         poseStack.pushPose();
@@ -104,7 +102,7 @@ public class ArmorersAssemblyTableRenderer implements BlockEntityRenderer<Armore
         poseStack.popPose();
     }
 
-    private void renderLyingBlock(Level level, PoseStack poseStack, ItemStack stack, MultiBufferSource bufferIn, int combinedLightIn, Direction direction, ArmorersAssemblyTableBlockEntity table) {
+    private void renderLyingBlock(Level level, PoseStack poseStack, ItemStack stack, MultiBufferSource bufferIn, int combinedLightIn, Direction direction, ArmorersTinkeringTableBlockEntity table) {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
         poseStack.pushPose();
@@ -119,7 +117,7 @@ public class ArmorersAssemblyTableRenderer implements BlockEntityRenderer<Armore
         poseStack.popPose();
     }
 
-    private void renderHungHammer(Level level, PoseStack poseStack, ItemStack hammer, MultiBufferSource bufferIn, int combinedLightIn, Direction direction, ArmorersAssemblyTableBlockEntity table) {
+    private void renderHungHammer(Level level, PoseStack poseStack, ItemStack hammer, MultiBufferSource bufferIn, int combinedLightIn, Direction direction, ArmorersTinkeringTableBlockEntity table) {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
         poseStack.pushPose();

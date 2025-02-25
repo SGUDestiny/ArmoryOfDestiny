@@ -1,0 +1,104 @@
+{
+  "parent": "armoryofdestiny:murasama_full",
+  "display": {
+    "icon": {
+      "item": "armoryofdestiny:smithing_hammer"
+    },
+    "title": {
+      "translate": "advancements.armoryofdestiny.all_special_items.title"
+    },
+    "description": {
+      "translate": "advancements.armoryofdestiny.all_special_items.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "dragon_slayer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:dragon_slayer"
+            ]
+          }
+        ]
+      }
+    },
+    "murasama": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:murasama"
+            ]
+          }
+        ]
+      }
+    },
+    "originium_katana": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:originium_katana"
+            ]
+          }
+        ]
+      }
+    },
+    "punisher": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:punisher"
+            ]
+          }
+        ]
+      }
+    },
+    "sharp_irony": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:sharp_irony"
+            ]
+          }
+        ]
+      }
+    },
+    "gun_sheath": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:gun_sheath"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["dragon_slayer"],
+    ["murasama"],
+    ["originium_katana"],
+    ["punisher"],
+    ["sharp_irony"],
+    ["gun_sheath"]
+  ],
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

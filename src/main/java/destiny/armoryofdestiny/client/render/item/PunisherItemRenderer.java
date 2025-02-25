@@ -1,16 +1,14 @@
 package destiny.armoryofdestiny.client.render.item;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
-import destiny.armoryofdestiny.item.MurasamaItem;
-import destiny.armoryofdestiny.item.PunisherItem;
+import destiny.armoryofdestiny.server.item.PunisherItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import software.bernie.geckolib.model.DefaultedItemGeoModel;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 
-import static destiny.armoryofdestiny.item.MurasamaItem.ABILITY_TICK;
-import static destiny.armoryofdestiny.item.PunisherItem.ANIMATION_TICK;
+import static destiny.armoryofdestiny.server.item.PunisherItem.ANIMATION_TICK;
 
 public class PunisherItemRenderer extends GeoItemRenderer<PunisherItem> {
     public PunisherItemRenderer() {

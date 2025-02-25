@@ -1,15 +1,15 @@
 package destiny.armoryofdestiny.client;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
-import destiny.armoryofdestiny.item.DoubleTroubleItem;
+import destiny.armoryofdestiny.server.item.DoubleTroubleItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import software.bernie.geckolib.model.DefaultedItemGeoModel;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 
-import static destiny.armoryofdestiny.item.DoubleTroubleItem.LEFT_BARREL;
-import static destiny.armoryofdestiny.item.DoubleTroubleItem.RIGHT_BARREL;
+import static destiny.armoryofdestiny.server.item.DoubleTroubleItem.LEFT_BARREL;
+import static destiny.armoryofdestiny.server.item.DoubleTroubleItem.RIGHT_BARREL;
 
 public class DoubleTroubleItemRenderer extends GeoItemRenderer<DoubleTroubleItem> {
     private final ResourceLocation DOUBLE_TROUBLE_FULL = new ResourceLocation(ArmoryOfDestiny.MODID, "textures/item/double_trouble/double_trouble_full.png");

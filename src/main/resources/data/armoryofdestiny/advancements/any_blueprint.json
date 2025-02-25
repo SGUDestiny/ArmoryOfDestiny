@@ -1,0 +1,39 @@
+{
+  "parent": "armoryofdestiny:armorers_workshop",
+  "display": {
+    "icon": {
+      "item": "armoryofdestiny:blueprint"
+    },
+    "title": {
+      "translate": "advancements.armoryofdestiny.any_blueprint.title"
+    },
+    "description": {
+      "translate": "advancements.armoryofdestiny.any_blueprint.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "blueprint": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:blueprint"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["blueprint"]
+  ],
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

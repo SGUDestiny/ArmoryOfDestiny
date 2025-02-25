@@ -2,7 +2,7 @@ package destiny.armoryofdestiny.client.render.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import destiny.armoryofdestiny.blockentity.AssemblyTableBlockEntityOld;
+import destiny.armoryofdestiny.server.block.blockentity.AssemblyTableBlockEntityOld;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;

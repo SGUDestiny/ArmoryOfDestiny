@@ -1,7 +1,7 @@
 package destiny.armoryofdestiny.client.render.item;
 
 import destiny.armoryofdestiny.client.models.item.WingedVengeanceModel;
-import destiny.armoryofdestiny.item.WingedVengeanceItem;
+import destiny.armoryofdestiny.server.item.WingedVengeanceItem;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;

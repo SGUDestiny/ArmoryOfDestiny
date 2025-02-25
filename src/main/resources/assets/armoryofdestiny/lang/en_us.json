@@ -19,10 +19,11 @@
   "item.armoryofdestiny.gun_sheath.ability.1.description.3": "Press §7[RMB]§r to §7sheath the sword§r.",
 
   "item.armoryofdestiny.originium_katana": "§6Originium Katana",
-  "item.armoryofdestiny.originium_katana.ability.1.title": "Expendable Blade",
+  "item.armoryofdestiny.originium_katana.ability.1.title": "Fragile Biohazard",
   "item.armoryofdestiny.originium_katana.ability.1.description.1": "Due to §7fragile§r crystal blade,",
-  "item.armoryofdestiny.originium_katana.ability.1.description.2": "it has only §764 durability§r.",
-  "item.armoryofdestiny.originium_katana.ability.1.description.3": "§7Cannot be repaired§r.",
+  "item.armoryofdestiny.originium_katana.ability.1.description.2": "it has only §764 durability§r, and",
+  "item.armoryofdestiny.originium_katana.ability.1.description.3": "it §7cannot be repaired§r.",
+  "item.armoryofdestiny.originium_katana.ability.1.description.4": "§7Poisons§r targets for §73 seconds§r.",
 
   "item.armoryofdestiny.originium_catalyst": "§6Originium Catalyst",
   "item.armoryofdestiny.originium_catalyst.ability.1.title": "Originium Arts",
@@ -51,6 +52,8 @@
   "item.armoryofdestiny.metallic_feather.ability.1.title": "Throwing Knife",
   "item.armoryofdestiny.metallic_feather.ability.1.description.1": "Serves as §7ammo§r for §7Sharp Irony§r.",
   "item.armoryofdestiny.metallic_feather.ability.1.description.2": "Deals §710 damage on hit§r.",
+  "item.armoryofdestiny.metallic_feather.ability.1.description.3": "Can be §7thrown§r by pressing §7[RMB]§r, but will.",
+  "item.armoryofdestiny.metallic_feather.ability.1.description.4": "§7cut the user§r.",
 
   "item.armoryofdestiny.dragon_slayer": "§8Dragon Slayer",
   "item.armoryofdestiny.dragon_slayer.ability.1.title": "Berserker's Blessing",
@@ -60,10 +63,14 @@
   "item.armoryofdestiny.dragon_slayer.ability.1.description.4": "§7times§r the §7base damage§r.",
   "item.armoryofdestiny.dragon_slayer.ability.1.damage_total": "Damage dealt: ",
 
-  "item.armoryofdestiny.blueprint": "§bBlueprint [WIP]",
+  "item.armoryofdestiny.blueprint": "§bBlueprint",
   "item.armoryofdestiny.blueprint.item": "Blueprint for: ",
+  "item.armoryofdestiny.blueprint.ingredients": "Ingredients",
 
-  "item.armoryofdestiny.smithing_hammer": "§7Smithing Hammer [WIP]",
+
+  "item.armoryofdestiny.smithing_hammer": "§7Smithing Hammer",
+
+  "item.armoryofdestiny.tongs": "§7Tongs [WIP]",
 
   "_tooltips": "Tooltips",
   "tooltip.line.collapsed": "▲ ",
@@ -76,7 +83,7 @@
   "tooltip.line.rarity.legendary": "§6✦ Legendary Item§r",
   "tooltip.line.rarity.unique": "§5✦ Unique Item§r",
   "tooltip.line.rarity.secondary": "§e ! Secondary Item§r",
-  "tooltip.line.rarity.armorers_workshop_part": "§6 ✸ Armorer's Workshop Part§r",
+  "tooltip.line.rarity.armorers_workshop_part": "§6✸ Armorer's Workshop Part§r",
 
   "_trivia": "Trivia",
   "tooltip.line.trivia": "✱ Item Trivia",
@@ -115,14 +122,14 @@
   "tooltip.line.trivia.armorers_crafting_table.description.2": "§7table§r if you §7[RMB]§r it's §7top side§r, or a §7container§r if you",
   "tooltip.line.trivia.armorers_crafting_table.description.3": "§7[RMB]§r it's §7drawers§r, but it's also the §7core§r of the",
   "tooltip.line.trivia.armorers_crafting_table.description.4": "§7Armorer's Workshop§r.",
-  "tooltip.line.trivia.armorers_assembly_table.title": "Armorer's Assembly Table",
-  "tooltip.line.trivia.armorers_assembly_table.description.1": "Armorer's Assembly Table is used as a §7workstation§r to §7create",
-  "tooltip.line.trivia.armorers_assembly_table.description.2": "§7special items§r. Make sure it's placed §7to the right§r of the",
-  "tooltip.line.trivia.armorers_assembly_table.description.3": "§7Armorer's Crafting Table§r, and they §7both face the same way§r.",
-  "tooltip.line.trivia.armorers_assembly_table.description.4": "Then, put a §7blueprint§7 on §7top§r of it, and put the §7displayed",
-  "tooltip.line.trivia.armorers_assembly_table.description.5": "§7ingredient§r, then §7[RMB]§r with a §7Smithing Hammer§r. Repeat until",
-  "tooltip.line.trivia.armorers_assembly_table.description.6": "the §7crafting is complete§r. You can also §7hang§r the §7Smithing",
-  "tooltip.line.trivia.armorers_assembly_table.description.7": "§7Hammer§r on the §7front hooks§r.",
+  "tooltip.line.trivia.armorers_tinkering_table.title": "Armorer's Tinkering Table",
+  "tooltip.line.trivia.armorers_tinkering_table.description.1": "Armorer's Tinkering Table is used as a §7workstation§r to §7create",
+  "tooltip.line.trivia.armorers_tinkering_table.description.2": "§7special items§r. Make sure it's placed §7to the right§r of the",
+  "tooltip.line.trivia.armorers_tinkering_table.description.3": "§7Armorer's Crafting Table§r, and they §7both face the same way§r.",
+  "tooltip.line.trivia.armorers_tinkering_table.description.4": "Then, put a §7blueprint§7 on §7top§r of it, and put the §7displayed",
+  "tooltip.line.trivia.armorers_tinkering_table.description.5": "§7ingredient§r, then §7[RMB]§r with a §7Smithing Hammer§r. Repeat until",
+  "tooltip.line.trivia.armorers_tinkering_table.description.6": "the §7crafting is complete§r. You can also §7hang§r the §7Smithing",
+  "tooltip.line.trivia.armorers_tinkering_table.description.7": "§7Hammer§r on the §7front hooks§r.",
 
   "_abilities": "Abilities",
   "tooltip.line.ability.collapsed": "Hold §7[Shift]§r to expand",
@@ -130,8 +137,8 @@
   "tooltip.line.ability.cooldown": "Cooldown: ",
 
   "_blocks": "Blocks",
-  "block.armoryofdestiny.armorers_assembly_table": "§7Armorer's Assembly Table [WIP]",
-  "block.armoryofdestiny.armorers_crafting_table": "§7Armorer's Crafting Table [WIP]",
+  "block.armoryofdestiny.armorers_tinkering_table": "§7Armorer's Tinkering Table",
+  "block.armoryofdestiny.armorers_crafting_table": "§7Armorer's Crafting Table",
 
   "_containers": "Containers",
   "container.armoryofdestiny.armorers_crafting_table": "Armorer's Crafting Table",
@@ -150,6 +157,10 @@
   "item.armoryofdestiny.explosive_slug_shell": "§0Explosive Slug Shell§r",
 
   "_advancements": "Advancements",
+  "advancements.armoryofdestiny.root.title": "Armory of Destiny",
+  "advancements.armoryofdestiny.root.description": "Forge your own destiny",
+  "advancements.armoryofdestiny.armorers_workshop.title": "Anvil’s Whisper, Iron’s Tale",
+  "advancements.armoryofdestiny.armorers_workshop.description": "Create a full Armorer's Workshop - Your gateway to the realm of craftsmanship.",
   "advancements.armoryofdestiny.murasama.title": "But This Isn't My Sword...",
   "advancements.armoryofdestiny.murasama.description": "Acquire the Katana of the based Brazilian Samurai",
   "advancements.armoryofdestiny.murasama_full.title": "There Will Be Blood--Shed!",
@@ -168,8 +179,10 @@
   "advancements.armoryofdestiny.sharp_irony.description": "Acquire a Throwing Fan. Irony stings, and oftentimes there is nothing that can be done but laughter",
   "advancements.armoryofdestiny.dragon_slayer.title": "My Brother",
   "advancements.armoryofdestiny.dragon_slayer.description": "Acquire the Greatsword of the Black Swordsman. It's too large, too heavy, and not even sharp. It's more like a heap of iron",
-  "advancements.armoryofdestiny.all_weapons.title": "Astute Collector",
-  "advancements.armoryofdestiny.all_weapons.description": "Acquire every single weapon and become a man of culture",
+  "advancements.armoryofdestiny.all_special_items.title": "Art Of Purpose",
+  "advancements.armoryofdestiny.all_special_items.description": "Craft every possible item on the Armorer's Workshop and earn the title of the true blacksmith.",
+  "advancements.armoryofdestiny.any_blueprint.title": "Wisdom Of The Olden Days",
+  "advancements.armoryofdestiny.any_blueprint.description": "Find a Blueprint inside a chest.",
 
   "_subtitles": "Subtitles",
   "sound.armoryofdestiny.sharp_irony_open": "Sharp Irony opens",

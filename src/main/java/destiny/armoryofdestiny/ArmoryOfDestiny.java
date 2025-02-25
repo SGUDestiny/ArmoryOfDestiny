@@ -7,11 +7,11 @@ import destiny.armoryofdestiny.client.render.entity.BuckshotRenderer;
 import destiny.armoryofdestiny.client.render.entity.ExplosiveSlugRenderer;
 import destiny.armoryofdestiny.client.render.entity.SlugRenderer;
 import destiny.armoryofdestiny.client.render.entity.SparkRenderer;
-import destiny.armoryofdestiny.event.CommonEvents;
-import destiny.armoryofdestiny.item.utility.MurasamaItemProperty;
-import destiny.armoryofdestiny.item.utility.PunisherItemProperty;
-import destiny.armoryofdestiny.item.utility.SharpIronyItemProperty;
-import destiny.armoryofdestiny.registry.*;
+import destiny.armoryofdestiny.server.event.CommonEvents;
+import destiny.armoryofdestiny.server.item.utility.MurasamaItemProperty;
+import destiny.armoryofdestiny.server.item.utility.PunisherItemProperty;
+import destiny.armoryofdestiny.server.item.utility.SharpIronyItemProperty;
+import destiny.armoryofdestiny.server.registry.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -51,6 +51,7 @@ public class ArmoryOfDestiny
         CreativeTabRegistry.DEF_REG.register(modEventBus);
         BlockEntityRegistry.BLOCK_ENTITIES.register(modEventBus);
         RecipeTypeRegistry.SERIALIZERS.register(modEventBus);
+        LootModifierRegistry.GLOBAL_LOOT_MODIFIER_DEF_REG.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
 

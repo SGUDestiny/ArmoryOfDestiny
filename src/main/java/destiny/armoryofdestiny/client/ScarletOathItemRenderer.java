@@ -1,7 +1,7 @@
 package destiny.armoryofdestiny.client;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
-import destiny.armoryofdestiny.item.ScarletOathItem;
+import destiny.armoryofdestiny.server.item.ScarletOathItem;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.DefaultedItemGeoModel;
 import software.bernie.geckolib.renderer.GeoItemRenderer;

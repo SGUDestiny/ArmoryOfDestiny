@@ -1,7 +1,7 @@
 package destiny.armoryofdestiny.client.render.entity;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
-import destiny.armoryofdestiny.entity.BuckshotEntity;
+import destiny.armoryofdestiny.server.entity.BuckshotEntity;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
