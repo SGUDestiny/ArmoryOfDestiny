@@ -27,30 +27,43 @@ public class CommonEvents {
                     stack.getOrCreateTag().putInt("damageDealt", (int) event.getAmount());
                 }
             } else if (stack.getItem() == ItemRegistry.BLOODLETTER.get()) {
+                //Vessel logic
                 Level level = source.getEntity().level();
                 ItemStack emptyVessels = null;
 
-                //Vessel logic
                 for (ItemStack itemStack : player.getInventory().items) {
                     if (itemStack != null && itemStack.getItem() == ItemRegistry.BLOOD_VESSEL_EMPTY.get()) {
                         emptyVessels = itemStack;
                         break;
                     }
                 }
-                if (level.random.nextFloat() > 0.7) {
-                    player.addItem(new ItemStack(ItemRegistry.BLOOD_VESSEL_FULL.get(), 1));
-                    emptyVessels.shrink(1);
+
+                if (emptyVessels != null) {
+                    if (level.random.nextFloat() > 0.7) {
+                        player.addItem(new ItemStack(ItemRegistry.BLOOD_VESSEL_FULL.get(), 1));
+                        emptyVessels.shrink(1);
+                    }
                 }
+            }
 
-                //Rapier logic
-                if (stack.getTag() != null) {
-                    if (0 >= stack.getTag().getInt(ABILITY_TICK)) {
-                        float damageStored = stack.getOrCreateTag().getInt("storedBlood");
+            //Bloodletter
+            ItemStack bloodletter = null;
+            for (ItemStack itemStack : player.getInventory().items) {
+                if (itemStack != null && itemStack.getItem() == ItemRegistry.BLOODLETTER.get()) {
+                    bloodletter = itemStack;
+                    break;
+                }
+            }
 
-                        stack.getOrCreateTag().putInt("storedBlood", (int) Math.min(maxBlood, (damageStored + event.getAmount())));
+            if (bloodletter != null) {
+                if (bloodletter.getTag() != null) {
+                    if (0 >= bloodletter.getTag().getInt(ABILITY_TICK)) {
+                        float damageStored = bloodletter.getOrCreateTag().getInt("storedBlood");
+
+                        bloodletter.getOrCreateTag().putInt("storedBlood", (int) Math.min(maxBlood, (damageStored + event.getAmount())));
                     }
                 } else {
-                    stack.getOrCreateTag().putInt("storedBlood", (int) Math.min(maxBlood, event.getAmount()));
+                    bloodletter.getOrCreateTag().putInt("storedBlood", (int) Math.min(maxBlood, event.getAmount()));
                 }
             }
         }

@@ -68,7 +68,7 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
 
     public BloodletterItem(Item.Properties build) {
         super(Tiers.NETHERITE, 0, 0, build);
-        this.attackDamage = 8.0F;
+        this.attackDamage = 7.0F;
         this.attackSpeed = 0F;
         this.attackKnockback = -0.5F;
         this.entityReach = 2;

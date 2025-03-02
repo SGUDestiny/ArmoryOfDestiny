@@ -28,13 +28,13 @@
         ]
       }
     },
-    "armorers_forging_table": {
+    "armorers_tinkering_table": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "armoryofdestiny:armorers_forging_table"
+              "armoryofdestiny:armorers_tinkering_table"
             ]
           }
         ]
@@ -55,7 +55,7 @@
   },
   "requirements": [
     ["armorers_crafting_table"],
-    ["armorers_forging_table"],
+    ["armorers_tinkering_table"],
     ["smithing_hammer"]
   ],
   "rewards": {
