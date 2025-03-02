@@ -43,6 +43,8 @@ public class BlueprintItem extends TooltipItem {
                 return 0x4A5B7D;
             } else if (blueprintItem.equals(ItemRegistry.PUNISHER.getKey().location().toString())) {
                 return 0x2FFFF8;
+            }  else if (blueprintItem.equals(ItemRegistry.BLOODLETTER.getKey().location().toString())) {
+                return 0xC57070D;
             }
         }
         return 0xFFFFFF;
@@ -102,6 +104,13 @@ public class BlueprintItem extends TooltipItem {
             ingredientList.add(3, Items.DIAMOND_BLOCK.getDescriptionId());
             ingredientList.add(4, Items.FIREWORK_ROCKET.getDescriptionId());
             ingredientList.add(5, Items.LEVER.getDescriptionId());
+        } else if (blueprintItem.equals(ItemRegistry.BLOODLETTER.getKey().location().toString())) {
+            ingredientList.add(0, Items.LODESTONE.getDescriptionId());
+            ingredientList.add(1, Items.ENCHANTED_BOOK.getDescriptionId());
+            ingredientList.add(2, Items.IRON_INGOT.getDescriptionId());
+            ingredientList.add(3, Items.IRON_INGOT.getDescriptionId());
+            ingredientList.add(4, Items.REDSTONE.getDescriptionId());
+            ingredientList.add(5, Items.REDSTONE.getDescriptionId());
         }
         return ingredientList;
     }

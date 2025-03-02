@@ -11,6 +11,10 @@ public class SoundRegistry {
 
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ArmoryOfDestiny.MODID);
 
+    public static RegistryObject<SoundEvent> BLOODLETTER_HIT = registerSoundEvent("bloodletter_hit");
+    public static RegistryObject<SoundEvent> BLOODLETTER_DEACTIVATE = registerSoundEvent("bloodletter_deactivate");
+    public static RegistryObject<SoundEvent> BLOODLETTER_ACTIVATE = registerSoundEvent("bloodletter_activate");
+
     public static RegistryObject<SoundEvent> SMITHING_HAMMER_HIT = registerSoundEvent("smithing_hammer_hit");
 
     public static RegistryObject<SoundEvent> PUNISHER_ATTACK = registerSoundEvent("punisher_attack");

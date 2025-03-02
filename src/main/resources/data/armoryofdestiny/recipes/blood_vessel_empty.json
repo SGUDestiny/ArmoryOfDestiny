@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " NI",
+    "IGN",
+    "NI "
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/gold"
+    },
+    "N": {
+      "tag": "forge:nuggets/gold"
+    },
+    "G": {
+      "tag": "forge:glass/colorless"
+    }
+  },
+  "result": {
+    "item": "armoryofdestiny:blood_vessel_empty",
+    "count": 8
+  }
+}

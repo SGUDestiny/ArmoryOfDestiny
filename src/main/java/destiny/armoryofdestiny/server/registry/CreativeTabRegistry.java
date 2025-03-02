@@ -30,6 +30,9 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.MURASAMA.get());
                 output.accept(ItemRegistry.MURASAMA_SHEATHED.get());
                 output.accept(ItemRegistry.GUN_SHEATH.get());
+                output.accept(ItemRegistry.BLOODLETTER.get());
+                output.accept(ItemRegistry.BLOOD_VESSEL_FULL.get());
+                output.accept(ItemRegistry.BLOOD_VESSEL_EMPTY.get());
                 output.accept(ItemRegistry.DRAGON_SLAYER.get());
                 output.accept(ItemRegistry.ORIGINIUM_KATANA.get());
                 output.accept(ItemRegistry.ORIGINIUM_CATALYST.get());
@@ -49,6 +52,7 @@ public class CreativeTabRegistry {
                 output.accept(createBlueprint(ItemRegistry.ORIGINIUM_CATALYST.getKey(), "unique"));
                 output.accept(createBlueprint(ItemRegistry.PUNISHER.getKey(), "legendary"));
                 output.accept(createBlueprint(ItemRegistry.SHARP_IRONY.getKey(), "unique"));
+                output.accept(createBlueprint(ItemRegistry.BLOODLETTER.getKey(), "legendary"));
             })
             .build()
     );

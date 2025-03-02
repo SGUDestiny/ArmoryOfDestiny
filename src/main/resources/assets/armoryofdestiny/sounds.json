@@ -193,5 +193,26 @@
       "armoryofdestiny:smithing_hammer_hit_5",
       "armoryofdestiny:smithing_hammer_hit_6"
     ]
+  },
+  "bloodletter_activate": {
+    "subtitle": "sound.armoryofdestiny.bloodletter_activate",
+    "sounds": [
+      "armoryofdestiny:bloodletter_activate"
+    ]
+  },
+  "bloodletter_deactivate": {
+    "subtitle": "sound.armoryofdestiny.bloodletter_deactivate",
+    "sounds": [
+      "armoryofdestiny:bloodletter_deactivate"
+    ]
+  },
+  "bloodletter_hit": {
+    "subtitle": "sound.armoryofdestiny.bloodletter_hit",
+    "sounds": [
+      "armoryofdestiny:bloodletter_hit_1",
+      "armoryofdestiny:bloodletter_hit_2",
+      "armoryofdestiny:bloodletter_hit_3",
+      "armoryofdestiny:bloodletter_hit_4"
+    ]
   }
 }

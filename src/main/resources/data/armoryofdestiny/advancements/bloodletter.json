@@ -1,0 +1,36 @@
+{
+  "parent": "armoryofdestiny:any_blueprint",
+  "display": {
+    "icon": {
+      "item": "armoryofdestiny:bloodletter"
+    },
+    "title": {
+      "translate": "advancements.armoryofdestiny.bloodletter.title"
+    },
+    "description": {
+      "translate": "advancements.armoryofdestiny.bloodletter.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:bloodletter"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

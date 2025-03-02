@@ -246,6 +246,13 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
             ingredientList.add(3, itemStackFromItem(Items.DIAMOND_BLOCK));
             ingredientList.add(4, itemStackFromItem(Items.FIREWORK_ROCKET));
             ingredientList.add(5, itemStackFromItem(Items.LEVER));
+        } else if (recipeID.equals(ItemRegistry.BLOODLETTER.getKey().location().toString())) {
+            ingredientList.add(0, itemStackFromItem(Items.LODESTONE));
+            ingredientList.add(1, itemStackFromItem(Items.ENCHANTED_BOOK));
+            ingredientList.add(2, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(3, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(4, itemStackFromItem(Items.REDSTONE));
+            ingredientList.add(5, itemStackFromItem(Items.REDSTONE));
         }
         return ingredientList;
     }
@@ -266,6 +273,8 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
             return stack;
         } else if (recipeID.equals(ItemRegistry.PUNISHER.getKey().location().toString())) {
             return new ItemStack(ItemRegistry.PUNISHER.get(), 1);
+        } else if (recipeID.equals(ItemRegistry.BLOODLETTER.getKey().location().toString())) {
+            return new ItemStack(ItemRegistry.BLOODLETTER.get(), 1);
         }
         return ItemStack.EMPTY;
     }

@@ -87,6 +87,18 @@
           }
         ]
       }
+    },
+    "bloodletter": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:bloodletter"
+            ]
+          }
+        ]
+      }
     }
   },
   "requirements": [
@@ -95,7 +107,8 @@
     ["originium_katana"],
     ["punisher"],
     ["sharp_irony"],
-    ["gun_sheath"]
+    ["gun_sheath"],
+    ["bloodletter"]
   ],
   "rewards": {
     "experience": 250

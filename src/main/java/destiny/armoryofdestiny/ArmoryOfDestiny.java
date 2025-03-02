@@ -8,6 +8,7 @@ import destiny.armoryofdestiny.client.render.entity.ExplosiveSlugRenderer;
 import destiny.armoryofdestiny.client.render.entity.SlugRenderer;
 import destiny.armoryofdestiny.client.render.entity.SparkRenderer;
 import destiny.armoryofdestiny.server.event.CommonEvents;
+import destiny.armoryofdestiny.server.item.utility.BloodletterItemProperty;
 import destiny.armoryofdestiny.server.item.utility.MurasamaItemProperty;
 import destiny.armoryofdestiny.server.item.utility.PunisherItemProperty;
 import destiny.armoryofdestiny.server.item.utility.SharpIronyItemProperty;
@@ -98,6 +99,7 @@ public class ArmoryOfDestiny
                 ItemProperties.register(ItemRegistry.SHARP_IRONY.get(), new ResourceLocation(MODID, "is_open"), new SharpIronyItemProperty());
                 ItemProperties.register(ItemRegistry.PUNISHER.get(), new ResourceLocation(MODID, "active"), new PunisherItemProperty());
                 ItemProperties.register(ItemRegistry.MURASAMA.get(), new ResourceLocation(MODID, "active"), new MurasamaItemProperty());
+                ItemProperties.register(ItemRegistry.BLOODLETTER.get(), new ResourceLocation(MODID, "active"), new BloodletterItemProperty());
             });
         }
     }

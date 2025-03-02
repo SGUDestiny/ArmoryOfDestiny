@@ -46,6 +46,13 @@ public class ItemRegistry {
     public static final RegistryObject<Item> TONGS = ITEMS.register("tongs",
             () -> new Item(new Item.Properties().stacksTo(1)));
 
+    public static final RegistryObject<Item> BLOODLETTER = ITEMS.register("bloodletter",
+            () -> new BloodletterItem(basicItem().rarity(Rarity.EPIC).durability(1024)));
+    public static final RegistryObject<Item> BLOOD_VESSEL_EMPTY = ITEMS.register("blood_vessel_empty",
+            () -> new BloodVesselEmptyItem(new Item.Properties().stacksTo(8)));
+    public static final RegistryObject<Item> BLOOD_VESSEL_FULL = ITEMS.register("blood_vessel_full",
+            () -> new BloodVesselFullItem(new Item.Properties().stacksTo(8)));
+
 //    public static final RegistryObject<Item> SPAS12 = ITEMS.register("spas12",
 //            () -> new Spas12Item(basicItem().rarity(Rarity.EPIC).durability(-1)
 //            ));

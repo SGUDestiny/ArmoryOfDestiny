@@ -18,4 +18,5 @@ public class UtilityVariables {
     public static final String SMITHING_HAMMER = "smithing_hammer";
     public static final String ARMORERS_CRAFTING_TABLE = "armorers_crafting_table";
     public static final String ARMORERS_TINKERING_TABLE = "armorers_tinkering_table";
+    public static final String RAPIER = "rapier";
 }

@@ -70,6 +70,9 @@ public class BlueprintLootModifier implements IGlobalLootModifier {
         if (blueprintItem.equals(ItemRegistry.DRAGON_SLAYER.getKey())) {
             return chanceLegendary;
         }
+        if (blueprintItem.equals(ItemRegistry.BLOODLETTER.getKey())) {
+            return chanceLegendary;
+        }
         if (blueprintItem.equals(ItemRegistry.PUNISHER.getKey())) {
             return chanceUnique;
         }
@@ -93,6 +96,9 @@ public class BlueprintLootModifier implements IGlobalLootModifier {
             return rarityLegendary;
         }
         if (blueprintItem.equals(ItemRegistry.DRAGON_SLAYER.getKey())) {
+            return rarityLegendary;
+        }
+        if (blueprintItem.equals(ItemRegistry.BLOODLETTER.getKey())) {
             return rarityLegendary;
         }
         if (blueprintItem.equals(ItemRegistry.PUNISHER.getKey())) {
