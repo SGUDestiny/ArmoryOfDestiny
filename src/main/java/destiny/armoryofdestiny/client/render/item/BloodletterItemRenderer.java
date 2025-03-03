@@ -25,7 +25,7 @@ public class BloodletterItemRenderer extends GeoItemRenderer<BloodletterItem> {
             int storedBlood = tag.getInt(STORED_BLOOD);
 
             if (animationFrame > 0) {
-                return new ResourceLocation(ArmoryOfDestiny.MODID, "textures/item/bloodletter/bloodletter_" + animationFrame / frameAmount + ".png");
+                return new ResourceLocation(ArmoryOfDestiny.MODID, "textures/item/bloodletter/bloodletter_" + (animationFrame - 1) + ".png");
             } else if (storedBlood >= maxBlood) {
                 return new ResourceLocation(ArmoryOfDestiny.MODID, "textures/item/bloodletter/bloodletter_full.png");
             } else if (storedBlood >= maxBlood / 2) {

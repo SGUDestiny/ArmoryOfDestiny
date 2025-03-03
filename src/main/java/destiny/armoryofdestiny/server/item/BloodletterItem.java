@@ -50,9 +50,8 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
     public static final String STORED_BLOOD = "storedBlood";
     public static final int maxBlood = 200;
     public static final int bloodPerTick = maxBlood / 20;
-    public static final int bloodPerHit = maxBlood / 10;
-    public static final int frameAmount = 5;
-    public static final int frameDuration = 4;
+    public static final int bloodPerHit = maxBlood / 20;
+    public static final int frameAmount = 15;
 
     public static final UUID ABILITY_MULTIPLIER_UUID = UUID.fromString("CB3F55D3-645C-4F38-A497-9C23A23DB6CF");
 
@@ -129,7 +128,7 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
 
                 player.playSound(SoundRegistry.BLOODLETTER_ACTIVATE.get(), 1, 1);
 
-                player.getCooldowns().addCooldown(stack.getItem(), 180);
+                player.getCooldowns().addCooldown(stack.getItem(), 60);
 
                 return InteractionResultHolder.success(stack);
                 //Deactivation
@@ -138,7 +137,7 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
 
                 player.playSound(SoundRegistry.BLOODLETTER_DEACTIVATE.get(), 1, 1);
 
-                player.getCooldowns().addCooldown(stack.getItem(), 180);
+                player.getCooldowns().addCooldown(stack.getItem(), 60);
 
                 return InteractionResultHolder.success(stack);
             }
@@ -239,12 +238,11 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
             if (stack.getTag() != null) {
                 int abilityTick = stack.getOrCreateTag().getInt(ABILITY_TICK);
                 int storedBlood = stack.getOrCreateTag().getInt(STORED_BLOOD);
-                int frameTime = frameAmount * frameDuration;
 
                 if (storedBlood > 0) {
-                    if (abilityTick > 0 && abilityTick < frameTime) {
+                    if (abilityTick > 0 && abilityTick < frameAmount) {
                         stack.getOrCreateTag().putInt(ABILITY_TICK, abilityTick + 1);
-                    } else if (abilityTick == frameTime) {
+                    } else if (abilityTick == frameAmount) {
                         stack.getOrCreateTag().putInt(ABILITY_TICK, 1);
                         stack.getOrCreateTag().putInt(STORED_BLOOD, Math.max(0, storedBlood - bloodPerTick));
                     }
