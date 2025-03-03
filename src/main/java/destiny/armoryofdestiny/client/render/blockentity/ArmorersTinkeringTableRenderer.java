@@ -18,8 +18,8 @@ import org.jetbrains.annotations.NotNull;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
-public class ArmorersAssemblyTableRenderer implements BlockEntityRenderer<ArmorersTinkeringTableBlockEntity> {
-    public ArmorersAssemblyTableRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
+public class ArmorersTinkeringTableRenderer implements BlockEntityRenderer<ArmorersTinkeringTableBlockEntity> {
+    public ArmorersTinkeringTableRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
 
     }
 

@@ -1,8 +1,8 @@
 package destiny.armoryofdestiny.server.event;
 
 import com.mojang.logging.LogUtils;
+import destiny.armoryofdestiny.client.render.blockentity.ArmorersTinkeringTableRenderer;
 import destiny.armoryofdestiny.server.block.ArmorersTinkeringTableBlock;
-import destiny.armoryofdestiny.client.render.blockentity.ArmorersAssemblyTableRenderer;
 import destiny.armoryofdestiny.server.item.BlueprintItem;
 import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;
 import destiny.armoryofdestiny.server.registry.BlockRegistry;
@@ -33,6 +33,6 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(BlockEntityRegistry.ARMORERS_ASSEMBLY_TABLE.get(), ArmorersAssemblyTableRenderer::new);
+        event.registerBlockEntityRenderer(BlockEntityRegistry.ARMORERS_ASSEMBLY_TABLE.get(), ArmorersTinkeringTableRenderer::new);
     }
 }
