@@ -1,0 +1,15 @@
+{
+  "type": "epicfight:greatsword",
+  "attributes": {
+    "one_hand": {
+      "armor_negotiation": 0.0,
+      "impact": 1.2,
+      "max_strikes": 5
+    },
+    "two_hand": {
+      "armor_negotiation": 0.0,
+      "impact": 1.7,
+      "max_strikes": 7
+    }
+  }
+}

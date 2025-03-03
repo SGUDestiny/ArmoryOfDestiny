@@ -1,0 +1,15 @@
+{
+  "type": "epicfight:dagger",
+  "attributes": {
+    "one_hand": {
+      "armor_negotiation": 0.0,
+      "impact": 0.5,
+      "max_strikes": 5
+    },
+    "two_hand": {
+      "armor_negotiation": 0.0,
+      "impact": 1.3,
+      "max_strikes": 7
+    }
+  }
+}
