@@ -129,7 +129,7 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
 
                 player.playSound(SoundRegistry.BLOODLETTER_ACTIVATE.get(), 1, 1);
 
-                player.getCooldowns().addCooldown(stack.getItem(), 60);
+                player.getCooldowns().addCooldown(stack.getItem(), 180);
 
                 return InteractionResultHolder.success(stack);
                 //Deactivation
@@ -138,7 +138,7 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
 
                 player.playSound(SoundRegistry.BLOODLETTER_DEACTIVATE.get(), 1, 1);
 
-                player.getCooldowns().addCooldown(stack.getItem(), 60);
+                player.getCooldowns().addCooldown(stack.getItem(), 180);
 
                 return InteractionResultHolder.success(stack);
             }
