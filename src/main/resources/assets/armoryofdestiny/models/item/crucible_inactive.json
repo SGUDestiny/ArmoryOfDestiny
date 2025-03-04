@@ -1,0 +1,11 @@
+{
+	"base":
+	{
+		"parent": "armoryofdestiny:item/crucible_inactive_dormant_inventory"
+	},
+	"overrides":
+	[
+		{ "predicate": { "armoryofdestiny:active": 0.0 }, "model": "armoryofdestiny:item/crucible_inactive_dormant"},
+		{ "predicate": { "armoryofdestiny:active": 1.0 }, "model": "armoryofdestiny:item/crucible_inactive_awoken"}
+        ]
+}

@@ -53,6 +53,11 @@ public class ItemRegistry {
     public static final RegistryObject<Item> BLOOD_VESSEL_FULL = ITEMS.register("blood_vessel_full",
             () -> new BloodVesselFullItem(new Item.Properties().stacksTo(8)));
 
+    public static final RegistryObject<Item> CRUCIBLE = ITEMS.register("crucible",
+            () -> new CrucibleItem(basicItem().rarity(Rarity.EPIC).durability(-1)));
+    public static final RegistryObject<Item> CRUCIBLE_INACTIVE = ITEMS.register("crucible_inactive",
+            () -> new CrucibleInactiveItem(basicItem().rarity(Rarity.EPIC).durability(-1)));
+
 //    public static final RegistryObject<Item> SPAS12 = ITEMS.register("spas12",
 //            () -> new Spas12Item(basicItem().rarity(Rarity.EPIC).durability(-1)
 //            ));
