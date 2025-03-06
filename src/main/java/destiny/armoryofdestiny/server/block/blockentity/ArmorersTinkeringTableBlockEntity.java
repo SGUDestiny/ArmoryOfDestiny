@@ -253,6 +253,14 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
             ingredientList.add(3, itemStackFromItem(Items.IRON_INGOT));
             ingredientList.add(4, itemStackFromItem(Items.REDSTONE));
             ingredientList.add(5, itemStackFromItem(Items.REDSTONE));
+        } else if (recipeID.equals(ItemRegistry.CRUCIBLE_INACTIVE.getKey().location().toString())) {
+            ingredientList.add(0, itemStackFromItem(Items.BLAZE_ROD));
+            ingredientList.add(1, itemStackFromItem(Items.BLAZE_POWDER));
+            ingredientList.add(2, itemStackFromItem(Items.BLAZE_POWDER));
+            ingredientList.add(3, itemStackFromItem(Items.ENDER_EYE));
+            ingredientList.add(4, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(5, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(5, itemStackFromItem(Items.NETHERITE_INGOT));
         }
         return ingredientList;
     }
@@ -275,6 +283,8 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
             return new ItemStack(ItemRegistry.PUNISHER.get(), 1);
         } else if (recipeID.equals(ItemRegistry.BLOODLETTER.getKey().location().toString())) {
             return new ItemStack(ItemRegistry.BLOODLETTER.get(), 1);
+        } else if (recipeID.equals(ItemRegistry.CRUCIBLE_INACTIVE.getKey().location().toString())) {
+            return new ItemStack(ItemRegistry.CRUCIBLE_INACTIVE.get(), 1);
         }
         return ItemStack.EMPTY;
     }

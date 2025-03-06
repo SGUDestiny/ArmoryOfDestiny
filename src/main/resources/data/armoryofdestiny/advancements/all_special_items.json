@@ -2,7 +2,7 @@
   "parent": "armoryofdestiny:armorers_workshop",
   "display": {
     "icon": {
-      "item": "armoryofdestiny:smithing_hammer"
+      "item": "armoryofdestiny:gold_smithing_hammer"
     },
     "title": {
       "translate": "advancements.armoryofdestiny.all_special_items.title"

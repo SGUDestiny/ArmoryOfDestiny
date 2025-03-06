@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "armoryofdestiny:item/smithing_hammer"
+    "layer0": "armoryofdestiny:item/gold_smithing_hammer"
   }
 }

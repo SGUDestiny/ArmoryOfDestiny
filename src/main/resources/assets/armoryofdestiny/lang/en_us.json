@@ -67,7 +67,10 @@
   "item.armoryofdestiny.blueprint.item": "Blueprint for: ",
   "item.armoryofdestiny.blueprint.ingredients": "Ingredients",
 
-  "item.armoryofdestiny.smithing_hammer": "§7Smithing Hammer",
+  "item.armoryofdestiny.gold_smithing_hammer": "§6Gold Smithing Hammer",
+  "item.armoryofdestiny.iron_smithing_hammer": "§fIron Smithing Hammer",
+  "item.armoryofdestiny.diamond_smithing_hammer": "§bDiamond Smithing Hammer",
+  "item.armoryofdestiny.netherite_smithing_hammer": "§8Netherite Smithing Hammer",
 
   "item.armoryofdestiny.tongs": "§7Tongs [WIP]",
 
@@ -86,8 +89,8 @@
   "item.armoryofdestiny.bloodletter.ability.2.description.1": "When hitting living beings, if an §7empty Blood Vessel is present§r",
   "item.armoryofdestiny.bloodletter.ability.2.description.2": "in the inventory, it has a §7random chance§r to be §7filled up§r.",
 
-  "item.armoryofdestiny.blood_vessel_empty": "Empty Blood Vessel",
-  "item.armoryofdestiny.blood_vessel_full": "Full Blood Vessel",
+  "item.armoryofdestiny.blood_vessel_empty": "§6Empty Blood Vessel",
+  "item.armoryofdestiny.blood_vessel_full": "§6Full Blood Vessel",
   "item.armoryofdestiny.blood_vessel_full.ability.1.title": "Fuel Of Life",
   "item.armoryofdestiny.blood_vessel_full.ability.1.description.1": "By pressing §7[RMB]§r the vessel can be §7consumed§r to restore",
   "item.armoryofdestiny.blood_vessel_full.ability.1.description.2": "a §7half§r of currently §7missing health§r. Does §7not§r leave the",
@@ -148,6 +151,8 @@
   "tooltip.line.trivia.smithing_hammer.description.1": "Smithing Hammers are used in combination with",
   "tooltip.line.trivia.smithing_hammer.description.2": "§7Armorer's Workshop§r to §7assemble individual",
   "tooltip.line.trivia.smithing_hammer.description.3": "§7ingredients§r together into a §7special item§r.",
+  "tooltip.line.trivia.smithing_hammer.description.4": "Hammers made out of §7different materials§r have",
+  "tooltip.line.trivia.smithing_hammer.description.5": "§7different durabilities§r.",
   "tooltip.line.trivia.armorers_crafting_table.title": "Armorer's Crafting Table",
   "tooltip.line.trivia.armorers_crafting_table.description.1": "Armorer's Crafting Table functions as a §7regular crafting",
   "tooltip.line.trivia.armorers_crafting_table.description.2": "§7table§r if you §7[RMB]§r it's §7top side§r, or a §7container§r if you",
@@ -224,6 +229,8 @@
   "advancements.armoryofdestiny.crucible_inactive.description": "Acquire the Greatsword of the Doom Slayer, powered by the very souls of the damned.",
   "advancements.armoryofdestiny.crucible.title": "...Is You",
   "advancements.armoryofdestiny.crucible.description": "Activate the Crucible by fueling it with blaze rods",
+  "advancements.armoryofdestiny.netherite_smithing_hammer.title": "It's Hammer Time!",
+  "advancements.armoryofdestiny.netherite_smithing_hammer.description": "Craft a Netherite Smithing Hammer - The ultimate tool of a smith",
 
   "_subtitles": "Subtitles",
   "sound.armoryofdestiny.sharp_irony_open": "Sharp Irony opens",

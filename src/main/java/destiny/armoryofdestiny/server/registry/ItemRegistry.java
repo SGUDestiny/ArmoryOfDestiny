@@ -40,8 +40,14 @@ public class ItemRegistry {
     public static final RegistryObject<Item> BLUEPRINT = ITEMS.register("blueprint",
             () -> new BlueprintItem(new Item.Properties().stacksTo(1)));
 
-    public static final RegistryObject<Item> SMITHING_HAMMER = ITEMS.register("smithing_hammer",
-            () -> new SmithingHammerItem(new Item.Properties().stacksTo(1).durability(64)));
+    public static final RegistryObject<Item> GOLD_SMITHING_HAMMER = ITEMS.register("gold_smithing_hammer",
+            () -> new SmithingHammerItem(new Item.Properties().stacksTo(1).durability(16), Items.GOLD_INGOT, 4));
+    public static final RegistryObject<Item> IRON_SMITHING_HAMMER = ITEMS.register("iron_smithing_hammer",
+            () -> new SmithingHammerItem(new Item.Properties().stacksTo(1).durability(32), Items.IRON_INGOT, 6));
+    public static final RegistryObject<Item> DIAMOND_SMITHING_HAMMER = ITEMS.register("diamond_smithing_hammer",
+            () -> new SmithingHammerItem(new Item.Properties().stacksTo(1).durability(64), Items.DIAMOND, 8));
+    public static final RegistryObject<Item> NETHERITE_SMITHING_HAMMER = ITEMS.register("netherite_smithing_hammer",
+            () -> new SmithingHammerItem(new Item.Properties().stacksTo(1).durability(128), Items.NETHERITE_INGOT, 10));
 
     public static final RegistryObject<Item> TONGS = ITEMS.register("tongs",
             () -> new Item(new Item.Properties().stacksTo(1)));

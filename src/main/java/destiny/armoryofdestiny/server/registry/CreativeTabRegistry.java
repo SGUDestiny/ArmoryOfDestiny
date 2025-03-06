@@ -28,6 +28,7 @@ public class CreativeTabRegistry {
             .icon(() -> ItemRegistry.MURASAMA.get().getDefaultInstance())
             .title(Component.translatable("itemGroup.armoryofdestiny.tab"))
             .displayItems((parameters, output) -> {
+                //Craftable items
                 output.accept(ItemRegistry.MURASAMA.get());
                 output.accept(ItemRegistry.MURASAMA_SHEATHED.get());
                 output.accept(ItemRegistry.GUN_SHEATH.get());
@@ -43,12 +44,18 @@ public class CreativeTabRegistry {
                 output.accept(createSharpIrony(ItemRegistry.SHARP_IRONY.get()));
                 output.accept(ItemRegistry.METALLIC_FEATHER.get());
 
-                output.accept(ItemRegistry.TONGS.get());
-
-                output.accept(ItemRegistry.SMITHING_HAMMER.get());
+                //Armorer's workshop
                 output.accept(BlockRegistry.ARMORERS_CRAFTING_TABLE.get());
                 output.accept(BlockRegistry.ARMORERS_FORGING_TABLE.get());
+                output.accept(ItemRegistry.GOLD_SMITHING_HAMMER.get());
+                output.accept(ItemRegistry.IRON_SMITHING_HAMMER.get());
+                output.accept(ItemRegistry.DIAMOND_SMITHING_HAMMER.get());
+                output.accept(ItemRegistry.NETHERITE_SMITHING_HAMMER.get());
 
+                //Armorer's forge
+                output.accept(ItemRegistry.TONGS.get());
+
+                //Blueprints
                 output.accept(createBlueprint(ItemRegistry.MURASAMA.getKey(), "legendary"));
                 output.accept(createBlueprint(ItemRegistry.GUN_SHEATH.getKey(), "legendary"));
                 output.accept(createBlueprint(ItemRegistry.DRAGON_SLAYER.getKey(), "legendary"));
@@ -56,6 +63,7 @@ public class CreativeTabRegistry {
                 output.accept(createBlueprint(ItemRegistry.PUNISHER.getKey(), "legendary"));
                 output.accept(createBlueprint(ItemRegistry.SHARP_IRONY.getKey(), "unique"));
                 output.accept(createBlueprint(ItemRegistry.BLOODLETTER.getKey(), "legendary"));
+                output.accept(createBlueprint(ItemRegistry.CRUCIBLE_INACTIVE.getKey(), "legendary"));
             })
             .build()
     );

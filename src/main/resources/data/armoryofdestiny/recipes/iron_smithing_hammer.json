@@ -10,13 +10,13 @@
       "item": "minecraft:string"
     },
     "I": {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     "T": {
       "item": "minecraft:stick"
     }
   },
   "result": {
-    "item": "armoryofdestiny:smithing_hammer"
+    "item": "armoryofdestiny:iron_smithing_hammer"
   }
 }

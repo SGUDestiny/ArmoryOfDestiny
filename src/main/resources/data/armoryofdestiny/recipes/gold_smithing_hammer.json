@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ISI",
+    "ITI",
+    " T "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "I": {
+      "tag": "forge:ingots/gold"
+    },
+    "T": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "armoryofdestiny:gold_smithing_hammer"
+  }
+}

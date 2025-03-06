@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DSD",
+    "DTD",
+    " T "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "T": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "armoryofdestiny:diamond_smithing_hammer"
+  }
+}

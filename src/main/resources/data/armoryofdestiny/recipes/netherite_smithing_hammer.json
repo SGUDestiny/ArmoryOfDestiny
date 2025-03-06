@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition":
+  {
+    "item": "minecraft:netherite_ingot"
+  },
+  "base":
+  {
+    "item": "armoryofdestiny:diamond_smithing_hammer"
+  },
+  "result":
+  {
+    "item": "armoryofdestiny:netherite_smithing_hammer"
+  },
+  "template":
+  {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  }
+}

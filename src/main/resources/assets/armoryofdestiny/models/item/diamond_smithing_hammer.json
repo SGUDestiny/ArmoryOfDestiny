@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "armoryofdestiny:item/diamond_smithing_hammer"
+  }
+}

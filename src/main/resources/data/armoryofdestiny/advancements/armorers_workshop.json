@@ -40,13 +40,49 @@
         ]
       }
     },
-    "smithing_hammer": {
+    "iron_smithing_hammer": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "armoryofdestiny:smithing_hammer"
+              "armoryofdestiny:iron_smithing_hammer"
+            ]
+          }
+        ]
+      }
+    },
+    "gold_smithing_hammer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:gold_smithing_hammer"
+            ]
+          }
+        ]
+      }
+    },
+    "diamond_smithing_hammer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:diamond_smithing_hammer"
+            ]
+          }
+        ]
+      }
+    },
+    "netherite_smithing_hammer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:netherite_smithing_hammer"
             ]
           }
         ]
@@ -56,7 +92,7 @@
   "requirements": [
     ["armorers_crafting_table"],
     ["armorers_tinkering_table"],
-    ["smithing_hammer"]
+    ["iron_smithing_hammer", "gold_smithing_hammer", "diamond_smithing_hammer", "netherite_smithing_hammer"]
   ],
   "rewards": {
     "experience": 250

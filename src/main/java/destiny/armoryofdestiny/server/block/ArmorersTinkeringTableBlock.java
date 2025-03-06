@@ -216,6 +216,8 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
                 return 0x2FFFF8;
             } else if (blueprintItem.equals(ItemRegistry.BLOODLETTER.getKey().location().toString())) {
                 return 0xC57070D;
+            } else if (blueprintItem.equals(ItemRegistry.CRUCIBLE_INACTIVE.getKey().location().toString())) {
+                return 0xFF4439;
             }
         }
         return 0xFFFFFF;

@@ -1,0 +1,36 @@
+{
+  "parent": "armoryofdestiny:armorers_workshop",
+  "display": {
+    "icon": {
+      "item": "armoryofdestiny:netherite_smithing_hammer"
+    },
+    "title": {
+      "translate": "advancements.armoryofdestiny.netherite_smithing_hammer.title"
+    },
+    "description": {
+      "translate": "advancements.armoryofdestiny.netherite_smithing_hammer.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:netherite_smithing_hammer"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 500
+  },
+  "sends_telemetry_event": false
+}
