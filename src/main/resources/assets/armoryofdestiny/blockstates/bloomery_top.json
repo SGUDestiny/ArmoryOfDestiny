@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": [
+      {
+        "model": "armoryofdestiny:block/bloomery_top"
+      }
+    ],
+    "facing=south": [
+      {
+        "model": "armoryofdestiny:block/bloomery_top",
+        "y": 180
+      }
+    ],
+    "facing=west": [
+      {
+        "model": "armoryofdestiny:block/bloomery_top",
+        "y": 270
+      }
+    ],
+    "facing=east": [
+      {
+        "model": "armoryofdestiny:block/bloomery_top",
+        "y": 90
+      }
+    ]
+  }
+}

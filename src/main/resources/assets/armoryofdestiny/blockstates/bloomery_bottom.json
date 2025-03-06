@@ -1,0 +1,427 @@
+{
+  "variants": {
+    "facing=north,lit=false,logs=0,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom"
+      }
+    ],
+    "facing=north,lit=false,logs=0,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_open"
+      }
+    ],
+    "facing=north,lit=false,logs=1,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1"
+      }
+    ],
+    "facing=north,lit=true,logs=1,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1_lit"
+      }
+    ],
+    "facing=north,lit=false,logs=1,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1_open"
+      }
+    ],
+    "facing=north,lit=true,logs=1,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1_open_lit"
+      }
+    ],
+    "facing=north,lit=false,logs=2,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2"
+      }
+    ],
+    "facing=north,lit=true,logs=2,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2_lit"
+      }
+    ],
+    "facing=north,lit=false,logs=2,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2_open"
+      }
+    ],
+    "facing=north,lit=true,logs=2,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2_open_lit"
+      }
+    ],
+    "facing=north,lit=false,logs=3,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3"
+      }
+    ],
+    "facing=north,lit=true,logs=3,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3_lit"
+      }
+    ],
+    "facing=north,lit=false,logs=3,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3_open"
+      }
+    ],
+    "facing=north,lit=true,logs=3,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3_open_lit"
+      }
+    ],
+    "facing=north,lit=false,logs=4,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4"
+      }
+    ],
+    "facing=north,lit=true,logs=4,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4_lit"
+      }
+    ],
+    "facing=north,lit=false,logs=4,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4_open"
+      }
+    ],
+    "facing=north,lit=true,logs=4,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4_open_lit"
+      }
+    ],
+
+
+
+    "facing=south,lit=false,logs=0,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=false,logs=0,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_open",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=false,logs=1,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=true,logs=1,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1_lit",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=false,logs=1,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1_open",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=true,logs=1,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1_open_lit",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=false,logs=2,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=true,logs=2,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2_lit",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=false,logs=2,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2_open",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=true,logs=2,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2_open_lit",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=false,logs=3,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=true,logs=3,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3_lit",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=false,logs=3,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3_open",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=true,logs=3,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3_open_lit",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=false,logs=4,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=true,logs=4,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4_lit",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=false,logs=4,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4_open",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=true,logs=4,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4_open_lit",
+        "y": 180
+      }
+    ],
+
+
+
+    "facing=west,lit=false,logs=0,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=false,logs=0,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_open",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=false,logs=1,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=true,logs=1,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1_lit",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=false,logs=1,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1_open",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=true,logs=1,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1_open_lit",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=false,logs=2,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=true,logs=2,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2_lit",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=false,logs=2,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2_open",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=true,logs=2,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2_open_lit",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=false,logs=3,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=true,logs=3,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3_lit",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=false,logs=3,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3_open",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=true,logs=3,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3_open_lit",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=false,logs=4,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=true,logs=4,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4_lit",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=false,logs=4,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4_open",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=true,logs=4,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4_open_lit",
+        "y": 270
+      }
+    ],
+
+
+
+    "facing=east,lit=false,logs=0,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=false,logs=0,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_open",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=false,logs=1,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=true,logs=1,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1_lit",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=false,logs=1,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1_open",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=true,logs=1,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_1_open_lit",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=false,logs=2,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=true,logs=2,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2_lit",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=false,logs=2,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2_open",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=true,logs=2,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_2_open_lit",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=false,logs=3,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=true,logs=3,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3_lit",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=false,logs=3,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3_open",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=true,logs=3,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_3_open_lit",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=false,logs=4,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=true,logs=4,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4_lit",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=false,logs=4,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4_open",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=true,logs=4,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_4_open_lit",
+        "y": 90
+      }
+    ]
+  }
+}
