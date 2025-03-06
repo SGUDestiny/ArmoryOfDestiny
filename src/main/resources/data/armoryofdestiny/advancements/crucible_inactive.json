@@ -1,0 +1,36 @@
+{
+  "parent": "armoryofdestiny:any_blueprint",
+  "display": {
+    "icon": {
+      "item": "armoryofdestiny:crucible_inactive"
+    },
+    "title": {
+      "translate": "advancements.armoryofdestiny.crucible_inactive.title"
+    },
+    "description": {
+      "translate": "advancements.armoryofdestiny.crucible_inactive.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:crucible_inactive"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

@@ -5,10 +5,13 @@ import com.google.common.collect.Multimap;
 import destiny.armoryofdestiny.client.render.item.CrucibleItemRenderer;
 import destiny.armoryofdestiny.server.item.utility.TooltipSwordItem;
 import destiny.armoryofdestiny.server.registry.ItemRegistry;
+import destiny.armoryofdestiny.server.registry.SoundRegistry;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -31,8 +34,13 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 
+import static destiny.armoryofdestiny.server.misc.UtilityVariables.GREATSWORD;
+import static destiny.armoryofdestiny.server.misc.UtilityVariables.LEGENDARY;
+
 public class CrucibleItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    public static final String USAGES = "usages";
 
     @OnlyIn(Dist.CLIENT)
     private float attackDamage;
@@ -40,15 +48,12 @@ public class CrucibleItem extends TooltipSwordItem implements GeoItem {
     private double attackKnockback;
     private double entityReach;
 
-    public float attackDamageAbility;
-    public int dealtDamageCap = 10240;
-
     public CrucibleItem(Item.Properties build) {
         super(Tiers.NETHERITE, 0, 0, build);
-        this.attackDamage = 11.0F;
-        this.attackSpeed = -2.8F;
-        this.attackKnockback = -0.8F;
-        this.entityReach = 2;
+        this.attackDamage = 29.0F;
+        this.attackSpeed = -2.5F;
+        this.attackKnockback = -1.5F;
+        this.entityReach = 1;
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
@@ -87,13 +92,69 @@ public class CrucibleItem extends TooltipSwordItem implements GeoItem {
         ItemStack stack = player.getItemInHand(hand);
 
         ItemStack newStack = new ItemStack(ItemRegistry.CRUCIBLE_INACTIVE.get());
-        newStack.getOrCreateTag().putBoolean("isActive", true);
 
-        stack.shrink(1);
+        if (stack.getTag() != null) {
+            newStack.getOrCreateTag().merge(stack.getTag());
+        }
 
         player.setItemInHand(hand, newStack);
 
+        level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundRegistry.CRUCIBLE_DEACTIVATE.get(), SoundSource.PLAYERS, 1F, 1, false);
+
+        player.getCooldowns().addCooldown(newStack.getItem(), 20);
+
         return InteractionResultHolder.success(stack);
+    }
+
+    @Override
+    public boolean hurtEnemy(ItemStack stack, LivingEntity entity1, LivingEntity entity2) {
+        if (stack.getTag() != null) {
+            int usages = stack.getTag().getInt(USAGES);
+
+            if (3 >= usages && usages > 1) {
+                stack.hurtAndBreak(1, entity2, (entity3) -> {
+                    entity3.broadcastBreakEvent(EquipmentSlot.MAINHAND);
+                });
+
+                stack.getOrCreateTag().putInt(USAGES, usages - 1);
+
+                entity1.playSound(SoundRegistry.CRUCIBLE_SWING.get(), 1F, 1);
+
+                return true;
+            } else if (usages == 1) {
+                stack.hurtAndBreak(1, entity2, (entity3) -> {
+                    entity3.broadcastBreakEvent(EquipmentSlot.MAINHAND);
+                });
+
+                if (entity2 instanceof Player player) {
+                    ItemStack newStack = new ItemStack(ItemRegistry.CRUCIBLE_INACTIVE.get(), 1);
+
+                    if (stack.getTag() != null) {
+                        newStack.getOrCreateTag().merge(stack.getTag());
+                    }
+
+                    player.setItemInHand(InteractionHand.MAIN_HAND, newStack);
+
+                    player.getCooldowns().addCooldown(newStack.getItem(), 100);
+                }
+
+                entity1.playSound(SoundRegistry.CRUCIBLE_SWING.get(), 1F, 1);
+                entity1.playSound(SoundRegistry.CRUCIBLE_DEACTIVATE.get(), 1F, 1);
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String getItemRarity(ItemStack stack) {
+        return LEGENDARY;
+    }
+
+    @Override
+    public String getTriviaType() {
+        return GREATSWORD;
     }
 
     @Override

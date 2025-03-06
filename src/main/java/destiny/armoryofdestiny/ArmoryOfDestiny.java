@@ -97,7 +97,6 @@ public class ArmoryOfDestiny
                 ItemProperties.register(ItemRegistry.PUNISHER.get(), new ResourceLocation(MODID, "active"), new PunisherItemProperty());
                 ItemProperties.register(ItemRegistry.MURASAMA.get(), new ResourceLocation(MODID, "active"), new MurasamaItemProperty());
                 ItemProperties.register(ItemRegistry.BLOODLETTER.get(), new ResourceLocation(MODID, "active"), new BloodletterItemProperty());
-                ItemProperties.register(ItemRegistry.CRUCIBLE_INACTIVE.get(), new ResourceLocation(MODID, "active"), new CrucibleInactiveProperty());
             });
         }
     }

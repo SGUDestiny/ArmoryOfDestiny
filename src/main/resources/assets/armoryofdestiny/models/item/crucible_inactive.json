@@ -1,11 +1,23 @@
 {
+	"loader": "forge:separate_transforms",
+	"gui_light": "front",
 	"base":
 	{
-		"parent": "armoryofdestiny:item/crucible_inactive_dormant_inventory"
+		"parent": "armoryofdestiny:item/crucible_third_person"
 	},
-	"overrides":
-	[
-		{ "predicate": { "armoryofdestiny:active": 0.0 }, "model": "armoryofdestiny:item/crucible_inactive_dormant"},
-		{ "predicate": { "armoryofdestiny:active": 1.0 }, "model": "armoryofdestiny:item/crucible_inactive_awoken"}
-        ]
+	"perspectives":
+	{
+		"gui":
+		{
+			"parent": "armoryofdestiny:item/crucible_inactive_inventory"
+		},
+		"fixed":
+		{
+			"parent": "armoryofdestiny:item/crucible_inactive_inventory"
+		},
+		"ground":
+		{
+			"parent": "armoryofdestiny:item/crucible_inactive_inventory"
+		}
+	}
 }

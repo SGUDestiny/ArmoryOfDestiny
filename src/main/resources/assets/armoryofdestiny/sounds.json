@@ -214,5 +214,24 @@
       "armoryofdestiny:bloodletter_hit_3",
       "armoryofdestiny:bloodletter_hit_4"
     ]
+  },
+  "crucible_activate": {
+  "subtitle": "sound.armoryofdestiny.crucible_activate",
+  "sounds": [
+    "armoryofdestiny:crucible_activate"
+    ]
+  },
+  "crucible_deactivate": {
+    "subtitle": "sound.armoryofdestiny.crucible_deactivate",
+    "sounds": [
+      "armoryofdestiny:crucible_deactivate"
+    ]
+  },
+  "crucible_swing": {
+    "subtitle": "sound.armoryofdestiny.crucible_swing",
+    "sounds": [
+      "armoryofdestiny:crucible_swing_1",
+      "armoryofdestiny:crucible_swing_2"
+    ]
   }
 }

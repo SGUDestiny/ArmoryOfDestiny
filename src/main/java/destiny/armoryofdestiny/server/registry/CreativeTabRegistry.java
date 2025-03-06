@@ -17,6 +17,7 @@ import java.util.function.Supplier;
 
 import static destiny.armoryofdestiny.server.item.SharpIronyItem.AMMO_COUNT;
 import static destiny.armoryofdestiny.server.item.SharpIronyItem.IS_OPEN;
+import static destiny.armoryofdestiny.server.item.CrucibleItem.USAGES;
 
 public class CreativeTabRegistry {
     public static final DeferredRegister<CreativeModeTab> DEF_REG  = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ArmoryOfDestiny.MODID);
@@ -30,9 +31,8 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.MURASAMA.get());
                 output.accept(ItemRegistry.MURASAMA_SHEATHED.get());
                 output.accept(ItemRegistry.GUN_SHEATH.get());
-                output.accept(ItemRegistry.CRUCIBLE.get());
-                output.accept(createInactiveCrucible(ItemRegistry.CRUCIBLE_INACTIVE.get(), true));
-                output.accept(createInactiveCrucible(ItemRegistry.CRUCIBLE_INACTIVE.get(), false));
+                output.accept(createCrucible(ItemRegistry.CRUCIBLE.get()));
+                output.accept(createCrucible(ItemRegistry.CRUCIBLE_INACTIVE.get()));
                 output.accept(ItemRegistry.BLOODLETTER.get());
                 output.accept(ItemRegistry.BLOOD_VESSEL_FULL.get());
                 output.accept(ItemRegistry.BLOOD_VESSEL_EMPTY.get());
@@ -60,19 +60,19 @@ public class CreativeTabRegistry {
             .build()
     );
 
+    private static ItemStack createCrucible(Item item) {
+        ItemStack crucible = new ItemStack(item);
+
+        crucible.getOrCreateTag().putInt(USAGES, 3);
+        return crucible;
+    }
+
     private static ItemStack createSharpIrony(Item item) {
         ItemStack sharpIrony = new ItemStack(item);
 
         sharpIrony.getOrCreateTag().putBoolean(IS_OPEN, true);
         sharpIrony.getOrCreateTag().putInt(AMMO_COUNT, 5);
         return sharpIrony;
-    }
-
-    private static ItemStack createInactiveCrucible(Item item, boolean isActive) {
-        ItemStack crucible = new ItemStack(item);
-
-        crucible.getOrCreateTag().putBoolean("isActive", isActive);
-        return crucible;
     }
 
     private static ItemStack createBlueprint(ResourceKey<Item> itemName, String blueprintRarity) {

@@ -1,5 +1,5 @@
 {
-  "parent": "armoryofdestiny:murasama_full",
+  "parent": "armoryofdestiny:armorers_workshop",
   "display": {
     "icon": {
       "item": "armoryofdestiny:smithing_hammer"
@@ -99,6 +99,18 @@
           }
         ]
       }
+    },
+    "crucible": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:crucible"
+            ]
+          }
+        ]
+      }
     }
   },
   "requirements": [
@@ -108,7 +120,8 @@
     ["punisher"],
     ["sharp_irony"],
     ["gun_sheath"],
-    ["bloodletter"]
+    ["bloodletter"],
+    ["crucible"]
   ],
   "rewards": {
     "experience": 250
