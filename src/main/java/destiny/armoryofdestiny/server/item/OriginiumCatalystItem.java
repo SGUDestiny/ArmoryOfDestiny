@@ -67,7 +67,7 @@ public class OriginiumCatalystItem extends TooltipItem implements GeoItem {
             player.addItem(newCatalystStack);
             player.getCooldowns().addCooldown(stack.getItem(), 20);
 
-            level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundRegistry.ORIGINIUM_CATALYST_ACTIVATE.get(), SoundSource.PLAYERS, 0.5F, 1, false);
+            level.playSound(player, player.blockPosition(), SoundRegistry.ORIGINIUM_CATALYST_ACTIVATE.get(), SoundSource.PLAYERS, 0.5F, 1);
 
             return InteractionResultHolder.success(stack);
         }

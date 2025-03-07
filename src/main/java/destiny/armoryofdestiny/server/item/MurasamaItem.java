@@ -106,8 +106,8 @@ public class MurasamaItem extends TooltipSwordItem implements GeoItem {
             if (!player.isCreative()) {
                 player.getCooldowns().addCooldown(player.getItemInHand(hand).getItem(), 60);
             }
-            level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundRegistry.MURASAMA_SHEATH.get(), SoundSource.PLAYERS, 0.5F, 1, false);
-            level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundRegistry.MURASAMA_INSERT.get(), SoundSource.PLAYERS, 0.5F, 1, false);
+            level.playSound(player, player.blockPosition(), SoundRegistry.MURASAMA_SHEATH.get(), SoundSource.PLAYERS, 0.5F, 1);
+            level.playSound(player, player.blockPosition(), SoundRegistry.MURASAMA_INSERT.get(), SoundSource.PLAYERS, 0.5F, 1);
 
             return InteractionResultHolder.success(stack);
         }

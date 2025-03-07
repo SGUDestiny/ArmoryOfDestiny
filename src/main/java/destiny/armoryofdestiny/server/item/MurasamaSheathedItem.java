@@ -98,7 +98,7 @@ public class MurasamaSheathedItem extends TooltipItem implements GeoItem {
         }
         newItem.getOrCreateTag().putInt(ABILITY_TICK, 1);
 
-        level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundRegistry.MURASAMA_SHOOT.get(), SoundSource.PLAYERS, 0.5F, 1, false);
+        level.playSound(player, player.blockPosition(), SoundRegistry.MURASAMA_SHOOT.get(), SoundSource.PLAYERS, 0.5F, 1);
         level.addParticle(ParticleTypes.EXPLOSION, false, player.getX(), player.getY() + 1, player.getZ(), 0, 0, 0);
     }
 

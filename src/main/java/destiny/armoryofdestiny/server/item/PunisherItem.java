@@ -7,6 +7,7 @@ import destiny.armoryofdestiny.server.item.utility.TooltipSwordItem;
 import destiny.armoryofdestiny.server.registry.ItemRegistry;
 import destiny.armoryofdestiny.server.registry.SoundRegistry;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -119,7 +120,7 @@ public class PunisherItem extends TooltipSwordItem implements GeoItem {
                 stack.getOrCreateTag().putInt(STRIKES_REMAINING, 3);
                 stack.getOrCreateTag().putInt(ANIMATION_TICK, 1);
 
-                player.playSound(SoundRegistry.PUNISHER_ACTIVATE.get(), 1, 1);
+                level.playSound(player, player.blockPosition(), SoundRegistry.PUNISHER_ACTIVATE.get(), SoundSource.PLAYERS, 1, 1);
             } else {
                 return InteractionResultHolder.pass(stack);
             }

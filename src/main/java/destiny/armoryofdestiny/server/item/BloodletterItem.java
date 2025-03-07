@@ -4,12 +4,12 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import destiny.armoryofdestiny.client.render.item.BloodletterItemRenderer;
 import destiny.armoryofdestiny.server.item.utility.TooltipAxeItem;
-import destiny.armoryofdestiny.server.item.utility.TooltipSwordItem;
 import destiny.armoryofdestiny.server.registry.SoundRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -22,12 +22,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.ForgeMod;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
@@ -126,7 +124,8 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
             if (storedBlood > 0 && abilityTick == 0) {
                 stack.getOrCreateTag().putInt(ABILITY_TICK, 1);
 
-                player.playSound(SoundRegistry.BLOODLETTER_ACTIVATE.get(), 1, 1);
+
+                level.playSound(player, player.blockPosition(), SoundRegistry.BLOODLETTER_ACTIVATE.get(), SoundSource.PLAYERS, 1, 1);
 
                 player.getCooldowns().addCooldown(stack.getItem(), 60);
 
@@ -135,7 +134,7 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
             } else if (abilityTick > 0) {
                 stack.getOrCreateTag().putInt(ABILITY_TICK, 0);
 
-                player.playSound(SoundRegistry.BLOODLETTER_DEACTIVATE.get(), 1, 1);
+                level.playSound(player, player.blockPosition(), SoundRegistry.BLOODLETTER_DEACTIVATE.get(), SoundSource.PLAYERS, 1, 1);
 
                 player.getCooldowns().addCooldown(stack.getItem(), 60);
 
@@ -248,8 +247,8 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
                     }
                 } else if (abilityTick != 0) {
                     stack.getOrCreateTag().putInt(ABILITY_TICK, 0);
-
-                    player.playSound(SoundRegistry.BLOODLETTER_DEACTIVATE.get(), 1, 1);
+                    
+                    level.playSound(player, player.blockPosition(), SoundRegistry.BLOODLETTER_DEACTIVATE.get(), SoundSource.PLAYERS, 1, 1);
                 }
             }
         }

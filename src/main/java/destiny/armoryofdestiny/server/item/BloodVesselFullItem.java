@@ -1,7 +1,9 @@
 package destiny.armoryofdestiny.server.item;
 
 import destiny.armoryofdestiny.server.item.utility.TooltipItem;
+import destiny.armoryofdestiny.server.registry.SoundRegistry;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -28,7 +30,7 @@ public class BloodVesselFullItem extends TooltipItem {
         player.heal(healAmount);
         stack.shrink(1);
 
-        player.playSound(SoundEvents.GLASS_BREAK, 1, 1.15F);
+        level.playSound(player, player.blockPosition(), SoundEvents.GLASS_BREAK, SoundSource.PLAYERS, 1, 1.15F);
 
         return InteractionResultHolder.success(stack);
     }

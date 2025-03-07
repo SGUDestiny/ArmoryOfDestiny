@@ -85,8 +85,8 @@ public class CrucibleInactiveItem extends TooltipItem implements GeoItem {
             }
 
             player.setItemInHand(hand, newStack);
-
-            level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundRegistry.CRUCIBLE_ACTIVATE.get(), SoundSource.PLAYERS, 1F, 1, false);
+            
+            level.playSound(player, player.blockPosition(), SoundRegistry.CRUCIBLE_ACTIVATE.get(), SoundSource.PLAYERS, 1, 1);
 
             player.getCooldowns().addCooldown(newStack.getItem(), 20);
 
