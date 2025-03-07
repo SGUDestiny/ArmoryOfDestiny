@@ -8,6 +8,7 @@ import destiny.armoryofdestiny.server.registry.ItemRegistry;
 import destiny.armoryofdestiny.server.registry.SoundRegistry;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -155,6 +156,29 @@ public class CrucibleItem extends TooltipSwordItem implements GeoItem {
     @Override
     public String getTriviaType() {
         return GREATSWORD;
+    }
+
+    @Override
+    public int getBarColor(ItemStack stack) {
+        return Mth.hsvToRgb(0F, 1F, 0.9F);
+    }
+
+    @Override
+    public boolean isBarVisible(ItemStack stack) {
+        if (stack.getTag() != null) {
+            return stack.getTag().getInt(USAGES) > 0;
+        }
+        return false;
+    }
+
+    @Override
+    public int getBarWidth(ItemStack stack) {
+        if (stack.getTag() != null) {
+            int usages = stack.getTag().getInt(USAGES);
+
+            return Math.round((float) usages / 3 * 13.0F);
+        }
+        return 0;
     }
 
     @Override
