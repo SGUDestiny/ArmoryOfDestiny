@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
@@ -52,10 +53,13 @@ public class BloomeryBottomBlock extends Block {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack stack = player.getItemInHand(hand);
 
+
         if (hitResult.getDirection() == state.getValue(HORIZONTAL_FACING)) {
             if (stack == ItemStack.EMPTY) {
                 if (!player.isShiftKeyDown()) {
-                    level.setBlock(pos, state.setValue(OPEN, !state.getValue(OPEN)), 2);
+                    if (!level.isClientSide) {
+                        level.setBlock(pos, state.setValue(OPEN, !state.getValue(OPEN)), 2);
+                    }
                     if (state.getValue(OPEN)) {
                         level.playSound(null, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.BLOCKS);
                     } else {
@@ -64,7 +68,9 @@ public class BloomeryBottomBlock extends Block {
                     return InteractionResult.SUCCESS;
                 } else {
                     if (!state.getValue(LIT) && state.getValue(LOGS) > 0) {
-                        level.setBlock(pos, state.setValue(LOGS, state.getValue(LOGS) - 1), 2);
+                        if (!level.isClientSide) {
+                            level.setBlock(pos, state.setValue(LOGS, state.getValue(LOGS) - 1), 2);
+                        }
                         player.addItem(new ItemStack(Items.OAK_LOG));
                         level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.5F, 1.5F);
 
@@ -79,8 +85,9 @@ public class BloomeryBottomBlock extends Block {
                         if (!player.isCreative()) {
                             stack.setDamageValue(stack.getDamageValue() + 1);
                         }
-
-                        level.setBlock(pos, state.setValue(LIT, true), 2);
+                        if (!level.isClientSide) {
+                            level.setBlock(pos, state.setValue(LIT, true), 2);
+                        }
                         level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS);
 
                         return InteractionResult.SUCCESS;
@@ -90,8 +97,9 @@ public class BloomeryBottomBlock extends Block {
                         if (!player.isCreative()) {
                             stack.shrink(1);
                         }
-
-                        level.setBlock(pos, state.setValue(LOGS, state.getValue(LOGS) + 1), 2);
+                        if (!level.isClientSide) {
+                            level.setBlock(pos, state.setValue(LOGS, state.getValue(LOGS) + 1), 2);
+                        }
                         level.playSound(null, pos, SoundEvents.WOOD_PLACE, SoundSource.BLOCKS);
 
                         return InteractionResult.SUCCESS;
@@ -102,8 +110,9 @@ public class BloomeryBottomBlock extends Block {
                         if (!player.isCreative()) {
                             stack.setDamageValue(stack.getDamageValue() + 1);
                         }
-
-                        level.setBlock(pos, state.setValue(LIT, false), 2);
+                        if (!level.isClientSide) {
+                            level.setBlock(pos, state.setValue(LIT, false), 2);
+                        }
                         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS);
 
                         return InteractionResult.SUCCESS;
