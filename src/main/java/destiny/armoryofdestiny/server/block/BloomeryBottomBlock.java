@@ -52,13 +52,12 @@ public class BloomeryBottomBlock extends Block {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         ItemStack stack = player.getItemInHand(hand);
-
-
+        
         if (hitResult.getDirection() == state.getValue(HORIZONTAL_FACING)) {
             if (stack == ItemStack.EMPTY) {
                 if (!player.isShiftKeyDown()) {
                     if (!level.isClientSide) {
-                        level.setBlock(pos, state.setValue(OPEN, !state.getValue(OPEN)), 2);
+                        level.setBlock(pos, state.cycle(OPEN), 2);
                     }
                     if (state.getValue(OPEN)) {
                         level.playSound(null, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.BLOCKS);
