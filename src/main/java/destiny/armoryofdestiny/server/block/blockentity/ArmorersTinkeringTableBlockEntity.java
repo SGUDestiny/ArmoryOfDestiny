@@ -90,58 +90,60 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
     }
 
     public void advanceCrafting(Level level, BlockPos pos, Player player, ItemStack heldItem) {
-        if (isSmithingCraftingTablePresent()) {
-            //Check if item in input slot is current ingredient
-            if (getInputItem().is(wantItemStack.getItem())) {
-                //Check if remaining ingredients is more than one
-                int remainingIngredients = recipeIngredients.size();
+        if (!level.isClientSide) {
+            if (isSmithingCraftingTablePresent()) {
+                //Check if item in input slot is current ingredient
+                if (getInputItem().is(wantItemStack.getItem())) {
+                    //Check if remaining ingredients is more than one
+                    int remainingIngredients = recipeIngredients.size();
 
-                if (remainingIngredients > 1) {
-                    recipeIngredients.remove(currentIngredientIndex);
-                    currentIngredientIndex = level.random.nextInt(recipeIngredients.size());
-                    markUpdated();
-                    wantItemStack = recipeIngredients.get(currentIngredientIndex);
+                    if (remainingIngredients > 1) {
+                        recipeIngredients.remove(currentIngredientIndex);
+                        currentIngredientIndex = level.random.nextInt(recipeIngredients.size());
+                        markUpdated();
+                        wantItemStack = recipeIngredients.get(currentIngredientIndex);
 
-                    //Transfer input slot to next empty storage slot
-                    for (int i = 0; storedItems.getSlots() > i; i++) {
-                        if (storedItems.getStackInSlot(i).isEmpty()) {
-                            storedItems.setStackInSlot(i, inputSlot.getStackInSlot(0));
-                            inputSlot.setStackInSlot(0, ItemStack.EMPTY);
-                            break;
+                        //Transfer input slot to next empty storage slot
+                        for (int i = 0; storedItems.getSlots() > i; i++) {
+                            if (storedItems.getStackInSlot(i).isEmpty()) {
+                                storedItems.setStackInSlot(i, inputSlot.getStackInSlot(0));
+                                inputSlot.setStackInSlot(0, ItemStack.EMPTY);
+                                break;
+                            }
                         }
+
+                        markUpdated();
+                    } else if (remainingIngredients == 1) {
+                        //Else finish crafting
+
+                        //Set result slot to result item
+                        setInputItem(recipeResult);
+                        setBlueprintItem(ItemStack.EMPTY);
+                        //Clear stored items
+                        clearStoredItems();
+                        //Clear ingredient list
+                        recipeIngredients.clear();
+                        recipeResult = ItemStack.EMPTY;
+                        //Reset variables
+                        currentIngredientIndex = -1;
+                        wantItemStack = ItemStack.EMPTY;
+                        level.setBlockAndUpdate(pos, getBlockState().setValue(HAS_BLUEPRINT, false));
+
+                        level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.5F, 1);
+
+                        markUpdated();
                     }
 
-                    markUpdated();
-                } else if (remainingIngredients == 1) {
-                    //Else finish crafting
+                    if (!player.isCreative()) {
+                        heldItem.setDamageValue(heldItem.getDamageValue() + 1);
+                    }
 
-                    //Set result slot to result item
-                    setInputItem(recipeResult);
-                    setBlueprintItem(ItemStack.EMPTY);
-                    //Clear stored items
-                    clearStoredItems();
-                    //Clear ingredient list
-                    recipeIngredients.clear();
-                    recipeResult = ItemStack.EMPTY;
-                    //Reset variables
-                    currentIngredientIndex = -1;
-                    wantItemStack = ItemStack.EMPTY;
-                    level.setBlockAndUpdate(pos, getBlockState().setValue(HAS_BLUEPRINT, false));
+                    if (level instanceof ServerLevel serverLevel) {
+                        serverLevel.sendParticles(ParticleTypes.CRIT, pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5, 8, 0.2, 0.1, 0.2, 0.05);
+                    }
 
-                    level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.5F, 1);
-
-                    markUpdated();
+                    level.playSound(null, pos, SoundRegistry.SMITHING_HAMMER_HIT.get(), SoundSource.BLOCKS, 1, 1);
                 }
-
-                if (!player.isCreative()) {
-                    heldItem.setDamageValue(heldItem.getDamageValue() + 1);
-                }
-
-                if (level instanceof ServerLevel serverLevel) {
-                    serverLevel.sendParticles(ParticleTypes.CRIT, pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5, 8, 0.2, 0.1, 0.2, 0.05);
-                }
-
-                level.playSound(null, pos, SoundRegistry.SMITHING_HAMMER_HIT.get(), SoundSource.BLOCKS, 1, 1);
             }
         }
     }
