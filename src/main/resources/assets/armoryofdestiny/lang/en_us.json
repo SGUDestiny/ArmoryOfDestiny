@@ -198,6 +198,9 @@
   "item.armoryofdestiny.incendiary_shell": "§9Incendiary Shell§r",
   "item.armoryofdestiny.explosive_slug_shell": "§0Explosive Slug Shell§r",
 
+  "_effects": "Effects",
+  "effect.armoryofdestiny.nonexistence": "§8Non-Existence",
+
   "_advancements": "Advancements",
   "advancements.armoryofdestiny.root.title": "Armory of Destiny",
   "advancements.armoryofdestiny.root.description": "Forge your own destiny",

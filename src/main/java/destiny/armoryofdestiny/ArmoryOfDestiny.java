@@ -50,6 +50,7 @@ public class ArmoryOfDestiny
         BlockEntityRegistry.BLOCK_ENTITIES.register(modEventBus);
         RecipeTypeRegistry.SERIALIZERS.register(modEventBus);
         LootModifierRegistry.GLOBAL_LOOT_MODIFIER_DEF_REG.register(modEventBus);
+        EffectRegistry.DEF_REG.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
 
