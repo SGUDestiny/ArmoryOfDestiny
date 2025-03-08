@@ -100,7 +100,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
                     if (remainingIngredients > 1) {
                         recipeIngredients.remove(currentIngredientIndex);
                         currentIngredientIndex = level.random.nextInt(recipeIngredients.size());
-                        markUpdated();
+
                         wantItemStack = recipeIngredients.get(currentIngredientIndex);
 
                         //Transfer input slot to next empty storage slot
