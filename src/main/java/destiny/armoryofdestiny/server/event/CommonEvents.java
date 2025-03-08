@@ -24,14 +24,14 @@ public class CommonEvents {
     public void playerInteract(PlayerInteractEvent event) {
         if (event.getEntity().hasEffect(EffectRegistry.NONEXISTENCE.get())) {
             event.getEntity().removeEffect(EffectRegistry.NONEXISTENCE.get());
-            event.getEntity().addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 0));
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.WITHER, 120, 0));
         }
     }
 
     @SubscribeEvent
     public void livingExpireEffect(MobEffectEvent.Expired event) {
         if (event.getEffectInstance().getEffect() instanceof NonexistenceEffect) {
-            event.getEntity().addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 0));
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.WITHER, 120, 0));
         }
     }
     @SubscribeEvent
@@ -46,7 +46,7 @@ public class CommonEvents {
         DamageSource source = event.getSource();
         if (event.getEntity().hasEffect(EffectRegistry.NONEXISTENCE.get())) {
             event.getEntity().removeEffect(EffectRegistry.NONEXISTENCE.get());
-            event.getEntity().addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 0));
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.WITHER, 120, 0));
         }
 
         if (source.getEntity() instanceof Player player) {
