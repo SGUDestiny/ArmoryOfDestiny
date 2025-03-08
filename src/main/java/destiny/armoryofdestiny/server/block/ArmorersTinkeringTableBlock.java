@@ -79,9 +79,8 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
                         return InteractionResult.SUCCESS;
                     } else if (heldItem.getItem() instanceof WritableBookItem) {
                         ItemStack blueprint = table.getBlueprintItem().copy();
-                        blueprint.setCount(1);
+                        blueprint.setCount(2);
 
-                        player.addItem(blueprint);
                         player.addItem(blueprint);
 
                         if (!player.isCreative()) {
