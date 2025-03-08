@@ -6,11 +6,21 @@ import destiny.armoryofdestiny.server.registry.ItemRegistry;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.warden.Warden;
+import net.minecraft.world.entity.monster.warden.WardenAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.event.VanillaGameEvent;
+import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -20,6 +30,51 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import static destiny.armoryofdestiny.server.item.BloodletterItem.*;
 
 public class CommonEvents {
+    //So sculk sensors don't detect players with effect
+    @SubscribeEvent
+    public void vanillaGameEvent(VanillaGameEvent event) {
+        if (event.getCause() instanceof Player player && player.hasEffect(EffectRegistry.NONEXISTENCE.get())) {
+            event.setCanceled(true);
+        }
+    }
+
+    //If player has effect, prevent mob targeting
+    @SubscribeEvent
+    public void livingChangeTarget(LivingChangeTargetEvent event) {
+        if (event.getNewTarget() != null && event.getOriginalTarget().hasEffect(EffectRegistry.NONEXISTENCE.get())) {
+            event.setCanceled(true);
+        }
+    }
+
+    //If mob has player with effect targeted, remove target
+    @SubscribeEvent
+    public void livingTick(LivingEvent.LivingTickEvent event) {
+        if (!event.getEntity().level().isClientSide) {
+            if (event.getEntity() instanceof Mob mob) {
+                if (mob.getTarget() instanceof Player player && player.hasEffect(EffectRegistry.NONEXISTENCE.get())) {
+                    mob.setTarget(null);
+                }
+            }
+        }
+    }
+
+    //When effect ends, apply withering
+    @SubscribeEvent
+    public void livingExpireEffect(MobEffectEvent.Expired event) {
+        if (event.getEffectInstance().getEffect() instanceof NonexistenceEffect) {
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.WITHER, 120, 0));
+        }
+    }
+
+    //If effect present, don't render player
+    @SubscribeEvent
+    public void onPlayerRender(RenderPlayerEvent.Pre event) {
+        if (event.getEntity().hasEffect(EffectRegistry.NONEXISTENCE.get())) {
+            event.setCanceled(true);
+        }
+    }
+
+    //If player interacts, remove effect
     @SubscribeEvent
     public void playerInteract(PlayerInteractEvent event) {
         if (event.getEntity().hasEffect(EffectRegistry.NONEXISTENCE.get())) {
@@ -28,16 +83,12 @@ public class CommonEvents {
         }
     }
 
+    //If player attacks an entity, remove effect
     @SubscribeEvent
-    public void livingExpireEffect(MobEffectEvent.Expired event) {
-        if (event.getEffectInstance().getEffect() instanceof NonexistenceEffect) {
-            event.getEntity().addEffect(new MobEffectInstance(MobEffects.WITHER, 120, 0));
-        }
-    }
-    @SubscribeEvent
-    public void onPlayerRender(RenderPlayerEvent.Pre event) {
+    public void attackEntity(AttackEntityEvent event) {
         if (event.getEntity().hasEffect(EffectRegistry.NONEXISTENCE.get())) {
-            event.setCanceled(true);
+            event.getEntity().removeEffect(EffectRegistry.NONEXISTENCE.get());
+            event.getEntity().addEffect(new MobEffectInstance(MobEffects.WITHER, 120, 0));
         }
     }
 
