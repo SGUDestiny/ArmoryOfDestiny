@@ -52,7 +52,7 @@ public class PunisherItem extends TooltipSwordItem implements GeoItem {
     private double attackSpeed;
     private double attackKnockback;
 
-    public float attackDamageAbility = 18;
+    public float attackDamageAbility = 7;
     public double attackSpeedAbility = 0.8;
     public double attackKnockbackAbility = 2.8;
 

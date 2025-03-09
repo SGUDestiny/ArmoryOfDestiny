@@ -59,7 +59,7 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
     private double attackKnockback;
     private double entityReach;
 
-    public float attackDamageAbility = 16;
+    public float attackDamageAbility = 8;
     public float attackSpeedAbility = 1.5F;
     public float attackKnockbackAbility = 1.0F;
 
