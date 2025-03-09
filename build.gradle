@@ -15,7 +15,7 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7.+'
 }
 
-version = '1.20.1-1.22'
+version = '1.20.1-1.23'
 group = 'destiny.armoryofdestiny'
 
 base {
