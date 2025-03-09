@@ -32,6 +32,7 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.MURASAMA.get());
                 output.accept(ItemRegistry.MURASAMA_SHEATHED.get());
                 output.accept(ItemRegistry.GUN_SHEATH.get());
+                output.accept(ItemRegistry.EDGE_OF_EXISTENCE.get());
                 output.accept(ItemRegistry.BLOODLETTER.get());
                 output.accept(createCrucible(ItemRegistry.CRUCIBLE.get()));
                 output.accept(createCrucible(ItemRegistry.CRUCIBLE_INACTIVE.get()));

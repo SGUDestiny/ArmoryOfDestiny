@@ -1,7 +1,7 @@
 package destiny.armoryofdestiny;
 
 import com.mojang.logging.LogUtils;
-import destiny.armoryofdestiny.client.MetallicFeatherRenderer;
+import destiny.armoryofdestiny.client.render.item.MetallicFeatherRenderer;
 import destiny.armoryofdestiny.client.render.entity.PelletRenderer;
 import destiny.armoryofdestiny.client.render.entity.BuckshotRenderer;
 import destiny.armoryofdestiny.client.render.entity.ExplosiveSlugRenderer;

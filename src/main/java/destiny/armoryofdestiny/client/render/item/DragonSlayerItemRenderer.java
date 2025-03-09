@@ -1,4 +1,4 @@
-package destiny.armoryofdestiny.client;
+package destiny.armoryofdestiny.client.render.item;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
 import destiny.armoryofdestiny.server.item.DragonSlayerItem;

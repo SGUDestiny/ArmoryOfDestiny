@@ -111,6 +111,18 @@
           }
         ]
       }
+    },
+    "edge_of_existence": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:edge_of_existence"
+            ]
+          }
+        ]
+      }
     }
   },
   "requirements": [
@@ -121,7 +133,8 @@
     ["sharp_irony"],
     ["gun_sheath"],
     ["bloodletter"],
-    ["crucible"]
+    ["crucible"],
+    ["edge_of_existence"]
   ],
   "rewards": {
     "experience": 250

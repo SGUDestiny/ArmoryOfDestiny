@@ -106,6 +106,17 @@
   "item.armoryofdestiny.crucible.ability.1.description.5": "§7Unbreakable§r, just as the Doom Slayer's will.",
   "item.armoryofdestiny.crucible.ability.1.cooldown": "5 seconds",
 
+  "item.armoryofdestiny.edge_of_existence": "§7Edge of Existence",
+  "item.armoryofdestiny.edge_of_existence.ability.1.title": "Witness The Oblivion",
+  "item.armoryofdestiny.edge_of_existence.ability.1.description.1": "When §7[RMB]§r is pressed, an §7effect§r called §7\"Non-Existence\"§r will be",
+  "item.armoryofdestiny.edge_of_existence.ability.1.description.2": "applied for §710 seconds§r. The effect makes the user §7completely",
+  "item.armoryofdestiny.edge_of_existence.ability.1.description.3": "§7imperceptible§r, and §7removes sounds§r such as §7walking§r or §7running§r. The",
+  "item.armoryofdestiny.edge_of_existence.ability.1.description.4": "effect however is §7cancelled§r upon §7any interaction§r, be it with a",
+  "item.armoryofdestiny.edge_of_existence.ability.1.description.5": "§7block§r, an §7entity§r, or §7taking damage§r. Upon §7running out§r or §7being",
+  "item.armoryofdestiny.edge_of_existence.ability.1.description.6": "§7cancelled§r, §76 seconds§r of §7Withering§r effect will be applied.",
+  "item.armoryofdestiny.edge_of_existence.ability.1.description.7": "Teetering on the edge between existence and Nihility...",
+  "item.armoryofdestiny.edge_of_existence.ability.1.cooldown": "16 seconds",
+
   "_tooltips": "Tooltips",
   "tooltip.line.collapsed": "▲ ",
   "tooltip.line.expanded": "▼ ",
@@ -234,6 +245,8 @@
   "advancements.armoryofdestiny.crucible.description": "Activate the Crucible by fueling it with blaze rods",
   "advancements.armoryofdestiny.netherite_smithing_hammer.title": "It's Hammer Time!",
   "advancements.armoryofdestiny.netherite_smithing_hammer.description": "Craft a Netherite Smithing Hammer - The ultimate tool of a smith",
+  "advancements.armoryofdestiny.edge_of_existence.title": "The Fire That Never Was",
+  "advancements.armoryofdestiny.edge_of_existence.description": "Obtain the Katana of a Decaying Self-Annihilator, the manifestation of his being which is doomed to oblivion.",
 
   "_subtitles": "Subtitles",
   "sound.armoryofdestiny.sharp_irony_open": "Sharp Irony opens",

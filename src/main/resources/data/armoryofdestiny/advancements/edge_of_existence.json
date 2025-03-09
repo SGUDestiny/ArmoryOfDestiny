@@ -1,0 +1,36 @@
+{
+  "parent": "armoryofdestiny:any_blueprint",
+  "display": {
+    "icon": {
+      "item": "armoryofdestiny:edge_of_existence"
+    },
+    "title": {
+      "translate": "advancements.armoryofdestiny.edge_of_existence.title"
+    },
+    "description": {
+      "translate": "advancements.armoryofdestiny.edge_of_existence.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:edge_of_existence"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}
