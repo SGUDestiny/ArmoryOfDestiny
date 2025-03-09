@@ -54,7 +54,7 @@ public class DragonSlayerItem extends TooltipSwordItem implements GeoItem {
 
     public DragonSlayerItem(Item.Properties build) {
         super(Tiers.NETHERITE, 0, 0, build);
-        this.attackDamage = 11.0F;
+        this.attackDamage = 13.0F;
         this.attackSpeed = -2.8F;
         this.attackKnockback = -0.8F;
         this.entityReach = 2;

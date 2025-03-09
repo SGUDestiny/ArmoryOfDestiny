@@ -52,13 +52,13 @@ public class PunisherItem extends TooltipSwordItem implements GeoItem {
     private double attackSpeed;
     private double attackKnockback;
 
-    public float attackDamageAbility = 16;
+    public float attackDamageAbility = 18;
     public double attackSpeedAbility = 0.8;
     public double attackKnockbackAbility = 2.8;
 
     public PunisherItem(Item.Properties build) {
         super(Tiers.NETHERITE, 0, 0, build);
-        this.attackDamage = 15.0F;
+        this.attackDamage = 17.0F;
         this.attackSpeed = -3.2F;
         this.attackKnockback = -1.2F;
 
