@@ -63,11 +63,11 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
 
     public ArmorersTinkeringTableBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.ARMORERS_ASSEMBLY_TABLE.get(), pos, state);
-        storedItems = createHandler(9);
+        storedItems = createHandler(16);
         blueprintSlot = createHandler(1);
         inputSlot = createHandler(1);
         hammerSlot = createHandler(1);
-        recipeIngredients = new ArrayList<>(9);
+        recipeIngredients = new ArrayList<>(16);
         inputHandler = LazyOptional.of(() -> inputSlot);
     }
 
@@ -106,7 +106,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
                         //Transfer input slot to next empty storage slot
                         for (int i = 0; storedItems.getSlots() > i; i++) {
                             if (storedItems.getStackInSlot(i).isEmpty()) {
-                                storedItems.setStackInSlot(i, inputSlot.getStackInSlot(0));
+                                storedItems.setStackInSlot(i, inputSlot.getStackInSlot(0).copy());
                                 inputSlot.setStackInSlot(0, ItemStack.EMPTY);
                                 break;
                             }
@@ -201,68 +201,97 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
             ingredientList.add(0, itemStackFromItem(Items.ECHO_SHARD));
             ingredientList.add(1, itemStackFromItem(Items.ECHO_SHARD));
             ingredientList.add(2, itemStackFromItem(Items.ECHO_SHARD));
-            ingredientList.add(3, itemStackFromItem(Items.ECHO_SHARD));
-            ingredientList.add(4, itemStackFromItem(Items.REDSTONE_BLOCK));
-            ingredientList.add(5, itemStackFromItem(Items.REDSTONE_BLOCK));
-            ingredientList.add(6, itemStackFromItem(Items.IRON_BLOCK));
+            ingredientList.add(3, itemStackFromItem(Items.REDSTONE));
+            ingredientList.add(4, itemStackFromItem(Items.REDSTONE));
+            ingredientList.add(5, itemStackFromItem(Items.REDSTONE));
+            ingredientList.add(6, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(7, itemStackFromItem(Items.IRON_INGOT));
         } else if (recipeID.equals(ItemRegistry.GUN_SHEATH.getKey().location().toString())) {
-            ingredientList.add(0, itemStackFromItem(Items.IRON_BLOCK));
+            ingredientList.add(0, itemStackFromItem(Items.IRON_INGOT));
             ingredientList.add(1, itemStackFromItem(Items.IRON_INGOT));
             ingredientList.add(2, itemStackFromItem(Items.IRON_INGOT));
             ingredientList.add(3, itemStackFromItem(Items.IRON_INGOT));
-            ingredientList.add(4, itemStackFromItem(Items.NETHERITE_INGOT));
-            ingredientList.add(5, itemStackFromItem(Items.FLINT_AND_STEEL));
-            ingredientList.add(6, itemStackFromItem(Items.TNT));
+            ingredientList.add(4, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(5, itemStackFromItem(Items.NETHERITE_INGOT));
+            ingredientList.add(6, itemStackFromItem(Items.FLINT_AND_STEEL));
+            ingredientList.add(7, itemStackFromItem(Items.TNT));
+            ingredientList.add(8, itemStackFromItem(Items.LEVER));
         } else if (recipeID.equals(ItemRegistry.ORIGINIUM_CATALYST.getKey().location().toString())) {
             ingredientList.add(0, itemStackFromItem(Items.BLAZE_POWDER));
             ingredientList.add(1, itemStackFromItem(Items.BLAZE_POWDER));
             ingredientList.add(2, itemStackFromItem(Items.BLAZE_POWDER));
-            ingredientList.add(3, itemStackFromItem(Items.BLAZE_POWDER));
+            ingredientList.add(3, itemStackFromItem(Items.AMETHYST_SHARD));
             ingredientList.add(4, itemStackFromItem(Items.AMETHYST_SHARD));
             ingredientList.add(5, itemStackFromItem(Items.AMETHYST_SHARD));
             ingredientList.add(6, itemStackFromItem(Items.IRON_NUGGET));
             ingredientList.add(7, itemStackFromItem(Items.IRON_NUGGET));
             ingredientList.add(8, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(9, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(10, itemStackFromItem(Items.IRON_INGOT));
         } else if (recipeID.equals(ItemRegistry.DRAGON_SLAYER.getKey().location().toString())) {
             ingredientList.add(0, itemStackFromItem(Items.IRON_BLOCK));
             ingredientList.add(1, itemStackFromItem(Items.IRON_BLOCK));
             ingredientList.add(2, itemStackFromItem(Items.IRON_INGOT));
             ingredientList.add(3, itemStackFromItem(Items.IRON_INGOT));
-            ingredientList.add(4, itemStackFromItem(Items.OBSIDIAN));
-            ingredientList.add(5, itemStackFromItem(Items.OBSIDIAN));
-            ingredientList.add(6, itemStackFromItem(Items.NETHERITE_INGOT));
+            ingredientList.add(4, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(5, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(6, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(7, itemStackFromItem(Items.OBSIDIAN));
+            ingredientList.add(8, itemStackFromItem(Items.OBSIDIAN));
+            ingredientList.add(9, itemStackFromItem(Items.OBSIDIAN));
+            ingredientList.add(10, itemStackFromItem(Items.NETHERITE_INGOT));
+            ingredientList.add(11, itemStackFromItem(Items.LEATHER));
+            ingredientList.add(12, itemStackFromItem(Items.LEATHER));
+            ingredientList.add(13, itemStackFromItem(Items.LEATHER));
         }  else if (recipeID.equals(ItemRegistry.SHARP_IRONY.getKey().location().toString())) {
-            ingredientList.add(0, itemStackFromItem(Items.NETHERITE_SCRAP));
-            ingredientList.add(1, itemStackFromItem(Items.IRON_INGOT));
-            ingredientList.add(2, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(0, itemStackFromItem(Items.IRON_NUGGET));
+            ingredientList.add(1, itemStackFromItem(Items.IRON_NUGGET));
+            ingredientList.add(2, itemStackFromItem(Items.IRON_NUGGET));
             ingredientList.add(3, itemStackFromItem(Items.IRON_INGOT));
-            ingredientList.add(4, itemStackFromItem(ItemRegistry.METALLIC_FEATHER.get()));
-            ingredientList.add(5, itemStackFromItem(ItemRegistry.METALLIC_FEATHER.get()));
-            ingredientList.add(6, itemStackFromItem(ItemRegistry.METALLIC_FEATHER.get()));
-            ingredientList.add(7, itemStackFromItem(ItemRegistry.METALLIC_FEATHER.get()));
+            ingredientList.add(4, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(5, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(6, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(7, itemStackFromItem(Items.IRON_INGOT));
             ingredientList.add(8, itemStackFromItem(ItemRegistry.METALLIC_FEATHER.get()));
+            ingredientList.add(9, itemStackFromItem(ItemRegistry.METALLIC_FEATHER.get()));
+            ingredientList.add(10, itemStackFromItem(ItemRegistry.METALLIC_FEATHER.get()));
+            ingredientList.add(11, itemStackFromItem(ItemRegistry.METALLIC_FEATHER.get()));
+            ingredientList.add(12, itemStackFromItem(ItemRegistry.METALLIC_FEATHER.get()));
         } else if (recipeID.equals(ItemRegistry.PUNISHER.getKey().location().toString())) {
             ingredientList.add(0, itemStackFromItem(Items.IRON_BLOCK));
             ingredientList.add(1, itemStackFromItem(Items.IRON_INGOT));
             ingredientList.add(2, itemStackFromItem(Items.IRON_INGOT));
-            ingredientList.add(3, itemStackFromItem(Items.DIAMOND_BLOCK));
-            ingredientList.add(4, itemStackFromItem(Items.FIREWORK_ROCKET));
-            ingredientList.add(5, itemStackFromItem(Items.LEVER));
+            ingredientList.add(3, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(4, itemStackFromItem(Items.DIAMOND_BLOCK));
+            ingredientList.add(5, itemStackFromItem(Items.HOPPER));
+            ingredientList.add(6, itemStackFromItem(Items.HOPPER));
+            ingredientList.add(7, itemStackFromItem(Items.HOPPER));
+            ingredientList.add(8, itemStackFromItem(Items.LEVER));
         } else if (recipeID.equals(ItemRegistry.BLOODLETTER.getKey().location().toString())) {
             ingredientList.add(0, itemStackFromItem(Items.LODESTONE));
             ingredientList.add(1, itemStackFromItem(Items.ENCHANTED_BOOK));
-            ingredientList.add(2, itemStackFromItem(Items.IRON_INGOT));
-            ingredientList.add(3, itemStackFromItem(Items.IRON_INGOT));
-            ingredientList.add(4, itemStackFromItem(Items.REDSTONE));
-            ingredientList.add(5, itemStackFromItem(Items.REDSTONE));
+            ingredientList.add(2, itemStackFromItem(Items.CHAIN));
+            ingredientList.add(3, itemStackFromItem(Items.CHAIN));
+            ingredientList.add(4, itemStackFromItem(Items.CHAIN));
+            ingredientList.add(5, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(6, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(7, itemStackFromItem(Items.REDSTONE));
+            ingredientList.add(8, itemStackFromItem(Items.REDSTONE));
+            ingredientList.add(9, itemStackFromItem(Items.REDSTONE));
+            ingredientList.add(10, itemStackFromItem(Items.LEATHER));
+            ingredientList.add(11, itemStackFromItem(Items.LEATHER));
         } else if (recipeID.equals(ItemRegistry.CRUCIBLE_INACTIVE.getKey().location().toString())) {
-            ingredientList.add(0, itemStackFromItem(Items.BLAZE_ROD));
+            ingredientList.add(0, itemStackFromItem(Items.BLAZE_POWDER));
             ingredientList.add(1, itemStackFromItem(Items.BLAZE_POWDER));
             ingredientList.add(2, itemStackFromItem(Items.BLAZE_POWDER));
             ingredientList.add(3, itemStackFromItem(Items.ENDER_EYE));
             ingredientList.add(4, itemStackFromItem(Items.IRON_INGOT));
             ingredientList.add(5, itemStackFromItem(Items.IRON_INGOT));
-            ingredientList.add(5, itemStackFromItem(Items.NETHERITE_INGOT));
+            ingredientList.add(6, itemStackFromItem(Items.IRON_INGOT));
+            ingredientList.add(7, itemStackFromItem(Items.IRON_BLOCK));
+            ingredientList.add(8, itemStackFromItem(Items.NETHERITE_INGOT));
+            ingredientList.add(9, itemStackFromItem(Items.LEATHER));
+            ingredientList.add(10, itemStackFromItem(Items.LEATHER));
         }
         return ingredientList;
     }
@@ -273,7 +302,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         } else if (recipeID.equals(ItemRegistry.GUN_SHEATH.getKey().location().toString())) {
             return new ItemStack(ItemRegistry.GUN_SHEATH.get(), 1);
         } else if (recipeID.equals(ItemRegistry.ORIGINIUM_CATALYST.getKey().location().toString())) {
-            return new ItemStack(ItemRegistry.ORIGINIUM_CATALYST.get(), 1);
+            return new ItemStack(ItemRegistry.ORIGINIUM_CATALYST.get(), 16);
         } else if (recipeID.equals(ItemRegistry.DRAGON_SLAYER.getKey().location().toString())) {
             return new ItemStack(ItemRegistry.DRAGON_SLAYER.get(), 1);
         }  else if (recipeID.equals(ItemRegistry.SHARP_IRONY.getKey().location().toString())) {
