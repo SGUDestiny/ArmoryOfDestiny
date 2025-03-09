@@ -1,3 +1,6 @@
 {
-  "parent": "bettercombat:claymore"
+  "parent": "bettercombat:claymore",
+  "attributes": {
+    "two_handed": true
+  }
 }
