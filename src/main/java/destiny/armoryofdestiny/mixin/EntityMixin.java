@@ -26,15 +26,15 @@ public abstract class EntityMixin {
         }
     }
 
-/*    @Inject(
-            method = "updateInWaterStateAndDoWaterCurrentPushing",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;doWaterSplashEffect()V"), cancellable = true
+    @Inject(
+            method = "doWaterSplashEffect()V",
+            at = @At("HEAD"), cancellable = true
     )
     public void checkForEffectSplash(CallbackInfo ci) {
         if (entity instanceof Player player && player.hasEffect(EffectRegistry.NONEXISTENCE.get())) {
             ci.cancel();
         }
-    }*/
+    }
 
     @Inject(method = "waterSwimSound()V", at = @At("HEAD"), cancellable = true)
     public void checkForEffectSwim(CallbackInfo ci) {
