@@ -1,3 +1,4 @@
+/*
 package destiny.armoryofdestiny.client;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
@@ -48,3 +49,4 @@ public class DoubleTroubleItemRenderer extends GeoItemRenderer<DoubleTroubleItem
         return super.getCurrentItemStack();
     }
 }
+*/

@@ -14,7 +14,7 @@ public class EntityRegistry {
     public static final RegistryObject<EntityType<MetallicFeatherEntity>> METALLIC_FEATHER = ENTITY_TYPES.register("metallic_feather",
             () -> EntityType.Builder.of((EntityType.EntityFactory<MetallicFeatherEntity>) MetallicFeatherEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("metallic_feather"));
 
-    public static final RegistryObject<EntityType<PelletEntity>> PELLET = ENTITY_TYPES.register("pellet",
+/*    public static final RegistryObject<EntityType<PelletEntity>> PELLET = ENTITY_TYPES.register("pellet",
             () -> EntityType.Builder.of((EntityType.EntityFactory<PelletEntity>) PelletEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("pellet"));
 
     public static final RegistryObject<EntityType<BuckshotEntity>> BUCKSHOT = ENTITY_TYPES.register("buckshot",
@@ -27,5 +27,5 @@ public class EntityRegistry {
             () -> EntityType.Builder.of((EntityType.EntityFactory<SparkEntity>) SparkEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("spark"));
 
     public static final RegistryObject<EntityType<ExplosiveSlugEntity>> EXPLOSIVE_SLUG = ENTITY_TYPES.register("explosive_slug",
-            () -> EntityType.Builder.of((EntityType.EntityFactory<ExplosiveSlugEntity>) ExplosiveSlugEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("explosive_slug"));
+            () -> EntityType.Builder.of((EntityType.EntityFactory<ExplosiveSlugEntity>) ExplosiveSlugEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("explosive_slug"));*/
 }

@@ -53,20 +53,11 @@ public class ArmoryOfDestiny
         EffectRegistry.DEF_REG.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
         LOGGER.info("HELLO FROM COMMON SETUP");
-
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
     }
 
     @SubscribeEvent
@@ -87,11 +78,6 @@ public class ArmoryOfDestiny
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
 
             EntityRenderers.register(EntityRegistry.METALLIC_FEATHER.get(), MetallicFeatherRenderer::new);
-            EntityRenderers.register(EntityRegistry.PELLET.get(), PelletRenderer::new);
-            EntityRenderers.register(EntityRegistry.BUCKSHOT.get(), BuckshotRenderer::new);
-            EntityRenderers.register(EntityRegistry.SLUG.get(), SlugRenderer::new);
-            EntityRenderers.register(EntityRegistry.SPARK.get(), SparkRenderer::new);
-            EntityRenderers.register(EntityRegistry.EXPLOSIVE_SLUG.get(), ExplosiveSlugRenderer::new);
 
             event.enqueueWork(() -> {
                 ItemProperties.register(ItemRegistry.SHARP_IRONY.get(), new ResourceLocation(MODID, "is_open"), new SharpIronyItemProperty());

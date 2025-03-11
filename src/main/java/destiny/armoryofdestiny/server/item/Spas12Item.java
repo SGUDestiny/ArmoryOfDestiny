@@ -6,6 +6,7 @@ import destiny.armoryofdestiny.ArmoryOfDestiny;
 import destiny.armoryofdestiny.server.entity.BuckshotEntity;
 import destiny.armoryofdestiny.server.entity.ExplosiveSlugEntity;
 import destiny.armoryofdestiny.server.entity.SlugEntity;
+/*
 import destiny.armoryofdestiny.server.entity.SparkEntity;
 import destiny.armoryofdestiny.server.registry.EntityRegistry;
 import destiny.armoryofdestiny.server.registry.ItemRegistry;
@@ -55,7 +56,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+*/
 
+/*
 @Mod.EventBusSubscriber(modid = ArmoryOfDestiny.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class Spas12Item extends Item implements GeoItem {
 
@@ -102,19 +105,23 @@ public class Spas12Item extends Item implements GeoItem {
 
     private static final Random random = new Random();
 
+*/
 /*    public static final Predicate<ItemStack> IS_SHELL = (stack) -> {
         return stack.getItem() == ItemRegistry.BUCKSHOT_SHELL.get()
                 || stack.getItem() == ItemRegistry.SLUG_SHELL.get()
                 || stack.getItem() == ItemRegistry.INCENDIARY_SHELL.get()
                 || stack.getItem() == ItemRegistry.EXPLOSIVE_SLUG_SHELL.get();
-    };*/
+    };*//*
+
 
     public ItemStack findAmmo(Player player){
         for (int i = 0; i < player.getInventory().getContainerSize(); ++i){
             ItemStack ammo_item = player.getInventory().getItem(i);
+*/
 /*            if (IS_SHELL.test(ammo_item)) {
                 return ammo_item;
-            }*/
+            }*//*
+
         }
         return ItemStack.EMPTY;
     }
@@ -123,9 +130,11 @@ public class Spas12Item extends Item implements GeoItem {
         for (int i = 0; i < player.getInventory().getContainerSize(); ++i){
             ItemStack ammo_item = player.getInventory().getItem(i);
             int ammo_number = player.getInventory().getItem(i).getCount();
+*/
 /*            if (IS_SHELL.test(ammo_item)) {
                 return ammo_number;
-            }*/
+            }*//*
+
         }
         return 0;
     }
@@ -664,3 +673,4 @@ public class Spas12Item extends Item implements GeoItem {
         }
     }
 }
+*/

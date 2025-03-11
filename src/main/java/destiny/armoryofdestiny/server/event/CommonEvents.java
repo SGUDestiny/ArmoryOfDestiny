@@ -7,17 +7,9 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.NeutralMob;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.EnderMan;
-import net.minecraft.world.entity.monster.warden.Warden;
-import net.minecraft.world.entity.monster.warden.WardenAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.VanillaGameEvent;
 import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -63,14 +55,6 @@ public class CommonEvents {
     public void livingExpireEffect(MobEffectEvent.Expired event) {
         if (event.getEffectInstance().getEffect() instanceof NonexistenceEffect) {
             event.getEntity().addEffect(new MobEffectInstance(MobEffects.WITHER, 120, 0));
-        }
-    }
-
-    //If effect present, don't render player
-    @SubscribeEvent
-    public void onPlayerRender(RenderPlayerEvent.Pre event) {
-        if (event.getEntity().hasEffect(EffectRegistry.NONEXISTENCE.get())) {
-            event.setCanceled(true);
         }
     }
 

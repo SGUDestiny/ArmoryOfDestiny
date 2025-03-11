@@ -1,6 +1,6 @@
 package destiny.armoryofdestiny.server.item;
 
-import destiny.armoryofdestiny.server.registry.EntityRegistry;
+/*import destiny.armoryofdestiny.server.registry.EntityRegistry;
 import destiny.armoryofdestiny.server.registry.ItemRegistry;
 import destiny.armoryofdestiny.server.registry.SoundRegistry;
 import destiny.armoryofdestiny.client.DoubleTroubleItemRenderer;
@@ -32,9 +32,9 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
+import java.util.function.Predicate;*/
 
-public class DoubleTroubleItem extends Item implements GeoItem {
+/*public class DoubleTroubleItem extends Item implements GeoItem {
 
     private static final RawAnimation DOUBLE_TROUBLE_SHOOT_LEFT = RawAnimation.begin().thenPlay("double_trouble.shoot_left");
     private static final RawAnimation DOUBLE_TROUBLE_SHOOT_RIGHT = RawAnimation.begin().thenPlay("double_trouble.shoot_right");
@@ -60,9 +60,9 @@ public class DoubleTroubleItem extends Item implements GeoItem {
 
     private static final Random random = new Random();
 
-/*    public static final Predicate<ItemStack> IS_SHELL = (stack) -> {
+*//*    public static final Predicate<ItemStack> IS_SHELL = (stack) -> {
         return stack.getItem() == ItemRegistry.BUCKSHOT_SHELL.get();
-    };*/
+    };*//*
 
     public DoubleTroubleItem(Item.Properties build) {
         super(build);
@@ -381,9 +381,9 @@ public class DoubleTroubleItem extends Item implements GeoItem {
         }
         for (int i = 0; i < player.getInventory().getContainerSize(); ++i){
             ItemStack ammo_item = player.getInventory().getItem(i);
-/*            if (IS_SHELL.test(ammo_item)) {
+*//*            if (IS_SHELL.test(ammo_item)) {
                 return ammo_item;
-            }*/
+            }*//*
         }
         return ItemStack.EMPTY;
     }
@@ -392,9 +392,9 @@ public class DoubleTroubleItem extends Item implements GeoItem {
         for (int i = 0; i < player.getInventory().getContainerSize(); ++i){
             ItemStack ammo_item = player.getInventory().getItem(i);
             int ammo_number = player.getInventory().getItem(i).getCount();
-/*            if (IS_SHELL.test(ammo_item)) {
+*//*            if (IS_SHELL.test(ammo_item)) {
                 return ammo_number;
-            }*/
+            }*//*
         }
         return 0;
     }
@@ -459,5 +459,5 @@ public class DoubleTroubleItem extends Item implements GeoItem {
                 }
             }
         }
-    }
-}
+    }*/
+//}

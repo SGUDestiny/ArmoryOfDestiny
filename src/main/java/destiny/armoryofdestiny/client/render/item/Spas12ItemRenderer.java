@@ -1,3 +1,4 @@
+/*
 package destiny.armoryofdestiny.client.render.item;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
@@ -51,4 +52,4 @@ public class Spas12ItemRenderer extends GeoItemRenderer<Spas12Item> {
     public ItemStack getCurrentItemStack() {
         return super.getCurrentItemStack();
     }
-}
+}*/
