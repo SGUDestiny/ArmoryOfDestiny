@@ -140,8 +140,7 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
 
         if (ammoCount > 0) {
             if (!level.isClientSide) {
-                MetallicFeatherEntity feather = new MetallicFeatherEntity(EntityRegistry.METALLIC_FEATHER.get(), player, level);
-                feather.setDeltaMovement(0, 0, 1);
+                MetallicFeatherEntity feather = new MetallicFeatherEntity(level, player);
                 feather.shootFromRotation(player, XRot, YRot, 0.0F, 5.0F, 1.0F);
                 level.addFreshEntity(feather);
             }

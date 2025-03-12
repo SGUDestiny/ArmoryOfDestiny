@@ -53,7 +53,6 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
 
     public static final UUID ABILITY_MULTIPLIER_UUID = UUID.fromString("CB3F55D3-645C-4F38-A497-9C23A23DB6CF");
 
-    @OnlyIn(Dist.CLIENT)
     private float attackDamage;
     private double attackSpeed;
     private double attackKnockback;

@@ -1,4 +1,4 @@
-package destiny.armoryofdestiny.client.render.item;
+package destiny.armoryofdestiny.client.render.entity;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
 import destiny.armoryofdestiny.server.entity.MetallicFeatherEntity;
@@ -16,6 +16,4 @@ public class MetallicFeatherRenderer extends ArrowRenderer<MetallicFeatherEntity
     public ResourceLocation getTextureLocation(MetallicFeatherEntity arrow) {
         return TEXTURE;
     }
-
-
 }

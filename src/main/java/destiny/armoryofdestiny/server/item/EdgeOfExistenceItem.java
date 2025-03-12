@@ -43,7 +43,6 @@ import static destiny.armoryofdestiny.server.misc.UtilityVariables.LEGENDARY;
 public class EdgeOfExistenceItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    @OnlyIn(Dist.CLIENT)
     private float attackDamage;
     private double attackSpeed;
     private double attackKnockback;

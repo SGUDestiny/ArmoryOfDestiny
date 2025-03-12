@@ -34,7 +34,6 @@ public class IcicleItem extends SwordItem implements GeoItem {
     private static final RawAnimation ICICLE_ANIM = RawAnimation.begin().thenPlay("icicle.idle");
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    @OnlyIn(Dist.CLIENT)
     private float attackDamage;
     private double attackSpeed;
 

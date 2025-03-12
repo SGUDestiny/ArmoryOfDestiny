@@ -45,7 +45,6 @@ public class MurasamaItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     boolean played = false;
 
-    @OnlyIn(Dist.CLIENT)
     private float attackDamage;
     private double attackSpeed;
     private double attackKnockback;

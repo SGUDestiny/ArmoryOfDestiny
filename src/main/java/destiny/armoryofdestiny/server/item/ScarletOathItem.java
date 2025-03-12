@@ -30,7 +30,6 @@ public class ScarletOathItem extends SwordItem implements GeoItem {
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    @OnlyIn(Dist.CLIENT)
     private float attackDamage;
     private double attackSpeed;
 

@@ -38,7 +38,6 @@ public class OriginiumKatanaItem extends TooltipSwordItem implements GeoItem {
 
     public static final String ANIMATION_TICK = "animationTick";
 
-    @OnlyIn(Dist.CLIENT)
     private float attackDamage;
     private double attackSpeed;
     private double attackKnockback;

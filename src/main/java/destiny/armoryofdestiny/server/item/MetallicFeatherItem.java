@@ -27,7 +27,7 @@ public class MetallicFeatherItem extends TooltipItem {
         if (stack.getItem() instanceof MetallicFeatherItem) {
             if (stack.getCount() > 0) {
                 if (!level.isClientSide) {
-                    MetallicFeatherEntity feather = new MetallicFeatherEntity(EntityRegistry.METALLIC_FEATHER.get(), player, level);
+                    MetallicFeatherEntity feather = new MetallicFeatherEntity(level, player);
                     feather.setDeltaMovement(0, 0, 1);
                     feather.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 5.0F, 1.0F);
                     level.addFreshEntity(feather);

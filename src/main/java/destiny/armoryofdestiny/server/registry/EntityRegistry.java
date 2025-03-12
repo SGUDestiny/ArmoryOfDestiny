@@ -11,8 +11,11 @@ import net.minecraftforge.registries.RegistryObject;
 public class EntityRegistry {
     public static DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ArmoryOfDestiny.MODID);
 
+    /*public static final RegistryObject<EntityType<MetallicFeatherEntity>> METALLIC_FEATHER = ENTITY_TYPES.register("metallic_feather",
+            () -> EntityType.Builder.of((EntityType.EntityFactory<MetallicFeatherEntity>) MetallicFeatherEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("metallic_feather"));*/
+
     public static final RegistryObject<EntityType<MetallicFeatherEntity>> METALLIC_FEATHER = ENTITY_TYPES.register("metallic_feather",
-            () -> EntityType.Builder.of((EntityType.EntityFactory<MetallicFeatherEntity>) MetallicFeatherEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("metallic_feather"));
+            () -> (EntityType) EntityType.Builder.of(MetallicFeatherEntity::new, MobCategory.MISC).sized(0.6F, 0.6F).setCustomClientFactory(MetallicFeatherEntity::new).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).build("water_bolt"));
 
 /*    public static final RegistryObject<EntityType<PelletEntity>> PELLET = ENTITY_TYPES.register("pellet",
             () -> EntityType.Builder.of((EntityType.EntityFactory<PelletEntity>) PelletEntity::new, MobCategory.MISC).sized(0.5F, 0.5F).build("pellet"));

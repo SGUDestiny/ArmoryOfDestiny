@@ -43,7 +43,6 @@ public class DragonSlayerItem extends TooltipSwordItem implements GeoItem {
 
     public static final UUID ABILITY_MULTIPLIER_UUID = UUID.fromString("CB3F55D3-644C-4F38-A497-9C13A23DB6CF");
 
-    @OnlyIn(Dist.CLIENT)
     private float attackDamage;
     private double attackSpeed;
     private double attackKnockback;

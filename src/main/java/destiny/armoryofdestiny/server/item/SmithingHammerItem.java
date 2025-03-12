@@ -19,7 +19,7 @@ import static destiny.armoryofdestiny.server.misc.UtilityVariables.SMITHING_HAMM
 
 public class SmithingHammerItem extends TooltipItem {
     Item repairItem;
-    @OnlyIn(Dist.CLIENT)
+
     private float attackDamage;
 
     public SmithingHammerItem(Properties properties, Item repairItem, int attackDamage) {

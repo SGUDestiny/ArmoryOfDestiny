@@ -43,7 +43,6 @@ public class CrucibleItem extends TooltipSwordItem implements GeoItem {
 
     public static final String USAGES = "usages";
 
-    @OnlyIn(Dist.CLIENT)
     private float attackDamage;
     private double attackSpeed;
     private double attackKnockback;

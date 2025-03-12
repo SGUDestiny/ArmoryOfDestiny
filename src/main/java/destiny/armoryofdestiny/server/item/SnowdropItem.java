@@ -34,7 +34,6 @@ public class SnowdropItem extends SwordItem implements GeoItem {
     private static final RawAnimation SNOWDROP_ANIM = RawAnimation.begin().thenPlay("snowdrop.idle");
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    @OnlyIn(Dist.CLIENT)
     private float attackDamage;
     private double attackSpeed;
 
