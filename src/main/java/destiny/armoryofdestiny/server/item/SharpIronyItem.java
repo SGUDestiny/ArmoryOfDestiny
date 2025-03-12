@@ -107,7 +107,7 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
         boolean isOpen = stack.getOrCreateTag().getBoolean(IS_OPEN);
         int ammoCount = getFanAmmo(stack);
 
-        if (isShift(level)) {
+        if (isShift(player)) {
             if (isOpen) {
                 closeFan(level, player, stack, item);
             } else {
@@ -299,9 +299,9 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean b) {
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
         if (stack.getTag() != null) {
-            if (firstLoad) {
+            if (selected) {
                 if (entity instanceof Player player) {
                     if (stack.getOrCreateTag().getBoolean(IS_OPEN)) {
                         triggerAnim(level, player, stack, "sharp_irony_controller", "open");
@@ -309,7 +309,6 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
                         triggerAnim(level, player, stack, "sharp_irony_controller", "close");
                     }
                 }
-                firstLoad = false;
             }
         }
     }
