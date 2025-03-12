@@ -6,6 +6,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
@@ -150,7 +151,11 @@ public class TooltipSwordItem extends SwordItem {
         if (level instanceof ClientLevel) {
             return Screen.hasShiftDown();
         }
-        return Screen.hasShiftDown();
+        return false;
+    }
+
+    public boolean isShift (Player player) {
+        return player.isShiftKeyDown();
     }
 
     public boolean isControl (Level level) {
