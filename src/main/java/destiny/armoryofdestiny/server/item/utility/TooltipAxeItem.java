@@ -1,6 +1,5 @@
 package destiny.armoryofdestiny.server.item.utility;
 
-import destiny.armoryofdestiny.ArmoryOfDestiny;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -16,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.NONE;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.NONE;
 
 public class TooltipAxeItem extends AxeItem {
     public TooltipAxeItem(Tier p_43269_, int p_43270_, float p_43271_, Properties p_43272_) {
@@ -25,32 +24,32 @@ public class TooltipAxeItem extends AxeItem {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
-        String modId = ArmoryOfDestiny.MODID;
         String itemName = getItemName(stack);
-        String itemRarity = getItemRarity(stack);
-        String itemTrivia = getTriviaType();
+        String rarityTranslatable = getRarityTranslatable(stack);
+        String triviaTranslatable = getTriviaTranslatable();
 
         //Rarity
         if (hasRarity()) {
-            MutableComponent rarity = Component.translatable("tooltip.line.rarity." + itemRarity);
+            MutableComponent rarity = Component.translatable(rarityTranslatable);
             components.add(rarity);
         }
 
         //Trivia
-        if (!itemTrivia.equals("none") && hasTrivia()) {
-            MutableComponent trivia = Component.translatable("tooltip.line.trivia")
-                    .withStyle(ChatFormatting.DARK_GRAY);
+        if (!triviaTranslatable.equals(NONE) && hasTrivia()) {
+            //Print trivia base
+            MutableComponent trivia = Component.translatable("tooltip.armoryofdestiny.trivia").withStyle(ChatFormatting.DARK_GRAY);
             components.add(trivia);
-            MutableComponent trivia_title = Component.translatable("tooltip.line.dropdown")
-                    .append(Component.translatable("tooltip.line.trivia." + itemTrivia + ".title")
+
+            MutableComponent trivia_title = Component.translatable("tooltip.armoryofdestiny.dropdown")
+                    .append(Component.translatable(triviaTranslatable + ".title")
                             .withStyle(ChatFormatting.GRAY));
             components.add(trivia_title);
 
-            int triviaLines = getTriviaLines(itemTrivia);
             //Print trivia
+            int triviaLines = getLineAmountTrivia(triviaTranslatable);
             for (int i = 1; i <= triviaLines; i++) {
-                MutableComponent trivia_description = Component.translatable("tooltip.line.dropdown")
-                        .append(Component.translatable("tooltip.line.trivia." + itemTrivia + ".description." + i)
+                MutableComponent trivia_description = Component.translatable("tooltip.armoryofdestiny.dropdown")
+                        .append(Component.translatable(triviaTranslatable + ".description." + i)
                                 .withStyle(ChatFormatting.DARK_GRAY));
                 components.add(trivia_description);
             }
@@ -59,40 +58,40 @@ public class TooltipAxeItem extends AxeItem {
         //Abilities
         if (hasAbilities()) {
             if (!isShift(level)) {
-                MutableComponent ability = Component.translatable("tooltip.line.collapsed")
-                        .append(Component.translatable("tooltip.line.ability.collapsed")
+                MutableComponent ability = Component.translatable("tooltip.armoryofdestiny.collapsed")
+                        .append(Component.translatable("tooltip.armoryofdestiny.ability.collapsed")
                                 .withStyle(ChatFormatting.DARK_GRAY));
                 components.add(ability);
             } else {
-                MutableComponent ability = Component.translatable("tooltip.line.expanded")
-                        .append(Component.translatable("tooltip.line.ability.expanded")
+                MutableComponent ability = Component.translatable("tooltip.armoryofdestiny.expanded")
+                        .append(Component.translatable("tooltip.armoryofdestiny.ability.expanded")
                                 .withStyle(ChatFormatting.DARK_GRAY));
                 components.add(ability);
 
-                int abilityCount = getAbilitiesTotal(itemName);
                 //Print abilities
+                int abilityCount = getAbilityAmount(itemName);
                 for (int i = 1; i <= abilityCount; i++) {
                     //Ability title
-                    MutableComponent ability_title = Component.translatable("tooltip.line.dropdown")
-                            .append(Component.translatable("item." + modId + "." + itemName + ".ability." + i + ".title")
+                    MutableComponent ability_title = Component.translatable("tooltip.armoryofdestiny.dropdown")
+                            .append(Component.translatable("item.armoryofdestiny." + itemName + ".ability." + i + ".title")
                                     .withStyle(ChatFormatting.GRAY));
                     components.add(ability_title);
 
                     //Ability description
-                    int descriptionLineCount = getAbilityLines(itemName, i);
+                    int descriptionLineCount = getLineAmountAbility(itemName, i);
                     for (int ii = 1; ii <= descriptionLineCount; ii++) {
-                        MutableComponent ability_description = Component.translatable("tooltip.line.dropdown")
-                                .append(Component.translatable("item." + modId + "." + itemName + ".ability." + i + ".description." + ii)
+                        MutableComponent ability_description = Component.translatable("tooltip.armoryofdestiny.dropdown")
+                                .append(Component.translatable("item.armoryofdestiny." + itemName + ".ability." + i + ".description." + ii)
                                         .withStyle(ChatFormatting.DARK_GRAY));
                         components.add(ability_description);
                     }
 
                     //Ability cooldown
-                    String key = "item." + modId + "." + itemName + ".ability." + i + ".cooldown";
+                    String key = "item.armoryofdestiny." + itemName + ".ability." + i + ".cooldown";
                     Component component = Component.translatable(key);
                     if (!component.getString().equals(key)) {
-                        MutableComponent ability_cooldown = Component.translatable("tooltip.line.cooldown")
-                                .append(Component.translatable("tooltip.line.ability.cooldown").withStyle(ChatFormatting.GRAY))
+                        MutableComponent ability_cooldown = Component.translatable("tooltip.armoryofdestiny.cooldown")
+                                .append(Component.translatable("tooltip.armoryofdestiny.ability.cooldown").withStyle(ChatFormatting.GRAY))
                                 .append(Component.translatable(key)
                                         .withStyle(ChatFormatting.DARK_GRAY));
                         components.add(ability_cooldown);
@@ -102,42 +101,29 @@ public class TooltipAxeItem extends AxeItem {
         }
     }
 
-    public int getAbilitiesTotal(String itemName) {
-        int i = 1;
-        String baseKey = "item." + ArmoryOfDestiny.MODID + "." + itemName + ".ability.";
-
-        while (true) {
-            String key = baseKey + i + ".title";
-            Component component = Component.translatable(key);
-            if (component.getString().equals(key)) {
-                break;
-            }
-            i++;
-        }
-        return i - 1;
+    public int getAbilityAmount(String itemName) {
+        String key = "item.armoryofdestiny." + itemName + ".ability.";
+        return getLineAmount(key, ".title");
     }
 
-    public int getAbilityLines(String itemName, int abilityIndex) {
-        int i = 1;
-        String baseKey = "item." + ArmoryOfDestiny.MODID + "." + itemName + ".ability." + abilityIndex + ".description.";
-
-        while (true) {
-            String key = baseKey + i;
-            Component component = Component.translatable(key);
-            if (component.getString().equals(key)) {
-                break;
-            }
-            i++;
-        }
-        return i - 1;
+    public int getLineAmountAbility(String itemName, int abilityIndex) {
+        String key = "item.armoryofdestiny." + itemName + ".ability." + abilityIndex + ".description.";
+        return getLineAmount(key, null);
     }
 
-    public int getTriviaLines(String trivia) {
+    public int getLineAmountTrivia(String trivia) {
+        String key = trivia + ".description.";
+        return getLineAmount(key, null);
+    }
+
+    public int getLineAmount(String translatable, @Nullable String tail) {
         int i = 1;
-        String baseKey = "tooltip.line.trivia." + trivia + ".description.";
+        if (tail == null) {
+            tail = "";
+        }
 
         while (true) {
-            String key = baseKey + i;
+            String key = translatable + i + tail;
             Component component = Component.translatable(key);
             if (component.getString().equals(key)) {
                 break;
@@ -151,7 +137,7 @@ public class TooltipAxeItem extends AxeItem {
         if (level instanceof ClientLevel) {
             return Screen.hasShiftDown();
         }
-        return Screen.hasShiftDown();
+        return false;
     }
 
     public boolean isShift (Player player) {
@@ -169,11 +155,11 @@ public class TooltipAxeItem extends AxeItem {
         return stack.getItem().toString();
     }
 
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return NONE;
     }
 
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return NONE;
     }
 

@@ -9,13 +9,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ForgeMod;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.ARMORERS_WORKSHOP_PART;
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.SMITHING_HAMMER;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.ARMORERS_WORKSHOP_PART;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.SMITHING_HAMMER;
 
 public class SmithingHammerItem extends TooltipItem {
     Item repairItem;
@@ -39,12 +35,12 @@ public class SmithingHammerItem extends TooltipItem {
     }
 
     @Override
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return SMITHING_HAMMER;
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return ARMORERS_WORKSHOP_PART;
     }
 

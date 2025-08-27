@@ -23,7 +23,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.function.Consumer;
 
 import static destiny.armoryofdestiny.server.item.OriginiumKatanaItem.ANIMATION_TICK;
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.SECONDARY;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.SECONDARY;
 
 public class OriginiumCatalystItem extends TooltipItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -85,7 +85,7 @@ public class OriginiumCatalystItem extends TooltipItem implements GeoItem {
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return SECONDARY;
     }
 }

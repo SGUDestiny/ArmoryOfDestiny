@@ -3,7 +3,7 @@ package destiny.armoryofdestiny.server.item;
 import destiny.armoryofdestiny.server.item.utility.TooltipItem;
 import net.minecraft.world.item.ItemStack;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.SECONDARY;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.SECONDARY;
 
 public class BloodVesselEmptyItem extends TooltipItem {
     public BloodVesselEmptyItem(Properties properties) {
@@ -16,7 +16,7 @@ public class BloodVesselEmptyItem extends TooltipItem {
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return SECONDARY;
     }
 

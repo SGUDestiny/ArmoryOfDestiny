@@ -2,18 +2,15 @@ package destiny.armoryofdestiny.server.item;
 
 import destiny.armoryofdestiny.server.entity.MetallicFeatherEntity;
 import destiny.armoryofdestiny.server.item.utility.TooltipItem;
-import destiny.armoryofdestiny.server.registry.EntityRegistry;
 import destiny.armoryofdestiny.server.registry.SoundRegistry;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.SECONDARY;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.SECONDARY;
 
 public class MetallicFeatherItem extends TooltipItem {
     public MetallicFeatherItem(Properties properties) {
@@ -48,7 +45,7 @@ public class MetallicFeatherItem extends TooltipItem {
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return SECONDARY;
     }
 }

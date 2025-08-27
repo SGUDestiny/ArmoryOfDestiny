@@ -11,6 +11,9 @@ public class SoundRegistry {
 
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ArmoryOfDestiny.MODID);
 
+    public static RegistryObject<SoundEvent> EDGE_OF_EXISTENCE_ACTIVATE = registerSoundEvent("edge_of_existence_activate");
+    public static RegistryObject<SoundEvent> EDGE_OF_EXISTENCE_DEACTIVATE = registerSoundEvent("edge_of_existence_deactivate");
+
     public static RegistryObject<SoundEvent> CRUCIBLE_SWING = registerSoundEvent("crucible_swing");
     public static RegistryObject<SoundEvent> CRUCIBLE_DEACTIVATE = registerSoundEvent("crucible_deactivate");
     public static RegistryObject<SoundEvent> CRUCIBLE_ACTIVATE = registerSoundEvent("crucible_activate");

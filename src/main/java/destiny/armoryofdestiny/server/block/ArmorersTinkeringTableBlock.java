@@ -28,8 +28,8 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.ARMORERS_TINKERING_TABLE;
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.ARMORERS_WORKSHOP_PART;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.ARMORERS_TINKERING_TABLE;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.ARMORERS_WORKSHOP_PART;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
@@ -78,23 +78,16 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
 
                         return InteractionResult.SUCCESS;
                     } else if (heldItem.getItem() instanceof WritableBookItem) {
-                        ItemStack blueprint = table.getBlueprintItem().copy();
-                        blueprint.setCount(2);
+                        Containers.dropItemStack(level, pos.getX(), pos.above().getY(), pos.getZ(), table.getBlueprintItem().copy());
+                        Containers.dropItemStack(level, pos.getX(), pos.above().getY(), pos.getZ(), table.getBlueprintItem().copy());
 
-                        player.addItem(blueprint);
+                        table.clearVariables();
+                        Containers.dropContents(level, pos.above(), table.getDroppableInventory());
 
                         if (!player.isCreative()) {
                             heldItem.shrink(1);
                         }
-
-                        table.setBlueprintItem(ItemStack.EMPTY);
-
                         level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
-
-                        BlockEntity tileEntity = level.getBlockEntity(pos);
-                        if (tileEntity instanceof ArmorersTinkeringTableBlockEntity tableTile) {
-                            Containers.dropContents(level, pos.above(), tableTile.getDroppableInventory());
-                        }
 
                         level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
 
@@ -102,7 +95,7 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
                     } else if (player.getMainHandItem().isEmpty() && player.isShiftKeyDown()) {
                         ItemStack stack = table.getBlueprintItem().copy();
                         player.addItem(stack);
-                        table.setBlueprintItem(ItemStack.EMPTY);
+                        table.clearVariables();
 
                         level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
                         level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
@@ -197,31 +190,6 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
         level.playSound(null, pos, SoundEvents.ITEM_FRAME_ROTATE_ITEM, SoundSource.BLOCKS, 1, 1);
     }
 
-    public static int getBlueprintColor(Level level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof ArmorersTinkeringTableBlockEntity table) {
-            String blueprintItem = table.getItemFromBlueprint();
-
-            if (blueprintItem.equals(ItemRegistry.MURASAMA.getKey().location().toString())) {
-                return 0xE80000;
-            } else if (blueprintItem.equals(ItemRegistry.GUN_SHEATH.getKey().location().toString())) {
-                return 0xBDBDBD;
-            } else if (blueprintItem.equals(ItemRegistry.ORIGINIUM_CATALYST.getKey().location().toString())) {
-                return 0xFFA82D;
-            } else if (blueprintItem.equals(ItemRegistry.DRAGON_SLAYER.getKey().location().toString())) {
-                return 0x474747;
-            }  else if (blueprintItem.equals(ItemRegistry.SHARP_IRONY.getKey().location().toString())) {
-                return 0x4A5B7D;
-            } else if (blueprintItem.equals(ItemRegistry.PUNISHER.getKey().location().toString())) {
-                return 0x2FFFF8;
-            } else if (blueprintItem.equals(ItemRegistry.BLOODLETTER.getKey().location().toString())) {
-                return 0xC57070D;
-            } else if (blueprintItem.equals(ItemRegistry.CRUCIBLE_INACTIVE.getKey().location().toString())) {
-                return 0xFF4439;
-            }
-        }
-        return 0xFFFFFF;
-    }
-
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return BlockEntityRegistry.ARMORERS_ASSEMBLY_TABLE.get().create(pos, state);
@@ -233,12 +201,12 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
     }
 
     @Override
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return ARMORERS_TINKERING_TABLE;
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return ARMORERS_WORKSHOP_PART;
     }
 }

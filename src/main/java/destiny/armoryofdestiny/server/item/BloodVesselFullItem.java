@@ -1,7 +1,6 @@
 package destiny.armoryofdestiny.server.item;
 
 import destiny.armoryofdestiny.server.item.utility.TooltipItem;
-import destiny.armoryofdestiny.server.registry.SoundRegistry;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -10,7 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.UNIQUE;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.UNIQUE;
 
 public class BloodVesselFullItem extends TooltipItem {
     public BloodVesselFullItem(Properties build) {
@@ -41,7 +40,7 @@ public class BloodVesselFullItem extends TooltipItem {
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return UNIQUE;
     }
 }

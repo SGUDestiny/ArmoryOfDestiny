@@ -49,12 +49,20 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    private static final String STORED_ITEMS = "StoredItems";
+    private static final String BLUEPRINT_SLOT = "BlueprintSlot";
+    private static final String INPUT_SLOT = "InputSlot";
+    private static final String HAMMER_SLOT = "HammerSlot";
+    private static final String RECIPE_INGREDIENTS = "RecipeIngredients";
+    private static final String RECIPE_RESULT = "RecipeResult";
+    private static final String CURRENT_INGREDIENT_INDEX = "CurrentIngredientIndex";
+    private static final String WANT_ITEM_STACK = "WantItemStack";
+
     private final ItemStackHandler storedItems;
     private final ItemStackHandler blueprintSlot;
     private final ItemStackHandler inputSlot;
     private final ItemStackHandler hammerSlot;
     private final LazyOptional<IItemHandler> inputHandler;
-
 
     private List<ItemStack> recipeIngredients;
     private ItemStack recipeResult = ItemStack.EMPTY;
@@ -118,15 +126,10 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
 
                         //Set result slot to result item
                         setInputItem(recipeResult);
-                        setBlueprintItem(ItemStack.EMPTY);
                         //Clear stored items
                         clearStoredItems();
                         //Clear ingredient list
-                        recipeIngredients.clear();
-                        recipeResult = ItemStack.EMPTY;
-                        //Reset variables
-                        currentIngredientIndex = -1;
-                        wantItemStack = ItemStack.EMPTY;
+                        clearVariables();
                         level.setBlockAndUpdate(pos, getBlockState().setValue(HAS_BLUEPRINT, false));
 
                         level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.5F, 1);
@@ -146,6 +149,14 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
                 }
             }
         }
+    }
+
+    public void clearVariables() {
+        setBlueprintItem(ItemStack.EMPTY);
+        recipeIngredients.clear();
+        recipeResult = ItemStack.EMPTY;
+        currentIngredientIndex = -1;
+        wantItemStack = ItemStack.EMPTY;
     }
 
     public ItemStack getInputItem() {
@@ -327,38 +338,38 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
-        storedItems.deserializeNBT(compound.getCompound("StoredItems"));
-        blueprintSlot.deserializeNBT(compound.getCompound("BlueprintSlot"));
-        inputSlot.deserializeNBT(compound.getCompound("InputSLot"));
-        hammerSlot.deserializeNBT(compound.getCompound("HammerSlot"));
+        storedItems.deserializeNBT(compound.getCompound(STORED_ITEMS));
+        blueprintSlot.deserializeNBT(compound.getCompound(BLUEPRINT_SLOT));
+        inputSlot.deserializeNBT(compound.getCompound(INPUT_SLOT));
+        hammerSlot.deserializeNBT(compound.getCompound(HAMMER_SLOT));
 
         recipeIngredients.clear();
-        ListTag ingredientsTag = compound.getList("RecipeIngredients", Tag.TAG_STRING);
+        ListTag ingredientsTag = compound.getList(RECIPE_INGREDIENTS, Tag.TAG_STRING);
         for (Tag tag : ingredientsTag) {
             ItemStack ingredientString = stringToItemStack(tag.getAsString());
             recipeIngredients.add(ingredientString);
         }
-        recipeResult = ItemStack.of(compound.getCompound("RecipeResult"));
-        currentIngredientIndex = compound.getInt("CurrentIngredientIndex");
-        wantItemStack = ItemStack.of(compound.getCompound("WantItemStack"));
+        recipeResult = ItemStack.of(compound.getCompound(RECIPE_RESULT));
+        currentIngredientIndex = compound.getInt(CURRENT_INGREDIENT_INDEX);
+        wantItemStack = ItemStack.of(compound.getCompound(WANT_ITEM_STACK));
     }
 
     @Override
     public void saveAdditional(CompoundTag compound) {
         super.saveAdditional(compound);
-        compound.put("StoredItems", storedItems.serializeNBT());
-        compound.put("BlueprintSlot", blueprintSlot.serializeNBT());
-        compound.put("InputSLot", inputSlot.serializeNBT());
-        compound.put("HammerSlot", hammerSlot.serializeNBT());
+        compound.put(STORED_ITEMS, storedItems.serializeNBT());
+        compound.put(BLUEPRINT_SLOT, blueprintSlot.serializeNBT());
+        compound.put(INPUT_SLOT, inputSlot.serializeNBT());
+        compound.put(HAMMER_SLOT, hammerSlot.serializeNBT());
 
         ListTag recipeIngredientList = new ListTag();
         for (ItemStack ingredient : recipeIngredients) {
             recipeIngredientList.add(StringTag.valueOf(ingredient.getItem().toString()));
         }
-        compound.put("RecipeIngredients", recipeIngredientList);
-        compound.put("RecipeResult", recipeResult.save(new CompoundTag()));
-        compound.putInt("CurrentIngredientIndex", currentIngredientIndex);
-        compound.put("WantItemStack", wantItemStack.save(new CompoundTag()));
+        compound.put(RECIPE_INGREDIENTS, recipeIngredientList);
+        compound.put(RECIPE_RESULT, recipeResult.save(new CompoundTag()));
+        compound.putInt(CURRENT_INGREDIENT_INDEX, currentIngredientIndex);
+        compound.put(WANT_ITEM_STACK, wantItemStack.save(new CompoundTag()));
     }
 
     @Override

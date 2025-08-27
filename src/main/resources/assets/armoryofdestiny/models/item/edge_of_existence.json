@@ -1,0 +1,11 @@
+{
+	"base":
+	{
+		"parent": "armoryofdestiny:item/edge_of_existence_inactive_inventory"
+	},
+	"overrides":
+	[
+		{ "predicate": { "armoryofdestiny:active": 0.0 }, "model": "armoryofdestiny:item/edge_of_existence_inactive"},
+		{ "predicate": { "armoryofdestiny:active": 1.0 }, "model": "armoryofdestiny:item/edge_of_existence_active"}
+	]
+}

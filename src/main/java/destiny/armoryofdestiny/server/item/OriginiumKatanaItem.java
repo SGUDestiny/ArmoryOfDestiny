@@ -16,8 +16,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.ForgeMod;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -30,8 +28,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.KATANA;
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.UNIQUE;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.KATANA;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.UNIQUE;
 
 public class OriginiumKatanaItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -108,12 +106,12 @@ public class OriginiumKatanaItem extends TooltipSwordItem implements GeoItem {
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return UNIQUE;
     }
 
     @Override
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return KATANA;
     }
 

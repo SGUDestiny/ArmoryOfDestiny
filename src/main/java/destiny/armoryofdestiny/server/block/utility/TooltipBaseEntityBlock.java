@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.NONE;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.NONE;
 
 public class TooltipBaseEntityBlock extends BaseEntityBlock {
     public TooltipBaseEntityBlock(Properties properties) {
@@ -28,30 +28,30 @@ public class TooltipBaseEntityBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter getter, List<Component> components, TooltipFlag flag) {
-        String itemRarity = getItemRarity(stack);
-        String itemTrivia = getTriviaType();
+        String itemRarity = getRarityTranslatable(stack);
+        String itemTrivia = getTriviaTranslatable();
 
         //Rarity
         if (hasRarity()) {
-            MutableComponent rarity = Component.translatable("tooltip.line.rarity." + itemRarity);
+            MutableComponent rarity = Component.translatable(itemRarity);
             components.add(rarity);
         }
 
         //Trivia
         if (!itemTrivia.equals("none") && hasTrivia()) {
-            MutableComponent trivia = Component.translatable("tooltip.line.trivia")
+            MutableComponent trivia = Component.translatable("tooltip.armoryofdestiny.trivia")
                     .withStyle(ChatFormatting.DARK_GRAY);
             components.add(trivia);
-            MutableComponent trivia_title = Component.translatable("tooltip.line.dropdown")
-                    .append(Component.translatable("tooltip.line.trivia." + itemTrivia + ".title")
+            MutableComponent trivia_title = Component.translatable("tooltip.armoryofdestiny.dropdown")
+                    .append(Component.translatable(itemTrivia + ".title")
                             .withStyle(ChatFormatting.GRAY));
             components.add(trivia_title);
 
             int triviaLines = getTriviaLines(itemTrivia);
             //Print trivia
             for (int i = 1; i <= triviaLines; i++) {
-                MutableComponent trivia_description = Component.translatable("tooltip.line.dropdown")
-                        .append(Component.translatable("tooltip.line.trivia." + itemTrivia + ".description." + i)
+                MutableComponent trivia_description = Component.translatable("tooltip.armoryofdestiny.dropdown")
+                        .append(Component.translatable(itemTrivia + ".description." + i)
                                 .withStyle(ChatFormatting.DARK_GRAY));
                 components.add(trivia_description);
             }
@@ -60,7 +60,7 @@ public class TooltipBaseEntityBlock extends BaseEntityBlock {
 
     public int getTriviaLines(String trivia) {
         int i = 1;
-        String baseKey = "tooltip.line.trivia." + trivia + ".description.";
+        String baseKey = trivia + ".description.";
 
         while (true) {
             String key = baseKey + i;
@@ -73,15 +73,11 @@ public class TooltipBaseEntityBlock extends BaseEntityBlock {
         return i - 1;
     }
 
-    public String getItemName(ItemStack stack) {
-        return stack.getItem().toString();
-    }
-
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return NONE;
     }
 
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return NONE;
     }
 

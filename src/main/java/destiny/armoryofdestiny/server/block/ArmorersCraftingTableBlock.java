@@ -29,8 +29,8 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import javax.annotation.Nullable;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.ARMORERS_CRAFTING_TABLE;
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.ARMORERS_WORKSHOP_PART;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.ARMORERS_CRAFTING_TABLE;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.ARMORERS_WORKSHOP_PART;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class ArmorersCraftingTableBlock extends TooltipBaseEntityBlock {
@@ -120,12 +120,12 @@ public class ArmorersCraftingTableBlock extends TooltipBaseEntityBlock {
     }
 
     @Override
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return ARMORERS_CRAFTING_TABLE;
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return ARMORERS_WORKSHOP_PART;
     }
 }

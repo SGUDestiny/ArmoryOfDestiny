@@ -17,8 +17,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.NotNull;
@@ -35,27 +33,29 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.GREATSWORD;
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.LEGENDARY;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.GREATSWORD;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.LEGENDARY;
 
 public class DragonSlayerItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public static final UUID ABILITY_MULTIPLIER_UUID = UUID.fromString("CB3F55D3-644C-4F38-A497-9C13A23DB6CF");
 
-    private float attackDamage;
-    private double attackSpeed;
-    private double attackKnockback;
-    private double entityReach;
+    public static final String DAMAGE_DEALT = "damageDealt";
+
+    private final float attackDamage;
+    private final double attackSpeed;
+    private final double attackKnockback;
+    private final double entityReach;
 
     public float attackDamageAbility;
-    public int dealtDamageCap = 10240;
+    public int damageDealtCap = 10240;
 
     public DragonSlayerItem(Item.Properties build) {
         super(Tiers.NETHERITE, 0, 0, build);
         this.attackDamage = 13.0F;
-        this.attackSpeed = -2.8F;
-        this.attackKnockback = -0.8F;
+        this.attackSpeed = -2.8;
+        this.attackKnockback = 0.8;
         this.entityReach = 2;
 
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
@@ -88,8 +88,8 @@ public class DragonSlayerItem extends TooltipSwordItem implements GeoItem {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 
             if (stack.getTag() != null) {
-                int damageDealt = stack.getOrCreateTag().getInt("damageDealt");
-                attackDamageAbility = Math.min(24, 24 * ((float) damageDealt / dealtDamageCap ));
+                int damageDealt = stack.getOrCreateTag().getInt(DAMAGE_DEALT);
+                attackDamageAbility = Math.min(24, 24 * (damageDealt / damageDealtCap));
 
                 if (damageDealt > 0) {
                     builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ABILITY_MULTIPLIER_UUID, "Active ability", attackDamageAbility, AttributeModifier.Operation.ADDITION));
@@ -122,12 +122,12 @@ public class DragonSlayerItem extends TooltipSwordItem implements GeoItem {
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return LEGENDARY;
     }
 
     @Override
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return GREATSWORD;
     }
 
@@ -136,9 +136,9 @@ public class DragonSlayerItem extends TooltipSwordItem implements GeoItem {
         super.appendHoverText(stack, level, components, flag);
 
         if (isShift(level) && stack.getTag() != null) {
-            MutableComponent damage_total = Component.translatable("tooltip.line.dropdown")
+            MutableComponent damage_total = Component.translatable("tooltip.armoryofdestiny.dropdown")
                     .append(Component.translatable("item.armoryofdestiny.dragon_slayer.ability.1.damage_total")
-                            .withStyle(ChatFormatting.GRAY)).append(Component.literal("" + stack.getTag().getInt("damageDealt")).withStyle(ChatFormatting.DARK_GRAY));
+                            .withStyle(ChatFormatting.GRAY)).append(Component.literal("" + stack.getTag().getInt(DAMAGE_DEALT)).withStyle(ChatFormatting.DARK_GRAY));
             components.add(damage_total);
         }
     }

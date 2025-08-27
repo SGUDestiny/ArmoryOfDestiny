@@ -3,11 +3,9 @@ package destiny.armoryofdestiny.server.item;
 import destiny.armoryofdestiny.server.item.utility.TooltipItem;
 import destiny.armoryofdestiny.server.registry.ItemRegistry;
 import net.minecraft.ChatFormatting;
-import net.minecraft.commands.arguments.ResourceKeyArgument;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,37 +17,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.BLUEPRINT;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.BLUEPRINT;
 
 public class BlueprintItem extends TooltipItem {
 
     public BlueprintItem(Properties properties) {
         super(properties);
-    }
-
-    public static int getBlueprintColor(ItemStack stack) {
-        if (stack.getTag() != null) {
-            String blueprintItem = stack.getOrCreateTag().getString("blueprintItem");
-
-            if (blueprintItem.equals(ItemRegistry.MURASAMA.getKey().location().toString())) {
-                return 0xE80000;
-            } else if (blueprintItem.equals(ItemRegistry.GUN_SHEATH.getKey().location().toString())) {
-                return 0xBDBDBD;
-            } else if (blueprintItem.equals(ItemRegistry.ORIGINIUM_CATALYST.getKey().location().toString())) {
-                return 0xFFA82D;
-            } else if (blueprintItem.equals(ItemRegistry.DRAGON_SLAYER.getKey().location().toString())) {
-                return 0x474747;
-            }  else if (blueprintItem.equals(ItemRegistry.SHARP_IRONY.getKey().location().toString())) {
-                return 0x4A5B7D;
-            } else if (blueprintItem.equals(ItemRegistry.PUNISHER.getKey().location().toString())) {
-                return 0x2FFFF8;
-            } else if (blueprintItem.equals(ItemRegistry.BLOODLETTER.getKey().location().toString())) {
-                return 0xC57070D;
-            }  else if (blueprintItem.equals(ItemRegistry.CRUCIBLE_INACTIVE.getKey().location().toString())) {
-                return 0xFF4439;
-            }
-        }
-        return 0xFFFFFF;
     }
 
     public static List<String> getBlueprintIngredients(String blueprintItem) {
@@ -155,15 +128,15 @@ public class BlueprintItem extends TooltipItem {
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         if (stack.getTag() != null) {
             return stack.getOrCreateTag().getString("blueprintRarity");
         }
-        return "none";
+        return super.getRarityTranslatable(stack);
     }
 
     @Override
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return BLUEPRINT;
     }
 
@@ -182,7 +155,7 @@ public class BlueprintItem extends TooltipItem {
         String keyLocation = stack.getOrCreateTag().getString("blueprintItem");
         List<String> ingredientList = getBlueprintIngredients(keyLocation);
 
-        MutableComponent blueprint_item_title = Component.translatable("tooltip.line.dropdown")
+        MutableComponent blueprint_item_title = Component.translatable("tooltip.armoryofdestiny.dropdown")
                 .append(Component.translatable("item.armoryofdestiny.blueprint.item")
                         .withStyle(ChatFormatting.DARK_GRAY))
                 .append(Component.translatable(BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(keyLocation)).getDescriptionId())
@@ -190,18 +163,18 @@ public class BlueprintItem extends TooltipItem {
         components.add(blueprint_item_title);
 
         if (!isShift(level)) {
-            MutableComponent blueprint_ingredients_collapsed = Component.translatable("tooltip.line.collapsed")
-                    .append(Component.translatable("tooltip.line.ability.collapsed")
+            MutableComponent blueprint_ingredients_collapsed = Component.translatable("tooltip.armoryofdestiny.collapsed")
+                    .append(Component.translatable("tooltip.armoryofdestiny.ability.collapsed")
                             .withStyle(ChatFormatting.DARK_GRAY));
             components.add(blueprint_ingredients_collapsed);
         } else {
-            MutableComponent blueprint_ingredients_expanded = Component.translatable("tooltip.line.expanded")
+            MutableComponent blueprint_ingredients_expanded = Component.translatable("tooltip.armoryofdestiny.expanded")
                     .append(Component.translatable("item.armoryofdestiny.blueprint.ingredients")
                             .withStyle(ChatFormatting.DARK_GRAY));
             components.add(blueprint_ingredients_expanded);
 
             for (int i = 0; ingredientList.size() > i; i++) {
-                MutableComponent blueprint_ingredient = Component.translatable("tooltip.line.dropdown")
+                MutableComponent blueprint_ingredient = Component.translatable("tooltip.armoryofdestiny.dropdown")
                         .append(Component.translatable(ingredientList.get(i))
                                 .withStyle(ChatFormatting.GRAY));
                 components.add(blueprint_ingredient);

@@ -22,8 +22,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.NotNull;
@@ -38,8 +36,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.KATANA;
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.LEGENDARY;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.KATANA;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.LEGENDARY;
 
 public class MurasamaItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -103,7 +101,7 @@ public class MurasamaItem extends TooltipSwordItem implements GeoItem {
             }
             //If player isn't creative, apply a cooldown
             if (!player.isCreative()) {
-                player.getCooldowns().addCooldown(player.getItemInHand(hand).getItem(), 60);
+                player.getCooldowns().addCooldown(player.getItemInHand(hand).getItem(), 40);
             }
             level.playSound(player, player.blockPosition(), SoundRegistry.MURASAMA_SHEATH.get(), SoundSource.PLAYERS, 0.5F, 1);
             level.playSound(player, player.blockPosition(), SoundRegistry.MURASAMA_INSERT.get(), SoundSource.PLAYERS, 0.5F, 1);
@@ -177,12 +175,12 @@ public class MurasamaItem extends TooltipSwordItem implements GeoItem {
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return LEGENDARY;
     }
 
     @Override
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return KATANA;
     }
 

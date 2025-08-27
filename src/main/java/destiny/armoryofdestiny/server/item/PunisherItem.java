@@ -22,8 +22,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
@@ -36,8 +34,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.HAMMER;
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.UNIQUE;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.HAMMER;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.UNIQUE;
 
 public class PunisherItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -181,12 +179,12 @@ public class PunisherItem extends TooltipSwordItem implements GeoItem {
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return UNIQUE;
     }
 
     @Override
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return HAMMER;
     }
 }

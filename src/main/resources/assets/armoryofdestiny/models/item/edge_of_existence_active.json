@@ -1,0 +1,23 @@
+{
+	"loader": "forge:separate_transforms",
+	"gui_light": "front",
+	"base":
+	{
+		"parent": "armoryofdestiny:item/edge_of_existence_third_person"
+	},
+	"perspectives":
+	{
+		"gui":
+		{
+			"parent": "armoryofdestiny:item/edge_of_existence_active_inventory"
+		},
+		"fixed":
+		{
+			"parent": "armoryofdestiny:item/edge_of_existence_active_inventory"
+		},
+		"ground":
+		{
+			"parent": "armoryofdestiny:item/edge_of_existence_active_inventory"
+		}
+	}
+}

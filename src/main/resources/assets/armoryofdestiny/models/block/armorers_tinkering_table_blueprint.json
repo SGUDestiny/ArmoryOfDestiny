@@ -1,4 +1,5 @@
 {
+	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"render_type": "cutout",
@@ -11,34 +12,6 @@
 		"blueprint": "armoryofdestiny:block/armorers_tinkering_table_blueprint"
 	},
 	"elements": [
-		{
-			"name": "markings",
-			"from": [-0.1, 11.9, -0.1],
-			"to": [16.1, 16.1, 16.1],
-			"rotation": {"angle": 0, "axis": "y", "origin": [14, 0, 0]},
-			"faces": {
-				"north": {"uv": [4, 5.33333, 8, 6.66667], "texture": "#markings"},
-				"east": {"uv": [0, 5.33333, 4, 6.66667], "texture": "#markings"},
-				"south": {"uv": [12, 5.33333, 16, 6.66667], "texture": "#markings"},
-				"west": {"uv": [8, 5.33333, 12, 6.66667], "texture": "#markings"},
-				"up": {"uv": [8, 5.33333, 4, 0], "texture": "#markings"},
-				"down": {"uv": [12, 0, 8, 5.33333], "texture": "#markings"}
-			}
-		},
-		{
-			"name": "blueprint",
-			"from": [-0.05, 11.95, -0.05],
-			"to": [16.05, 16.05, 16.05],
-			"rotation": {"angle": 0, "axis": "y", "origin": [14, 0, 0]},
-			"faces": {
-				"north": {"uv": [4, 5.33333, 8, 6.66667], "texture": "#blueprint", "tintindex": 0},
-				"east": {"uv": [0, 5.33333, 4, 6.66667], "texture": "#blueprint", "tintindex": 0},
-				"south": {"uv": [12, 5.33333, 16, 6.66667], "texture": "#blueprint", "tintindex": 0},
-				"west": {"uv": [8, 5.33333, 12, 6.66667], "texture": "#blueprint", "tintindex": 0},
-				"up": {"uv": [8, 5.33333, 4, 0], "texture": "#blueprint", "tintindex": 0},
-				"down": {"uv": [12, 0, 8, 5.33333], "texture": "#blueprint", "tintindex": 0}
-			}
-		},
 		{
 			"name": "table",
 			"from": [0, 12, 0],
@@ -113,7 +86,7 @@
 			"faces": {
 				"north": {"uv": [0, 3.66667, 1.75, 7], "texture": "#3"},
 				"east": {"uv": [0, 3.66667, 0, 7], "texture": "#3"},
-				"south": {"uv": [1.75, 3.66667, 3.5, 7], "texture": "#3"},
+				"south": {"uv": [1.75, 3.66667, 0, 7], "texture": "#3"},
 				"west": {"uv": [1.75, 3.66667, 1.75, 7], "texture": "#3"},
 				"up": {"uv": [1.75, 3.66667, 0, 3.66667], "texture": "#3"},
 				"down": {"uv": [3.5, 3.66667, 1.75, 3.66667], "texture": "#3"}
@@ -136,6 +109,65 @@
 				"east": {"uv": [0.5, 0, 0, 1], "texture": "#table"},
 				"west": {"uv": [0, 0, 0.5, 1], "texture": "#table"}
 			}
+		},
+		{
+			"from": [4.10662, 16.025, 3.98233],
+			"to": [12.10662, 16.025, 9.98233],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8.10662, 16.025, 6.98233]},
+			"faces": {
+				"up": {"uv": [4.5, 0, 6, 2.66667], "rotation": 270, "texture": "#blueprint"}
+			}
+		},
+		{
+			"name": "markings",
+			"from": [5.10662, 16.05, 4.48233],
+			"to": [10.10662, 16.05, 9.48233],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8.10662, 16.05, 6.98233]},
+			"faces": {
+				"up": {"uv": [0, 0, 1.25, 1.66667], "rotation": 270, "texture": "#markings", "tintindex": 1}
+			}
+		},
+		{
+			"from": [2.75, 16, 5.25],
+			"to": [4.75, 18, 12.25],
+			"rotation": {"angle": 45, "axis": "y", "origin": [6, 16.5, 8.75]},
+			"faces": {
+				"north": {"uv": [1.75, 2.33333, 2.25, 3], "texture": "#blueprint"},
+				"east": {"uv": [0, 2.33333, 1.75, 3], "texture": "#blueprint"},
+				"south": {"uv": [4, 2.33333, 4.5, 3], "texture": "#blueprint"},
+				"west": {"uv": [2.25, 2.33333, 4, 3], "texture": "#blueprint"},
+				"up": {"uv": [2.25, 2.33333, 1.75, 0], "texture": "#blueprint"},
+				"down": {"uv": [2.75, 0, 2.25, 2.33333], "texture": "#blueprint"}
+			}
+		},
+		{
+			"from": [3.25, 16.5, 4.75],
+			"to": [4.25, 17.5, 12.75],
+			"rotation": {"angle": 45, "axis": "y", "origin": [6, 16.5, 8.75]},
+			"faces": {
+				"north": {"uv": [8, 2.66667, 8.25, 3], "texture": "#blueprint"},
+				"east": {"uv": [6, 2.66667, 8, 3], "texture": "#blueprint"},
+				"south": {"uv": [10.25, 2.66667, 10.5, 3], "texture": "#blueprint"},
+				"west": {"uv": [8.25, 2.66667, 10.25, 3], "texture": "#blueprint"},
+				"up": {"uv": [8.25, 2.66667, 8, 0], "texture": "#blueprint"},
+				"down": {"uv": [8.5, 0, 8.25, 2.66667], "texture": "#blueprint"}
+			}
+		}
+	],
+	"groups": [
+		0,
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		{
+			"name": "group",
+			"origin": [3, 16, 8],
+			"color": 0,
+			"children": [8, 9, 10, 11]
 		}
 	]
 }

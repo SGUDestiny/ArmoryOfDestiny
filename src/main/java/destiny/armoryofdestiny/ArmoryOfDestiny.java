@@ -72,6 +72,7 @@ public class ArmoryOfDestiny
 
             event.enqueueWork(() -> {
                 ItemProperties.register(ItemRegistry.SHARP_IRONY.get(), new ResourceLocation(MODID, "is_open"), new SharpIronyItemProperty());
+                ItemProperties.register(ItemRegistry.EDGE_OF_EXISTENCE.get(), new ResourceLocation(MODID, "active"), new EdgeOfExistenceItemProperty());
                 ItemProperties.register(ItemRegistry.PUNISHER.get(), new ResourceLocation(MODID, "active"), new PunisherItemProperty());
                 ItemProperties.register(ItemRegistry.MURASAMA.get(), new ResourceLocation(MODID, "active"), new MurasamaItemProperty());
                 ItemProperties.register(ItemRegistry.BLOODLETTER.get(), new ResourceLocation(MODID, "active"), new BloodletterItemProperty());

@@ -3,10 +3,8 @@ package destiny.armoryofdestiny.server.item;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import destiny.armoryofdestiny.client.render.item.EdgeOfExistenceItemRenderer;
-import destiny.armoryofdestiny.client.render.item.MurasamaItemRenderer;
 import destiny.armoryofdestiny.server.item.utility.TooltipSwordItem;
 import destiny.armoryofdestiny.server.registry.EffectRegistry;
-import destiny.armoryofdestiny.server.registry.ItemRegistry;
 import destiny.armoryofdestiny.server.registry.SoundRegistry;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.sounds.SoundSource;
@@ -20,11 +18,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.ForgeMod;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -37,8 +32,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.KATANA;
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.LEGENDARY;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.KATANA;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.LEGENDARY;
 
 public class EdgeOfExistenceItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -79,8 +74,8 @@ public class EdgeOfExistenceItem extends TooltipSwordItem implements GeoItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
-        player.addEffect(new MobEffectInstance(EffectRegistry.NONEXISTENCE.get(), 200, 0, false, false, true));
-
+        player.addEffect(new MobEffectInstance(EffectRegistry.NONEXISTENCE.get(), 300, 0, false, false, true));
+        level.playSound(player, player.blockPosition(), SoundRegistry.EDGE_OF_EXISTENCE_ACTIVATE.get(), SoundSource.PLAYERS, 1, 1);
         player.getCooldowns().addCooldown(stack.getItem(), 320);
 
         return InteractionResultHolder.success(stack);
@@ -111,12 +106,12 @@ public class EdgeOfExistenceItem extends TooltipSwordItem implements GeoItem {
     }
 
     @Override
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return KATANA;
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return LEGENDARY;
     }
 }

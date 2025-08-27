@@ -22,8 +22,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.Nullable;
@@ -39,10 +37,12 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.*;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.*;
 
 public class BloodletterItem extends TooltipAxeItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    public static final UUID ABILITY_MULTIPLIER_UUID = UUID.fromString("CB3F55D3-645C-4F38-A497-9C23A23DB6CF");
 
     public static final String ABILITY_TICK = "abilityTick";
     public static final String STORED_BLOOD = "storedBlood";
@@ -51,12 +51,10 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
     public static final int bloodPerHit = maxBlood / 20;
     public static final int frameAmount = 15;
 
-    public static final UUID ABILITY_MULTIPLIER_UUID = UUID.fromString("CB3F55D3-645C-4F38-A497-9C23A23DB6CF");
-
-    private float attackDamage;
-    private double attackSpeed;
-    private double attackKnockback;
-    private double entityReach;
+    private final float attackDamage;
+    private final double attackSpeed;
+    private final double attackKnockback;
+    private final double entityReach;
 
     public float attackDamageAbility = 8;
     public float attackSpeedAbility = 1.5F;
@@ -123,7 +121,6 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
             if (storedBlood > 0 && abilityTick == 0) {
                 stack.getOrCreateTag().putInt(ABILITY_TICK, 1);
 
-
                 level.playSound(player, player.blockPosition(), SoundRegistry.BLOODLETTER_ACTIVATE.get(), SoundSource.PLAYERS, 1, 1);
 
                 player.getCooldowns().addCooldown(stack.getItem(), 60);
@@ -175,12 +172,12 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return LEGENDARY;
     }
 
     @Override
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return RAPIER;
     }
 

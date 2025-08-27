@@ -233,5 +233,17 @@
       "armoryofdestiny:crucible_swing_1",
       "armoryofdestiny:crucible_swing_2"
     ]
+  },
+  "edge_of_existence_activate": {
+    "subtitle": "sound.armoryofdestiny.edge_of_existence_activate",
+    "sounds": [
+      "armoryofdestiny:edge_of_existence_activate"
+    ]
+  },
+  "edge_of_existence_deactivate": {
+    "subtitle": "sound.armoryofdestiny.edge_of_existence_deactivate",
+    "sounds": [
+      "armoryofdestiny:edge_of_existence_deactivate"
+    ]
   }
 }

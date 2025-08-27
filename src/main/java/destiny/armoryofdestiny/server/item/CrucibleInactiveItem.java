@@ -23,8 +23,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.function.Consumer;
 
 import static destiny.armoryofdestiny.server.item.CrucibleItem.USAGES;
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.GREATSWORD;
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.LEGENDARY;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.GREATSWORD;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.LEGENDARY;
 
 public class CrucibleInactiveItem extends TooltipItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -113,12 +113,12 @@ public class CrucibleInactiveItem extends TooltipItem implements GeoItem {
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return LEGENDARY;
     }
 
     @Override
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return GREATSWORD;
     }
 

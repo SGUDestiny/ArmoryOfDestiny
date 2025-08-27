@@ -26,8 +26,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.function.Consumer;
 
 import static destiny.armoryofdestiny.server.item.MurasamaItem.ABILITY_TICK;
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.KATANA;
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.LEGENDARY;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.KATANA;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.LEGENDARY;
 
 public class MurasamaSheathedItem extends TooltipItem implements GeoItem {
     boolean played;
@@ -108,12 +108,12 @@ public class MurasamaSheathedItem extends TooltipItem implements GeoItem {
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return LEGENDARY;
     }
 
     @Override
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return KATANA;
     }
 

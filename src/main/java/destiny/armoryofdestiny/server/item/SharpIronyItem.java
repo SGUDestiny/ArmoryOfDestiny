@@ -3,7 +3,6 @@ package destiny.armoryofdestiny.server.item;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import destiny.armoryofdestiny.server.item.utility.TooltipSwordItem;
-import destiny.armoryofdestiny.server.registry.EntityRegistry;
 import destiny.armoryofdestiny.server.registry.ItemRegistry;
 import destiny.armoryofdestiny.server.registry.SoundRegistry;
 import destiny.armoryofdestiny.client.render.item.SharpIronyItemRenderer;
@@ -34,8 +33,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.THROWING_FAN;
-import static destiny.armoryofdestiny.server.misc.UtilityVariables.UNIQUE;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.THROWING_FAN;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.UNIQUE;
 
 public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
     private static final RawAnimation SHARP_IRONY_OPEN = RawAnimation.begin().thenPlay("sharp_irony.open");
@@ -117,16 +116,28 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
                     openFan(level, player, stack, item);
                 }
             }
+
+            return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
         } else if (isControl(level)) {
             if (isOpen){
-                throwAll(level, player, stack, item);
+                throwAll(level, player, stack, item, hand);
+
+                return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
             }
         } else {
             if (isOpen) {
-                throwFeather(level, player, stack, item, player.getXRot(), player.getYRot());
+                if (ammoCount > 0) {
+                    throwFeather(level, player, stack, item, hand, player.getXRot(), player.getYRot());
+                } else {
+                    reload(level, player, stack, item);
+                }
+
+                return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
             } else {
                 if (ammoCount < 5) {
                     reload(level, player, stack, item);
+
+                    return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
                 } else {
                     openFan(level, player, stack, item);
                 }
@@ -135,31 +146,29 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
         return InteractionResultHolder.pass(stack);
     }
 
-    public void throwFeather(Level level, Player player, ItemStack stack, Item item, float XRot, float YRot) {
+    public void throwFeather(Level level, Player player, ItemStack stack, Item item, InteractionHand hand, float XRot, float YRot) {
         int ammoCount = stack.getOrCreateTag().getInt(AMMO_COUNT);
 
-        if (ammoCount > 0) {
-            if (!level.isClientSide) {
-                MetallicFeatherEntity feather = new MetallicFeatherEntity(level, player);
-                feather.shootFromRotation(player, XRot, YRot, 0.0F, 5.0F, 1.0F);
-                level.addFreshEntity(feather);
-            }
-            stack.getOrCreateTag().putInt(AMMO_COUNT, ammoCount - 1);
-
-            if (!player.isCreative()) {
-                stack.setDamageValue(stack.getDamageValue() + 1);
-            }
-
-            triggerAnim(level, player, stack, "sharp_irony_controller", "throw");
-            level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_THROW.get(), SoundSource.PLAYERS, 1, 1);
-
-            player.getCooldowns().addCooldown(item, 5);
-        } else {
-            reload(level, player, stack, item);
+        if (!level.isClientSide) {
+            MetallicFeatherEntity feather = new MetallicFeatherEntity(level, player);
+            feather.shootFromRotation(player, XRot, YRot, 0.0F, 5.0F, 1.0F);
+            level.addFreshEntity(feather);
         }
+        stack.getOrCreateTag().putInt(AMMO_COUNT, ammoCount - 1);
+
+        if (!player.isCreative()) {
+            stack.hurtAndBreak(1, player, (player1) -> {
+                player1.broadcastBreakEvent(hand);
+            });
+        }
+
+        triggerAnim(level, player, stack, "sharp_irony_controller", "throw");
+        level.playSound(player, player.blockPosition(), SoundRegistry.SHARP_IRONY_THROW.get(), SoundSource.PLAYERS, 1, 1);
+
+        player.getCooldowns().addCooldown(item, 5);
     }
 
-    public void throwAll(Level level, Player player, ItemStack stack, Item item) {
+    public void throwAll(Level level, Player player, ItemStack stack, Item item, InteractionHand hand) {
         int ammoCount = stack.getOrCreateTag().getInt(AMMO_COUNT);
 
         if (ammoCount > 0) {
@@ -172,12 +181,8 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
             }
 
             for (int i = 0; i < ammoCount; i++){
-                throwFeather(level, player, stack, item, player.getXRot(), YRot);
+                throwFeather(level, player, stack, item, hand, player.getXRot(), YRot);
                 YRot += 5;
-
-                if (!player.isCreative()) {
-                    stack.setDamageValue(stack.getDamageValue() + 1);
-                }
             }
             stack.getOrCreateTag().putInt(AMMO_COUNT, 0);
 
@@ -195,8 +200,8 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
             ItemStack feather_stack = findAmmo(player);
             int feather_stack_amount = getAmmoCount(player);
 
-            if (!player.isCreative()) {
-                if (feather_stack_amount > 0) {
+            if (feather_stack_amount > 0) {
+                if (!player.isCreative()) {
                     if (5 >= feather_stack_amount + ammoCount) {
                         feather_stack.shrink(feather_stack_amount);
                         stack.getOrCreateTag().putInt(AMMO_COUNT, ammoCount + feather_stack_amount);
@@ -204,13 +209,12 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
                         feather_stack.shrink(5 - ammoCount);
                         stack.getOrCreateTag().putInt(AMMO_COUNT, ammoCount + 5 - ammoCount);
                     }
+                } else {
+                    stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
                 }
-            }
-            else {
-                stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
-            }
 
-            openFan(level, player, stack, item);
+                openFan(level, player, stack, item);
+            }
         }
     }
 
@@ -289,12 +293,12 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
     }
 
     @Override
-    public String getItemRarity(ItemStack stack) {
+    public String getRarityTranslatable(ItemStack stack) {
         return UNIQUE;
     }
 
     @Override
-    public String getTriviaType() {
+    public String getTriviaTranslatable() {
         return THROWING_FAN;
     }
 
