@@ -2,7 +2,6 @@ package destiny.armoryofdestiny.server.event;
 
 import com.mojang.logging.LogUtils;
 import destiny.armoryofdestiny.client.render.blockentity.ArmorersTinkeringTableRenderer;
-import destiny.armoryofdestiny.server.block.ArmorersTinkeringTableBlock;
 import destiny.armoryofdestiny.server.util.UtilityVariables;
 import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;
 import destiny.armoryofdestiny.server.registry.BlockRegistry;
@@ -27,11 +26,11 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onBlockColors(RegisterColorHandlersEvent.Block event) {
         LOGGER.info("Loaded block colors");
-        event.register((blockState, blockAndTintGetter, blockPos, colorIn) -> colorIn != 1 ? -1 : UtilityVariables.getBlueprintColor(Minecraft.getInstance().level, blockPos), BlockRegistry.ARMORERS_FORGING_TABLE.get());
+        event.register((blockState, blockAndTintGetter, blockPos, colorIn) -> colorIn != 1 ? -1 : UtilityVariables.getBlueprintColor(Minecraft.getInstance().level, blockPos), BlockRegistry.ARMORERS_TINKERING_TABLE.get());
     }
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(BlockEntityRegistry.ARMORERS_ASSEMBLY_TABLE.get(), ArmorersTinkeringTableRenderer::new);
+        event.registerBlockEntityRenderer(BlockEntityRegistry.ARMORERS_TINKERING_TABLE.get(), ArmorersTinkeringTableRenderer::new);
     }
 }

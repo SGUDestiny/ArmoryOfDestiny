@@ -5,7 +5,6 @@ import destiny.armoryofdestiny.server.block.blockentity.ArmorersTinkeringTableBl
 import destiny.armoryofdestiny.server.item.BlueprintItem;
 import destiny.armoryofdestiny.server.item.SmithingHammerItem;
 import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;
-import destiny.armoryofdestiny.server.registry.ItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -192,12 +191,12 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return BlockEntityRegistry.ARMORERS_ASSEMBLY_TABLE.get().create(pos, state);
+        return BlockEntityRegistry.ARMORERS_TINKERING_TABLE.get().create(pos, state);
     }
 
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntity) {
-        return createTickerHelper(blockEntity, BlockEntityRegistry.ARMORERS_ASSEMBLY_TABLE.get(), ArmorersTinkeringTableBlockEntity::tick);
+        return createTickerHelper(blockEntity, BlockEntityRegistry.ARMORERS_TINKERING_TABLE.get(), ArmorersTinkeringTableBlockEntity::tick);
     }
 
     @Override

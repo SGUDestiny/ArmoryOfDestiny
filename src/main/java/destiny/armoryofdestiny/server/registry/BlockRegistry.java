@@ -14,7 +14,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.ListIterator;
 import java.util.function.Supplier;
 
 import static destiny.armoryofdestiny.server.block.BloomeryBottomBlock.LIT;
@@ -27,7 +26,7 @@ public class BlockRegistry {
             () -> new ArmorersCraftingTableBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_GRAY).strength(2.5F).sound(SoundType.NETHER_WOOD).noOcclusion()));
 
-    public static final RegistryObject<Block> ARMORERS_FORGING_TABLE = registerBlock("armorers_tinkering_table",
+    public static final RegistryObject<Block> ARMORERS_TINKERING_TABLE = registerBlock("armorers_tinkering_table",
             () -> new ArmorersTinkeringTableBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_GRAY).strength(2.5F).sound(SoundType.NETHER_WOOD).noOcclusion()));
 

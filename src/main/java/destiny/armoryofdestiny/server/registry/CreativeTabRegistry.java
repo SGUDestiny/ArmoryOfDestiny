@@ -47,7 +47,7 @@ public class CreativeTabRegistry {
 
                 //Armorer's workshop
                 output.accept(BlockRegistry.ARMORERS_CRAFTING_TABLE.get());
-                output.accept(BlockRegistry.ARMORERS_FORGING_TABLE.get());
+                output.accept(BlockRegistry.ARMORERS_TINKERING_TABLE.get());
                 output.accept(ItemRegistry.GOLD_SMITHING_HAMMER.get());
                 output.accept(ItemRegistry.IRON_SMITHING_HAMMER.get());
                 output.accept(ItemRegistry.DIAMOND_SMITHING_HAMMER.get());

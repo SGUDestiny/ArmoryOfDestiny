@@ -2,6 +2,7 @@ package destiny.armoryofdestiny.server.block.blockentity;
 
 import com.mojang.logging.LogUtils;
 import destiny.armoryofdestiny.ArmoryOfDestiny;
+import destiny.armoryofdestiny.server.recipe.TinkeringRecipe;
 import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;
 import destiny.armoryofdestiny.server.registry.BlockRegistry;
 import destiny.armoryofdestiny.server.registry.ItemRegistry;
@@ -11,9 +12,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -64,13 +63,13 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
     private final ItemStackHandler hammerSlot;
     private final LazyOptional<IItemHandler> inputHandler;
 
-    private List<ItemStack> recipeIngredients;
+    private List<Ingredient> recipeIngredients;
     private ItemStack recipeResult = ItemStack.EMPTY;
     private int currentIngredientIndex = -1;
-    private ItemStack wantItemStack = ItemStack.EMPTY;
+    private Ingredient wantItemStack = Ingredient.EMPTY;
 
     public ArmorersTinkeringTableBlockEntity(BlockPos pos, BlockState state) {
-        super(BlockEntityRegistry.ARMORERS_ASSEMBLY_TABLE.get(), pos, state);
+        super(BlockEntityRegistry.ARMORERS_TINKERING_TABLE.get(), pos, state);
         storedItems = createHandler(16);
         blueprintSlot = createHandler(1);
         inputSlot = createHandler(1);
@@ -85,12 +84,17 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
                 //Begin crafting
                 if (table.isSmithingCraftingTablePresent()) {
                     if (table.recipeIngredients.isEmpty()) {
-                        String recipeID = table.getItemFromBlueprint();
-                        table.recipeIngredients = table.getIngredientsFromRecipe(recipeID, table.recipeIngredients);
-                        table.recipeResult = table.getResultItemFromRecipe(recipeID);
-                        table.currentIngredientIndex = level.random.nextInt(0, table.recipeIngredients.size() - 1);
-                        table.wantItemStack = table.recipeIngredients.get(table.currentIngredientIndex);
-                        table.markUpdated();
+                        ResourceLocation recipeID = table.getItemFromBlueprint();
+
+                        List<TinkeringRecipe> recipes = level.getRecipeManager().getAllRecipesFor(TinkeringRecipe.Type.INSTANCE);
+                        if (recipes.removeIf(recipe -> !recipe.recipeID.equals(recipeID))) {
+                            TinkeringRecipe recipe = recipes.get(0);
+                            table.recipeIngredients = recipe.getIngredientList();
+                            table.recipeResult = recipe.getResult();
+                            table.currentIngredientIndex = level.random.nextInt(0, table.recipeIngredients.size() - 1);
+                            table.wantItemStack = table.recipeIngredients.get(table.currentIngredientIndex);
+                            table.markUpdated();
+                        }
                     }
                 }
             }
@@ -101,7 +105,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         if (!level.isClientSide) {
             if (isSmithingCraftingTablePresent()) {
                 //Check if item in input slot is current ingredient
-                if (getInputItem().is(wantItemStack.getItem())) {
+                if (wantItemStack.test(getInputItem())) {
                     //Check if remaining ingredients is more than one
                     int remainingIngredients = recipeIngredients.size();
 
@@ -156,7 +160,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         recipeIngredients.clear();
         recipeResult = ItemStack.EMPTY;
         currentIngredientIndex = -1;
-        wantItemStack = ItemStack.EMPTY;
+        wantItemStack = Ingredient.EMPTY;
     }
 
     public ItemStack getInputItem() {
@@ -196,13 +200,13 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         return !getBlueprintItem().isEmpty();
     }
 
-    public String getItemFromBlueprint() {
+    public ResourceLocation getItemFromBlueprint() {
         ItemStack blueprint = getBlueprintItem();
 
         if (blueprint.getTag() != null) {
-            return blueprint.getOrCreateTag().getString("blueprintItem");
+            return new ResourceLocation(blueprint.getOrCreateTag().getString("blueprintItem"));
         }
-        return "";
+        return new ResourceLocation("");
     }
 
     public List<ItemStack> getIngredientsFromRecipe(String recipeID, List<ItemStack> ingredientList) {
@@ -343,15 +347,8 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         inputSlot.deserializeNBT(compound.getCompound(INPUT_SLOT));
         hammerSlot.deserializeNBT(compound.getCompound(HAMMER_SLOT));
 
-        recipeIngredients.clear();
-        ListTag ingredientsTag = compound.getList(RECIPE_INGREDIENTS, Tag.TAG_STRING);
-        for (Tag tag : ingredientsTag) {
-            ItemStack ingredientString = stringToItemStack(tag.getAsString());
-            recipeIngredients.add(ingredientString);
-        }
         recipeResult = ItemStack.of(compound.getCompound(RECIPE_RESULT));
         currentIngredientIndex = compound.getInt(CURRENT_INGREDIENT_INDEX);
-        wantItemStack = ItemStack.of(compound.getCompound(WANT_ITEM_STACK));
     }
 
     @Override
@@ -362,14 +359,8 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         compound.put(INPUT_SLOT, inputSlot.serializeNBT());
         compound.put(HAMMER_SLOT, hammerSlot.serializeNBT());
 
-        ListTag recipeIngredientList = new ListTag();
-        for (ItemStack ingredient : recipeIngredients) {
-            recipeIngredientList.add(StringTag.valueOf(ingredient.getItem().toString()));
-        }
-        compound.put(RECIPE_INGREDIENTS, recipeIngredientList);
         compound.put(RECIPE_RESULT, recipeResult.save(new CompoundTag()));
         compound.putInt(CURRENT_INGREDIENT_INDEX, currentIngredientIndex);
-        compound.put(WANT_ITEM_STACK, wantItemStack.save(new CompoundTag()));
     }
 
     @Override
@@ -398,7 +389,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         recipeIngredients.clear();
     }
 
-    public ItemStack getWantItem() {
+    public Ingredient getWantItem() {
         return wantItemStack;
     }
 

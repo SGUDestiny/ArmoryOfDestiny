@@ -1,0 +1,16 @@
+{
+  "type": "armoryofdestiny:tinkering",
+  "ingredients": {
+    "item": "minecraft:echo_shard",
+    "item": "minecraft:echo_shard",
+    "item": "minecraft:echo_shard",
+    "item": "minecraft:redstone",
+    "item": "minecraft:redstone",
+    "item": "minecraft:redstone",
+    "item": "minecraft:iron_ingot",
+    "item": "minecraft:iron_ingot"
+  },
+  "result": {
+    "item": "armoryofdestiny:murasama"
+  }
+}
