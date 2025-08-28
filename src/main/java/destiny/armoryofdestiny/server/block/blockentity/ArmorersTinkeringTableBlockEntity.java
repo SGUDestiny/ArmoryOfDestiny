@@ -89,11 +89,18 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
                         List<TinkeringRecipe> recipes = level.getRecipeManager().getAllRecipesFor(TinkeringRecipe.Type.INSTANCE);
                         if (recipes.removeIf(recipe -> !recipe.recipeID.equals(recipeID))) {
                             TinkeringRecipe recipe = recipes.get(0);
-                            table.recipeIngredients = recipe.getIngredientList();
-                            table.recipeResult = recipe.getResult();
-                            table.currentIngredientIndex = level.random.nextInt(0, table.recipeIngredients.size() - 1);
-                            table.wantItemStack = table.recipeIngredients.get(table.currentIngredientIndex);
-                            table.markUpdated();
+
+                            if (table.currentIngredientIndex == -1) {
+                                table.recipeIngredients = recipe.getIngredientList();
+                                table.recipeResult = recipe.getResult();
+                                table.currentIngredientIndex = level.random.nextInt(0, table.recipeIngredients.size() - 1);
+                                table.wantItemStack = table.recipeIngredients.get(table.currentIngredientIndex);
+                                table.markUpdated();
+                            } else {
+                                table.recipeIngredients = recipe.getIngredientList();
+                                table.wantItemStack = table.recipeIngredients.get(table.currentIngredientIndex);
+                                table.markUpdated();
+                            }
                         }
                     }
                 }
