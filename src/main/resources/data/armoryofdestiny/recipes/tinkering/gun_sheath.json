@@ -1,0 +1,17 @@
+{
+  "type": "armoryofdestiny:tinkering",
+  "ingredients": {
+    "item": "minecraft:iron_ingot",
+    "item": "minecraft:iron_ingot",
+    "item": "minecraft:iron_ingot",
+    "item": "minecraft:iron_ingot",
+    "item": "minecraft:iron_ingot",
+    "item": "minecraft:netherite_ingot",
+    "item": "minecraft:flint_and_steel",
+    "item": "minecraft:tnt",
+    "item": "minecraft:lever"
+  },
+  "result": {
+    "item": "armoryofdestiny:gun_sheath"
+  }
+}
