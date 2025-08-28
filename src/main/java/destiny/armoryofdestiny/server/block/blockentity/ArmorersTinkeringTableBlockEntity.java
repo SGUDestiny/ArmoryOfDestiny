@@ -23,6 +23,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -39,6 +40,7 @@ import org.slf4j.Logger;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static destiny.armoryofdestiny.server.block.ArmorersTinkeringTableBlock.HAS_BLUEPRINT;
 import static destiny.armoryofdestiny.server.item.SharpIronyItem.AMMO_COUNT;
@@ -86,7 +88,23 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
                     if (table.recipeIngredients.isEmpty()) {
                         ResourceLocation recipeID = table.getItemFromBlueprint();
 
-                        List<TinkeringRecipe> recipes = level.getRecipeManager().getAllRecipesFor(TinkeringRecipe.Type.INSTANCE);
+                        Optional<? extends Recipe<?>> optionalRecipe = level.getRecipeManager().byKey(recipeID);
+                        if(optionalRecipe.isPresent() && optionalRecipe.get() instanceof TinkeringRecipe recipe) {
+                            if (table.currentIngredientIndex == -1) {
+                                table.recipeIngredients = recipe.getIngredientList();
+                                table.recipeResult = recipe.getResult();
+                                table.currentIngredientIndex = level.random.nextInt(0, table.recipeIngredients.size() - 1);
+                                table.wantItemStack = table.recipeIngredients.get(table.currentIngredientIndex);
+                                table.markUpdated();
+                            } else {
+
+                                table.recipeIngredients = recipe.getIngredientList();
+                                table.wantItemStack = table.recipeIngredients.get(table.currentIngredientIndex);
+                                table.markUpdated();
+                            }
+                        }
+
+/*                        List<TinkeringRecipe> recipes = level.getRecipeManager().getAllRecipesFor(TinkeringRecipe.Type.INSTANCE);
                         if (recipes.removeIf(recipe -> !recipe.recipeID.equals(recipeID))) {
                             TinkeringRecipe recipe = recipes.get(0);
 
@@ -97,11 +115,12 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
                                 table.wantItemStack = table.recipeIngredients.get(table.currentIngredientIndex);
                                 table.markUpdated();
                             } else {
+
                                 table.recipeIngredients = recipe.getIngredientList();
                                 table.wantItemStack = table.recipeIngredients.get(table.currentIngredientIndex);
                                 table.markUpdated();
                             }
-                        }
+                        }*/
                     }
                 }
             }
