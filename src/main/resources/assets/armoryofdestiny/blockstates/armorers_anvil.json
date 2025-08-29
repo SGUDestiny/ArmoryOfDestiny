@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=north": [
+      {
+        "model": "armoryofdestiny:block/armorers_anvil"
+      }
+    ],
+    "facing=south": [
+      {
+        "model": "armoryofdestiny:block/armorers_anvil",
+        "y": 180
+      }
+    ],
+    "facing=west": [
+      {
+        "model": "armoryofdestiny:block/armorers_anvil",
+        "y": 270
+      }
+    ],
+    "facing=east": [
+      {
+        "model": "armoryofdestiny:block/armorers_anvil",
+        "y": 90
+      }
+    ]
+  }
+}

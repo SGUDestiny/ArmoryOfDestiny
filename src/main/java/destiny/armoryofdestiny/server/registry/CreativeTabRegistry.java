@@ -59,6 +59,11 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.NETHERITE_SMITHING_HAMMER.get());
 
                 //Armorer's forge
+                output.accept(BlockRegistry.ARMORERS_ANVIL.get());
+                output.accept(BlockRegistry.BLOOMERY_TOP.get());
+                output.accept(BlockRegistry.BLOOMERY_BOTTOM.get());
+                output.accept(BlockRegistry.NETHER_BLOOMERY_TOP.get());
+                output.accept(BlockRegistry.NETHER_BLOOMERY_BOTTOM.get());
                 output.accept(ItemRegistry.TONGS.get());
 
                 //Blueprints
