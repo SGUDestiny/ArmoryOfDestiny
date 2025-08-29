@@ -1,18 +1,23 @@
 package destiny.armoryofdestiny.server.registry;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
+import destiny.armoryofdestiny.server.recipe.TinkeringRecipe;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import static destiny.armoryofdestiny.server.item.SharpIronyItem.AMMO_COUNT;
@@ -57,14 +62,11 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.TONGS.get());
 
                 //Blueprints
-                output.accept(createBlueprint(ItemRegistry.MURASAMA.getKey(), "legendary"));
-                output.accept(createBlueprint(ItemRegistry.GUN_SHEATH.getKey(), "legendary"));
-                output.accept(createBlueprint(ItemRegistry.BLOODLETTER.getKey(), "legendary"));
-                output.accept(createBlueprint(ItemRegistry.CRUCIBLE_INACTIVE.getKey(), "legendary"));
-                output.accept(createBlueprint(ItemRegistry.DRAGON_SLAYER.getKey(), "legendary"));
-                output.accept(createBlueprint(ItemRegistry.ORIGINIUM_CATALYST.getKey(), "unique"));
-                output.accept(createBlueprint(ItemRegistry.PUNISHER.getKey(), "legendary"));
-                output.accept(createBlueprint(ItemRegistry.SHARP_IRONY.getKey(), "unique"));
+                List<TinkeringRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(TinkeringRecipe.Type.INSTANCE);
+                for (TinkeringRecipe recipe : recipes)
+                {
+                    output.accept(createBlueprint(recipe.recipeID, recipe.rarity));
+                }
             })
             .build()
     );
@@ -84,10 +86,10 @@ public class CreativeTabRegistry {
         return sharpIrony;
     }
 
-    private static ItemStack createBlueprint(ResourceKey<Item> itemName, String blueprintRarity) {
+    private static ItemStack createBlueprint(ResourceLocation recipeID, String blueprintRarity) {
         ItemStack blueprint = new ItemStack(ItemRegistry.BLUEPRINT.get());
 
-        blueprint.getOrCreateTag().putString("blueprintItem", itemName.location().toString());
+        blueprint.getOrCreateTag().putString("recipe", recipeID.toString());
         blueprint.getOrCreateTag().putString("blueprintRarity", blueprintRarity);
         return blueprint;
     }

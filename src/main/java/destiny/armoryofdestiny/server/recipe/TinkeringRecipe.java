@@ -23,23 +23,31 @@ import java.util.List;
 public class TinkeringRecipe implements Recipe<TinkeringContainer>
 {
     public ResourceLocation recipeID;
+    public int color;
+    public String rarity;
     public List<Ingredient> ingredients;
     public ItemStack result;
 
     public static final Codec<TinkeringRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.INT.fieldOf("blueprint_color").forGetter(TinkeringRecipe::getBlueprintColor),
+            Codec.STRING.fieldOf("rarity").forGetter(TinkeringRecipe::getRarity),
             UtilityCodecs.INGREDIENT_CODEC.listOf().fieldOf("ingredients").forGetter(TinkeringRecipe::getIngredientList),
             UtilityCodecs.STACK_CODEC.fieldOf("result").forGetter(TinkeringRecipe::getResult)
     ).apply(instance, TinkeringRecipe::new));
 
-    public TinkeringRecipe(List<Ingredient> ingredients, ItemStack result)
+    public TinkeringRecipe(int color, String rarity, List<Ingredient> ingredients, ItemStack result)
     {
+        this.color = color;
+        this.rarity = rarity;
         this.ingredients = ingredients;
         this.result = result;
     }
 
-    public TinkeringRecipe(ResourceLocation recipeID, List<Ingredient> ingredients, ItemStack result)
+    public TinkeringRecipe(ResourceLocation recipeID, String rarity, int color, List<Ingredient> ingredients, ItemStack result)
     {
         this.recipeID = recipeID;
+        this.rarity = rarity;
+        this.color = color;
         this.ingredients = ingredients;
         this.result = result;
     }
@@ -47,6 +55,16 @@ public class TinkeringRecipe implements Recipe<TinkeringContainer>
     public ItemStack getResult()
     {
         return result;
+    }
+
+    public int getBlueprintColor()
+    {
+        return color;
+    }
+
+    public String getRarity()
+    {
+        return rarity;
     }
 
     public List<Ingredient> getIngredientList()
@@ -138,20 +156,24 @@ public class TinkeringRecipe implements Recipe<TinkeringContainer>
                                 throw new JsonParseException(s);
                             });
 
-            return new TinkeringRecipe(recipeID, recipe.ingredients, recipe.result);
+            return new TinkeringRecipe(recipeID, recipe.rarity, recipe.color, recipe.ingredients, recipe.result);
         }
 
         @Override
         public @Nullable TinkeringRecipe fromNetwork(ResourceLocation recipeID, FriendlyByteBuf buffer)
         {
+            int color = buffer.readInt();
+            String rarity = buffer.readUtf();
             List<Ingredient> stacks = buffer.readCollection(i -> new ArrayList<>(), Ingredient::fromNetwork);
             ItemStack result = buffer.readItem();
-            return new TinkeringRecipe(recipeID, stacks, result);
+            return new TinkeringRecipe(recipeID, rarity, color, stacks, result);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, TinkeringRecipe recipe)
         {
+            buffer.writeInt(recipe.color);
+            buffer.writeUtf(recipe.rarity);
             buffer.writeCollection(recipe.ingredients, (writeBuffer, ingredient) -> {
                 ingredient.toNetwork(writeBuffer);
             });

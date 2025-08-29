@@ -2,14 +2,13 @@ package destiny.armoryofdestiny.server.util;
 
 import destiny.armoryofdestiny.server.block.blockentity.ArmorersTinkeringTableBlockEntity;
 import destiny.armoryofdestiny.server.item.BlueprintItem;
+import destiny.armoryofdestiny.server.recipe.TinkeringRecipe;
 import destiny.armoryofdestiny.server.registry.ItemRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.Item;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -34,40 +33,24 @@ public class UtilityVariables {
     public static final String RAPIER = "tooltip.armoryofdestiny.trivia.rapier";
 
     public static int getBlueprintColor(ItemStack stack) {
-        if (stack.getTag() != null) {
-            String blueprintItem = stack.getOrCreateTag().getString("blueprintItem");
-            return getBlueprintColor(blueprintItem);
-        }
+        if (stack.getTag() != null && stack.getItem() instanceof BlueprintItem blueprint)
+            blueprint.getRecipeColor(stack);
         return 0xFFFFFF;
     }
 
-    public static int getBlueprintColor(Level level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof ArmorersTinkeringTableBlockEntity table) {
-            String blueprintItem = table.getItemFromBlueprint();
-            return getBlueprintColor(blueprintItem);
-        }
-        return 0xFFFFFF;
-    }
-
-    public static int getBlueprintColor(String itemId) {
-        if (itemId.equals(ItemRegistry.MURASAMA.getKey().location().toString())) {
-            return 0xE63C3C;
-        } else if (itemId.equals(ItemRegistry.GUN_SHEATH.getKey().location().toString())) {
-            return 0x99B3CC;
-        } else if (itemId.equals(ItemRegistry.ORIGINIUM_CATALYST.getKey().location().toString())) {
-            return 0xFFB366;
-        } else if (itemId.equals(ItemRegistry.DRAGON_SLAYER.getKey().location().toString())) {
-            return 0x4D4D4D;
-        }  else if (itemId.equals(ItemRegistry.SHARP_IRONY.getKey().location().toString())) {
-            return 0x4E5F80;
-        } else if (itemId.equals(ItemRegistry.PUNISHER.getKey().location().toString())) {
-            return 0x5CCFE6;
-        } else if (itemId.equals(ItemRegistry.BLOODLETTER.getKey().location().toString())) {
-            return 0xB31432;
-        }  else if (itemId.equals(ItemRegistry.CRUCIBLE_INACTIVE.getKey().location().toString())) {
-            return 0xFF3D33;
-        } else {
+    public static int getBlueprintColor(Level level, BlockPos pos)
+    {
+        if(level == null || pos == null)
             return 0xFFFFFF;
+        if (level.getBlockEntity(pos) instanceof ArmorersTinkeringTableBlockEntity table) {
+            ResourceLocation recipeKey = table.getRecipe();
+            if(recipeKey != null)
+            {
+                Optional<? extends Recipe<?>> recipeOptional = level.getRecipeManager().byKey(recipeKey);
+                if(recipeOptional.isPresent() && recipeOptional.get() instanceof TinkeringRecipe recipe)
+                    return recipe.getBlueprintColor();
+            }
         }
+        return 0xFFFFFF;
     }
 }

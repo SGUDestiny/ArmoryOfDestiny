@@ -39,7 +39,7 @@ public class ArmoryOfDestiny
         BlockRegistry.BLOCKS.register(modEventBus);
         CreativeTabRegistry.DEF_REG.register(modEventBus);
         BlockEntityRegistry.BLOCK_ENTITIES.register(modEventBus);
-        RecipeTypeRegistry.SERIALIZERS.register(modEventBus);
+        RecipeRegistry.register(modEventBus);
         LootModifierRegistry.GLOBAL_LOOT_MODIFIER_DEF_REG.register(modEventBus);
         EffectRegistry.DEF_REG.register(modEventBus);
 

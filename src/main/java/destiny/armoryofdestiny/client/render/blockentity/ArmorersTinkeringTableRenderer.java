@@ -13,8 +13,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
@@ -43,8 +46,8 @@ public class ArmorersTinkeringTableRenderer implements BlockEntityRenderer<Armor
                 } else {
                     renderLyingItem(level, poseStack, currentItem, bufferIn, combinedLightIn, direction, table);
                 }
-            } else if (table.getWantItem() != ItemStack.EMPTY) {
-                ItemStack wantItem = table.getWantItem();
+            } else if (table.getDesiredItem() != Ingredient.EMPTY) {
+                ItemStack wantItem = table.getDesiredItem().getItems()[0];
 
                 renderSpinningItem(level, wantItem, poseStack, partialTicks, bufferIn, combinedLightIn);
             }

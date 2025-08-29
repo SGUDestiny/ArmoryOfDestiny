@@ -1,15 +1,33 @@
 {
   "type": "armoryofdestiny:tinkering",
-  "ingredients": {
-    "item": "minecraft:echo_shard",
-    "item": "minecraft:echo_shard",
-    "item": "minecraft:echo_shard",
-    "item": "minecraft:redstone",
-    "item": "minecraft:redstone",
-    "item": "minecraft:redstone",
-    "item": "minecraft:iron_ingot",
-    "item": "minecraft:iron_ingot"
-  },
+  "blueprint_color": 15088700,
+  "rarity": "legendary",
+  "ingredients": [
+    {
+      "item": "minecraft:echo_shard"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
   "result": {
     "item": "armoryofdestiny:murasama"
   }

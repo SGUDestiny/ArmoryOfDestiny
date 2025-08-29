@@ -80,8 +80,7 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
                         Containers.dropItemStack(level, pos.getX(), pos.above().getY(), pos.getZ(), table.getBlueprintItem().copy());
                         Containers.dropItemStack(level, pos.getX(), pos.above().getY(), pos.getZ(), table.getBlueprintItem().copy());
 
-                        table.clearVariables();
-                        Containers.dropContents(level, pos.above(), table.getDroppableInventory());
+                            Containers.dropContents(level, pos.above(), table.getDroppableInventory());
 
                         if (!player.isCreative()) {
                             heldItem.shrink(1);
@@ -94,7 +93,6 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
                     } else if (player.getMainHandItem().isEmpty() && player.isShiftKeyDown()) {
                         ItemStack stack = table.getBlueprintItem().copy();
                         player.addItem(stack);
-                        table.clearVariables();
 
                         level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
                         level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));

@@ -1,21 +1,24 @@
 package destiny.armoryofdestiny.server.item;
 
 import destiny.armoryofdestiny.server.item.utility.TooltipItem;
+import destiny.armoryofdestiny.server.recipe.TinkeringRecipe;
 import destiny.armoryofdestiny.server.registry.ItemRegistry;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static destiny.armoryofdestiny.server.util.UtilityVariables.BLUEPRINT;
 
@@ -145,8 +148,31 @@ public class BlueprintItem extends TooltipItem {
         return false;
     }
 
-    public Item getItemFromResourceKeyLocation(String keyLocation) {
-        return BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(keyLocation));
+    public int getRecipeColor(ItemStack stack)
+    {
+        Level level = Minecraft.getInstance().level;
+        ResourceLocation recipeKey = getRecipeKey(stack);
+        if(level == null || recipeKey == null)
+            return 0xFFFFFF;
+        Optional<? extends Recipe<?>> recipeOptional = level.getRecipeManager().byKey(recipeKey);
+        if(recipeOptional.isPresent() && recipeOptional.get() instanceof TinkeringRecipe recipe)
+            return recipe.getBlueprintColor();
+
+        return 0xFFFFFF;
+    }
+
+    @Nullable
+    public ResourceLocation getRecipeKey(ItemStack stack)
+    {
+        if(stack.getTag() != null && stack.getTag().contains("recipe"))
+        {
+            String recipeString = stack.getTag().getString("recipe");
+            ResourceLocation recipeKey = ResourceLocation.tryParse(recipeString);
+
+            return recipeKey;
+        }
+
+        return null;
     }
 
     @Override
