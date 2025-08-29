@@ -94,7 +94,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
 
     public void advanceCrafting(Level level, BlockPos pos, Player player, ItemStack heldItem)
     {
-        if (level.isClientSide || !isSmithingCraftingTablePresent())
+        if (level.isClientSide || !isSmithingCraftingTablePresent() && craftingRecipe != null)
         {
             TinkeringContainer container = new TinkeringContainer(storedItems);
             if (craftingRecipe.matches(container, level))
