@@ -31,6 +31,7 @@ public class ArmorersTinkeringTableRenderer implements BlockEntityRenderer<Armor
         Direction direction = table.getBlockState().getValue(HORIZONTAL_FACING);
         Level level = table.getLevel();
 
+        boolean renderDemand = table.getWantStack() != ItemStack.EMPTY;
         //Check if blueprint is present
         if (table.getBlueprintItem() != ItemStack.EMPTY) {
             if (table.getInputItem() != ItemStack.EMPTY) {
@@ -46,8 +47,9 @@ public class ArmorersTinkeringTableRenderer implements BlockEntityRenderer<Armor
                 } else {
                     renderLyingItem(level, poseStack, currentItem, bufferIn, combinedLightIn, direction, table);
                 }
-            } else if (table.getDesiredItem() != Ingredient.EMPTY) {
-                ItemStack wantItem = table.getDesiredItem().getItems()[0];
+            } else if (renderDemand)
+            {
+                ItemStack wantItem = table.getWantStack();
 
                 renderSpinningItem(level, wantItem, poseStack, partialTicks, bufferIn, combinedLightIn);
             }

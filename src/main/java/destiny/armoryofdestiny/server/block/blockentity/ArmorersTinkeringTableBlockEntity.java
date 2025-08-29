@@ -3,10 +3,7 @@ package destiny.armoryofdestiny.server.block.blockentity;
 import com.mojang.logging.LogUtils;
 import destiny.armoryofdestiny.server.container.TinkeringContainer;
 import destiny.armoryofdestiny.server.recipe.TinkeringRecipe;
-import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;
-import destiny.armoryofdestiny.server.registry.BlockRegistry;
-import destiny.armoryofdestiny.server.registry.ItemRegistry;
-import destiny.armoryofdestiny.server.registry.SoundRegistry;
+import destiny.armoryofdestiny.server.registry.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -59,6 +56,8 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
     private Ingredient desired = Ingredient.EMPTY;
     private TinkeringRecipe craftingRecipe = null;
 
+    public ItemStack wantStack = ItemStack.EMPTY;
+
     public ArmorersTinkeringTableBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.ARMORERS_TINKERING_TABLE.get(), pos, state);
     }
@@ -89,7 +88,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
                         ingredientCopy.remove(ingredient);
             }
 
-            table.desired = ingredientCopy.get(random.nextInt(ingredientCopy.size()));
+            table.setDesired(ingredientCopy.get(random.nextInt(ingredientCopy.size())));
         }
     }
 
@@ -102,14 +101,14 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
             {
                 input = craftingRecipe.assemble(container, level.registryAccess());
                 storedItems.clear();
-                this.desired = Ingredient.EMPTY;
+                this.setDesired(Ingredient.EMPTY);
                 level.setBlockAndUpdate(pos, getBlockState().setValue(HAS_BLUEPRINT, false));
                 level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.5F, 1);
 
                 markUpdated();
             } else if (desired.test(getInputItem()))
             {
-                this.desired = Ingredient.EMPTY;
+                this.setDesired(Ingredient.EMPTY);
                 this.storedItems.add(getInputItem());
                 this.input = ItemStack.EMPTY;
             }
@@ -157,6 +156,12 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         return !getBlueprintItem().isEmpty();
     }
 
+    public void setDesired(Ingredient ingredient)
+    {
+        this.desired = ingredient;
+        this.wantStack = ingredient.getItems()[0];
+    }
+
     @Nullable
     public ResourceLocation getRecipe() {
         ItemStack blueprint = getBlueprintItem();
@@ -179,6 +184,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         blueprint = ItemStack.of(tag.getCompound(BLUEPRINT));
         input = ItemStack.of(tag.getCompound(INPUT));
         hammer = ItemStack.of(tag.getCompound(HAMMER));
+        wantStack = ItemStack.of(tag.getCompound("want_item"));
     }
 
     @Override
@@ -192,6 +198,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         tag.put(BLUEPRINT, blueprint.serializeNBT());
         tag.put(INPUT, input.serializeNBT());
         tag.put(HAMMER, hammer.serializeNBT());
+        tag.put("want_item", wantStack.serializeNBT());
     }
 
     @Override
@@ -212,6 +219,11 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
 
     public Ingredient getDesiredItem() {
         return desired;
+    }
+
+    public ItemStack getWantStack()
+    {
+        return wantStack;
     }
 
     @Override
@@ -243,4 +255,6 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         if (level != null)
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
     }
+
+
 }
