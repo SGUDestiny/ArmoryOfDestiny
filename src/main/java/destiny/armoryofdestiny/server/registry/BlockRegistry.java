@@ -1,10 +1,7 @@
 package destiny.armoryofdestiny.server.registry;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
-import destiny.armoryofdestiny.server.block.ArmorersTinkeringTableBlock;
-import destiny.armoryofdestiny.server.block.ArmorersCraftingTableBlock;
-import destiny.armoryofdestiny.server.block.BloomeryBottomBlock;
-import destiny.armoryofdestiny.server.block.BloomeryTopBlock;
+import destiny.armoryofdestiny.server.block.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
@@ -29,6 +26,10 @@ public class BlockRegistry {
     public static final RegistryObject<Block> ARMORERS_TINKERING_TABLE = registerBlock("armorers_tinkering_table",
             () -> new ArmorersTinkeringTableBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_GRAY).strength(2.5F).sound(SoundType.NETHER_WOOD).noOcclusion()));
+
+    public static final RegistryObject<Block> ARMORERS_ANVIL = registerBlock("armorers_anvil",
+            () -> new ArmorersAnvilBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY).strength(2.5F).sound(SoundType.ANVIL).noOcclusion()));
 
     public static final RegistryObject<Block> BLOOMERY_BOTTOM = registerBlock("bloomery_bottom",
             () -> new BloomeryBottomBlock(BlockBehaviour.Properties.of()
