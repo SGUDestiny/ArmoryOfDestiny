@@ -30,10 +30,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 import static destiny.armoryofdestiny.server.block.ArmorersTinkeringTableBlock.HAS_BLUEPRINT;
 import static destiny.armoryofdestiny.server.item.SharpIronyItem.AMMO_COUNT;
@@ -80,39 +77,45 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         }
         else if(table.desired == Ingredient.EMPTY)
         {
-            List<Ingredient> ingredientCopy = table.craftingRecipe.getIngredientList();
-            for (Ingredient ingredient : ingredientCopy)
+            List<Ingredient> ingredientList = new ArrayList<>(table.craftingRecipe.getIngredientList());
+            Iterator<Ingredient> ingredientCopy = ingredientList.iterator();
+            while(ingredientCopy.hasNext())
             {
+                Ingredient ingredient = ingredientCopy.next();
                 for(ItemStack storedItem : table.storedItems)
                     if(ingredient.test(storedItem))
-                        ingredientCopy.remove(ingredient);
+                    {
+                        ingredientCopy.remove();
+                        break;
+                    }
             }
 
-            table.setDesired(ingredientCopy.get(random.nextInt(ingredientCopy.size())));
+            table.setDesired(ingredientList.get(random.nextInt(ingredientList.size())));
         }
     }
 
     public void advanceCrafting(Level level, BlockPos pos, Player player, ItemStack heldItem)
     {
-        if (level.isClientSide || !isSmithingCraftingTablePresent() && craftingRecipe == null)
-        {
-            TinkeringContainer container = new TinkeringContainer(storedItems);
-            if (craftingRecipe.matches(container, level))
-            {
-                input = craftingRecipe.assemble(container, level.registryAccess());
-                storedItems.clear();
-                this.setDesired(Ingredient.EMPTY);
-                level.setBlockAndUpdate(pos, getBlockState().setValue(HAS_BLUEPRINT, false));
-                level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.5F, 1);
+        if (level.isClientSide || !isSmithingCraftingTablePresent() || craftingRecipe == null) return;
 
-                markUpdated();
-            } else if (desired.test(getInputItem()))
-            {
-                this.setDesired(Ingredient.EMPTY);
-                this.storedItems.add(getInputItem());
-                this.input = ItemStack.EMPTY;
-            }
+        TinkeringContainer container = new TinkeringContainer(storedItems);
+        if (craftingRecipe.matches(container, level))
+        {
+            input = craftingRecipe.assemble(container, level.registryAccess());
+            storedItems.clear();
+            this.setDesired(Ingredient.EMPTY);
+            level.setBlockAndUpdate(pos, getBlockState().setValue(HAS_BLUEPRINT, false));
+            level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.5F, 1);
+
+            markUpdated();
         }
+        else if (desired.test(getInputItem()))
+        {
+            this.setDesired(Ingredient.EMPTY);
+            this.storedItems.add(getInputItem());
+            this.input = ItemStack.EMPTY;
+        }
+
 
         if (!player.isCreative())
         {
@@ -159,7 +162,9 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
     public void setDesired(Ingredient ingredient)
     {
         this.desired = ingredient;
-        this.wantStack = ingredient.getItems()[0];
+        if(ingredient.isEmpty())
+            this.wantStack = ItemStack.EMPTY;
+        else this.wantStack = ingredient.getItems()[0];
     }
 
     @Nullable
