@@ -64,6 +64,21 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         Random random = new Random();
         if (level.isClientSide() || !table.hasBlueprint() || !table.isSmithingCraftingTablePresent())
             return;
+        if(table.craftingRecipe != null)
+        {
+            TinkeringContainer container = new TinkeringContainer(table.storedItems);
+            if (table.craftingRecipe.matches(container, level))
+            {
+                table.input = table.craftingRecipe.assemble(container, level.registryAccess());
+                table.storedItems.clear();
+                table.setDesired(Ingredient.EMPTY);
+                table.setBlueprintItem(ItemStack.EMPTY);
+                level.setBlockAndUpdate(pos, table.getBlockState().setValue(HAS_BLUEPRINT, false));
+                level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.5F, 1);
+
+                table.markUpdated();
+            }
+        }
 
         if (table.craftingRecipe == null)
         {
@@ -78,19 +93,24 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         else if(table.desired == Ingredient.EMPTY)
         {
             List<Ingredient> ingredientList = new ArrayList<>(table.craftingRecipe.getIngredientList());
+            List<ItemStack> storedList = new ArrayList<>(table.storedItems);
             Iterator<Ingredient> ingredientCopy = ingredientList.iterator();
-            while(ingredientCopy.hasNext())
+            while (ingredientCopy.hasNext())
             {
                 Ingredient ingredient = ingredientCopy.next();
-                for(ItemStack storedItem : table.storedItems)
-                    if(ingredient.test(storedItem))
+                for (ItemStack storedItem : storedList)
+                    if (ingredient.test(storedItem))
                     {
                         ingredientCopy.remove();
+                        storedList.remove(storedItem);
                         break;
                     }
             }
 
-            table.setDesired(ingredientList.get(random.nextInt(ingredientList.size())));
+            if (!ingredientList.isEmpty())
+            {
+                table.setDesired(ingredientList.get(random.nextInt(ingredientList.size())));
+            }
         }
     }
 
@@ -98,22 +118,25 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
     {
         if (level.isClientSide || !isSmithingCraftingTablePresent() || craftingRecipe == null) return;
 
+
+        if (desired.test(getInputItem()))
+        {
+            this.setDesired(Ingredient.EMPTY);
+            this.storedItems.add(getInputItem());
+            this.input = ItemStack.EMPTY;
+        }
+
         TinkeringContainer container = new TinkeringContainer(storedItems);
         if (craftingRecipe.matches(container, level))
         {
             input = craftingRecipe.assemble(container, level.registryAccess());
             storedItems.clear();
             this.setDesired(Ingredient.EMPTY);
+            this.setBlueprintItem(ItemStack.EMPTY);
             level.setBlockAndUpdate(pos, getBlockState().setValue(HAS_BLUEPRINT, false));
             level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.5F, 1);
 
             markUpdated();
-        }
-        else if (desired.test(getInputItem()))
-        {
-            this.setDesired(Ingredient.EMPTY);
-            this.storedItems.add(getInputItem());
-            this.input = ItemStack.EMPTY;
         }
 
 
@@ -165,6 +188,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         if(ingredient.isEmpty())
             this.wantStack = ItemStack.EMPTY;
         else this.wantStack = ingredient.getItems()[0];
+        markUpdated();
     }
 
     @Nullable
