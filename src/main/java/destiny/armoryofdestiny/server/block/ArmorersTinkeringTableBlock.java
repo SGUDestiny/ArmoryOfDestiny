@@ -91,16 +91,10 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
 
                         return InteractionResult.SUCCESS;
                     } else if (player.getMainHandItem().isEmpty() && player.isShiftKeyDown()) {
-                        ItemStack stack = table.getBlueprintItem().copy();
-                        player.addItem(stack);
+                        Containers.dropContents(level, pos.above(), table.getDroppableInventory());
 
                         level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
                         level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
-
-                        BlockEntity tileEntity = level.getBlockEntity(pos);
-                        if (tileEntity instanceof ArmorersTinkeringTableBlockEntity tableTile) {
-                            Containers.dropContents(level, pos.above(), tableTile.getDroppableInventory());
-                        }
 
                         return InteractionResult.SUCCESS;
                     } else if (table.getInputItem().isEmpty() && !player.getMainHandItem().isEmpty()) {
