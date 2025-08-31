@@ -87,13 +87,13 @@ public class ArmorersTinkeringTableRenderer implements BlockEntityRenderer<Armor
 
         poseStack.pushPose();
         if (direction == Direction.NORTH) {
-            poseStack.translate(0.5, 1, 0.375);
+            poseStack.translate(0.5, 1.025, 0.375);
         } else if (direction == Direction.SOUTH) {
-            poseStack.translate(0.5, 1, 0.625);
+            poseStack.translate(0.5, 1.025, 0.625);
         } else if (direction == Direction.WEST) {
-            poseStack.translate(0.375, 1, 0.5);
+            poseStack.translate(0.375, 1.025, 0.5);
         } else {
-            poseStack.translate(0.625, 1, 0.5);
+            poseStack.translate(0.625, 1.025, 0.5);
         }
 
         float f = -direction.toYRot();

@@ -75,6 +75,8 @@ public class BlueprintItem extends TooltipItem {
         if (optionalRecipe.isPresent() && optionalRecipe.get() instanceof TinkeringRecipe recipe)
             craftingRecipe = recipe;
 
+        if (craftingRecipe == null) return;
+
         List<Ingredient> ingredientList = craftingRecipe.getIngredientList();
         ItemStack result = craftingRecipe.getResult();
 

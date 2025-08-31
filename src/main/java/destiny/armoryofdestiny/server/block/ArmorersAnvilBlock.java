@@ -3,9 +3,12 @@ package destiny.armoryofdestiny.server.block;
 import destiny.armoryofdestiny.server.util.MathUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -15,7 +18,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
-public class ArmorersAnvilBlock extends Block {
+public class ArmorersAnvilBlock extends FallingBlock {
     private static final VoxelShape SHAPE_NORTH = MathUtil.buildShape(
             Block.box(0, 9, 3, 16, 16, 13),
             Block.box(3, 4, 5, 13, 9, 11),
@@ -83,5 +86,18 @@ public class ArmorersAnvilBlock extends Block {
             default:
                 return SHAPE_NORTH;
         }
+    }
+
+    @Override
+    protected void falling(FallingBlockEntity entity) {
+        entity.setHurtsEntities(10, 100);
+    }
+
+    @Override
+    public void onLand(Level level, BlockPos pos, BlockState state1, BlockState state2, FallingBlockEntity entity) {
+        if (!entity.isSilent()) {
+            level.levelEvent(1031, pos, 0);
+        }
+
     }
 }

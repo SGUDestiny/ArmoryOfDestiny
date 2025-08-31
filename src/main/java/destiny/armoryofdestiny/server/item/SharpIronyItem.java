@@ -97,8 +97,8 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
         ItemStack stack = player.getItemInHand(hand);
         Item item = stack.getItem();
 
-        if (stack.getTag() == null) {
-            stack.getOrCreateTag().putBoolean(IS_OPEN, true);
+        if (stack.getTag() == null || stack.getTag().get(AMMO_COUNT) == null) {
+            stack.getOrCreateTag().putBoolean(IS_OPEN, false);
             stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
         }
 
@@ -211,9 +211,8 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
                 } else {
                     stack.getOrCreateTag().putInt(AMMO_COUNT, 5);
                 }
-
-                openFan(level, player, stack, item);
             }
+            openFan(level, player, stack, item);
         }
     }
 
