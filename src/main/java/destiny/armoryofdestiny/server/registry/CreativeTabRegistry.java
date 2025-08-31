@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import static destiny.armoryofdestiny.server.item.BlueprintItem.RECIPE;
 import static destiny.armoryofdestiny.server.item.SharpIronyItem.AMMO_COUNT;
 import static destiny.armoryofdestiny.server.item.SharpIronyItem.IS_OPEN;
 import static destiny.armoryofdestiny.server.item.CrucibleItem.USAGES;
@@ -70,7 +71,7 @@ public class CreativeTabRegistry {
                 List<TinkeringRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(TinkeringRecipe.Type.INSTANCE);
                 for (TinkeringRecipe recipe : recipes)
                 {
-                    output.accept(createBlueprint(recipe.recipeID, recipe.rarity));
+                    output.accept(createBlueprint(recipe.recipeID));
                 }
             })
             .build()
@@ -91,11 +92,10 @@ public class CreativeTabRegistry {
         return sharpIrony;
     }
 
-    private static ItemStack createBlueprint(ResourceLocation recipeID, String blueprintRarity) {
+    private static ItemStack createBlueprint(ResourceLocation recipeID) {
         ItemStack blueprint = new ItemStack(ItemRegistry.BLUEPRINT.get());
 
-        blueprint.getOrCreateTag().putString("recipe", recipeID.toString());
-        blueprint.getOrCreateTag().putString("blueprintRarity", blueprintRarity);
+        blueprint.getOrCreateTag().putString(RECIPE, recipeID.toString());
         return blueprint;
     }
 }

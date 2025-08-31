@@ -34,7 +34,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.function.Consumer;
 
 import static destiny.armoryofdestiny.server.util.UtilityVariables.GREATSWORD;
-import static destiny.armoryofdestiny.server.util.UtilityVariables.LEGENDARY;
 
 public class CrucibleItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -143,11 +142,6 @@ public class CrucibleItem extends TooltipSwordItem implements GeoItem {
             }
         }
         return false;
-    }
-
-    @Override
-    public String getRarityTranslatable(ItemStack stack) {
-        return LEGENDARY;
     }
 
     @Override

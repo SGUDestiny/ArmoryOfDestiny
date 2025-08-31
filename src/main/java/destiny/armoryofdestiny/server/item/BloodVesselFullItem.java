@@ -9,8 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import static destiny.armoryofdestiny.server.util.UtilityVariables.UNIQUE;
-
 public class BloodVesselFullItem extends TooltipItem {
     public BloodVesselFullItem(Properties build) {
         super(build);
@@ -37,10 +35,5 @@ public class BloodVesselFullItem extends TooltipItem {
     @Override
     public boolean hasTrivia() {
         return false;
-    }
-
-    @Override
-    public String getRarityTranslatable(ItemStack stack) {
-        return UNIQUE;
     }
 }

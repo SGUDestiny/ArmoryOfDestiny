@@ -44,7 +44,6 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
     private static final String BLUEPRINT = "blueprint";
     private static final String INPUT = "input";
     private static final String HAMMER = "hammer";
-    private static final String DESIRED_ITEM = "desired_item";
 
     private final List<ItemStack> storedItems = new ArrayList<>();
     private ItemStack blueprint = ItemStack.EMPTY;
@@ -124,22 +123,30 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
             this.setDesired(Ingredient.EMPTY);
             this.storedItems.add(getInputItem());
             this.input = ItemStack.EMPTY;
+            this.doHammerStuff(player, pos, heldItem);
         }
 
         TinkeringContainer container = new TinkeringContainer(storedItems);
         if (craftingRecipe.matches(container, level))
         {
             input = craftingRecipe.assemble(container, level.registryAccess());
-            storedItems.clear();
-            this.setDesired(Ingredient.EMPTY);
             this.setBlueprintItem(ItemStack.EMPTY);
+            clearTable();
+            this.doHammerStuff(player, pos, heldItem);
             level.setBlockAndUpdate(pos, getBlockState().setValue(HAS_BLUEPRINT, false));
             level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 0.5F, 1);
 
             markUpdated();
         }
+    }
 
+    public void clearTable() {
+        this.setDesired(Ingredient.EMPTY);
+        storedItems.clear();
+        craftingRecipe = null;
+    }
 
+    public void doHammerStuff(Player player, BlockPos pos, ItemStack heldItem) {
         if (!player.isCreative())
         {
             heldItem.setDamageValue(heldItem.getDamageValue() + 1);
@@ -152,7 +159,6 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
 
         level.playSound(null, pos, SoundRegistry.SMITHING_HAMMER_HIT.get(), SoundSource.BLOCKS, 1, 1);
     }
-
 
     public ItemStack getInputItem() {
         return input;

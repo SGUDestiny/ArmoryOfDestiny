@@ -13,13 +13,7 @@ import net.minecraft.world.level.Level;
 import java.util.Optional;
 
 public class UtilityVariables {
-    public static final String NONE = "tooltip.armoryofdestiny.rarity.none";
-
-    //Rarities
-    public static final String ARMORERS_WORKSHOP_PART = "tooltip.armoryofdestiny.rarity.armorers_workshop_part";
-    public static final String SECONDARY = "tooltip.armoryofdestiny.rarity.secondary";
-    public static final String UNIQUE = "tooltip.armoryofdestiny.rarity.unique";
-    public static final String LEGENDARY = "tooltip.armoryofdestiny.rarity.legendary";
+    public static final String NONE = "tooltip.armoryofdestiny.none";
 
     //Trivia
     public static final String KATANA = "tooltip.armoryofdestiny.trivia.katana";
@@ -34,7 +28,7 @@ public class UtilityVariables {
 
     public static int getBlueprintColor(ItemStack stack) {
         if (stack.getTag() != null && stack.getItem() instanceof BlueprintItem blueprint)
-            blueprint.getRecipeColor(stack);
+            return blueprint.getRecipeColor(stack);
         return 0xFFFFFF;
     }
 

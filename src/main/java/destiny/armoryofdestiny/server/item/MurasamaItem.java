@@ -37,7 +37,6 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 import static destiny.armoryofdestiny.server.util.UtilityVariables.KATANA;
-import static destiny.armoryofdestiny.server.util.UtilityVariables.LEGENDARY;
 
 public class MurasamaItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -172,11 +171,6 @@ public class MurasamaItem extends TooltipSwordItem implements GeoItem {
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack stack1) {
         return stack1.is(Items.ECHO_SHARD);
-    }
-
-    @Override
-    public String getRarityTranslatable(ItemStack stack) {
-        return LEGENDARY;
     }
 
     @Override

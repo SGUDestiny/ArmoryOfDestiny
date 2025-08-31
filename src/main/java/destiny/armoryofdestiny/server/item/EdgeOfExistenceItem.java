@@ -33,7 +33,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.function.Consumer;
 
 import static destiny.armoryofdestiny.server.util.UtilityVariables.KATANA;
-import static destiny.armoryofdestiny.server.util.UtilityVariables.LEGENDARY;
 
 public class EdgeOfExistenceItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -108,10 +107,5 @@ public class EdgeOfExistenceItem extends TooltipSwordItem implements GeoItem {
     @Override
     public String getTriviaTranslatable() {
         return KATANA;
-    }
-
-    @Override
-    public String getRarityTranslatable(ItemStack stack) {
-        return LEGENDARY;
     }
 }

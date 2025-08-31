@@ -25,14 +25,7 @@ public class TooltipSwordItem extends SwordItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
         String itemName = getItemName(stack);
-        String rarityTranslatable = getRarityTranslatable(stack);
         String triviaTranslatable = getTriviaTranslatable();
-
-        //Rarity
-        if (hasRarity()) {
-            MutableComponent rarity = Component.translatable(rarityTranslatable);
-            components.add(rarity);
-        }
 
         //Trivia
         if (!triviaTranslatable.equals(NONE) && hasTrivia()) {
@@ -155,16 +148,8 @@ public class TooltipSwordItem extends SwordItem {
         return stack.getItem().toString();
     }
 
-    public String getRarityTranslatable(ItemStack stack) {
-        return NONE;
-    }
-
     public String getTriviaTranslatable() {
         return NONE;
-    }
-
-    public boolean hasRarity() {
-        return true;
     }
 
     public boolean hasTrivia() {

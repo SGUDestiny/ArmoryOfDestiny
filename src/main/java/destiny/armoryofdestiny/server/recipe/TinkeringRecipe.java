@@ -18,35 +18,32 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class TinkeringRecipe implements Recipe<TinkeringContainer>
 {
     public ResourceLocation recipeID;
     public int color;
-    public String rarity;
     public List<Ingredient> ingredients;
     public ItemStack result;
 
     public static final Codec<TinkeringRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("blueprint_color").forGetter(TinkeringRecipe::getBlueprintColor),
-            Codec.STRING.fieldOf("rarity").forGetter(TinkeringRecipe::getRarity),
             UtilityCodecs.INGREDIENT_CODEC.listOf().fieldOf("ingredients").forGetter(TinkeringRecipe::getIngredientList),
             UtilityCodecs.STACK_CODEC.fieldOf("result").forGetter(TinkeringRecipe::getResult)
     ).apply(instance, TinkeringRecipe::new));
 
-    public TinkeringRecipe(int color, String rarity, List<Ingredient> ingredients, ItemStack result)
+    public TinkeringRecipe(int color, List<Ingredient> ingredients, ItemStack result)
     {
         this.color = color;
-        this.rarity = rarity;
         this.ingredients = ingredients;
         this.result = result;
     }
 
-    public TinkeringRecipe(ResourceLocation recipeID, String rarity, int color, List<Ingredient> ingredients, ItemStack result)
+    public TinkeringRecipe(ResourceLocation recipeID, int color, List<Ingredient> ingredients, ItemStack result)
     {
         this.recipeID = recipeID;
-        this.rarity = rarity;
         this.color = color;
         this.ingredients = ingredients;
         this.result = result;
@@ -62,11 +59,6 @@ public class TinkeringRecipe implements Recipe<TinkeringContainer>
         return color;
     }
 
-    public String getRarity()
-    {
-        return rarity;
-    }
-
     public List<Ingredient> getIngredientList()
     {
         return ingredients;
@@ -75,13 +67,21 @@ public class TinkeringRecipe implements Recipe<TinkeringContainer>
     @Override
     public boolean matches(TinkeringContainer container, Level level)
     {
+        List<Ingredient> ingredientList = new ArrayList<>(ingredients);
+        List<ItemStack> storedList = new ArrayList<>(container.inputs);
         List<Boolean> test = new ArrayList<>();
-
-        for (Ingredient ingredient : ingredients)
+        Iterator<Ingredient> ingredientCopy = ingredientList.iterator();
+        while (ingredientCopy.hasNext())
         {
-            for (ItemStack stack : container.inputs)
-                if (ingredient.test(stack))
+            Ingredient ingredient = ingredientCopy.next();
+            for (ItemStack storedItem : storedList)
+                if (ingredient.test(storedItem))
+                {
+                    ingredientCopy.remove();
+                    storedList.remove(storedItem);
                     test.add(true);
+                    break;
+                }
         }
 
         return test.size() == ingredients.size();
@@ -156,7 +156,7 @@ public class TinkeringRecipe implements Recipe<TinkeringContainer>
                                 throw new JsonParseException(s);
                             });
 
-            return new TinkeringRecipe(recipeID, recipe.rarity, recipe.color, recipe.ingredients, recipe.result);
+            return new TinkeringRecipe(recipeID, recipe.color, recipe.ingredients, recipe.result);
         }
 
         @Override
@@ -166,14 +166,13 @@ public class TinkeringRecipe implements Recipe<TinkeringContainer>
             String rarity = buffer.readUtf();
             List<Ingredient> stacks = buffer.readCollection(i -> new ArrayList<>(), Ingredient::fromNetwork);
             ItemStack result = buffer.readItem();
-            return new TinkeringRecipe(recipeID, rarity, color, stacks, result);
+            return new TinkeringRecipe(recipeID, color, stacks, result);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, TinkeringRecipe recipe)
         {
             buffer.writeInt(recipe.color);
-            buffer.writeUtf(recipe.rarity);
             buffer.writeCollection(recipe.ingredients, (writeBuffer, ingredient) -> {
                 ingredient.toNetwork(writeBuffer);
             });

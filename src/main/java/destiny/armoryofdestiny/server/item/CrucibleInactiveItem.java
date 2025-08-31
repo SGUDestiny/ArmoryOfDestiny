@@ -24,7 +24,6 @@ import java.util.function.Consumer;
 
 import static destiny.armoryofdestiny.server.item.CrucibleItem.USAGES;
 import static destiny.armoryofdestiny.server.util.UtilityVariables.GREATSWORD;
-import static destiny.armoryofdestiny.server.util.UtilityVariables.LEGENDARY;
 
 public class CrucibleInactiveItem extends TooltipItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -58,8 +57,8 @@ public class CrucibleInactiveItem extends TooltipItem implements GeoItem {
         if (stack.getTag() != null) {
             fuelAmount = stack.getTag().getInt(USAGES);
         } else {
-            fuelAmount = 0;
-            stack.getOrCreateTag().putInt(USAGES, 0);
+            fuelAmount = 3;
+            stack.getOrCreateTag().putInt(USAGES, 3);
         }
 
 
@@ -110,11 +109,6 @@ public class CrucibleInactiveItem extends TooltipItem implements GeoItem {
     @Override
     public String getItemName(ItemStack stack) {
         return "crucible";
-    }
-
-    @Override
-    public String getRarityTranslatable(ItemStack stack) {
-        return LEGENDARY;
     }
 
     @Override

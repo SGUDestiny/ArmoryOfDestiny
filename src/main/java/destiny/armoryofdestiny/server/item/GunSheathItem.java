@@ -17,8 +17,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 
-import static destiny.armoryofdestiny.server.util.UtilityVariables.SECONDARY;
-
 public class GunSheathItem extends TooltipItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     boolean played = false;
@@ -50,11 +48,6 @@ public class GunSheathItem extends TooltipItem implements GeoItem {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 20, state -> PlayState.STOP));
-    }
-
-    @Override
-    public String getRarityTranslatable(ItemStack stack) {
-        return SECONDARY;
     }
 
     @Override

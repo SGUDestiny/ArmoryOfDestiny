@@ -35,7 +35,6 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 import static destiny.armoryofdestiny.server.util.UtilityVariables.HAMMER;
-import static destiny.armoryofdestiny.server.util.UtilityVariables.UNIQUE;
 
 public class PunisherItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -176,11 +175,6 @@ public class PunisherItem extends TooltipSwordItem implements GeoItem {
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack stack1) {
         return stack1.is(Items.DIAMOND);
-    }
-
-    @Override
-    public String getRarityTranslatable(ItemStack stack) {
-        return UNIQUE;
     }
 
     @Override

@@ -10,7 +10,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-import static destiny.armoryofdestiny.server.util.UtilityVariables.ARMORERS_WORKSHOP_PART;
 import static destiny.armoryofdestiny.server.util.UtilityVariables.SMITHING_HAMMER;
 
 public class SmithingHammerItem extends TooltipItem {
@@ -37,11 +36,6 @@ public class SmithingHammerItem extends TooltipItem {
     @Override
     public String getTriviaTranslatable() {
         return SMITHING_HAMMER;
-    }
-
-    @Override
-    public String getRarityTranslatable(ItemStack stack) {
-        return ARMORERS_WORKSHOP_PART;
     }
 
     @Override

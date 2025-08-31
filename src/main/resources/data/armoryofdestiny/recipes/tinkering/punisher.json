@@ -1,9 +1,9 @@
 {
   "type": "armoryofdestiny:tinkering",
-  "blueprint_color": 3688550,
+  "blueprint_color": 5427703,
   "ingredients": [
     {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:diamond_block"
     },
     {
       "item": "minecraft:iron_ingot"
@@ -15,22 +15,19 @@
       "item": "minecraft:iron_ingot"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:hopper"
     },
     {
-      "item": "minecraft:netherite_ingot"
+      "item": "minecraft:hopper"
     },
     {
-      "item": "minecraft:flint_and_steel"
-    },
-    {
-      "item": "minecraft:tnt"
+      "item": "minecraft:hopper"
     },
     {
       "item": "minecraft:lever"
     }
   ],
   "result": {
-    "item": "armoryofdestiny:gun_sheath"
+    "item": "armoryofdestiny:punisher"
   }
 }

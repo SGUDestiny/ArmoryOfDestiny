@@ -124,13 +124,7 @@
   "tooltip.armoryofdestiny.expanded": "▼ ",
   "tooltip.armoryofdestiny.dropdown": "|  ",
   "tooltip.armoryofdestiny.cooldown": "⧗ ",
-
-  "_rarities": "Rarities",
-  "tooltip.armoryofdestiny.rarity.none": "None",
-  "tooltip.armoryofdestiny.rarity.legendary": "§6✦ Legendary Item§r",
-  "tooltip.armoryofdestiny.rarity.unique": "§5✦ Unique Item§r",
-  "tooltip.armoryofdestiny.rarity.secondary": "§e ! Secondary Item§r",
-  "tooltip.armoryofdestiny.rarity.armorers_workshop_part": "§6✸ Armorer's Workshop Part§r",
+  "tooltip.armoryofdestiny.none": "None",
 
   "_trivia": "Trivia",
   "tooltip.armoryofdestiny.trivia": "✱ Item Trivia",

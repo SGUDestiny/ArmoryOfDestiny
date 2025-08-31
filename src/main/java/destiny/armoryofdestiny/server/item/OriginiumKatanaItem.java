@@ -29,7 +29,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.function.Consumer;
 
 import static destiny.armoryofdestiny.server.util.UtilityVariables.KATANA;
-import static destiny.armoryofdestiny.server.util.UtilityVariables.UNIQUE;
 
 public class OriginiumKatanaItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -103,11 +102,6 @@ public class OriginiumKatanaItem extends TooltipSwordItem implements GeoItem {
     @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
         return false;
-    }
-
-    @Override
-    public String getRarityTranslatable(ItemStack stack) {
-        return UNIQUE;
     }
 
     @Override

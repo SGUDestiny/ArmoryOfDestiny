@@ -34,7 +34,6 @@ import java.util.UUID;
 import java.util.function.Consumer;
 
 import static destiny.armoryofdestiny.server.util.UtilityVariables.GREATSWORD;
-import static destiny.armoryofdestiny.server.util.UtilityVariables.LEGENDARY;
 
 public class DragonSlayerItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -119,11 +118,6 @@ public class DragonSlayerItem extends TooltipSwordItem implements GeoItem {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
-    }
-
-    @Override
-    public String getRarityTranslatable(ItemStack stack) {
-        return LEGENDARY;
     }
 
     @Override

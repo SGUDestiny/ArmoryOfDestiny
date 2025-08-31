@@ -34,7 +34,6 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import static destiny.armoryofdestiny.server.util.UtilityVariables.THROWING_FAN;
-import static destiny.armoryofdestiny.server.util.UtilityVariables.UNIQUE;
 
 public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
     private static final RawAnimation SHARP_IRONY_OPEN = RawAnimation.begin().thenPlay("sharp_irony.open");
@@ -290,11 +289,6 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack stack1) {
         return stack1.is(Items.NETHERITE_SCRAP);
-    }
-
-    @Override
-    public String getRarityTranslatable(ItemStack stack) {
-        return UNIQUE;
     }
 
     @Override

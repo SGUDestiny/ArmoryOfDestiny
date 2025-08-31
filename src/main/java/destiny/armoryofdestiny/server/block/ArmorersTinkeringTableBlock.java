@@ -28,7 +28,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 import static destiny.armoryofdestiny.server.util.UtilityVariables.ARMORERS_TINKERING_TABLE;
-import static destiny.armoryofdestiny.server.util.UtilityVariables.ARMORERS_WORKSHOP_PART;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
@@ -92,6 +91,7 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
                         return InteractionResult.SUCCESS;
                     } else if (player.getMainHandItem().isEmpty() && player.isShiftKeyDown()) {
                         Containers.dropContents(level, pos.above(), table.getDroppableInventory());
+                        table.clearTable();
 
                         level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
                         level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
@@ -194,10 +194,5 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
     @Override
     public String getTriviaTranslatable() {
         return ARMORERS_TINKERING_TABLE;
-    }
-
-    @Override
-    public String getRarityTranslatable(ItemStack stack) {
-        return ARMORERS_WORKSHOP_PART;
     }
 }

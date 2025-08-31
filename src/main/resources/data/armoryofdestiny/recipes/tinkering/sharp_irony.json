@@ -1,0 +1,48 @@
+{
+  "type": "armoryofdestiny:tinkering",
+  "blueprint_color": 2435661,
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "armoryofdestiny:metallic_feather"
+    },
+    {
+      "item": "armoryofdestiny:metallic_feather"
+    },
+    {
+      "item": "armoryofdestiny:metallic_feather"
+    },
+    {
+      "item": "armoryofdestiny:metallic_feather"
+    },
+    {
+      "item": "armoryofdestiny:metallic_feather"
+    }
+  ],
+  "result": {
+    "item": "armoryofdestiny:sharp_irony"
+  }
+}

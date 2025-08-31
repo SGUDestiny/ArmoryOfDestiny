@@ -172,11 +172,6 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
     }
 
     @Override
-    public String getRarityTranslatable(ItemStack stack) {
-        return LEGENDARY;
-    }
-
-    @Override
     public String getTriviaTranslatable() {
         return RAPIER;
     }

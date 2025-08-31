@@ -10,8 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import static destiny.armoryofdestiny.server.util.UtilityVariables.SECONDARY;
-
 public class MetallicFeatherItem extends TooltipItem {
     public MetallicFeatherItem(Properties properties) {
         super(properties);
@@ -42,10 +40,5 @@ public class MetallicFeatherItem extends TooltipItem {
         }
 
         return InteractionResultHolder.pass(stack);
-    }
-
-    @Override
-    public String getRarityTranslatable(ItemStack stack) {
-        return SECONDARY;
     }
 }

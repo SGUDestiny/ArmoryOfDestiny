@@ -28,14 +28,7 @@ public class TooltipBaseEntityBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter getter, List<Component> components, TooltipFlag flag) {
-        String itemRarity = getRarityTranslatable(stack);
         String itemTrivia = getTriviaTranslatable();
-
-        //Rarity
-        if (hasRarity()) {
-            MutableComponent rarity = Component.translatable(itemRarity);
-            components.add(rarity);
-        }
 
         //Trivia
         if (!itemTrivia.equals("none") && hasTrivia()) {
@@ -73,16 +66,8 @@ public class TooltipBaseEntityBlock extends BaseEntityBlock {
         return i - 1;
     }
 
-    public String getRarityTranslatable(ItemStack stack) {
-        return NONE;
-    }
-
     public String getTriviaTranslatable() {
         return NONE;
-    }
-
-    public boolean hasRarity() {
-        return true;
     }
 
     public boolean hasTrivia() {
