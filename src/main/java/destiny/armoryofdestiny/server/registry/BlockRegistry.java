@@ -29,20 +29,24 @@ public class BlockRegistry {
 
     public static final RegistryObject<Block> ARMORERS_ANVIL = registerBlock("armorers_anvil",
             () -> new ArmorersAnvilBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_LIGHT_GRAY).strength(2.5F).sound(SoundType.ANVIL).noOcclusion()));
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY).strength(5F).sound(SoundType.ANVIL).noOcclusion()));
 
     public static final RegistryObject<Block> BLOOMERY_BOTTOM = registerBlock("bloomery_bottom",
             () -> new BloomeryBottomBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_RED).strength(2.5F).noOcclusion().lightLevel((state) -> {return !state.getValue(LIT) ? 0 : 3 + 3 * state.getValue(LOGS);})));
+                    .mapColor(MapColor.COLOR_RED).strength(3F).noOcclusion().lightLevel((state) -> {return !state.getValue(LIT) ? 0 : 3 + 3 * state.getValue(LOGS);})));
     public static final RegistryObject<Block> BLOOMERY_TOP = registerBlock("bloomery_top",
             () -> new BloomeryTopBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_BROWN).strength(2.5F).sound(SoundType.MUD_BRICKS).noOcclusion()));
+                    .mapColor(MapColor.COLOR_BROWN).strength(3F).sound(SoundType.MUD_BRICKS).noOcclusion()));
     public static final RegistryObject<Block> NETHER_BLOOMERY_BOTTOM = registerBlock("nether_bloomery_bottom",
             () -> new BloomeryBottomBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_RED).strength(2.5F).sound(SoundType.NETHER_BRICKS).noOcclusion().lightLevel((state) -> {return !state.getValue(LIT) ? 0 : 3 + 3 * state.getValue(LOGS);})));
+                    .mapColor(MapColor.COLOR_RED).strength(4F).sound(SoundType.NETHER_BRICKS).noOcclusion().lightLevel((state) -> {return !state.getValue(LIT) ? 0 : 3 + 3 * state.getValue(LOGS);})));
     public static final RegistryObject<Block> NETHER_BLOOMERY_TOP = registerBlock("nether_bloomery_top",
             () -> new BloomeryTopBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_BROWN).strength(2.5F).noOcclusion()));
+                    .mapColor(MapColor.COLOR_BROWN).strength(4F).noOcclusion()));
+
+    public static final RegistryObject<Block> TEMPERING_BARREL = registerBlock("tempering_barrel",
+            () -> new TemperingBarrelBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BROWN).strength(2.5F).sound(SoundType.WOOD).noOcclusion()));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

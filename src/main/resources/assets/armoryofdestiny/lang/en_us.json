@@ -193,6 +193,7 @@
   "block.armoryofdestiny.bloomery_bottom": "§6Bloomery Top",
   "block.armoryofdestiny.nether_bloomery_top": "§cNether Bloomery Top",
   "block.armoryofdestiny.nether_bloomery_bottom": "§cNether Bloomery Top",
+  "block.armoryofdestiny.tempering_barrel": "§6Tempering Barrel",
 
   "_containers": "Containers",
   "container.armoryofdestiny.armorers_crafting_table": "Armorer's Crafting Table",

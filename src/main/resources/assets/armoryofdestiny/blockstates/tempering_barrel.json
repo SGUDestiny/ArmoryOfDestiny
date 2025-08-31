@@ -1,0 +1,50 @@
+{
+  "variants": {
+    "facing=north,water=false": [
+      {
+        "model": "armoryofdestiny:block/tempering_barrel"
+      }
+    ],
+    "facing=south,water=false": [
+      {
+        "model": "armoryofdestiny:block/tempering_barrel",
+        "y": 180
+      }
+    ],
+    "facing=west,water=false": [
+      {
+        "model": "armoryofdestiny:block/tempering_barrel",
+        "y": 270
+      }
+    ],
+    "facing=east,water=false": [
+      {
+        "model": "armoryofdestiny:block/tempering_barrel",
+        "y": 90
+      }
+    ],
+    "facing=north,water=true": [
+      {
+        "model": "armoryofdestiny:block/tempering_barrel_water"
+      }
+    ],
+    "facing=south,water=true": [
+      {
+        "model": "armoryofdestiny:block/tempering_barrel_water",
+        "y": 180
+      }
+    ],
+    "facing=west,water=true": [
+      {
+        "model": "armoryofdestiny:block/tempering_barrel_water",
+        "y": 270
+      }
+    ],
+    "facing=east,water=true": [
+      {
+        "model": "armoryofdestiny:block/tempering_barrel_water",
+        "y": 90
+      }
+    ]
+  }
+}

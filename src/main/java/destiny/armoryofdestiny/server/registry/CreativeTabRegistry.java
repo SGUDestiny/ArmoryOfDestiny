@@ -65,6 +65,7 @@ public class CreativeTabRegistry {
                 output.accept(BlockRegistry.BLOOMERY_BOTTOM.get());
                 output.accept(BlockRegistry.NETHER_BLOOMERY_TOP.get());
                 output.accept(BlockRegistry.NETHER_BLOOMERY_BOTTOM.get());
+                output.accept(BlockRegistry.TEMPERING_BARREL.get());
                 output.accept(ItemRegistry.TONGS.get());
 
                 //Blueprints
