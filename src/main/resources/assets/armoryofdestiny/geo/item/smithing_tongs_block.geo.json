@@ -23,7 +23,7 @@
 					"name": "RightPart",
 					"parent": "Tongs",
 					"pivot": [0, 31, -0.5],
-					"rotation": [0, 0, -12.5],
+					"rotation": [0, 0, -15],
 					"cubes": [
 						{
 							"origin": [1, 0, -1.5],
@@ -91,7 +91,7 @@
 					"name": "LeftPart",
 					"parent": "Tongs",
 					"pivot": [0, 31, 0.5],
-					"rotation": [0, 0, 12.5],
+					"rotation": [0, 0, 15],
 					"cubes": [
 						{
 							"origin": [-3, 0, -0.5],
