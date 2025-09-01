@@ -1,0 +1,66 @@
+package destiny.armoryofdestiny.server.item;
+
+import destiny.armoryofdestiny.client.render.item.SmithingTongsItemRenderer;
+import destiny.armoryofdestiny.server.item.utility.TooltipItem;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
+
+import java.util.function.Consumer;
+
+public class SmithingTongsItem extends TooltipItem implements GeoItem {
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    public static final String HELD_ITEM = "held_item";
+    Item repairItem;
+
+    public SmithingTongsItem(Properties properties, Item repairItem) {
+        super(properties);
+        this.repairItem = repairItem;
+    }
+
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
+            private SmithingTongsItemRenderer renderer;
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                if (this.renderer == null)
+                    this.renderer = new SmithingTongsItemRenderer();
+
+                return this.renderer;
+            }
+        });
+    }
+
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", 0, state -> PlayState.STOP));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, Level lava, Entity entity, int i, boolean b) {
+        if (stack.getTag() == null || stack.getTag().get(HELD_ITEM) == null) {
+            stack.getOrCreateTag().put(HELD_ITEM, ItemStack.EMPTY.serializeNBT());
+        }
+    }
+
+    @Override
+    public boolean isValidRepairItem(ItemStack stack, ItemStack stack1) {
+        return stack1.is(repairItem);
+    }
+}

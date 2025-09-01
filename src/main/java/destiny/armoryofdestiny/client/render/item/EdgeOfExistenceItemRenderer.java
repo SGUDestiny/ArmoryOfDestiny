@@ -2,7 +2,6 @@ package destiny.armoryofdestiny.client.render.item;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
 import destiny.armoryofdestiny.server.item.EdgeOfExistenceItem;
-import destiny.armoryofdestiny.server.item.MurasamaItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;

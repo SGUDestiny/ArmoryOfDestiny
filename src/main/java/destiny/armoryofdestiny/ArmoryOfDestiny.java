@@ -5,7 +5,6 @@ import destiny.armoryofdestiny.client.render.entity.MetallicFeatherRenderer;
 import destiny.armoryofdestiny.server.event.CommonEvents;
 import destiny.armoryofdestiny.server.item.utility.*;
 import destiny.armoryofdestiny.server.registry.*;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -71,6 +70,10 @@ public class ArmoryOfDestiny
                 ItemProperties.register(ItemRegistry.PUNISHER.get(), new ResourceLocation(MODID, "active"), new PunisherItemProperty());
                 ItemProperties.register(ItemRegistry.MURASAMA.get(), new ResourceLocation(MODID, "active"), new MurasamaItemProperty());
                 ItemProperties.register(ItemRegistry.BLOODLETTER.get(), new ResourceLocation(MODID, "active"), new BloodletterItemProperty());
+                ItemProperties.register(ItemRegistry.GOLD_SMITHING_TONGS.get(), new ResourceLocation(MODID, "is_holding"), new SmithingTongsItemProperty());
+                ItemProperties.register(ItemRegistry.IRON_SMITHING_TONGS.get(), new ResourceLocation(MODID, "is_holding"), new SmithingTongsItemProperty());
+                ItemProperties.register(ItemRegistry.DIAMOND_SMITHING_TONGS.get(), new ResourceLocation(MODID, "is_holding"), new SmithingTongsItemProperty());
+                ItemProperties.register(ItemRegistry.NETHERITE_SMITHING_TONGS.get(), new ResourceLocation(MODID, "is_holding"), new SmithingTongsItemProperty());
             });
         }
     }

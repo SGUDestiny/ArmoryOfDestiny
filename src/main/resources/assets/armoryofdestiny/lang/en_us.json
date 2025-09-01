@@ -72,7 +72,10 @@
   "item.armoryofdestiny.diamond_smithing_hammer": "§bDiamond Smithing Hammer",
   "item.armoryofdestiny.netherite_smithing_hammer": "§8Netherite Smithing Hammer",
 
-  "item.armoryofdestiny.tongs": "§7Tongs [WIP]",
+  "item.armoryofdestiny.gold_smithing_tongs": "§6Gold Smithing Tongs",
+  "item.armoryofdestiny.iron_smithing_tongs": "§fIron Smithing Tongs",
+  "item.armoryofdestiny.diamond_smithing_tongs": "§bDiamond Smithing Tongs",
+  "item.armoryofdestiny.netherite_smithing_tongs": "§8Netherite Smithing Tongs",
 
   "item.armoryofdestiny.bloodletter": "§7Bloodletter",
   "item.armoryofdestiny.bloodletter.ability.1.title": "Vermilion Oath",

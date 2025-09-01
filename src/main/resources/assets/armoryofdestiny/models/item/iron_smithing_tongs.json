@@ -1,0 +1,11 @@
+{
+	"base":
+	{
+		"parent": "armoryofdestiny:item/iron_smithing_tongs_empty_inventory"
+	},
+	"overrides":
+	[
+		{ "predicate": { "armoryofdestiny:is_holding": 0.0 }, "model": "armoryofdestiny:item/iron_smithing_tongs_empty"},
+		{ "predicate": { "armoryofdestiny:is_holding": 1.0 }, "model": "armoryofdestiny:item/iron_smithing_tongs_holding"}
+	]
+}

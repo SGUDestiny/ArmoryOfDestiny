@@ -66,7 +66,10 @@ public class CreativeTabRegistry {
                 output.accept(BlockRegistry.NETHER_BLOOMERY_TOP.get());
                 output.accept(BlockRegistry.NETHER_BLOOMERY_BOTTOM.get());
                 output.accept(BlockRegistry.TEMPERING_BARREL.get());
-                output.accept(ItemRegistry.TONGS.get());
+                output.accept(ItemRegistry.GOLD_SMITHING_TONGS.get());
+                output.accept(ItemRegistry.IRON_SMITHING_TONGS.get());
+                output.accept(ItemRegistry.DIAMOND_SMITHING_TONGS.get());
+                output.accept(ItemRegistry.NETHERITE_SMITHING_TONGS.get());
 
                 //Blueprints
                 List<TinkeringRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(TinkeringRecipe.Type.INSTANCE);
