@@ -163,7 +163,6 @@ public class TinkeringRecipe implements Recipe<TinkeringContainer>
         public @Nullable TinkeringRecipe fromNetwork(ResourceLocation recipeID, FriendlyByteBuf buffer)
         {
             int color = buffer.readInt();
-            String rarity = buffer.readUtf();
             List<Ingredient> stacks = buffer.readCollection(i -> new ArrayList<>(), Ingredient::fromNetwork);
             ItemStack result = buffer.readItem();
             return new TinkeringRecipe(recipeID, color, stacks, result);
