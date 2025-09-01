@@ -1,6 +1,6 @@
 {
   "type": "armoryofdestiny:blueprint",
-  "blueprintItem": "armoryofdestiny:gun_sheath",
+  "recipeID": "armoryofdestiny:tinkering/gun_sheath",
   "replace": false,
   "conditions": [
     {

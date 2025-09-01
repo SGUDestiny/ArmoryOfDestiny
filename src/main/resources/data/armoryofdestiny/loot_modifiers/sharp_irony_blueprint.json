@@ -1,6 +1,6 @@
 {
   "type": "armoryofdestiny:blueprint",
-  "blueprintItem": "armoryofdestiny:sharp_irony",
+  "recipeID": "armoryofdestiny:tinkering/sharp_irony",
   "replace": false,
   "conditions": [
     {

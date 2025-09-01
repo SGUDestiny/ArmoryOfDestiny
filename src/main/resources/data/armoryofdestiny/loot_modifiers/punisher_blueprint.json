@@ -1,6 +1,6 @@
 {
   "type": "armoryofdestiny:blueprint",
-  "blueprintItem": "armoryofdestiny:punisher",
+  "recipeID": "armoryofdestiny:tinkering/punisher",
   "replace": false,
   "conditions": [
     {

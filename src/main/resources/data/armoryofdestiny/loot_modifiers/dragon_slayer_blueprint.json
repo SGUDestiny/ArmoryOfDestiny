@@ -1,6 +1,6 @@
 {
   "type": "armoryofdestiny:blueprint",
-  "blueprintItem": "armoryofdestiny:dragon_slayer",
+  "recipeID": "armoryofdestiny:tinkering/dragon_slayer",
   "replace": false,
   "conditions": [
     {

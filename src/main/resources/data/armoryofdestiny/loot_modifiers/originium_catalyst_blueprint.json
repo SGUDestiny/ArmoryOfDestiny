@@ -1,6 +1,6 @@
 {
   "type": "armoryofdestiny:blueprint",
-  "blueprintItem": "armoryofdestiny:originium_catalyst",
+  "recipeID": "armoryofdestiny:tinkering/originium_catalyst",
   "replace": false,
   "conditions": [
     {

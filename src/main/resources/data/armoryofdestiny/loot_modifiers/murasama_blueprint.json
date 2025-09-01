@@ -1,6 +1,6 @@
 {
   "type": "armoryofdestiny:blueprint",
-  "blueprintItem": "armoryofdestiny:murasama",
+  "recipeID": "armoryofdestiny:tinkering/murasama",
   "replace": false,
   "conditions": [
     {

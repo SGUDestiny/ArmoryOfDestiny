@@ -1,6 +1,6 @@
 {
   "type": "armoryofdestiny:blueprint",
-  "blueprintItem": "armoryofdestiny:bloodletter",
+  "recipeID": "armoryofdestiny:tinkering/bloodletter",
   "replace": false,
   "conditions": [
     {

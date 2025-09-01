@@ -1,6 +1,6 @@
 {
   "type": "armoryofdestiny:blueprint",
-  "blueprintItem": "armoryofdestiny:crucible_inactive",
+  "recipeID": "armoryofdestiny:tinkering/crucible_inactive",
   "replace": false,
   "conditions": [
     {
