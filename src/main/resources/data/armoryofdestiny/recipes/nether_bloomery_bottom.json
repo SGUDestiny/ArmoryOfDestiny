@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BAB",
+    "BNB",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "tag": "forge:ingots/nether_brick"
+    },
+    "N": {
+      "tag": "forge:ingots/netherite"
+    },
+    "A": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "result": {
+    "item": "armoryofdestiny:nether_bloomery_bottom"
+  }
+}

@@ -2,15 +2,15 @@
   "type": "minecraft:smithing_transform",
   "addition":
   {
-    "tag": "forge:ingots/netherite"
+    "item": "minecraft:netherite_ingot"
   },
   "base":
   {
-    "item": "armoryofdestiny:diamond_smithing_hammer"
+    "item": "armoryofdestiny:diamond_smithing_tongs"
   },
   "result":
   {
-    "item": "armoryofdestiny:netherite_smithing_hammer"
+    "item": "armoryofdestiny:netherite_smithing_tongs"
   },
   "template":
   {

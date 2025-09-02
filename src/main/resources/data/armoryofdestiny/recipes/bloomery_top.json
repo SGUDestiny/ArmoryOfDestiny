@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    "SWS",
+    "B B"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:mud_bricks"
+    },
+    "W": {
+      "item": "minecraft:mud_brick_wall"
+    },
+    "S": {
+      "item": "minecraft:mud_brick_slab"
+    }
+  },
+  "result": {
+    "item": "armoryofdestiny:bloomery_top"
+  }
+}

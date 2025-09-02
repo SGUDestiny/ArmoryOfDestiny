@@ -25,27 +25,27 @@ public class TemperingRecipe implements Recipe<TemperingContainer>
 {
     public ResourceLocation recipeID;
     public Ingredient ingredient;
-    public int coolTime;
+    //public int coolTime;
     public ItemStack result;
 
     public static final Codec<TemperingRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             UtilityCodecs.INGREDIENT_CODEC.fieldOf("ingredient").forGetter(TemperingRecipe::getIngredient),
-            Codec.INT.fieldOf("cool_time").forGetter(TemperingRecipe::getCoolTime),
+            //Codec.INT.fieldOf("cool_time").forGetter(TemperingRecipe::getCoolTime),
             UtilityCodecs.STACK_CODEC.fieldOf("result").forGetter(TemperingRecipe::getResult)
     ).apply(instance, TemperingRecipe::new));
 
-    public TemperingRecipe(Ingredient ingredient, int coolTime, ItemStack result)
+    public TemperingRecipe(Ingredient ingredient, /*int coolTime,*/ ItemStack result)
     {
         this.ingredient = ingredient;
-        this.coolTime = coolTime;
+        //this.coolTime = coolTime;
         this.result = result;
     }
 
-    public TemperingRecipe(ResourceLocation recipeID, Ingredient ingredient, int coolTime, ItemStack result)
+    public TemperingRecipe(ResourceLocation recipeID, Ingredient ingredient, /*int coolTime,*/ ItemStack result)
     {
         this.recipeID = recipeID;
         this.ingredient = ingredient;
-        this.coolTime = coolTime;
+        //this.coolTime = coolTime;
         this.result = result;
     }
 
@@ -54,10 +54,10 @@ public class TemperingRecipe implements Recipe<TemperingContainer>
         return result;
     }
 
-    public int getCoolTime()
+/*    public int getCoolTime()
     {
         return coolTime;
-    }
+    }*/
 
     public Ingredient getIngredient()
     {
@@ -67,7 +67,7 @@ public class TemperingRecipe implements Recipe<TemperingContainer>
     @Override
     public boolean matches(TemperingContainer container, Level level)
     {
-        return ingredient.test(container.input) && container.coolTime > this.getCoolTime();
+        return ingredient.test(container.input) /*&& container.coolTime > this.getCoolTime()*/;
     }
 
     @Override
@@ -115,7 +115,7 @@ public class TemperingRecipe implements Recipe<TemperingContainer>
     public static class Type implements RecipeType<TemperingRecipe>
     {
         public static final Type INSTANCE = new Type();
-        public static final String ID = "blooming";
+        public static final String ID = "tempering";
 
         private Type()
         {
@@ -126,7 +126,7 @@ public class TemperingRecipe implements Recipe<TemperingContainer>
     public static class Serializer implements RecipeSerializer<TemperingRecipe>
     {
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation(ArmoryOfDestiny.MODID, "blooming");
+        public static final ResourceLocation ID = new ResourceLocation(ArmoryOfDestiny.MODID, "tempering");
 
         @Override
         public TemperingRecipe fromJson(ResourceLocation recipeID, JsonObject jsonRecipe)
@@ -137,23 +137,23 @@ public class TemperingRecipe implements Recipe<TemperingContainer>
                                 throw new JsonParseException(s);
                             });
 
-            return new TemperingRecipe(recipeID, recipe.ingredient, recipe.coolTime, recipe.result);
+            return new TemperingRecipe(recipeID, recipe.ingredient, /*recipe.coolTime,*/ recipe.result);
         }
 
         @Override
         public @Nullable TemperingRecipe fromNetwork(ResourceLocation recipeID, FriendlyByteBuf buffer)
         {
             Ingredient ingredient = Ingredient.fromNetwork(buffer);
-            int meltTime = buffer.readInt();
+            //int coolTime = buffer.readInt();
             ItemStack result = buffer.readItem();
-            return new TemperingRecipe(recipeID, ingredient, meltTime, result);
+            return new TemperingRecipe(recipeID, ingredient, /*coolTime,*/ result);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, TemperingRecipe recipe)
         {
             recipe.ingredient.toNetwork(buffer);
-            buffer.writeInt(recipe.coolTime);
+            //buffer.writeInt(recipe.coolTime);
             buffer.writeItem(recipe.result);
         }
     }

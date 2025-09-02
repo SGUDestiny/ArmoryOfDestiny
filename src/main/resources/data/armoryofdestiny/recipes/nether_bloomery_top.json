@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    "SWS",
+    "B B"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:polished_blackstone_bricks"
+    },
+    "W": {
+      "item": "minecraft:polished_blackstone_brick_wall"
+    },
+    "S": {
+      "item": "minecraft:polished_blackstone_brick_slab"
+    }
+  },
+  "result": {
+    "item": "armoryofdestiny:nether_bloomery_top"
+  }
+}

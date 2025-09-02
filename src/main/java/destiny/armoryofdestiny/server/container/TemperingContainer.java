@@ -7,15 +7,15 @@ import net.minecraft.world.item.ItemStack;
 public class TemperingContainer implements Container
 {
     public ItemStack input;
-    public int coolTime;
+/*    public int coolTime;*/
 
-    public TemperingContainer(ItemStack input, int coolTime)
+    public TemperingContainer(ItemStack input/*, int coolTime*/)
     {
         this.input = input;
-        this.coolTime = coolTime;
+/*        this.coolTime = coolTime;*/
     }
 
-    public int getCoolTime()
+/*    public int getCoolTime()
     {
         return coolTime;
     }
@@ -23,7 +23,7 @@ public class TemperingContainer implements Container
     public void setCoolTime(int coolTime)
     {
         this.coolTime = coolTime;
-    }
+    }*/
 
     @Override
     public int getContainerSize()

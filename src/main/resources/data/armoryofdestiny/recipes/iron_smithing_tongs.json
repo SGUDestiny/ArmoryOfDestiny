@@ -1,22 +1,22 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ISI",
-    "ITI",
-    " T "
+    "TST",
+    " I ",
+    "I I"
   ],
   "key": {
     "S": {
-      "tag": "forge:strings"
+      "tag": "forge:string"
     },
     "I": {
       "tag": "forge:ingots/iron"
     },
     "T": {
-      "item": "minecraft:stick"
+      "item": "minecraft:tripwire_hook"
     }
   },
   "result": {
-    "item": "armoryofdestiny:iron_smithing_hammer"
+    "item": "armoryofdestiny:iron_smithing_tongs"
   }
 }

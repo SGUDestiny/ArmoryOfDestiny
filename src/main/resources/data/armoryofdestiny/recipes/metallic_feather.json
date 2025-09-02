@@ -7,13 +7,13 @@
   ],
   "key": {
     "F": {
-      "item": "minecraft:feather"
+      "tag": "forge:feathers"
     },
     "I": {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     "N": {
-      "item": "minecraft:iron_nugget"
+      "tag": "forge:nuggets/iron"
     }
   },
   "result": {

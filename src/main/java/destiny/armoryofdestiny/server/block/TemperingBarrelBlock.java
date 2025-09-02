@@ -1,5 +1,10 @@
 package destiny.armoryofdestiny.server.block;
 
+import destiny.armoryofdestiny.server.container.TemperingContainer;
+import destiny.armoryofdestiny.server.container.TinkeringContainer;
+import destiny.armoryofdestiny.server.item.SmithingTongsItem;
+import destiny.armoryofdestiny.server.recipe.TemperingRecipe;
+import destiny.armoryofdestiny.server.recipe.TinkeringRecipe;
 import destiny.armoryofdestiny.server.util.MathUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -21,6 +27,10 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.Optional;
+
+import static destiny.armoryofdestiny.server.item.SmithingTongsItem.HELD_ITEM;
 
 public class TemperingBarrelBlock extends Block {
     private static final VoxelShape SHAPE = MathUtil.buildShape(
@@ -65,6 +75,63 @@ public class TemperingBarrelBlock extends Block {
                 }
 
                 return InteractionResult.SUCCESS;
+            }
+        }
+
+        if (stack.getItem() instanceof SmithingTongsItem) {
+            if (state.getValue(WATER) > 0) {
+                if (stack.getTag() != null && stack.getTag().get(HELD_ITEM) != null) {
+                    ItemStack held_item = ItemStack.of(stack.getTag().getCompound(HELD_ITEM));
+
+                    TemperingContainer container = new TemperingContainer(held_item);
+                    TemperingRecipe craftingRecipe = null;
+                    Optional<? extends Recipe<?>> optionalRecipe = level.getRecipeManager().getRecipeFor(TemperingRecipe.Type.INSTANCE, container, level);
+                    if (optionalRecipe.isPresent() && optionalRecipe.get() instanceof TemperingRecipe recipe)
+                        craftingRecipe = recipe;
+
+                    if (craftingRecipe == null) {
+                        return InteractionResult.FAIL;
+                    }
+
+                    if (craftingRecipe.matches(container, level)) {
+                        level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1, 1);
+                        level.playSound(null, pos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 1, 1);
+
+                        stack.getOrCreateTag().put(HELD_ITEM, craftingRecipe.getResult().serializeNBT());
+                        level.setBlockAndUpdate(pos, state.setValue(WATER, state.getValue(WATER) - 1));
+
+                        if (!player.isCreative()) {
+                            stack.setDamageValue(stack.getDamageValue() + 1);
+                        }
+
+                        return InteractionResult.SUCCESS;
+                    }
+                }
+            }
+        }
+
+        if (!stack.isEmpty()) {
+            if (state.getValue(WATER) > 0) {
+                TemperingContainer container = new TemperingContainer(stack);
+                TemperingRecipe craftingRecipe = null;
+                Optional<? extends Recipe<?>> optionalRecipe = level.getRecipeManager().getRecipeFor(TemperingRecipe.Type.INSTANCE, container, level);
+                if (optionalRecipe.isPresent() && optionalRecipe.get() instanceof TemperingRecipe recipe)
+                    craftingRecipe = recipe;
+
+                if (craftingRecipe == null) {
+                    return InteractionResult.FAIL;
+                }
+
+                if (craftingRecipe.matches(container, level)) {
+                    level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1, 1);
+                    level.playSound(null, pos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 1, 1);
+
+                    stack.shrink(1);
+                    player.addItem(craftingRecipe.getResult().copy());
+                    level.setBlockAndUpdate(pos, state.setValue(WATER, state.getValue(WATER) - 1));
+
+                    return InteractionResult.SUCCESS;
+                }
             }
         }
 
