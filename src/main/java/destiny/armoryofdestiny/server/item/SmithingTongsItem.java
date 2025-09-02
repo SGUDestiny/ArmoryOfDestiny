@@ -3,9 +3,16 @@ package destiny.armoryofdestiny.server.item;
 import destiny.armoryofdestiny.client.render.item.SmithingTongsItemRenderer;
 import destiny.armoryofdestiny.server.item.utility.TooltipItem;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -26,6 +33,50 @@ public class SmithingTongsItem extends TooltipItem implements GeoItem {
     public SmithingTongsItem(Properties properties, Item repairItem) {
         super(properties);
         this.repairItem = repairItem;
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack mainStack = player.getItemInHand(InteractionHand.MAIN_HAND);
+        ItemStack secondaryStack = player.getItemInHand(InteractionHand.OFF_HAND);
+
+        if (player.isCrouching()) {
+            if (mainStack.getTag() != null && mainStack.getTag().get(HELD_ITEM) != null) {
+                ItemStack held_item = ItemStack.of(mainStack.getTag().getCompound(HELD_ITEM));
+
+                if (held_item.getItem() != Items.AIR) {
+                    level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_BREAK, SoundSource.BLOCKS, 1, 1);
+
+                    player.addItem(held_item.copy());
+                    mainStack.getOrCreateTag().put(HELD_ITEM, ItemStack.EMPTY.serializeNBT());
+
+                    if (!player.isCreative()) {
+                        mainStack.setDamageValue(mainStack.getDamageValue() + 1);
+                    }
+
+                    return InteractionResultHolder.success(mainStack);
+                }
+
+                if (held_item.getItem() == Items.AIR) {
+                    if (secondaryStack.getItem() != Items.AIR) {
+                        level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 1, 1);
+
+                        ItemStack putStack = secondaryStack.copy();
+                        putStack.setCount(1);
+                        mainStack.getOrCreateTag().put(HELD_ITEM, putStack.serializeNBT());
+                        secondaryStack.shrink(1);
+
+                        if (!player.isCreative()) {
+                            mainStack.setDamageValue(mainStack.getDamageValue() + 1);
+                        }
+
+                        return InteractionResultHolder.success(mainStack);
+                    }
+                }
+            }
+        }
+
+        return InteractionResultHolder.pass(mainStack);
     }
 
     @Override
