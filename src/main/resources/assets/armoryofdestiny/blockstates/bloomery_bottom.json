@@ -5,9 +5,19 @@
         "model": "armoryofdestiny:block/bloomery_bottom"
       }
     ],
+    "facing=north,lit=true,logs=0,open=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_lit"
+      }
+    ],
     "facing=north,lit=false,logs=0,open=true": [
       {
         "model": "armoryofdestiny:block/bloomery_bottom_open"
+      }
+    ],
+    "facing=north,lit=true,logs=0,open=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_bottom_open_lit"
       }
     ],
     "facing=north,lit=false,logs=1,open=false": [

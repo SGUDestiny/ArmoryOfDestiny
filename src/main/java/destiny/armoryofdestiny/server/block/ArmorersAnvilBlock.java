@@ -1,24 +1,39 @@
 package destiny.armoryofdestiny.server.block;
 
+import destiny.armoryofdestiny.server.block.blockentity.ArmorersAnvilBlockEntity;
+import destiny.armoryofdestiny.server.block.utility.TooltipBaseEntityBlock;
+import destiny.armoryofdestiny.server.item.SmithingHammerItem;
+import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;
 import destiny.armoryofdestiny.server.util.MathUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
+import static destiny.armoryofdestiny.server.block.BloomeryBottomBlock.LIT;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
-public class ArmorersAnvilBlock extends FallingBlock {
+public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
     private static final VoxelShape SHAPE_NORTH = MathUtil.buildShape(
             Block.box(0, 9, 3, 16, 16, 13),
             Block.box(3, 4, 5, 13, 9, 11),
@@ -57,6 +72,89 @@ public class ArmorersAnvilBlock extends FallingBlock {
         this.registerDefaultState(this.defaultBlockState().setValue(HORIZONTAL_FACING, Direction.NORTH));
     }
 
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity tileEntity = level.getBlockEntity(pos);
+            if (tileEntity instanceof ArmorersAnvilBlockEntity anvil) {
+                Containers.dropContents(level, pos, anvil.getDroppableInventory());
+                level.updateNeighbourForOutputSignal(pos, this);
+            }
+
+            super.onRemove(state, level, pos, newState, isMoving);
+        }
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
+
+        if (level.getBlockEntity(pos) instanceof ArmorersAnvilBlockEntity anvil) {
+            //Advance crafting with hammer
+            if (stack.getItem() instanceof SmithingHammerItem) {
+                if (anvil.advanceCrafting(level, pos, player)) {
+                    return InteractionResult.SUCCESS;
+                } else {
+                    return InteractionResult.PASS;
+                }
+            }
+
+            //Take all items from anvil
+            if (player.isCrouching()) {
+                if (stack.isEmpty()) {
+                    int size = anvil.getStoredItemAmount();
+
+                    for (int i = 0; i < size; i++) {
+                        ItemStack copy = anvil.getLastStoredItem().copy();
+                        copy.setCount(1);
+
+                        player.addItem(copy);
+                        anvil.removeLastStoredItem();
+                    }
+
+                    level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
+
+                    return InteractionResult.SUCCESS;
+                }
+            }
+
+            //Take item from anvil
+            if (stack.isEmpty()) {
+                if (anvil.getStoredItemAmount() > 0) {
+                    ItemStack copy = anvil.getLastStoredItem().copy();
+                    copy.setCount(1);
+
+                    player.addItem(copy);
+                    anvil.removeLastStoredItem();
+
+                    level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
+
+                    return InteractionResult.SUCCESS;
+                }
+            }
+
+            //Add item to anvil
+            if (!stack.isEmpty()) {
+                if (anvil.getStoredItemAmount() < 8) {
+                    ItemStack copy = stack.copy();
+                    copy.setCount(1);
+
+                    anvil.addStoredItem(copy);
+
+                    if (!player.isCreative()) {
+                        stack.shrink(1);
+                    }
+
+                    level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
+
+                    return InteractionResult.SUCCESS;
+                }
+            }
+        }
+
+        return InteractionResult.PASS;
+    }
+
     @javax.annotation.Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
@@ -89,15 +187,12 @@ public class ArmorersAnvilBlock extends FallingBlock {
     }
 
     @Override
-    protected void falling(FallingBlockEntity entity) {
-        entity.setHurtsEntities(10, 100);
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return BlockEntityRegistry.ARMORERS_ANVIL.get().create(pos, state);
     }
 
-    @Override
-    public void onLand(Level level, BlockPos pos, BlockState state1, BlockState state2, FallingBlockEntity entity) {
-        if (!entity.isSilent()) {
-            level.levelEvent(1031, pos, 0);
-        }
-
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntity) {
+        return createTickerHelper(blockEntity, BlockEntityRegistry.ARMORERS_ANVIL.get(), ArmorersAnvilBlockEntity::tick);
     }
 }

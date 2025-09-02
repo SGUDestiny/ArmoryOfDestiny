@@ -290,6 +290,4 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         if (level != null)
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
     }
-
-
 }

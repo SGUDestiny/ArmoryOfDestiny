@@ -72,6 +72,7 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.NETHERITE_SMITHING_TONGS.get());
 
                 //Components
+                output.accept(ItemRegistry.HOT_NETHERITE_INGOT.get());
                 output.accept(ItemRegistry.HOT_IRON_INGOT.get());
                 output.accept(ItemRegistry.HOT_IRON_NUGGET.get());
                 output.accept(ItemRegistry.HOT_RAW_COPPER_BLOCK.get());

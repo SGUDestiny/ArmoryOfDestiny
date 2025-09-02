@@ -1,0 +1,10 @@
+{
+  "type": "armoryofdestiny:superheated_blooming",
+  "ingredient": {
+    "item": "minecraft:raw_copper_block"
+  },
+  "melt_time": 100,
+  "result": {
+    "item": "armoryofdestiny:hot_raw_copper_block"
+  }
+}

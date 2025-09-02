@@ -50,10 +50,6 @@ public class SmithingTongsItem extends TooltipItem implements GeoItem {
                     player.addItem(held_item.copy());
                     mainStack.getOrCreateTag().put(HELD_ITEM, ItemStack.EMPTY.serializeNBT());
 
-                    if (!player.isCreative()) {
-                        mainStack.setDamageValue(mainStack.getDamageValue() + 1);
-                    }
-
                     return InteractionResultHolder.success(mainStack);
                 }
 

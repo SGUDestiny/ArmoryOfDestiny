@@ -19,6 +19,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class SmithingRecipe implements Recipe<SmithingContainer>
@@ -67,16 +68,17 @@ public class SmithingRecipe implements Recipe<SmithingContainer>
     @Override
     public boolean matches(SmithingContainer container, Level level)
     {
+        List<Ingredient> ingredientList = new ArrayList<>(ingredients);
+        List<ItemStack> storedList = new ArrayList<>(container.inputs);
         List<Boolean> test = new ArrayList<>();
 
-        for (Ingredient ingredient : ingredients)
-        {
-            for (ItemStack stack : container.inputs)
-                if (ingredient.test(stack))
-                    test.add(true);
+        for (int i = 0; i < storedList.size(); i++) {
+            if (ingredientList.get(i).test(storedList.get(i))) {
+                test.add(true);
+            }
         }
 
-        return test.size() == this.ingredients.size() && container.getHammerHits() == getHammerHits();
+        return test.size() == ingredients.size();
     }
 
     @Override

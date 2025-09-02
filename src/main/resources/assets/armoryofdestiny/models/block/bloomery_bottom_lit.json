@@ -1,0 +1,121 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"render_type": "cutout",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "armoryofdestiny:block/campfire_fire",
+		"1": "armoryofdestiny:block/bloomery_bottom",
+		"2": "minecraft:block/coal_block",
+		"particle": "armoryofdestiny:block/bloomery_bottom"
+	},
+	"elements": [
+		{
+			"from": [0, 0.025, 0],
+			"to": [16, 16.025, 0],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0.025, 0]},
+			"faces": {
+				"north": {"uv": [0, 12, 4, 16], "texture": "#1"},
+				"south": {"uv": [4, 12, 0, 16], "texture": "#1"}
+			}
+		},
+		{
+			"from": [0, 0.025, 0],
+			"to": [0, 16.025, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8.025, 8]},
+			"faces": {
+				"east": {"uv": [12, 4, 8, 8], "texture": "#1"},
+				"west": {"uv": [8, 4, 12, 8], "texture": "#1"}
+			}
+		},
+		{
+			"from": [0, 0.025, 16],
+			"to": [16, 16.025, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8.025, 8]},
+			"faces": {
+				"north": {"uv": [16, 4, 12, 8], "texture": "#1"},
+				"south": {"uv": [12, 4, 16, 8], "texture": "#1"}
+			}
+		},
+		{
+			"from": [0, 16.025, 0],
+			"to": [16, 16.025, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8.025, 8]},
+			"faces": {
+				"up": {"uv": [4, 0, 8, 4], "rotation": 180, "texture": "#1"},
+				"down": {"uv": [8, 0, 4, 4], "texture": "#1"}
+			}
+		},
+		{
+			"from": [0, 0.025, 0],
+			"to": [16, 0.025, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8.025, 8]},
+			"faces": {
+				"up": {"uv": [12, 0, 8, 4], "texture": "#1"},
+				"down": {"uv": [8, 0, 12, 4], "rotation": 180, "texture": "#1"}
+			}
+		},
+		{
+			"from": [16, 0.025, 0],
+			"to": [16, 16.025, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8.025, 8]},
+			"faces": {
+				"east": {"uv": [0, 4, 4, 8], "texture": "#1"},
+				"west": {"uv": [4, 4, 0, 8], "texture": "#1"}
+			}
+		},
+		{
+			"from": [0, 1.025, 8],
+			"to": [16, 17.025, 8],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 9.025, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#0"}
+			}
+		},
+		{
+			"from": [0, 1.025, 8],
+			"to": [16, 17.025, 8],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 9.025, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#0"}
+			}
+		},
+		{
+			"from": [4, 0, 4],
+			"to": [12, 2, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 0, 4]},
+			"faces": {
+				"north": {"uv": [0, 0, 8, 2], "texture": "#2"},
+				"east": {"uv": [0, 0, 8, 2], "texture": "#2"},
+				"south": {"uv": [0, 0, 8, 2], "texture": "#2"},
+				"west": {"uv": [0, 0, 8, 2], "texture": "#2"},
+				"up": {"uv": [8, 8, 0, 0], "texture": "#2"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "Bottom",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "Walls",
+					"origin": [8, -8, 8],
+					"color": 0,
+					"children": [0, 1, 2, 3, 4, 5]
+				},
+				{
+					"name": "Fire",
+					"origin": [8, -7, 8],
+					"color": 0,
+					"children": [6, 7]
+				}
+			]
+		},
+		8
+	]
+}

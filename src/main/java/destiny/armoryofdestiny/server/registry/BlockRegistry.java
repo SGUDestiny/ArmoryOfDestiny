@@ -38,10 +38,10 @@ public class BlockRegistry {
             () -> new BloomeryTopBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN).strength(3F).sound(SoundType.MUD_BRICKS).noOcclusion()));
     public static final RegistryObject<Block> NETHER_BLOOMERY_BOTTOM = registerBlock("nether_bloomery_bottom",
-            () -> new BloomeryBottomBlock(BlockBehaviour.Properties.of()
+            () -> new NetherBloomeryBottomBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_RED).strength(4F).sound(SoundType.NETHER_BRICKS).noOcclusion().lightLevel((state) -> {return !state.getValue(LIT) ? 0 : 3 + 3 * state.getValue(LOGS);})));
     public static final RegistryObject<Block> NETHER_BLOOMERY_TOP = registerBlock("nether_bloomery_top",
-            () -> new BloomeryTopBlock(BlockBehaviour.Properties.of()
+            () -> new NetherBloomeryTopBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN).strength(4F).noOcclusion()));
 
     public static final RegistryObject<Block> TEMPERING_BARREL = registerBlock("tempering_barrel",

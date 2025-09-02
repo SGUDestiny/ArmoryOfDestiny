@@ -1,4 +1,5 @@
 {
+	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
 	"render_type": "cutout",
@@ -6,6 +7,7 @@
 	"textures": {
 		"0": "armoryofdestiny:block/soul_campfire_fire",
 		"1": "armoryofdestiny:block/nether_bloomery_bottom",
+		"2": "minecraft:block/coal_block",
 		"particle": "armoryofdestiny:block/nether_bloomery_bottom"
 	},
 	"elements": [
@@ -141,6 +143,18 @@
 				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
 				"south": {"uv": [0, 0, 16, 16], "texture": "#0"}
 			}
+		},
+		{
+			"from": [4, 0, 4],
+			"to": [12, 2, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 0, 4]},
+			"faces": {
+				"north": {"uv": [0, 0, 8, 2], "texture": "#2"},
+				"east": {"uv": [0, 0, 8, 2], "texture": "#2"},
+				"south": {"uv": [0, 0, 8, 2], "texture": "#2"},
+				"west": {"uv": [0, 0, 8, 2], "texture": "#2"},
+				"up": {"uv": [8, 8, 0, 0], "texture": "#2"}
+			}
 		}
 	],
 	"groups": [
@@ -174,6 +188,7 @@
 					"children": [11, 12]
 				}
 			]
-		}
+		},
+		13
 	]
 }

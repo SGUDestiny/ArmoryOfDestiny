@@ -1,7 +1,10 @@
 package destiny.armoryofdestiny.server.event;
 
 import com.mojang.logging.LogUtils;
+import destiny.armoryofdestiny.client.render.blockentity.ArmorersAnvilRenderer;
 import destiny.armoryofdestiny.client.render.blockentity.ArmorersTinkeringTableRenderer;
+import destiny.armoryofdestiny.client.render.blockentity.BloomeryTopRenderer;
+import destiny.armoryofdestiny.client.render.blockentity.NetherBloomeryTopRenderer;
 import destiny.armoryofdestiny.server.util.UtilityVariables;
 import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;
 import destiny.armoryofdestiny.server.registry.BlockRegistry;
@@ -32,5 +35,8 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(BlockEntityRegistry.ARMORERS_TINKERING_TABLE.get(), ArmorersTinkeringTableRenderer::new);
+        event.registerBlockEntityRenderer(BlockEntityRegistry.BLOOMERY_TOP.get(), BloomeryTopRenderer::new);
+        event.registerBlockEntityRenderer(BlockEntityRegistry.NETHER_BLOOMERY_TOP.get(), NetherBloomeryTopRenderer::new);
+        event.registerBlockEntityRenderer(BlockEntityRegistry.ARMORERS_ANVIL.get(), ArmorersAnvilRenderer::new);
     }
 }

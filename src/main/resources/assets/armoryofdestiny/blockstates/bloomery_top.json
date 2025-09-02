@@ -1,23 +1,46 @@
 {
   "variants": {
-    "facing=north": [
+    "facing=north,lit=false": [
       {
         "model": "armoryofdestiny:block/bloomery_top"
       }
     ],
-    "facing=south": [
+    "facing=south,lit=false": [
       {
         "model": "armoryofdestiny:block/bloomery_top",
         "y": 180
       }
     ],
-    "facing=west": [
+    "facing=west,lit=false": [
       {
         "model": "armoryofdestiny:block/bloomery_top",
         "y": 270
       }
     ],
-    "facing=east": [
+    "facing=east,lit=false": [
+      {
+        "model": "armoryofdestiny:block/bloomery_top",
+        "y": 90
+      }
+    ],
+    "facing=north,lit=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_top"
+      }
+    ],
+    "facing=south,lit=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_top",
+        "y": 180
+      }
+    ],
+    "facing=west,lit=true": [
+      {
+        "model": "armoryofdestiny:block/bloomery_top",
+        "y": 270
+      }
+    ],
+    "facing=east,lit=true": [
       {
         "model": "armoryofdestiny:block/bloomery_top",
         "y": 90

@@ -73,6 +73,8 @@ public class ItemRegistry {
     public static final RegistryObject<Item> EDGE_OF_EXISTENCE = ITEMS.register("edge_of_existence",
             () -> new EdgeOfExistenceItem(basicItem().rarity(Rarity.EPIC).durability(1150)));
 
+    public static final RegistryObject<Item> HOT_NETHERITE_INGOT = ITEMS.register("hot_netherite_ingot",
+            () -> new HotItem(new Item.Properties().stacksTo(1), 4, 10));
     public static final RegistryObject<Item> HOT_IRON_INGOT = ITEMS.register("hot_iron_ingot",
             () -> new HotItem(new Item.Properties().stacksTo(1), 2, 20));
     public static final RegistryObject<Item> HOT_IRON_NUGGET = ITEMS.register("hot_iron_nugget",

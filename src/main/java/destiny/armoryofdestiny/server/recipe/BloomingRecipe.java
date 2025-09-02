@@ -72,7 +72,7 @@ public class BloomingRecipe implements Recipe<BloomingContainer>
     @Override
     public boolean matches(BloomingContainer container, Level level)
     {
-        return ingredient.test(container.input) && container.meltTime > this.getMeltTime();
+        return ingredient.test(container.input);
     }
 
     @Override
@@ -162,5 +162,4 @@ public class BloomingRecipe implements Recipe<BloomingContainer>
             buffer.writeItem(recipe.result);
         }
     }
-
 }

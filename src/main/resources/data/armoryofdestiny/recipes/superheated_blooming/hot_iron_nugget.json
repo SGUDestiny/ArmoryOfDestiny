@@ -1,0 +1,10 @@
+{
+  "type": "armoryofdestiny:superheated_blooming",
+  "ingredient": {
+    "item": "minecraft:iron_nugget"
+  },
+  "melt_time": 100,
+  "result": {
+    "item": "armoryofdestiny:hot_iron_nugget"
+  }
+}
