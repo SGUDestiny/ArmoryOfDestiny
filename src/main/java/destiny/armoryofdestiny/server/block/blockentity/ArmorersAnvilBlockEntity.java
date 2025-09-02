@@ -20,6 +20,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -70,6 +71,39 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
             }
 
             if (tinkeringRecipe.getResult().getItem() == craftingRecipe.getParentItem().getItem()) {
+                if (craftingRecipe.matches(container, level)) {
+                    if (hammer_hits == -1) {
+                        hammer_hits = craftingRecipe.getHammerHits() - 1;
+
+                        level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 1);
+                    } else if (hammer_hits == 0) {
+                        storedItems.clear();
+                        storedItems.add(craftingRecipe.getResult());
+                        hammer_hits = -1;
+
+                        level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 1, 1);
+                    } else {
+                        hammer_hits--;
+
+                        level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 1);
+                    }
+                    doHammerStuff(player, pos, player.getItemInHand(InteractionHand.MAIN_HAND));
+
+                    return true;
+                }
+            }
+        } else {
+            SmithingContainer container = new SmithingContainer(storedItems, 0);
+            SmithingRecipe craftingRecipe = null;
+            Optional<? extends Recipe<?>> optionalRecipe = level.getRecipeManager().getRecipeFor(SmithingRecipe.Type.INSTANCE, container, level);
+            if (optionalRecipe.isPresent() && optionalRecipe.get() instanceof SmithingRecipe recipe)
+                craftingRecipe = recipe;
+
+            if (craftingRecipe == null) {
+                return false;
+            }
+
+            if (craftingRecipe.getParentItem().isEmpty()) {
                 if (craftingRecipe.matches(container, level)) {
                     if (hammer_hits == -1) {
                         hammer_hits = craftingRecipe.getHammerHits() - 1;

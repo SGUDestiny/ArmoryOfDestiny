@@ -1,0 +1,15 @@
+{
+  "type": "armoryofdestiny:smithing",
+  "parent_item": {
+    "item": "minecraft:air"
+  },
+  "ingredients": [
+    {
+      "item": "armoryofdestiny:hot_raw_iron_block"
+    }
+  ],
+  "hammer_hits": 5,
+  "result": {
+    "item": "minecraft:iron_block"
+  }
+}
