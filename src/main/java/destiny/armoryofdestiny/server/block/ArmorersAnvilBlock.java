@@ -2,6 +2,7 @@ package destiny.armoryofdestiny.server.block;
 
 import destiny.armoryofdestiny.server.block.blockentity.ArmorersAnvilBlockEntity;
 import destiny.armoryofdestiny.server.block.utility.TooltipBaseEntityBlock;
+import destiny.armoryofdestiny.server.item.BlueprintItem;
 import destiny.armoryofdestiny.server.item.SmithingHammerItem;
 import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;
 import destiny.armoryofdestiny.server.util.MathUtil;
@@ -30,7 +31,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import static destiny.armoryofdestiny.server.block.BloomeryBottomBlock.LIT;
+import static destiny.armoryofdestiny.server.block.ArmorersTinkeringTableBlock.HAS_BLUEPRINT;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
@@ -69,7 +70,7 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
 
     public ArmorersAnvilBlock(BlockBehaviour.Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(HORIZONTAL_FACING, Direction.NORTH));
+        this.registerDefaultState(this.defaultBlockState().setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(HAS_BLUEPRINT, false));
     }
 
     @Override
@@ -90,31 +91,52 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
         ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 
         if (level.getBlockEntity(pos) instanceof ArmorersAnvilBlockEntity anvil) {
+            if (player.isCrouching()) {
+                //Take blueprint
+                if (stack.isEmpty()) {
+                    if (!anvil.getBlueprint().isEmpty()) {
+                        int size = anvil.getStoredItemAmount();
+
+                        for (int i = 0; i < size; i++) {
+                            ItemStack copy = anvil.getLastStoredItem().copy();
+                            copy.setCount(1);
+
+                            player.addItem(copy);
+                            anvil.removeLastStoredItem();
+                        }
+
+                        player.addItem(anvil.getBlueprint().copy());
+                        anvil.setBlueprint(ItemStack.EMPTY);
+                        level.setBlockAndUpdate(pos, state.setValue(HAS_BLUEPRINT, false));
+                        level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS);
+
+                        return InteractionResult.SUCCESS;
+                    }
+                }
+            }
+
+            //Put blueprint
+            if (stack.getItem() instanceof BlueprintItem) {
+                if (anvil.getBlueprint().isEmpty()) {
+                    anvil.setBlueprint(stack);
+
+                    if (!player.isCreative()) {
+                        stack.shrink(1);
+                    }
+
+                    level.setBlockAndUpdate(pos, state.setValue(HAS_BLUEPRINT, true));
+                    level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
+
+                    return InteractionResult.SUCCESS;
+                }
+            }
+
             //Advance crafting with hammer
             if (stack.getItem() instanceof SmithingHammerItem) {
                 if (anvil.advanceCrafting(level, pos, player)) {
                     return InteractionResult.SUCCESS;
                 } else {
                     return InteractionResult.PASS;
-                }
-            }
-
-            //Take all items from anvil
-            if (player.isCrouching()) {
-                if (stack.isEmpty()) {
-                    int size = anvil.getStoredItemAmount();
-
-                    for (int i = 0; i < size; i++) {
-                        ItemStack copy = anvil.getLastStoredItem().copy();
-                        copy.setCount(1);
-
-                        player.addItem(copy);
-                        anvil.removeLastStoredItem();
-                    }
-
-                    level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
-
-                    return InteractionResult.SUCCESS;
                 }
             }
 
@@ -157,11 +179,11 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
 
     @javax.annotation.Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
+        return this.defaultBlockState().setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite()).setValue(HAS_BLUEPRINT, false);
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(HORIZONTAL_FACING);
+        builder.add(HORIZONTAL_FACING, HAS_BLUEPRINT);
     }
 
     @Override

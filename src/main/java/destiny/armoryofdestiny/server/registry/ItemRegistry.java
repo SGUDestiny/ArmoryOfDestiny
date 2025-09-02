@@ -86,6 +86,9 @@ public class ItemRegistry {
     public static final RegistryObject<Item> HOT_RAW_GOLD_BLOCK = ITEMS.register("hot_raw_gold_block",
             () -> new HotBlockItem(BlockRegistry.HOT_RAW_GOLD_BLOCK.get(), new Item.Properties().stacksTo(1), 2, 20));
 
+    public static final RegistryObject<Item> MURASAMA_BLADE = ITEMS.register("murasama_blade",
+            () -> new Item(new Item.Properties().stacksTo(1)));
+
 //    public static final RegistryObject<Item> SPAS12 = ITEMS.register("spas12",
 //            () -> new Spas12Item(basicItem().rarity(Rarity.EPIC).durability(-1)
 //            ));

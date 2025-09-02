@@ -1,5 +1,6 @@
 package destiny.armoryofdestiny.server.util;
 
+import destiny.armoryofdestiny.server.block.blockentity.ArmorersAnvilBlockEntity;
 import destiny.armoryofdestiny.server.block.blockentity.ArmorersTinkeringTableBlockEntity;
 import destiny.armoryofdestiny.server.item.BlueprintItem;
 import destiny.armoryofdestiny.server.recipe.TinkeringRecipe;
@@ -38,6 +39,15 @@ public class UtilityVariables {
             return 0xFFFFFF;
         if (level.getBlockEntity(pos) instanceof ArmorersTinkeringTableBlockEntity table) {
             ResourceLocation recipeKey = table.getRecipe();
+            if(recipeKey != null)
+            {
+                Optional<? extends Recipe<?>> recipeOptional = level.getRecipeManager().byKey(recipeKey);
+                if(recipeOptional.isPresent() && recipeOptional.get() instanceof TinkeringRecipe recipe)
+                    return recipe.getBlueprintColor();
+            }
+        }
+        if (level.getBlockEntity(pos) instanceof ArmorersAnvilBlockEntity anvil) {
+            ResourceLocation recipeKey = new ResourceLocation(anvil.getBlueprint().getOrCreateTag().getString("recipe"));
             if(recipeKey != null)
             {
                 Optional<? extends Recipe<?>> recipeOptional = level.getRecipeManager().byKey(recipeKey);

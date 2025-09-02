@@ -79,6 +79,8 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.HOT_RAW_IRON_BLOCK.get());
                 output.accept(ItemRegistry.HOT_RAW_GOLD_BLOCK.get());
 
+                output.accept(ItemRegistry.MURASAMA_BLADE.get());
+
                 //Blueprints
                 List<TinkeringRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(TinkeringRecipe.Type.INSTANCE);
                 for (TinkeringRecipe recipe : recipes)

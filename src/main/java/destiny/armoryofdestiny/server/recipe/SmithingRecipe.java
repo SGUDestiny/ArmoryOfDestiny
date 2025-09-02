@@ -25,29 +25,38 @@ import java.util.List;
 public class SmithingRecipe implements Recipe<SmithingContainer>
 {
     public ResourceLocation recipeID;
+    public ItemStack parentItem;
     public List<Ingredient> ingredients;
     public int hammerHits;
     public ItemStack result;
 
     public static final Codec<SmithingRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            UtilityCodecs.STACK_CODEC.fieldOf("parent_item").forGetter(SmithingRecipe::getParentItem),
             UtilityCodecs.INGREDIENT_CODEC.listOf().fieldOf("ingredients").forGetter(SmithingRecipe::getIngredientList),
             Codec.INT.fieldOf("hammer_hits").forGetter(SmithingRecipe::getHammerHits),
             UtilityCodecs.STACK_CODEC.fieldOf("result").forGetter(SmithingRecipe::getResult)
     ).apply(instance, SmithingRecipe::new));
 
-    public SmithingRecipe(List<Ingredient> ingredients, int hammerHits, ItemStack result)
+    public SmithingRecipe(ItemStack parentItem, List<Ingredient> ingredients, int hammerHits, ItemStack result)
     {
+        this.parentItem = parentItem;
         this.ingredients = ingredients;
         this.hammerHits = hammerHits;
         this.result = result;
     }
 
-    public SmithingRecipe(ResourceLocation recipeID, List<Ingredient> ingredients, int hammerHits, ItemStack result)
+    public SmithingRecipe(ResourceLocation recipeID, ItemStack parentItem, List<Ingredient> ingredients, int hammerHits, ItemStack result)
     {
         this.recipeID = recipeID;
+        this.parentItem = parentItem;
         this.ingredients = ingredients;
         this.hammerHits = hammerHits;
         this.result = result;
+    }
+
+    public ItemStack getParentItem()
+    {
+        return parentItem;
     }
 
     public ItemStack getResult()
@@ -150,21 +159,23 @@ public class SmithingRecipe implements Recipe<SmithingContainer>
                                 throw new JsonParseException(s);
                             });
 
-            return new SmithingRecipe(recipeID, recipe.ingredients, recipe.hammerHits, recipe.result);
+            return new SmithingRecipe(recipeID, recipe.parentItem, recipe.ingredients, recipe.hammerHits, recipe.result);
         }
 
         @Override
         public @Nullable SmithingRecipe fromNetwork(ResourceLocation recipeID, FriendlyByteBuf buffer)
         {
+            ItemStack parentItem = buffer.readItem();
             List<Ingredient> stacks = buffer.readCollection(i -> new ArrayList<>(), Ingredient::fromNetwork);
             int hammerHits = buffer.readInt();
             ItemStack result = buffer.readItem();
-            return new SmithingRecipe(recipeID, stacks, hammerHits, result);
+            return new SmithingRecipe(recipeID, parentItem, stacks, hammerHits, result);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, SmithingRecipe recipe)
         {
+            buffer.writeItem(recipe.parentItem);
             buffer.writeCollection(recipe.ingredients, (writeBuffer, ingredient) -> {
                 ingredient.toNetwork(writeBuffer);
             });

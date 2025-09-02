@@ -1,9 +1,10 @@
 package destiny.armoryofdestiny.server.block.blockentity;
 
 import destiny.armoryofdestiny.server.container.SmithingContainer;
+import destiny.armoryofdestiny.server.container.TinkeringContainer;
 import destiny.armoryofdestiny.server.recipe.SmithingRecipe;
+import destiny.armoryofdestiny.server.recipe.TinkeringRecipe;
 import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;
-import destiny.armoryofdestiny.server.registry.SoundRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
@@ -17,7 +18,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -25,17 +25,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 public class ArmorersAnvilBlockEntity extends BlockEntity {
     private static final String STORED_ITEMS = "stored_items";
     private static final String HAMMER_HITS = "hammer_hits";
+    private static final String BLUEPRINT = "blueprint";
 
     private final List<ItemStack> storedItems = new ArrayList<>();
-    private SmithingRecipe craftingRecipe = null;
     private int hammer_hits = -1;
+    private ItemStack blueprint = ItemStack.EMPTY;
 
     public ArmorersAnvilBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.ARMORERS_ANVIL.get(), pos, state);
@@ -48,35 +48,49 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
     }
 
     public boolean advanceCrafting(Level level, BlockPos pos, Player player) {
-        SmithingContainer container = new SmithingContainer(storedItems, 0);
-        SmithingRecipe craftingRecipe = null;
-        Optional<? extends Recipe<?>> optionalRecipe = level.getRecipeManager().getRecipeFor(SmithingRecipe.Type.INSTANCE, container, level);
-        if (optionalRecipe.isPresent() && optionalRecipe.get() instanceof SmithingRecipe recipe)
-            craftingRecipe = recipe;
+        if (!blueprint.isEmpty() && blueprint.getTag() != null && blueprint.getTag().get("recipe") != null) {
+            ResourceLocation recipeID = new ResourceLocation(blueprint.getOrCreateTag().getString("recipe"));
+            TinkeringRecipe tinkeringRecipe = null;
+            Optional<? extends Recipe<?>> optionalRecipeTinkering = level.getRecipeManager().byKey(recipeID);
+            if (optionalRecipeTinkering.isPresent() && optionalRecipeTinkering.get() instanceof TinkeringRecipe recipe)
+                tinkeringRecipe = recipe;
 
-        if (craftingRecipe == null) {
-            return false;
-        }
-
-        if (craftingRecipe.matches(container, level)) {
-            if (hammer_hits == -1) {
-                hammer_hits = craftingRecipe.getHammerHits() - 1;
-
-                level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 1);
-            } else if (hammer_hits == 0) {
-                storedItems.clear();
-                storedItems.add(craftingRecipe.getResult());
-                hammer_hits = -1;
-
-                level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 1, 1);
-            } else {
-                hammer_hits--;
-
-                level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 1);
+            if (tinkeringRecipe == null) {
+                return false;
             }
-            doHammerStuff(player, pos, player.getItemInHand(InteractionHand.MAIN_HAND));
 
-            return true;
+            SmithingContainer container = new SmithingContainer(storedItems, 0);
+            SmithingRecipe craftingRecipe = null;
+            Optional<? extends Recipe<?>> optionalRecipe = level.getRecipeManager().getRecipeFor(SmithingRecipe.Type.INSTANCE, container, level);
+            if (optionalRecipe.isPresent() && optionalRecipe.get() instanceof SmithingRecipe recipe)
+                craftingRecipe = recipe;
+
+            if (craftingRecipe == null) {
+                return false;
+            }
+
+            if (tinkeringRecipe.getResult().getItem() == craftingRecipe.getParentItem().getItem()) {
+                if (craftingRecipe.matches(container, level)) {
+                    if (hammer_hits == -1) {
+                        hammer_hits = craftingRecipe.getHammerHits() - 1;
+
+                        level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 1);
+                    } else if (hammer_hits == 0) {
+                        storedItems.clear();
+                        storedItems.add(craftingRecipe.getResult());
+                        hammer_hits = -1;
+
+                        level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 1, 1);
+                    } else {
+                        hammer_hits--;
+
+                        level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 1);
+                    }
+                    doHammerStuff(player, pos, player.getItemInHand(InteractionHand.MAIN_HAND));
+
+                    return true;
+                }
+            }
         }
 
         return false;
@@ -93,6 +107,14 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
         {
             serverLevel.sendParticles(ParticleTypes.CRIT, pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5, 8, 0.2, 0.1, 0.2, 0.05);
         }
+    }
+
+    public ItemStack getBlueprint() {
+        return blueprint;
+    }
+
+    public void setBlueprint(ItemStack blueprint) {
+        this.blueprint = blueprint.copy();
     }
 
     public int getStoredItemAmount() {
@@ -125,6 +147,7 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
             storedItems.add(storedStack);
         });
         hammer_hits = tag.getInt(HAMMER_HITS);
+        blueprint = ItemStack.of(tag.getCompound(BLUEPRINT));
     }
 
     @Override
@@ -136,6 +159,7 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
             storedItemsTag.add(stack.serializeNBT());
         tag.put(STORED_ITEMS, storedItemsTag);
         tag.putInt(HAMMER_HITS, hammer_hits);
+        tag.put(BLUEPRINT, blueprint.serializeNBT());
     }
 
     @Override
@@ -156,6 +180,7 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
     public NonNullList<ItemStack> getDroppableInventory() {
         NonNullList<ItemStack> drops = NonNullList.create();
         drops.addAll(storedItems);
+        drops.add(blueprint);
         return drops;
     }
 

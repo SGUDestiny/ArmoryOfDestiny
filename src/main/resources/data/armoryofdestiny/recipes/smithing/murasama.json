@@ -1,5 +1,8 @@
 {
   "type": "armoryofdestiny:smithing",
+  "parent_item": {
+    "item": "armoryofdestiny:murasama"
+  },
   "ingredients": [
     {
       "item": "armoryofdestiny:hot_iron_ingot"
@@ -13,6 +16,6 @@
   ],
   "hammer_hits": 5,
   "result": {
-    "item": "armoryofdestiny:murasama"
+    "item": "armoryofdestiny:murasama_blade"
   }
 }

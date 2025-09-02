@@ -30,6 +30,7 @@ public class ClientEvents {
     public static void onBlockColors(RegisterColorHandlersEvent.Block event) {
         LOGGER.info("Loaded block colors");
         event.register((blockState, blockAndTintGetter, blockPos, colorIn) -> colorIn != 1 ? -1 : UtilityVariables.getBlueprintColor(Minecraft.getInstance().level, blockPos), BlockRegistry.ARMORERS_TINKERING_TABLE.get());
+        event.register((blockState, blockAndTintGetter, blockPos, colorIn) -> colorIn != 1 ? -1 : UtilityVariables.getBlueprintColor(Minecraft.getInstance().level, blockPos), BlockRegistry.ARMORERS_ANVIL.get());
     }
 
     @SubscribeEvent
