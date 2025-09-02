@@ -75,7 +75,7 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
                     if (hammer_hits == -1) {
                         hammer_hits = craftingRecipe.getHammerHits() - 1;
 
-                        level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 1);
+                        level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 0.75F);
                     } else if (hammer_hits == 0) {
                         storedItems.clear();
                         storedItems.add(craftingRecipe.getResult());
@@ -85,7 +85,7 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
                     } else {
                         hammer_hits--;
 
-                        level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 1);
+                        level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 0.75F);
                     }
                     doHammerStuff(player, pos, player.getItemInHand(InteractionHand.MAIN_HAND));
 
