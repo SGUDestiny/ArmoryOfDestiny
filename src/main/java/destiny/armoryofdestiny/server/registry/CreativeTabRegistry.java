@@ -71,6 +71,13 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.DIAMOND_SMITHING_TONGS.get());
                 output.accept(ItemRegistry.NETHERITE_SMITHING_TONGS.get());
 
+                //Components
+                output.accept(ItemRegistry.HOT_IRON_INGOT.get());
+                output.accept(ItemRegistry.HOT_IRON_NUGGET.get());
+                output.accept(ItemRegistry.HOT_RAW_COPPER_BLOCK.get());
+                output.accept(ItemRegistry.HOT_RAW_IRON_BLOCK.get());
+                output.accept(ItemRegistry.HOT_RAW_GOLD_BLOCK.get());
+
                 //Blueprints
                 List<TinkeringRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(TinkeringRecipe.Type.INSTANCE);
                 for (TinkeringRecipe recipe : recipes)

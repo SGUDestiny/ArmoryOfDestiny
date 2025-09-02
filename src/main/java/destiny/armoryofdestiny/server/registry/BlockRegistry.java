@@ -48,6 +48,16 @@ public class BlockRegistry {
             () -> new TemperingBarrelBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BROWN).strength(2.5F).sound(SoundType.WOOD).noOcclusion()));
 
+    public static final RegistryObject<Block> HOT_RAW_COPPER_BLOCK = BLOCKS.register("hot_raw_copper_block",
+            () -> new HotBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_YELLOW).strength(5.0F, 6.0F), 2, 20));
+    public static final RegistryObject<Block> HOT_RAW_IRON_BLOCK = BLOCKS.register("hot_raw_iron_block",
+            () -> new HotBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_YELLOW).strength(5.0F, 6.0F), 2, 20));
+    public static final RegistryObject<Block> HOT_RAW_GOLD_BLOCK = BLOCKS.register("hot_raw_gold_block",
+            () -> new HotBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_YELLOW).strength(5.0F, 6.0F), 2, 20));
+
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

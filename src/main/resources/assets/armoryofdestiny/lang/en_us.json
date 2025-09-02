@@ -77,6 +77,12 @@
   "item.armoryofdestiny.diamond_smithing_tongs": "§bDiamond Smithing Tongs",
   "item.armoryofdestiny.netherite_smithing_tongs": "§8Netherite Smithing Tongs",
 
+  "item.armoryofdestiny.hot_iron_ingot": "§eHot Iron Ingot",
+  "item.armoryofdestiny.hot_iron_nugget": "§eHot Iron Nugget",
+  "block.armoryofdestiny.hot_raw_copper_block": "§eHot Raw Copper Block",
+  "block.armoryofdestiny.hot_raw_iron_block": "§eHot Raw Iron Block",
+  "block.armoryofdestiny.hot_raw_gold_block": "§eHot Raw Gold Block",
+
   "item.armoryofdestiny.bloodletter": "§7Bloodletter",
   "item.armoryofdestiny.bloodletter.ability.1.title": "Vermilion Oath",
   "item.armoryofdestiny.bloodletter.ability.1.description.1": "This weapon §7collects blood§r of it's enemies inside of itself.",

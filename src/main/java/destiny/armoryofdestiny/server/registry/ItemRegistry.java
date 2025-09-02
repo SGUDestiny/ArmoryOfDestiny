@@ -73,6 +73,17 @@ public class ItemRegistry {
     public static final RegistryObject<Item> EDGE_OF_EXISTENCE = ITEMS.register("edge_of_existence",
             () -> new EdgeOfExistenceItem(basicItem().rarity(Rarity.EPIC).durability(1150)));
 
+    public static final RegistryObject<Item> HOT_IRON_INGOT = ITEMS.register("hot_iron_ingot",
+            () -> new HotItem(new Item.Properties().stacksTo(1), 2, 20));
+    public static final RegistryObject<Item> HOT_IRON_NUGGET = ITEMS.register("hot_iron_nugget",
+            () -> new HotItem(new Item.Properties().stacksTo(1), 1, 40));
+    public static final RegistryObject<Item> HOT_RAW_COPPER_BLOCK = ITEMS.register("hot_raw_copper_block",
+            () -> new HotBlockItem(BlockRegistry.HOT_RAW_COPPER_BLOCK.get(), new Item.Properties().stacksTo(1), 2, 20));
+    public static final RegistryObject<Item> HOT_RAW_IRON_BLOCK = ITEMS.register("hot_raw_iron_block",
+            () -> new HotBlockItem(BlockRegistry.HOT_RAW_IRON_BLOCK.get(), new Item.Properties().stacksTo(1), 2, 20));
+    public static final RegistryObject<Item> HOT_RAW_GOLD_BLOCK = ITEMS.register("hot_raw_gold_block",
+            () -> new HotBlockItem(BlockRegistry.HOT_RAW_GOLD_BLOCK.get(), new Item.Properties().stacksTo(1), 2, 20));
+
 //    public static final RegistryObject<Item> SPAS12 = ITEMS.register("spas12",
 //            () -> new Spas12Item(basicItem().rarity(Rarity.EPIC).durability(-1)
 //            ));
