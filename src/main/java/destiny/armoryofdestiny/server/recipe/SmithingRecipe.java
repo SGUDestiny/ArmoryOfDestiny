@@ -7,7 +7,6 @@ import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import destiny.armoryofdestiny.ArmoryOfDestiny;
 import destiny.armoryofdestiny.server.container.SmithingContainer;
-import destiny.armoryofdestiny.server.container.TinkeringContainer;
 import destiny.armoryofdestiny.server.util.UtilityCodecs;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -19,7 +18,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class SmithingRecipe implements Recipe<SmithingContainer>
@@ -81,9 +79,14 @@ public class SmithingRecipe implements Recipe<SmithingContainer>
         List<ItemStack> storedList = new ArrayList<>(container.inputs);
         List<Boolean> test = new ArrayList<>();
 
-        for (int i = 0; i < storedList.size(); i++) {
-            if (ingredientList.get(i).test(storedList.get(i))) {
-                test.add(true);
+        System.out.println("ingredientList.size() " + ingredientList.size());
+        System.out.println("storedList.size() " + storedList.size());
+
+        if (ingredientList.size() == storedList.size()) {
+            for (int i = 0; i < ingredientList.size(); i++) {
+                if (ingredientList.get(i).test(storedList.get(i))) {
+                    test.add(true);
+                }
             }
         }
 

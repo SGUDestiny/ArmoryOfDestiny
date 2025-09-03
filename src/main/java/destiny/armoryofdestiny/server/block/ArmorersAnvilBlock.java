@@ -134,6 +134,7 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
             //Advance crafting with hammer
             if (stack.getItem() instanceof SmithingHammerItem) {
                 if (anvil.advanceCrafting(level, pos, player)) {
+                    level.setBlockAndUpdate(pos, state);
                     return InteractionResult.SUCCESS;
                 } else {
                     return InteractionResult.PASS;
@@ -148,6 +149,8 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
 
                     player.addItem(copy);
                     anvil.removeLastStoredItem();
+
+                    level.setBlockAndUpdate(pos, state);
 
                     level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
 
@@ -166,6 +169,8 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
                     if (!player.isCreative()) {
                         stack.shrink(1);
                     }
+
+                    level.setBlockAndUpdate(pos, state);
 
                     level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
 

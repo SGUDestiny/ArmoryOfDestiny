@@ -96,8 +96,8 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
             SmithingContainer container = new SmithingContainer(storedItems, 0);
             SmithingRecipe craftingRecipe = null;
             Optional<? extends Recipe<?>> optionalRecipe = level.getRecipeManager().getRecipeFor(SmithingRecipe.Type.INSTANCE, container, level);
-            if (optionalRecipe.isPresent() && optionalRecipe.get() instanceof SmithingRecipe recipe)
-                craftingRecipe = recipe;
+            if (optionalRecipe.isPresent() && optionalRecipe.get() instanceof SmithingRecipe smithingRecipe)
+                craftingRecipe = smithingRecipe;
 
             if (craftingRecipe == null) {
                 return false;
@@ -111,7 +111,7 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
                         level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 1);
                     } else if (hammer_hits == 0) {
                         storedItems.clear();
-                        storedItems.add(craftingRecipe.getResult());
+                        storedItems.add(craftingRecipe.assemble(container, level.registryAccess()));
                         hammer_hits = -1;
 
                         level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 1, 1);
