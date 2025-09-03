@@ -12,14 +12,14 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class HotBlock extends TooltipBlock {
-    int damage;
-    int delay;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.HOT_ITEM;
 
-    public HotBlock(Properties properties, int damage, int delay) {
+public class HotBlock extends TooltipBlock {
+    int damage = 2;
+    int delay = 20;
+
+    public HotBlock(Properties properties) {
         super(properties);
-        this.damage = damage;
-        this.delay = delay;
     }
 
     @Override
@@ -43,5 +43,10 @@ public class HotBlock extends TooltipBlock {
             }
         }
         super.stepOn(level, pos, state, entity);
+    }
+
+    @Override
+    public String getTriviaTranslatable() {
+        return HOT_ITEM;
     }
 }

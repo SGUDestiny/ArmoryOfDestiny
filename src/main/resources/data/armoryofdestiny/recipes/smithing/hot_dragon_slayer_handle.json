@@ -1,0 +1,30 @@
+{
+  "type": "armoryofdestiny:smithing",
+  "parent_item": {
+    "item": "armoryofdestiny:dragon_slayer"
+  },
+  "ingredients": [
+    {
+      "item": "armoryofdestiny:hot_iron_block"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "tag": "forge:leather"
+    },
+    {
+      "tag": "forge:leather"
+    }
+  ],
+  "hammer_hits": 4,
+  "result": {
+    "item": "armoryofdestiny:hot_dragon_slayer_handle"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "type": "armoryofdestiny:smithing",
+  "parent_item": {
+    "item": "armoryofdestiny:sharp_irony"
+  },
+  "ingredients": [
+    {
+      "item": "armoryofdestiny:hot_iron_nugget"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_nugget"
+    },
+    {
+      "item": "minecraft:tripwire_hook"
+    },
+    {
+      "tag": "forge:string"
+    }
+  ],
+  "hammer_hits": 5,
+  "result": {
+    "item": "armoryofdestiny:hot_sharp_irony_wing"
+  }
+}

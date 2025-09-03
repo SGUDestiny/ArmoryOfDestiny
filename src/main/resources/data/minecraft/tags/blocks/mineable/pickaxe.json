@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "armoryofdestiny:armorers_anvil",
+    "armoryofdestiny:bloomery_top",
+    "armoryofdestiny:bloomery_bottom",
+    "armoryofdestiny:nether_bloomery_top",
+    "armoryofdestiny:nether_bloomery_bottom",
+
+    "armoryofdestiny:hot_raw_copper_block",
+    "armoryofdestiny:hot_raw_iron_block",
+    "armoryofdestiny:hot_raw_gold_block",
+    "armoryofdestiny:hot_copper_block",
+    "armoryofdestiny:hot_iron_block",
+    "armoryofdestiny:hot_gold_block",
+    "armoryofdestiny:hot_iron_bars"
+  ]
+}

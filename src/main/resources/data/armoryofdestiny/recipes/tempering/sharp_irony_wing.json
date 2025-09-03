@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_sharp_irony_wing"
+  },
+  "result": {
+    "item": "armoryofdestiny:sharp_irony_wing"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_dragon_slayer_blade"
+  },
+  "result": {
+    "item": "armoryofdestiny:dragon_slayer_blade"
+  }
+}

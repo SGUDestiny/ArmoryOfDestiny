@@ -88,14 +88,10 @@ public class NetherBloomeryTopBlockEntity extends BlockEntity {
     }
 
     public ItemStack getInput() {
-        ItemStack stack = input.copy();
-        stack.setCount(1);
-
-        return stack;
+        return input.copy();
     }
 
     public void setInput(ItemStack stack) {
-        stack.setCount(1);
         input = stack.copy();
     }
 

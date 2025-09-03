@@ -3,28 +3,13 @@
   "blueprint_color": 16072487,
   "ingredients": [
     {
-      "item": "minecraft:echo_shard"
+      "item": "armoryofdestiny:murasama_blade"
     },
     {
-      "item": "minecraft:echo_shard"
+      "item": "armoryofdestiny:murasama_hand_guard"
     },
     {
-      "item": "minecraft:echo_shard"
-    },
-    {
-      "item": "minecraft:redstone"
-    },
-    {
-      "item": "minecraft:redstone"
-    },
-    {
-      "item": "minecraft:redstone"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
+      "item": "armoryofdestiny:murasama_handle"
     }
   ],
   "result": {

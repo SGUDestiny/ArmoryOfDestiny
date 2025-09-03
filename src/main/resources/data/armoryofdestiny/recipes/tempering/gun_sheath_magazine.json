@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_gun_sheath_magazine"
+  },
+  "result": {
+    "item": "armoryofdestiny:gun_sheath_magazine"
+  }
+}

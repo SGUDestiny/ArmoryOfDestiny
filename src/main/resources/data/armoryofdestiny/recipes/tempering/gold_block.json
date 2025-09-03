@@ -1,7 +1,7 @@
 {
   "type": "armoryofdestiny:tempering",
   "ingredient": {
-    "item": "armoryofdestiny:hot_raw_gold_block"
+    "item": "armoryofdestiny:hot_gold_block"
   },
   "result": {
     "item": "minecraft:gold_block"

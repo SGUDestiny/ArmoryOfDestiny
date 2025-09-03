@@ -103,6 +103,10 @@
 		{
 			"from": [0, 1.025, 8],
 			"to": [16, 17.025, 8],
+			"forge_data": {
+				"block_light": 15,
+				"sky_light": 15
+			},
 			"rotation": {"angle": -45, "axis": "y", "origin": [8, 9.025, 8]},
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
@@ -112,6 +116,10 @@
 		{
 			"from": [0, 1.025, 8],
 			"to": [16, 17.025, 8],
+			"forge_data": {
+				"block_light": 15,
+				"sky_light": 15
+			},
 			"rotation": {"angle": 45, "axis": "y", "origin": [8, 9.025, 8]},
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},

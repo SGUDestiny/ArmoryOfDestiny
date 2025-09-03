@@ -31,6 +31,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import static destiny.armoryofdestiny.server.item.SmithingTongsItem.HELD_ITEM;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.BLOOMERY_TOP;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT;
 
@@ -184,5 +185,10 @@ public class BloomeryTopBlock extends TooltipBaseEntityBlock {
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntity) {
         return createTickerHelper(blockEntity, BlockEntityRegistry.BLOOMERY_TOP.get(), BloomeryTopBlockEntity::tick);
+    }
+
+    @Override
+    public String getTriviaTranslatable() {
+        return BLOOMERY_TOP;
     }
 }

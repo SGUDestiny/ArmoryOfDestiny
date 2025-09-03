@@ -15,11 +15,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class ArmorersAnvilRenderer implements BlockEntityRenderer<ArmorersAnvilBlockEntity> {
+    List<Integer> randomRotationList = new ArrayList<>();
+
     public ArmorersAnvilRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
 
     }
@@ -28,31 +32,42 @@ public class ArmorersAnvilRenderer implements BlockEntityRenderer<ArmorersAnvilB
     public void render(ArmorersAnvilBlockEntity anvil, float partialTicks, @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
         Direction direction = anvil.getBlockState().getValue(HORIZONTAL_FACING);
         Level level = anvil.getLevel();
+        List<ItemStack> storedItems = anvil.getAllStoredItems();
+        Random random = new Random();
 
         if (anvil.getStoredItemAmount() > 0) {
-            List<ItemStack> storedItems = anvil.getAllStoredItems();
             double itemWidth = 0.03;
             double blockWidth = 0.25;
             double totalWidth = 0;
 
-            for (ItemStack storedItem : storedItems) {
+            for (int i = 0; i < storedItems.size(); i++) {
+                ItemStack storedItem = storedItems.get(i);
                 poseStack.pushPose();
                 ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
                 boolean isBlockItem = itemRenderer.getModel(storedItem, level, null, 0).applyTransform(ItemDisplayContext.FIXED, poseStack, false).isGui3d();
                 poseStack.popPose();
 
+                if (randomRotationList.isEmpty() || randomRotationList.size() <= i) {
+                    randomRotationList.add(random.nextInt(-45, 45));
+                }
+
                 if (isBlockItem) {
-                    renderLyingBlock(level, poseStack, storedItem, bufferIn, combinedLightIn, direction, anvil, totalWidth);
+                    renderLyingBlock(level, poseStack, storedItem, bufferIn, combinedLightIn, direction, anvil, totalWidth, randomRotationList.get(i));
                     totalWidth += blockWidth;
                 } else {
-                    renderLyingItem(level, poseStack, storedItem, bufferIn, combinedLightIn, direction, anvil, totalWidth);
+                    renderLyingItem(level, poseStack, storedItem, bufferIn, combinedLightIn, direction, anvil, totalWidth, randomRotationList.get(i));
                     totalWidth += itemWidth;
                 }
             }
         }
+        if (randomRotationList.size() > storedItems.size()) {
+            for (int i = 0; i < (randomRotationList.size() - storedItems.size()); i++) {
+                randomRotationList.remove(randomRotationList.size() - 1);
+            }
+        }
     }
 
-    private void renderLyingItem(Level level, PoseStack poseStack, ItemStack stack, MultiBufferSource bufferIn, int combinedLightIn, Direction direction, ArmorersAnvilBlockEntity anvil, double offset) {
+    private void renderLyingItem(Level level, PoseStack poseStack, ItemStack stack, MultiBufferSource bufferIn, int combinedLightIn, Direction direction, ArmorersAnvilBlockEntity anvil, double offset, int randomRotation) {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
         poseStack.pushPose();
@@ -66,7 +81,7 @@ public class ArmorersAnvilRenderer implements BlockEntityRenderer<ArmorersAnvilB
             poseStack.translate(0.625, 1.025 + offset, 0.5);
         }
 
-        float f = -direction.toYRot();
+        float f = -direction.toYRot() + randomRotation;
         poseStack.mulPose(Axis.YP.rotationDegrees(f));
 
         poseStack.mulPose(Axis.XP.rotationDegrees(-90));
@@ -77,13 +92,13 @@ public class ArmorersAnvilRenderer implements BlockEntityRenderer<ArmorersAnvilB
         poseStack.popPose();
     }
 
-    private void renderLyingBlock(Level level, PoseStack poseStack, ItemStack stack, MultiBufferSource bufferIn, int combinedLightIn, Direction direction, ArmorersAnvilBlockEntity anvil, double offset) {
+    private void renderLyingBlock(Level level, PoseStack poseStack, ItemStack stack, MultiBufferSource bufferIn, int combinedLightIn, Direction direction, ArmorersAnvilBlockEntity anvil, double offset, int randomRotation) {
         ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
         poseStack.pushPose();
         poseStack.translate(0.5, 0.95 + offset, 0.5);
 
-        float f = -direction.toYRot();
+        float f = -direction.toYRot() + randomRotation;
         poseStack.mulPose(Axis.YP.rotationDegrees(f));
 
         poseStack.scale(1, 1, 1);

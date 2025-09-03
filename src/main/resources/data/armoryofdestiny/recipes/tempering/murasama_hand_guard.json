@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_murasama_hand_guard"
+  },
+  "result": {
+    "item": "armoryofdestiny:murasama_hand_guard"
+  }
+}

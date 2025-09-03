@@ -5,6 +5,7 @@ import destiny.armoryofdestiny.server.container.TinkeringContainer;
 import destiny.armoryofdestiny.server.recipe.SmithingRecipe;
 import destiny.armoryofdestiny.server.recipe.TinkeringRecipe;
 import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;
+import destiny.armoryofdestiny.server.registry.SoundRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
@@ -73,19 +74,20 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
             if (tinkeringRecipe.getResult().getItem() == craftingRecipe.getParentItem().getItem()) {
                 if (craftingRecipe.matches(container, level)) {
                     if (hammer_hits == -1) {
-                        hammer_hits = craftingRecipe.getHammerHits() - 1;
+                        hammer_hits = craftingRecipe.getHammerHits() - 2;
 
-                        level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 0.75F);
+                        level.playSound(null, pos, SoundRegistry.ARMORERS_ANVIL_HIT.get(), SoundSource.BLOCKS, 1, 1);
                     } else if (hammer_hits == 0) {
                         storedItems.clear();
                         storedItems.add(craftingRecipe.getResult());
                         hammer_hits = -1;
 
+                        level.playSound(null, pos, SoundRegistry.ARMORERS_ANVIL_HIT.get(), SoundSource.BLOCKS, 1, 1);
                         level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 1, 1);
                     } else {
                         hammer_hits--;
 
-                        level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 0.75F);
+                        level.playSound(null, pos, SoundRegistry.ARMORERS_ANVIL_HIT.get(), SoundSource.BLOCKS, 1, 1);
                     }
                     doHammerStuff(player, pos, player.getItemInHand(InteractionHand.MAIN_HAND));
 
@@ -108,17 +110,18 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
                     if (hammer_hits == -1) {
                         hammer_hits = craftingRecipe.getHammerHits() - 1;
 
-                        level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 1);
+                        level.playSound(null, pos, SoundRegistry.ARMORERS_ANVIL_HIT.get(), SoundSource.BLOCKS, 1, 1);
                     } else if (hammer_hits == 0) {
                         storedItems.clear();
                         storedItems.add(craftingRecipe.assemble(container, level.registryAccess()));
                         hammer_hits = -1;
 
+                        level.playSound(null, pos, SoundRegistry.ARMORERS_ANVIL_HIT.get(), SoundSource.BLOCKS, 1, 1);
                         level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS, 1, 1);
                     } else {
                         hammer_hits--;
 
-                        level.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1, 1);
+                        level.playSound(null, pos, SoundRegistry.ARMORERS_ANVIL_HIT.get(), SoundSource.BLOCKS, 1, 1);
                     }
                     doHammerStuff(player, pos, player.getItemInHand(InteractionHand.MAIN_HAND));
 
@@ -139,7 +142,9 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
 
         if (level instanceof ServerLevel serverLevel)
         {
-            serverLevel.sendParticles(ParticleTypes.CRIT, pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5, 8, 0.2, 0.1, 0.2, 0.05);
+            serverLevel.sendParticles(ParticleTypes.LAVA, pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5, 8, 0.2, 0.1, 0.2, 0.05);
+            serverLevel.sendParticles(ParticleTypes.LAVA, pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5, 8, 0.2, 0.1, 0.2, 0.05);
+            serverLevel.sendParticles(ParticleTypes.LAVA, pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5, 8, 0.2, 0.1, 0.2, 0.05);
         }
     }
 

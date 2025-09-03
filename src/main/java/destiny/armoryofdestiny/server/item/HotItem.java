@@ -6,14 +6,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-public class HotItem extends TooltipItem {
-    int damage;
-    int delay;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.HOT_ITEM;
 
-    public HotItem(Properties properties, int damage, int delay) {
+public class HotItem extends TooltipItem {
+    int damage = 2;
+    int delay = 20;
+
+    public HotItem(Properties properties) {
         super(properties);
-        this.damage = damage;
-        this.delay = delay;
     }
 
     @Override
@@ -23,5 +23,15 @@ public class HotItem extends TooltipItem {
                 player.hurt(level.damageSources().hotFloor(), damage);
             }
         }
+    }
+
+    @Override
+    public String getTriviaTranslatable() {
+        return HOT_ITEM;
+    }
+
+    @Override
+    public boolean hasAbilities() {
+        return false;
     }
 }

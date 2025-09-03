@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "armoryofdestiny:armorers_crafting_table",
-    "armoryofdestiny:armorers_tinkering_table"
+    "armoryofdestiny:armorers_tinkering_table",
+    "armoryofdestiny:tempering_barrel"
   ]
 }

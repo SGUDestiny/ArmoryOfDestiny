@@ -73,21 +73,87 @@ public class ItemRegistry {
     public static final RegistryObject<Item> EDGE_OF_EXISTENCE = ITEMS.register("edge_of_existence",
             () -> new EdgeOfExistenceItem(basicItem().rarity(Rarity.EPIC).durability(1150)));
 
-    public static final RegistryObject<Item> HOT_NETHERITE_INGOT = ITEMS.register("hot_netherite_ingot",
-            () -> new HotItem(new Item.Properties().stacksTo(1), 4, 10));
-    public static final RegistryObject<Item> HOT_IRON_INGOT = ITEMS.register("hot_iron_ingot",
-            () -> new HotItem(new Item.Properties().stacksTo(1), 2, 20));
-    public static final RegistryObject<Item> HOT_IRON_NUGGET = ITEMS.register("hot_iron_nugget",
-            () -> new HotItem(new Item.Properties().stacksTo(1), 1, 40));
-    public static final RegistryObject<Item> HOT_RAW_COPPER_BLOCK = ITEMS.register("hot_raw_copper_block",
-            () -> new HotBlockItem(BlockRegistry.HOT_RAW_COPPER_BLOCK.get(), new Item.Properties().stacksTo(1), 2, 20));
-    public static final RegistryObject<Item> HOT_RAW_IRON_BLOCK = ITEMS.register("hot_raw_iron_block",
-            () -> new HotBlockItem(BlockRegistry.HOT_RAW_IRON_BLOCK.get(), new Item.Properties().stacksTo(1), 2, 20));
-    public static final RegistryObject<Item> HOT_RAW_GOLD_BLOCK = ITEMS.register("hot_raw_gold_block",
-            () -> new HotBlockItem(BlockRegistry.HOT_RAW_GOLD_BLOCK.get(), new Item.Properties().stacksTo(1), 2, 20));
-
+    //Materials
     public static final RegistryObject<Item> MURASAMA_BLADE = ITEMS.register("murasama_blade",
-            () -> new Item(new Item.Properties().stacksTo(1)));
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> MURASAMA_HAND_GUARD = ITEMS.register("murasama_hand_guard",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> MURASAMA_HANDLE = ITEMS.register("murasama_handle",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> DRAGON_SLAYER_BLADE = ITEMS.register("dragon_slayer_blade",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> DRAGON_SLAYER_HANDLE = ITEMS.register("dragon_slayer_handle",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> DRAGON_SLAYER_POMMEL = ITEMS.register("dragon_slayer_pommel",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> GUN_SHEATH_CHAMBER = ITEMS.register("gun_sheath_chamber",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> GUN_SHEATH_MAGAZINE = ITEMS.register("gun_sheath_magazine",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> GUN_SHEATH_SCABBARD = ITEMS.register("gun_sheath_scabbard",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> SHARP_IRONY_BEARING = ITEMS.register("sharp_irony_bearing",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> SHARP_IRONY_WING = ITEMS.register("sharp_irony_wing",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> CRUCIBLE_EMBLEM = ITEMS.register("crucible_emblem",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> CRUCIBLE_HAND_GUARD = ITEMS.register("crucible_hand_guard",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> CRUCIBLE_HANDLE = ITEMS.register("crucible_handle",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+
+    //Hot materials
+    public static final RegistryObject<Item> HOT_MURASAMA_BLADE = ITEMS.register("hot_murasama_blade",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_MURASAMA_HAND_GUARD = ITEMS.register("hot_murasama_hand_guard",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_MURASAMA_HANDLE = ITEMS.register("hot_murasama_handle",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_DRAGON_SLAYER_BLADE = ITEMS.register("hot_dragon_slayer_blade",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_DRAGON_SLAYER_HANDLE = ITEMS.register("hot_dragon_slayer_handle",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_DRAGON_SLAYER_POMMEL = ITEMS.register("hot_dragon_slayer_pommel",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_GUN_SHEATH_CHAMBER = ITEMS.register("hot_gun_sheath_chamber",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_GUN_SHEATH_MAGAZINE = ITEMS.register("hot_gun_sheath_magazine",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_GUN_SHEATH_SCABBARD = ITEMS.register("hot_gun_sheath_scabbard",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_SHARP_IRONY_BEARING = ITEMS.register("hot_sharp_irony_bearing",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_SHARP_IRONY_WING = ITEMS.register("hot_sharp_irony_wing",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_CRUCIBLE_EMBLEM = ITEMS.register("hot_crucible_emblem",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_CRUCIBLE_HAND_GUARD = ITEMS.register("hot_crucible_hand_guard",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_CRUCIBLE_HANDLE = ITEMS.register("hot_crucible_handle",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> HOT_NETHERITE_INGOT = ITEMS.register("hot_netherite_ingot",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_IRON_INGOT = ITEMS.register("hot_iron_ingot",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_IRON_NUGGET = ITEMS.register("hot_iron_nugget",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> HOT_IRON_BARS = ITEMS.register("hot_iron_bars",
+            () -> new HotBlockItem(BlockRegistry.HOT_IRON_BARS.get(), new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_RAW_COPPER_BLOCK = ITEMS.register("hot_raw_copper_block",
+            () -> new HotBlockItem(BlockRegistry.HOT_RAW_COPPER_BLOCK.get(), new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_RAW_IRON_BLOCK = ITEMS.register("hot_raw_iron_block",
+            () -> new HotBlockItem(BlockRegistry.HOT_RAW_IRON_BLOCK.get(), new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_RAW_GOLD_BLOCK = ITEMS.register("hot_raw_gold_block",
+            () -> new HotBlockItem(BlockRegistry.HOT_RAW_GOLD_BLOCK.get(), new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_COPPER_BLOCK = ITEMS.register("hot_copper_block",
+            () -> new HotBlockItem(BlockRegistry.HOT_COPPER_BLOCK.get(), new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_IRON_BLOCK = ITEMS.register("hot_iron_block",
+            () -> new HotBlockItem(BlockRegistry.HOT_IRON_BLOCK.get(), new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_GOLD_BLOCK = ITEMS.register("hot_gold_block",
+            () -> new HotBlockItem(BlockRegistry.HOT_GOLD_BLOCK.get(), new Item.Properties().stacksTo(1)));
 
 //    public static final RegistryObject<Item> SPAS12 = ITEMS.register("spas12",
 //            () -> new Spas12Item(basicItem().rarity(Rarity.EPIC).durability(-1)

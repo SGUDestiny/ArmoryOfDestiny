@@ -1,0 +1,27 @@
+{
+  "type": "armoryofdestiny:smithing",
+  "parent_item": {
+    "item": "armoryofdestiny:gun_sheath"
+  },
+  "ingredients": [
+    {
+      "item": "armoryofdestiny:hot_iron_nugget"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_nugget"
+    }
+  ],
+  "hammer_hits": 4,
+  "result": {
+    "item": "armoryofdestiny:hot_gun_sheath_scabbard"
+  }
+}

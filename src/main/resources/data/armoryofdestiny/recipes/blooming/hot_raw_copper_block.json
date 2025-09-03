@@ -1,7 +1,7 @@
 {
   "type": "armoryofdestiny:blooming",
   "ingredient": {
-    "item": "minecraft:raw_copper_block"
+    "tag": "forge:storage_blocks/raw_copper"
   },
   "melt_time": 200,
   "result": {

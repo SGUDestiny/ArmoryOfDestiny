@@ -1,0 +1,27 @@
+{
+  "type": "armoryofdestiny:smithing",
+  "parent_item": {
+    "item": "armoryofdestiny:sharp_irony"
+  },
+  "ingredients": [
+    {
+      "item": "armoryofdestiny:hot_iron_nugget"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "minecraft:oak_button"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_nugget"
+    }
+  ],
+  "hammer_hits": 3,
+  "result": {
+    "item": "armoryofdestiny:hot_sharp_irony_bearing"
+  }
+}

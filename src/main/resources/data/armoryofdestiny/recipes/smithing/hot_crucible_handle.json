@@ -1,0 +1,36 @@
+{
+  "type": "armoryofdestiny:smithing",
+  "parent_item": {
+    "item": "armoryofdestiny:crucible_inactive"
+  },
+  "ingredients": [
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_netherite_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_block"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "minecraft:redstone_block"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "tag": "forge:leather"
+    },
+    {
+      "tag": "forge:leather"
+    }
+  ],
+  "hammer_hits": 5,
+  "result": {
+    "item": "armoryofdestiny:hot_crucible_handle"
+  }
+}

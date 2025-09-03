@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_iron_bars"
+  },
+  "result": {
+    "item": "minecraft:iron_bars"
+  }
+}

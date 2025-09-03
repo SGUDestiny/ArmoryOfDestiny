@@ -79,9 +79,6 @@ public class SmithingRecipe implements Recipe<SmithingContainer>
         List<ItemStack> storedList = new ArrayList<>(container.inputs);
         List<Boolean> test = new ArrayList<>();
 
-        System.out.println("ingredientList.size() " + ingredientList.size());
-        System.out.println("storedList.size() " + storedList.size());
-
         if (ingredientList.size() == storedList.size()) {
             for (int i = 0; i < ingredientList.size(); i++) {
                 if (ingredientList.get(i).test(storedList.get(i))) {

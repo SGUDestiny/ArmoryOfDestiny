@@ -4,6 +4,7 @@ import destiny.armoryofdestiny.server.block.utility.TooltipBaseEntityBlock;
 import destiny.armoryofdestiny.server.block.blockentity.ArmorersTinkeringTableBlockEntity;
 import destiny.armoryofdestiny.server.item.BlueprintItem;
 import destiny.armoryofdestiny.server.item.SmithingHammerItem;
+import destiny.armoryofdestiny.server.item.SmithingTongsItem;
 import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -27,6 +28,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
+import static destiny.armoryofdestiny.server.item.SmithingTongsItem.HELD_ITEM;
 import static destiny.armoryofdestiny.server.util.UtilityVariables.ARMORERS_TINKERING_TABLE;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
@@ -70,6 +72,44 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
 
         if (hit.getDirection() == Direction.UP) {
             if (level.getBlockEntity(pos) instanceof ArmorersTinkeringTableBlockEntity table) {
+                if (heldItem.getItem() instanceof SmithingTongsItem) {
+                    //Take item using tongs
+                    if (!table.getInputItem().isEmpty()) {
+                        if (heldItem.getTag() != null && heldItem.getTag().get(HELD_ITEM) != null) {
+                            ItemStack held_item = ItemStack.of(heldItem.getTag().getCompound(HELD_ITEM).copy());
+
+                            if (held_item.isEmpty()) {
+                                heldItem.getOrCreateTag().put(HELD_ITEM, table.getInputItem().serializeNBT());
+                                table.setInputItem(ItemStack.EMPTY);
+
+                                level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 1, 1);
+
+                                if (!player.isCreative()) {
+                                    heldItem.setDamageValue(heldItem.getDamageValue() + 1);
+                                }
+
+                                return InteractionResult.SUCCESS;
+                            }
+                        }
+                    }
+
+                    //Put item using tongs
+                    if (table.getInputItem().isEmpty()) {
+                        if (heldItem.getTag() != null && heldItem.getTag().get(HELD_ITEM) != null) {
+                            ItemStack held_item = ItemStack.of(heldItem.getTag().getCompound(HELD_ITEM).copy());
+
+                            if (!held_item.isEmpty()) {
+                                table.setInputItem(held_item);
+                                heldItem.getOrCreateTag().put(HELD_ITEM, ItemStack.EMPTY.serializeNBT());
+
+                                level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_BREAK, SoundSource.BLOCKS, 1, 1);
+
+                                return InteractionResult.SUCCESS;
+                            }
+                        }
+                    }
+                }
+
                 if (table.hasBlueprint()) {
                     if (heldItem.getItem() instanceof SmithingHammerItem) {
                         table.advanceCrafting(level, pos, player, heldItem);

@@ -1,7 +1,7 @@
 {
   "type": "armoryofdestiny:superheated_blooming",
   "ingredient": {
-    "item": "minecraft:netherite_ingot"
+    "tag": "forge:ingots/netherite"
   },
   "melt_time": 200,
   "result": {

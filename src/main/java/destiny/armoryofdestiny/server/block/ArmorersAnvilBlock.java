@@ -4,6 +4,7 @@ import destiny.armoryofdestiny.server.block.blockentity.ArmorersAnvilBlockEntity
 import destiny.armoryofdestiny.server.block.utility.TooltipBaseEntityBlock;
 import destiny.armoryofdestiny.server.item.BlueprintItem;
 import destiny.armoryofdestiny.server.item.SmithingHammerItem;
+import destiny.armoryofdestiny.server.item.SmithingTongsItem;
 import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;
 import destiny.armoryofdestiny.server.util.MathUtil;
 import net.minecraft.core.BlockPos;
@@ -32,6 +33,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import static destiny.armoryofdestiny.server.block.ArmorersTinkeringTableBlock.HAS_BLUEPRINT;
+import static destiny.armoryofdestiny.server.item.SmithingTongsItem.HELD_ITEM;
+import static destiny.armoryofdestiny.server.util.UtilityVariables.ARMORERS_ANVIL;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
@@ -91,6 +94,46 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
         ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 
         if (level.getBlockEntity(pos) instanceof ArmorersAnvilBlockEntity anvil) {
+            if (stack.getItem() instanceof SmithingTongsItem) {
+                //Put item using tongs
+                if (anvil.getStoredItemAmount() < 8) {
+                    if (stack.getTag() != null && stack.getTag().get(HELD_ITEM) != null) {
+                        ItemStack held_item = ItemStack.of(stack.getTag().getCompound(HELD_ITEM).copy());
+
+                        if (!held_item.isEmpty()) {
+                            anvil.addStoredItem(held_item);
+                            stack.getOrCreateTag().put(HELD_ITEM, ItemStack.EMPTY.serializeNBT());
+
+                            level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_BREAK, SoundSource.BLOCKS, 1, 1);
+
+                            return InteractionResult.SUCCESS;
+                        }
+                    }
+                }
+
+                //Take item using tongs
+                if (anvil.getStoredItemAmount() > 0) {
+                    if (stack.getTag() != null && stack.getTag().get(HELD_ITEM) != null) {
+                        ItemStack held_item = ItemStack.of(stack.getTag().getCompound(HELD_ITEM).copy());
+
+                        if (held_item.isEmpty()) {
+                            stack.getOrCreateTag().put(HELD_ITEM, anvil.getLastStoredItem().copy().serializeNBT());
+                            anvil.removeLastStoredItem();
+
+                            level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 1, 1);
+
+                            level.setBlockAndUpdate(pos, state);
+
+                            if (!player.isCreative()) {
+                                stack.setDamageValue(stack.getDamageValue() + 1);
+                            }
+
+                            return InteractionResult.SUCCESS;
+                        }
+                    }
+                }
+            }
+
             if (player.isCrouching()) {
                 //Take blueprint
                 if (stack.isEmpty()) {
@@ -117,17 +160,19 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
 
             //Put blueprint
             if (stack.getItem() instanceof BlueprintItem) {
-                if (anvil.getBlueprint().isEmpty()) {
-                    anvil.setBlueprint(stack);
+                if (anvil.getStoredItemAmount() == 0) {
+                    if (anvil.getBlueprint().isEmpty()) {
+                        anvil.setBlueprint(stack);
 
-                    if (!player.isCreative()) {
-                        stack.shrink(1);
+                        if (!player.isCreative()) {
+                            stack.shrink(1);
+                        }
+
+                        level.setBlockAndUpdate(pos, state.setValue(HAS_BLUEPRINT, true));
+                        level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
+
+                        return InteractionResult.SUCCESS;
                     }
-
-                    level.setBlockAndUpdate(pos, state.setValue(HAS_BLUEPRINT, true));
-                    level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
-
-                    return InteractionResult.SUCCESS;
                 }
             }
 
@@ -211,6 +256,11 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
             default:
                 return SHAPE_NORTH;
         }
+    }
+
+    @Override
+    public String getTriviaTranslatable() {
+        return ARMORERS_ANVIL;
     }
 
     @Override

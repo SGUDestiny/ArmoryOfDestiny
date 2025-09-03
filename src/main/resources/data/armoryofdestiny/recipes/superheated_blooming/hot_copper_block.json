@@ -1,0 +1,10 @@
+{
+  "type": "armoryofdestiny:superheated_blooming",
+  "ingredient": {
+    "tag": "forge:storage_blocks/copper"
+  },
+  "melt_time": 100,
+  "result": {
+    "item": "armoryofdestiny:hot_copper_block"
+  }
+}

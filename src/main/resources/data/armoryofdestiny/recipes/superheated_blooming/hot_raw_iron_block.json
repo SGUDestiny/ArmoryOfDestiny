@@ -1,7 +1,7 @@
 {
   "type": "armoryofdestiny:superheated_blooming",
   "ingredient": {
-    "item": "minecraft:raw_iron_block"
+    "tag": "forge:storage_blocks/raw_iron"
   },
   "melt_time": 100,
   "result": {

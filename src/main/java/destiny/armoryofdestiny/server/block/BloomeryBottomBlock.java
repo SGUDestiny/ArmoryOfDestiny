@@ -39,6 +39,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.Nullable;
 
+import static destiny.armoryofdestiny.server.util.UtilityVariables.BLOOMERY_BOTTOM;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class BloomeryBottomBlock extends TooltipBaseEntityBlock {
@@ -226,6 +227,11 @@ public class BloomeryBottomBlock extends TooltipBaseEntityBlock {
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    public String getTriviaTranslatable() {
+        return BLOOMERY_BOTTOM;
     }
 
     @Override

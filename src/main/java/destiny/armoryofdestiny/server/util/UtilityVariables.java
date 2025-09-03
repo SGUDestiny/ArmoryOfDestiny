@@ -4,7 +4,6 @@ import destiny.armoryofdestiny.server.block.blockentity.ArmorersAnvilBlockEntity
 import destiny.armoryofdestiny.server.block.blockentity.ArmorersTinkeringTableBlockEntity;
 import destiny.armoryofdestiny.server.item.BlueprintItem;
 import destiny.armoryofdestiny.server.recipe.TinkeringRecipe;
-import destiny.armoryofdestiny.server.registry.ItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -26,6 +25,12 @@ public class UtilityVariables {
     public static final String ARMORERS_CRAFTING_TABLE = "tooltip.armoryofdestiny.trivia.armorers_crafting_table";
     public static final String ARMORERS_TINKERING_TABLE = "tooltip.armoryofdestiny.trivia.armorers_tinkering_table";
     public static final String RAPIER = "tooltip.armoryofdestiny.trivia.rapier";
+    public static final String HOT_ITEM = "tooltip.armoryofdestiny.trivia.hot_item";
+    public static final String MATERIAL = "tooltip.armoryofdestiny.trivia.material";
+    public static final String SMITHING_TONGS = "tooltip.armoryofdestiny.trivia.smithing_tongs";
+    public static final String BLOOMERY_TOP = "tooltip.armoryofdestiny.trivia.bloomery_top";
+    public static final String BLOOMERY_BOTTOM = "tooltip.armoryofdestiny.trivia.bloomery_bottom";
+    public static final String ARMORERS_ANVIL = "tooltip.armoryofdestiny.trivia.armorers_anvil";
 
     public static int getBlueprintColor(ItemStack stack) {
         if (stack.getTag() != null && stack.getItem() instanceof BlueprintItem blueprint)

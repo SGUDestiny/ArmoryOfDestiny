@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "armoryofdestiny:item/hot_murasama_hand_guard"
+  }
+}

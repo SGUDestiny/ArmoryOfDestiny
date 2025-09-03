@@ -1,7 +1,7 @@
 {
   "type": "armoryofdestiny:blooming",
   "ingredient": {
-    "item": "minecraft:iron_nugget"
+    "tag": "forge:nuggets/iron"
   },
   "melt_time": 200,
   "result": {

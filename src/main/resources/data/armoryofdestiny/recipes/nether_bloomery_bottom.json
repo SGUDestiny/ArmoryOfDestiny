@@ -1,8 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "BAB",
     "BNB",
+    "BPB",
     "BBB"
   ],
   "key": {
@@ -12,8 +12,8 @@
     "N": {
       "tag": "forge:ingots/netherite"
     },
-    "A": {
-      "item": "minecraft:iron_bars"
+    "P": {
+      "item": "armoryofdestiny:bloomery_bottom"
     }
   },
   "result": {

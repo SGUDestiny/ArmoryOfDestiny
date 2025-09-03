@@ -1,7 +1,7 @@
 {
   "type": "armoryofdestiny:blooming",
   "ingredient": {
-    "item": "minecraft:raw_gold_block"
+    "tag": "forge:storage_blocks/raw_gold"
   },
   "melt_time": 200,
   "result": {

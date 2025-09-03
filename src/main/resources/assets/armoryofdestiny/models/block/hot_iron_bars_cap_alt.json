@@ -1,0 +1,83 @@
+{
+	"ambientocclusion": false,
+	"render_type": "cutout",
+	"textures": {
+		"particle": "armoryofdestiny:block/hot_iron_bars",
+		"bars": "armoryofdestiny:block/hot_iron_bars",
+		"edge": "armoryofdestiny:block/hot_iron_bars"
+	},
+	"elements": [
+		{
+			"from": [
+				8,
+				0,
+				7
+			],
+			"to": [
+				8,
+				16,
+				8
+			],
+			"forge_data": {
+				"block_light": 15,
+				"sky_light": 15
+			},
+			"faces": {
+				"west": {
+					"uv": [
+						8,
+						0,
+						9,
+						16
+					],
+					"texture": "#bars"
+				},
+				"east": {
+					"uv": [
+						9,
+						0,
+						8,
+						16
+					],
+					"texture": "#bars"
+				}
+			}
+		},
+		{
+			"from": [
+				7,
+				0,
+				7
+			],
+			"to": [
+				9,
+				16,
+				7
+			],
+			"forge_data": {
+				"block_light": 15,
+				"sky_light": 15
+			},
+			"faces": {
+				"north": {
+					"uv": [
+						7,
+						0,
+						9,
+						16
+					],
+					"texture": "#bars"
+				},
+				"south": {
+					"uv": [
+						9,
+						0,
+						7,
+						16
+					],
+					"texture": "#bars"
+				}
+			}
+		}
+	]
+}

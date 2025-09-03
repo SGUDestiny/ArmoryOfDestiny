@@ -245,5 +245,13 @@
     "sounds": [
       "armoryofdestiny:edge_of_existence_deactivate"
     ]
+  },
+  "armorers_anvil_hit": {
+    "subtitle": "sound.armoryofdestiny.armorers_anvil_hit",
+    "sounds": [
+      "armoryofdestiny:armorers_anvil_hit_1",
+      "armoryofdestiny:armorers_anvil_hit_2",
+      "armoryofdestiny:armorers_anvil_hit_3"
+    ]
   }
 }

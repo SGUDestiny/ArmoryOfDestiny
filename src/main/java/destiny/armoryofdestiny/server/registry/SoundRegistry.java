@@ -11,6 +11,8 @@ public class SoundRegistry {
 
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ArmoryOfDestiny.MODID);
 
+    public static RegistryObject<SoundEvent> ARMORERS_ANVIL_HIT = registerSoundEvent("armorers_anvil_hit");
+
     public static RegistryObject<SoundEvent> EDGE_OF_EXISTENCE_ACTIVATE = registerSoundEvent("edge_of_existence_activate");
     public static RegistryObject<SoundEvent> EDGE_OF_EXISTENCE_DEACTIVATE = registerSoundEvent("edge_of_existence_deactivate");
 

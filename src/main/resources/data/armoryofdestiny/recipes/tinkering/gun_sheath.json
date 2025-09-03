@@ -3,31 +3,13 @@
   "blueprint_color": 3688550,
   "ingredients": [
     {
-      "item": "minecraft:iron_ingot"
+      "item": "armoryofdestiny:gun_sheath_chamber"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "item": "armoryofdestiny:gun_sheath_magazine"
     },
     {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:netherite_ingot"
-    },
-    {
-      "item": "minecraft:flint_and_steel"
-    },
-    {
-      "item": "minecraft:tnt"
-    },
-    {
-      "item": "minecraft:lever"
+      "item": "armoryofdestiny:gun_sheath_scabbard"
     }
   ],
   "result": {

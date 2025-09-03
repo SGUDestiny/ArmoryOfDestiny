@@ -8,6 +8,8 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -39,6 +41,7 @@ public class BloomeryBottomBlockEntity extends BlockEntity {
         if (state.getValue(LIT)) {
             if (bloomery.burnTick == 0) {
                 if (!bloomery.logs.isEmpty()) {
+                    level.playSound(null, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 0.5F, 1);
 
                     bloomery.burnTick = bloomery.burnTimePerLog;
                     bloomery.logs.remove(bloomery.logs.size() - 1);

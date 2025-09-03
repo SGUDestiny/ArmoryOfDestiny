@@ -42,7 +42,7 @@ public class UtilityCodecs
 
     public static final Codec<ItemStack> STACK_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             BuiltInRegistries.ITEM.byNameCodec().fieldOf("item").forGetter(ItemStack::getItem),
-            Codec.INT.optionalFieldOf("amount", 1).forGetter(ItemStack::getCount),
+            Codec.INT.optionalFieldOf("count", 1).forGetter(ItemStack::getCount),
             CompoundTag.CODEC.optionalFieldOf("tag").forGetter(stack -> Optional.ofNullable(stack.getTag()))
     ).apply(instance, UtilityCodecs::createStack));
 

@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_crucible_handle"
+  },
+  "result": {
+    "item": "armoryofdestiny:crucible_handle"
+  }
+}

@@ -175,7 +175,7 @@ public class TinkeringRecipe implements Recipe<TinkeringContainer>
             buffer.writeCollection(recipe.ingredients, (writeBuffer, ingredient) -> {
                 ingredient.toNetwork(writeBuffer);
             });
-            buffer.writeItem(recipe.result);
+            buffer.writeItemStack(recipe.result, false);
         }
     }
 

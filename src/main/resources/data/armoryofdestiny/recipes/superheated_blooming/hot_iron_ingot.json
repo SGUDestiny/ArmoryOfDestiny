@@ -1,7 +1,7 @@
 {
   "type": "armoryofdestiny:superheated_blooming",
   "ingredient": {
-    "item": "minecraft:iron_ingot"
+    "tag": "forge:ingots/iron"
   },
   "melt_time": 100,
   "result": {

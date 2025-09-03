@@ -3,28 +3,13 @@
   "blueprint_color": 2435661,
   "ingredients": [
     {
-      "item": "minecraft:iron_ingot"
+      "item": "armoryofdestiny:sharp_irony_wing"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "item": "armoryofdestiny:sharp_irony_bearing"
     },
     {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_nugget"
-    },
-    {
-      "item": "minecraft:iron_nugget"
-    },
-    {
-      "item": "minecraft:iron_nugget"
+      "item": "armoryofdestiny:sharp_irony_wing"
     },
     {
       "item": "armoryofdestiny:metallic_feather"

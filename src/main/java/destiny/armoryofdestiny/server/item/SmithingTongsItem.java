@@ -24,6 +24,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 
+import static destiny.armoryofdestiny.server.util.UtilityVariables.SMITHING_TONGS;
+
 public class SmithingTongsItem extends TooltipItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
@@ -109,5 +111,15 @@ public class SmithingTongsItem extends TooltipItem implements GeoItem {
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack stack1) {
         return stack1.is(repairItem);
+    }
+
+    @Override
+    public boolean hasAbilities() {
+        return false;
+    }
+
+    @Override
+    public String getTriviaTranslatable() {
+        return SMITHING_TONGS;
     }
 }

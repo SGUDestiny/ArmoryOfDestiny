@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "armoryofdestiny:armorers_anvil",
+
+    "armoryofdestiny:hot_raw_iron_block",
+    "armoryofdestiny:hot_raw_gold_block",
+    "armoryofdestiny:hot_gold_block"
+  ]
+}

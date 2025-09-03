@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "armoryofdestiny:block/cube_all_emissive",
   "textures": {
     "all": "armoryofdestiny:block/hot_raw_copper_block"
   }
