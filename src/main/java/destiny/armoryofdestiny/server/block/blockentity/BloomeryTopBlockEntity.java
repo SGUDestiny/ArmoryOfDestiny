@@ -9,6 +9,8 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
@@ -49,6 +51,7 @@ public class BloomeryTopBlockEntity extends BlockEntity {
                             bloomery.input = recipe.getResult().copy();
                             bloomery.meltTick = 0;
 
+                            level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 1);
                             level.setBlockAndUpdate(pos, state.setValue(LIT, false));
 
                             bloomery.markUpdated();

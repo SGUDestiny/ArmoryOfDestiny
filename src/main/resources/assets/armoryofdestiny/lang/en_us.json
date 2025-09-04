@@ -101,6 +101,9 @@
   "item.armoryofdestiny.originium": "§6Originium",
   "item.armoryofdestiny.edge_of_existence_blade": "§7Edge of Existence Blade",
   "item.armoryofdestiny.edge_of_existence_handle": "§7Edge of Existence Handle",
+  "item.armoryofdestiny.bloodletter_blade": "§7Bloodletter Blade",
+  "item.armoryofdestiny.bloodletter_hand_guard": "§7Bloodletter Hand Guard",
+  "item.armoryofdestiny.bloodletter_handle": "§7Bloodletter Handle",
 
   "item.armoryofdestiny.hot_murasama_blade": "Hot Murasama Blade",
   "item.armoryofdestiny.hot_murasama_hand_guard": "Hot Murasama Guard",
@@ -123,7 +126,9 @@
   "item.armoryofdestiny.hot_originium": "Hot Originium",
   "item.armoryofdestiny.hot_edge_of_existence_blade": "Hot Edge of Existence Blade",
   "item.armoryofdestiny.hot_edge_of_existence_handle": "Hot Edge of Existence Handle",
-
+  "item.armoryofdestiny.hot_bloodletter_blade": "Hot Bloodletter Blade",
+  "item.armoryofdestiny.hot_bloodletter_hand_guard": "Hot Bloodletter Hand Guard",
+  "item.armoryofdestiny.hot_bloodletter_handle": "Hot Bloodletter Handle",
 
   "item.armoryofdestiny.hot_netherite_ingot": "Hot Netherite Ingot",
   "item.armoryofdestiny.hot_diamond": "Hot Diamond",
@@ -138,8 +143,10 @@
   "block.armoryofdestiny.hot_raw_iron_block": "Hot Raw Iron Block",
   "block.armoryofdestiny.hot_raw_gold_block": "Hot Raw Gold Block",
 
-  "block.armoryofdestiny.hot_copper_block": "Hot Copper Block",
   "block.armoryofdestiny.hot_iron_bars": "Hot Iron Bars",
+  "block.armoryofdestiny.hot_chain": "Hot Chain",
+
+  "block.armoryofdestiny.hot_copper_block": "Hot Copper Block",
   "block.armoryofdestiny.hot_iron_block": "Hot Iron Block",
   "block.armoryofdestiny.hot_gold_block": "Hot Gold Block",
   "block.armoryofdestiny.hot_diamond_block": "Hot Diamond Block",

@@ -94,6 +94,37 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
         ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 
         if (level.getBlockEntity(pos) instanceof ArmorersAnvilBlockEntity anvil) {
+            if (hitResult.getDirection() == state.getValue(HORIZONTAL_FACING)) {
+                if (stack.getItem() instanceof SmithingTongsItem) {
+                    //Put tongs
+                    if (anvil.getTongs().isEmpty()) {
+                        anvil.setTongs(stack.copy());
+
+                        if (!player.isCreative()) {
+                            stack.shrink(1);
+                        }
+
+                        level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
+
+                        return InteractionResult.SUCCESS;
+                    }
+
+                    //Take tongs
+                    if (stack.isEmpty()) {
+                        if (!anvil.getTongs().isEmpty()) {
+                            player.addItem(anvil.getTongs().copy());
+                            anvil.setTongs(ItemStack.EMPTY);
+
+                            level.setBlockAndUpdate(pos, state);
+
+                            level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
+
+                            return InteractionResult.SUCCESS;
+                        }
+                    }
+                }
+            }
+
             if (stack.getItem() instanceof SmithingTongsItem) {
                 //Put item using tongs
                 if (anvil.getStoredItemAmount() < 8) {

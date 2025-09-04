@@ -110,6 +110,9 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.ORIGINIUM.get());
                 output.accept(ItemRegistry.EDGE_OF_EXISTENCE_BLADE.get());
                 output.accept(ItemRegistry.EDGE_OF_EXISTENCE_HANDLE.get());
+                output.accept(ItemRegistry.BLOODLETTER_BLADE.get());
+                output.accept(ItemRegistry.BLOODLETTER_HAND_GUARD.get());
+                output.accept(ItemRegistry.BLOODLETTER_HANDLE.get());
 
                 output.accept(ItemRegistry.HOT_MURASAMA_BLADE.get());
                 output.accept(ItemRegistry.HOT_MURASAMA_HAND_GUARD.get());
@@ -132,6 +135,9 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.HOT_ORIGINIUM.get());
                 output.accept(ItemRegistry.HOT_EDGE_OF_EXISTENCE_BLADE.get());
                 output.accept(ItemRegistry.HOT_EDGE_OF_EXISTENCE_HANDLE.get());
+                output.accept(ItemRegistry.HOT_BLOODLETTER_BLADE.get());
+                output.accept(ItemRegistry.HOT_BLOODLETTER_HAND_GUARD.get());
+                output.accept(ItemRegistry.HOT_BLOODLETTER_HANDLE.get());
 
                 output.accept(ItemRegistry.HOT_NETHERITE_INGOT.get());
                 output.accept(ItemRegistry.HOT_DIAMOND.get());
@@ -142,13 +148,14 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.HOT_COPPER_INGOT.get());
                 output.accept(ItemRegistry.HOT_AMETHYST_SHARD.get());
 
+                output.accept(ItemRegistry.HOT_IRON_BARS.get());
+                output.accept(ItemRegistry.HOT_CHAIN.get());
+
                 output.accept(ItemRegistry.HOT_NETHERITE_BLOCK.get());
                 output.accept(ItemRegistry.HOT_DIAMOND_BLOCK.get());
                 output.accept(ItemRegistry.HOT_GOLD_BLOCK.get());
                 output.accept(ItemRegistry.HOT_IRON_BLOCK.get());
                 output.accept(ItemRegistry.HOT_COPPER_BLOCK.get());
-
-                output.accept(ItemRegistry.HOT_IRON_BARS.get());
 
                 output.accept(ItemRegistry.HOT_RAW_GOLD_BLOCK.get());
                 output.accept(ItemRegistry.HOT_RAW_IRON_BLOCK.get());

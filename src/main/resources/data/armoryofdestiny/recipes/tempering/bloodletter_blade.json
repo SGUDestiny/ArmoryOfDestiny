@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_bloodletter_blade"
+  },
+  "result": {
+    "item": "armoryofdestiny:bloodletter_blade"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "armoryofdestiny:smithing",
+  "parent_item": {
+    "item": "armoryofdestiny:edge_of_existence"
+  },
+  "ingredients": [
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_netherite_ingot"
+    },
+    {
+      "item": "minecraft:wither_rose"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    }
+  ],
+  "hammer_hits": 5,
+  "result": {
+    "item": "armoryofdestiny:hot_edge_of_existence_blade"
+  }
+}

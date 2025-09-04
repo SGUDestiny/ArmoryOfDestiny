@@ -7,49 +7,49 @@
 	"textures": {
 		"0": "armoryofdestiny:block/campfire_fire",
 		"1": "armoryofdestiny:block/bloomery_bottom",
-		"2": "minecraft:block/coal_block",
+		"2": "block/coal_block",
 		"particle": "armoryofdestiny:block/bloomery_bottom"
 	},
 	"elements": [
 		{
-			"from": [0, 0.025, 0],
-			"to": [16, 16.025, 0],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0.025, 0]},
+			"from": [0.025, 0.025, 0.025],
+			"to": [15.975, 15.975, 0.025],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 0.025]},
 			"faces": {
 				"north": {"uv": [4, 4, 8, 8], "texture": "#1"},
 				"south": {"uv": [8, 4, 4, 8], "texture": "#1"}
 			}
 		},
 		{
-			"from": [0, 0.025, 0],
-			"to": [0, 16.025, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8.025, 8]},
+			"from": [0.025, 0.025, 0.025],
+			"to": [0.025, 15.975, 15.975],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8.025, 8, 8]},
 			"faces": {
 				"east": {"uv": [12, 4, 8, 8], "texture": "#1"},
 				"west": {"uv": [8, 4, 12, 8], "texture": "#1"}
 			}
 		},
 		{
-			"from": [0, 0.025, 16],
-			"to": [16, 16.025, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8.025, 8]},
+			"from": [0.025, 0.025, 15.975],
+			"to": [15.975, 15.975, 15.975],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 7.975]},
 			"faces": {
 				"north": {"uv": [16, 4, 12, 8], "texture": "#1"},
 				"south": {"uv": [12, 4, 16, 8], "texture": "#1"}
 			}
 		},
 		{
-			"from": [0, 16.025, 0],
-			"to": [16, 16.025, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8.025, 8]},
+			"from": [0.025, 15.975, 0.025],
+			"to": [15.975, 15.975, 15.975],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 7.975, 8]},
 			"faces": {
 				"up": {"uv": [4, 0, 8, 4], "rotation": 180, "texture": "#1"},
 				"down": {"uv": [8, 0, 4, 4], "texture": "#1"}
 			}
 		},
 		{
-			"from": [0, 0.025, 0],
-			"to": [16, 0.025, 16],
+			"from": [0.025, 0.025, 0.025],
+			"to": [15.975, 0.025, 15.975],
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8.025, 8]},
 			"faces": {
 				"up": {"uv": [12, 0, 8, 4], "texture": "#1"},
@@ -57,9 +57,9 @@
 			}
 		},
 		{
-			"from": [16, 0.025, 0],
-			"to": [16, 16.025, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8.025, 8]},
+			"from": [15.975, 0.025, 0.025],
+			"to": [15.975, 15.975, 15.975],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7.975, 8, 8]},
 			"faces": {
 				"east": {"uv": [0, 4, 4, 8], "texture": "#1"},
 				"west": {"uv": [4, 4, 0, 8], "texture": "#1"}
@@ -116,10 +116,6 @@
 		{
 			"from": [0, 1.025, 8],
 			"to": [16, 17.025, 8],
-			"forge_data": {
-				"block_light": 15,
-				"sky_light": 15
-			},
 			"rotation": {"angle": -45, "axis": "y", "origin": [8, 9.025, 8]},
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
@@ -129,10 +125,6 @@
 		{
 			"from": [0, 1.025, 8],
 			"to": [16, 17.025, 8],
-			"forge_data": {
-				"block_light": 15,
-				"sky_light": 15
-			},
 			"rotation": {"angle": 45, "axis": "y", "origin": [8, 9.025, 8]},
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},

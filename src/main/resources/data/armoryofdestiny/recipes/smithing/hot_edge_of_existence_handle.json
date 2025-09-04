@@ -1,0 +1,27 @@
+{
+  "type": "armoryofdestiny:smithing",
+  "parent_item": {
+    "item": "armoryofdestiny:edge_of_existence"
+  },
+  "ingredients": [
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "tag": "forge:leather"
+    }
+  ],
+  "hammer_hits": 4,
+  "result": {
+    "item": "armoryofdestiny:hot_edge_of_existence_handle"
+  }
+}

@@ -25,6 +25,15 @@
 			}
 		},
 		{
+			"from": [8, 11, 1],
+			"to": [8, 14, 3],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 6]},
+			"faces": {
+				"east": {"uv": [0.5, 13.25, 0, 14], "texture": "#0"},
+				"west": {"uv": [0, 13.25, 0.5, 14], "texture": "#0"}
+			}
+		},
+		{
 			"from": [3, 4, 5],
 			"to": [13, 9, 11],
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
@@ -151,13 +160,13 @@
 			"name": "group",
 			"origin": [8, 13.5, -5],
 			"color": 0,
-			"children": [0, 1, 2, 3, 4, 5, 6]
+			"children": [0, 1, 2, 3, 4, 5, 6, 7]
 		},
 		{
 			"name": "group",
 			"origin": [3, 16, 8],
 			"color": 0,
-			"children": [7, 8, 9, 10]
+			"children": [8, 9, 10, 11]
 		}
 	]
 }

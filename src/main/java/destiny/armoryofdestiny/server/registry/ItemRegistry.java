@@ -117,6 +117,12 @@ public class ItemRegistry {
             () -> new MaterialItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> EDGE_OF_EXISTENCE_HANDLE = ITEMS.register("edge_of_existence_handle",
             () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> BLOODLETTER_BLADE = ITEMS.register("bloodletter_blade",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> BLOODLETTER_HAND_GUARD = ITEMS.register("bloodletter_hand_guard",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> BLOODLETTER_HANDLE = ITEMS.register("bloodletter_handle",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
 
     //Hot materials
     public static final RegistryObject<Item> HOT_MURASAMA_BLADE = ITEMS.register("hot_murasama_blade",
@@ -161,6 +167,12 @@ public class ItemRegistry {
             () -> new HotItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> HOT_EDGE_OF_EXISTENCE_HANDLE = ITEMS.register("hot_edge_of_existence_handle",
             () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_BLOODLETTER_BLADE = ITEMS.register("hot_bloodletter_blade",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_BLOODLETTER_HAND_GUARD = ITEMS.register("hot_bloodletter_hand_guard",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_BLOODLETTER_HANDLE = ITEMS.register("hot_bloodletter_handle",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> HOT_NETHERITE_INGOT = ITEMS.register("hot_netherite_ingot",
             () -> new HotItem(new Item.Properties().stacksTo(1)));
@@ -181,6 +193,9 @@ public class ItemRegistry {
 
     public static final RegistryObject<Item> HOT_IRON_BARS = ITEMS.register("hot_iron_bars",
             () -> new HotBlockItem(BlockRegistry.HOT_IRON_BARS.get(), new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_CHAIN = ITEMS.register("hot_chain",
+            () -> new HotBlockItem(BlockRegistry.HOT_CHAIN.get(), new Item.Properties().stacksTo(1)));
+
     public static final RegistryObject<Item> HOT_RAW_COPPER_BLOCK = ITEMS.register("hot_raw_copper_block",
             () -> new HotBlockItem(BlockRegistry.HOT_RAW_COPPER_BLOCK.get(), new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> HOT_RAW_IRON_BLOCK = ITEMS.register("hot_raw_iron_block",

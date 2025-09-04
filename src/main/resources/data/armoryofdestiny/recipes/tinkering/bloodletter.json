@@ -3,31 +3,13 @@
   "blueprint_color": 13178420,
   "ingredients": [
     {
-      "item": "minecraft:iron_ingot"
+      "item": "armoryofdestiny:bloodletter_blade"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "item": "armoryofdestiny:bloodletter_hand_guard"
     },
     {
-      "item": "minecraft:lodestone"
-    },
-    {
-      "item": "minecraft:enchanted_book"
-    },
-    {
-      "item": "minecraft:chain"
-    },
-    {
-      "item": "minecraft:chain"
-    },
-    {
-      "item": "minecraft:chain"
-    },
-    {
-      "item": "minecraft:leather"
-    },
-    {
-      "item": "minecraft:leather"
+      "item": "armoryofdestiny:bloodletter_handle"
     }
   ],
   "result": {

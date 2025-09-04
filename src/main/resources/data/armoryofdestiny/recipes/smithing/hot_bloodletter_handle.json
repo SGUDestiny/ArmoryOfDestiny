@@ -1,0 +1,30 @@
+{
+  "type": "armoryofdestiny:smithing",
+  "parent_item": {
+    "item": "armoryofdestiny:bloodletter"
+  },
+  "ingredients": [
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "tag": "forge:leather"
+    },
+    {
+      "tag": "forge:leather"
+    },
+    {
+      "item": "armoryofdestiny:hot_chain"
+    },
+    {
+      "item": "armoryofdestiny:hot_chain"
+    }
+  ],
+  "hammer_hits": 3,
+  "result": {
+    "item": "armoryofdestiny:hot_bloodletter_handle"
+  }
+}

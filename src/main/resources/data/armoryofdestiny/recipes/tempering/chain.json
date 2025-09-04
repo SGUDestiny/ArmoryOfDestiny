@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_chain"
+  },
+  "result": {
+    "item": "minecraft:chain"
+  }
+}

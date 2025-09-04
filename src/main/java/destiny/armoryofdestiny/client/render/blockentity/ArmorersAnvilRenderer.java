@@ -65,6 +65,11 @@ public class ArmorersAnvilRenderer implements BlockEntityRenderer<ArmorersAnvilB
                 randomRotationList.remove(randomRotationList.size() - 1);
             }
         }
+        if (!anvil.getTongs().isEmpty()) {
+            ItemStack tongs = anvil.getTongs();
+
+            renderHungTongs(level, poseStack, tongs, bufferIn, combinedLightIn, direction, anvil);
+        }
     }
 
     private void renderLyingItem(Level level, PoseStack poseStack, ItemStack stack, MultiBufferSource bufferIn, int combinedLightIn, Direction direction, ArmorersAnvilBlockEntity anvil, double offset, int randomRotation) {
@@ -104,6 +109,31 @@ public class ArmorersAnvilRenderer implements BlockEntityRenderer<ArmorersAnvilB
         poseStack.scale(1, 1, 1);
 
         itemRenderer.renderStatic(stack, ItemDisplayContext.GROUND, combinedLightIn, OverlayTexture.NO_OVERLAY, poseStack, bufferIn, level, 0);
+        poseStack.popPose();
+    }
+
+    private void renderHungTongs(Level level, PoseStack poseStack, ItemStack tongs, MultiBufferSource bufferIn, int combinedLightIn, Direction direction, ArmorersAnvilBlockEntity anvil) {
+        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+
+        poseStack.pushPose();
+        if (direction == Direction.NORTH) {
+            poseStack.translate(0.4325, 0.65, 0.15);
+        } else if (direction == Direction.SOUTH) {
+            poseStack.translate(0.5675, 0.65, 0.85);
+        } else if (direction == Direction.WEST) {
+            poseStack.translate(0.15, 0.65, 0.4325);
+        } else {
+            poseStack.translate(0.85, 0.65, 0.5675);
+        }
+
+        float f = direction.toYRot();
+        poseStack.mulPose(Axis.YP.rotationDegrees(f));
+
+        poseStack.mulPose(Axis.ZP.rotationDegrees(45));
+
+        poseStack.scale(1, 1, 1);
+
+        itemRenderer.renderStatic(tongs, ItemDisplayContext.GROUND, combinedLightIn, OverlayTexture.NO_OVERLAY, poseStack, bufferIn, level, 0);
         poseStack.popPose();
     }
 }

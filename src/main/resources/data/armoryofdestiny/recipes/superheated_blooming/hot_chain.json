@@ -1,0 +1,10 @@
+{
+  "type": "armoryofdestiny:superheated_blooming",
+  "ingredient": {
+    "item": "minecraft:chain"
+  },
+  "melt_time": 100,
+  "result": {
+    "item": "armoryofdestiny:hot_chain"
+  }
+}

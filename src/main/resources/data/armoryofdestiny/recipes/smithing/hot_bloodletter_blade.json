@@ -1,0 +1,30 @@
+{
+  "type": "armoryofdestiny:smithing",
+  "parent_item": {
+    "item": "armoryofdestiny:bloodletter"
+  },
+  "ingredients": [
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "minecraft:lodestone"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "minecraft:enchanted_book"
+    }
+  ],
+  "hammer_hits": 5,
+  "result": {
+    "item": "armoryofdestiny:hot_bloodletter_blade"
+  }
+}

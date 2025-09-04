@@ -32,10 +32,12 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
     private static final String STORED_ITEMS = "stored_items";
     private static final String HAMMER_HITS = "hammer_hits";
     private static final String BLUEPRINT = "blueprint";
+    private static final String TONGS_SLOT = "tongs_slot";
 
     private final List<ItemStack> storedItems = new ArrayList<>();
     private int hammer_hits = -1;
     private ItemStack blueprint = ItemStack.EMPTY;
+    private ItemStack tongs_slot = ItemStack.EMPTY;
 
     public ArmorersAnvilBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.ARMORERS_ANVIL.get(), pos, state);
@@ -146,8 +148,16 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
         }
     }
 
+    public void setTongs(ItemStack stack) {
+        tongs_slot = stack.copy();
+    }
+
+    public ItemStack getTongs() {
+        return tongs_slot.copy();
+    }
+
     public ItemStack getBlueprint() {
-        return blueprint;
+        return blueprint.copy();
     }
 
     public void setBlueprint(ItemStack blueprint) {
@@ -185,6 +195,7 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
         });
         hammer_hits = tag.getInt(HAMMER_HITS);
         blueprint = ItemStack.of(tag.getCompound(BLUEPRINT));
+        tongs_slot = ItemStack.of(tag.getCompound(TONGS_SLOT));
     }
 
     @Override
@@ -197,6 +208,7 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
         tag.put(STORED_ITEMS, storedItemsTag);
         tag.putInt(HAMMER_HITS, hammer_hits);
         tag.put(BLUEPRINT, blueprint.serializeNBT());
+        tag.put(TONGS_SLOT, tongs_slot.serializeNBT());
     }
 
     @Override
@@ -218,6 +230,7 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
         NonNullList<ItemStack> drops = NonNullList.create();
         drops.addAll(storedItems);
         drops.add(blueprint);
+        drops.add(tongs_slot);
         return drops;
     }
 
