@@ -50,47 +50,51 @@ public class CrucibleInactiveItem extends TooltipItem implements GeoItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        ItemStack foundFuelStack = getFuelStack(player);
-        int foundFuelAmount = foundFuelStack.getCount();
-        int fuelAmount;
+        int usages;
 
         if (stack.getTag() != null) {
-            fuelAmount = stack.getTag().getInt(USAGES);
+            usages = stack.getTag().getInt(USAGES);
         } else {
-            fuelAmount = 3;
+            usages = 3;
             stack.getOrCreateTag().putInt(USAGES, 3);
         }
 
+        ItemStack newStack = new ItemStack(ItemRegistry.CRUCIBLE.get());
+        if (stack.getTag() != null) {
+            newStack.getOrCreateTag().merge(stack.getTag());
+        }
 
-        if (foundFuelAmount != 0 || fuelAmount != 0) {
-            ItemStack newStack = new ItemStack(ItemRegistry.CRUCIBLE.get());
-
-            if (stack.getTag() != null) {
-                newStack.getOrCreateTag().merge(stack.getTag());
-            }
-
-            if (3 > fuelAmount) {
-                if (!player.isCreative()) {
-                    if (foundFuelAmount > 2) {
-                        newStack.getOrCreateTag().putInt(USAGES, 3);
-                        foundFuelStack.setCount(foundFuelAmount - 3);
-                    } else {
-                        newStack.getOrCreateTag().putInt(USAGES, foundFuelAmount);
-                        foundFuelStack.setCount(0);
-                    }
-                } else {
-                    newStack.getOrCreateTag().putInt(USAGES, 3);
-                }
-            }
+        if (player.isCreative()) {
+            newStack.getOrCreateTag().putInt(USAGES, 3);
 
             player.setItemInHand(hand, newStack);
-            
             level.playSound(player, player.blockPosition(), SoundRegistry.CRUCIBLE_ACTIVATE.get(), SoundSource.PLAYERS, 1, 1);
-
             player.getCooldowns().addCooldown(newStack.getItem(), 20);
 
             return InteractionResultHolder.success(stack);
         }
+
+        ItemStack foundBlazeRods = getFuelStack(player);
+        int blazeRodAmount = foundBlazeRods.getCount();
+
+        if (blazeRodAmount != 0) {
+            if (usages < 3) {
+                if (blazeRodAmount > 2) {
+                    newStack.getOrCreateTag().putInt(USAGES, 3);
+                    foundBlazeRods.shrink(3);
+                } else {
+                    newStack.getOrCreateTag().putInt(USAGES, blazeRodAmount);
+                    foundBlazeRods.setCount(0);
+                }
+            }
+
+            player.setItemInHand(hand, newStack);
+            level.playSound(player, player.blockPosition(), SoundRegistry.CRUCIBLE_ACTIVATE.get(), SoundSource.PLAYERS, 1, 1);
+            player.getCooldowns().addCooldown(newStack.getItem(), 20);
+
+            return InteractionResultHolder.success(stack);
+        }
+
         return InteractionResultHolder.pass(stack);
     }
 
@@ -103,6 +107,7 @@ public class CrucibleInactiveItem extends TooltipItem implements GeoItem {
                 break;
             }
         }
+
         return fuel;
     }
 

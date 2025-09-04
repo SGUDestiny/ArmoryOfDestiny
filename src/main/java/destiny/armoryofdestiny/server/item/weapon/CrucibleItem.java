@@ -126,6 +126,8 @@ public class CrucibleItem extends TooltipSwordItem implements GeoItem {
                 if (entity2 instanceof Player player) {
                     ItemStack newStack = new ItemStack(ItemRegistry.CRUCIBLE_INACTIVE.get(), 1);
 
+                    stack.getOrCreateTag().putInt(USAGES, 0);
+
                     if (stack.getTag() != null) {
                         newStack.getOrCreateTag().merge(stack.getTag());
                     }
