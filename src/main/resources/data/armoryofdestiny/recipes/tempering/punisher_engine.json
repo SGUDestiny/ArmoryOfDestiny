@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_punisher_engine"
+  },
+  "result": {
+    "item": "minecraft:punisher_engine"
+  }
+}

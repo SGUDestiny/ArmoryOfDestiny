@@ -29,8 +29,6 @@ import static destiny.armoryofdestiny.server.item.weapon.MurasamaItem.ABILITY_TI
 import static destiny.armoryofdestiny.server.util.UtilityVariables.KATANA;
 
 public class MurasamaSheathedItem extends TooltipItem implements GeoItem {
-    boolean played;
-
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public MurasamaSheathedItem(Properties properties) {

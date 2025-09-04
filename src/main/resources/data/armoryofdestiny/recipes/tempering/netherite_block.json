@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_netherite_block"
+  },
+  "result": {
+    "item": "minecraft:netherite_block"
+  }
+}

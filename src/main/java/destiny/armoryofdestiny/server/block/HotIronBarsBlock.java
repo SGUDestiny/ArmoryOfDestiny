@@ -22,7 +22,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import static destiny.armoryofdestiny.server.util.UtilityVariables.HOT_ITEM;
-import static destiny.armoryofdestiny.server.util.UtilityVariables.NONE;
 
 public class HotIronBarsBlock extends IronBarsBlock {
     int damage = 2;

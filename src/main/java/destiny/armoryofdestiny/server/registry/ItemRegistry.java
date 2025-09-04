@@ -103,6 +103,12 @@ public class ItemRegistry {
             () -> new MaterialItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> CRUCIBLE_HANDLE = ITEMS.register("crucible_handle",
             () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> PUNISHER_HEAD = ITEMS.register("punisher_head",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> PUNISHER_HANDLE = ITEMS.register("punisher_handle",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> PUNISHER_ENGINE = ITEMS.register("punisher_engine",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
 
     //Hot materials
     public static final RegistryObject<Item> HOT_MURASAMA_BLADE = ITEMS.register("hot_murasama_blade",
@@ -133,12 +139,26 @@ public class ItemRegistry {
             () -> new HotItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> HOT_CRUCIBLE_HANDLE = ITEMS.register("hot_crucible_handle",
             () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_PUNISHER_HEAD = ITEMS.register("hot_punisher_head",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_PUNISHER_HANDLE = ITEMS.register("hot_punisher_handle",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_PUNISHER_ENGINE = ITEMS.register("hot_punisher_engine",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> HOT_NETHERITE_INGOT = ITEMS.register("hot_netherite_ingot",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_DIAMOND = ITEMS.register("hot_diamond",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_GOLD_INGOT = ITEMS.register("hot_gold_ingot",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_GOLD_NUGGET = ITEMS.register("hot_gold_nugget",
             () -> new HotItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> HOT_IRON_INGOT = ITEMS.register("hot_iron_ingot",
             () -> new HotItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> HOT_IRON_NUGGET = ITEMS.register("hot_iron_nugget",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_COPPER_INGOT = ITEMS.register("hot_copper_nugget",
             () -> new HotItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> HOT_IRON_BARS = ITEMS.register("hot_iron_bars",
@@ -155,6 +175,10 @@ public class ItemRegistry {
             () -> new HotBlockItem(BlockRegistry.HOT_IRON_BLOCK.get(), new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> HOT_GOLD_BLOCK = ITEMS.register("hot_gold_block",
             () -> new HotBlockItem(BlockRegistry.HOT_GOLD_BLOCK.get(), new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_DIAMOND_BLOCK = ITEMS.register("hot_diamond_block",
+            () -> new HotBlockItem(BlockRegistry.HOT_DIAMOND_BLOCK.get(), new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_NETHERITE_BLOCK = ITEMS.register("hot_netherite_block",
+            () -> new HotBlockItem(BlockRegistry.HOT_NETHERITE_BLOCK.get(), new Item.Properties().stacksTo(1)));
 
 //    public static final RegistryObject<Item> SPAS12 = ITEMS.register("spas12",
 //            () -> new Spas12Item(basicItem().rarity(Rarity.EPIC).durability(-1)
@@ -174,17 +198,6 @@ public class ItemRegistry {
 //                            .fireResistant()
 //            ));
 
-//    public static final RegistryObject<Item> SNOWDROP = ITEMS.register("snowdrop",
-//            () -> new SnowdropItem(basicItem()
-//                    .rarity(Rarity.EPIC)
-//                    .durability(-1)
-//            ));
-//
-//    public static final RegistryObject<Item> ICICLE = ITEMS.register("icicle",
-//            () -> new IcicleItem(basicItem()
-//                    .rarity(Rarity.EPIC)
-//                    .durability(-1)
-//            ));
 //
 //    public static final RegistryObject<Item> KAFKAS_KATANA = ITEMS.register("kafkas_katana",
 //            () -> new KafkasKatanaItem(basicItem()

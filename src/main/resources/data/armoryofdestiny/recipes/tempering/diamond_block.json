@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_diamond_block"
+  },
+  "result": {
+    "item": "minecraft:diamond_block"
+  }
+}

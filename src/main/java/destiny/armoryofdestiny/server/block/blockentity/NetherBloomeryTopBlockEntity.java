@@ -1,6 +1,5 @@
 package destiny.armoryofdestiny.server.block.blockentity;
 
-import destiny.armoryofdestiny.server.block.BloomeryBottomBlock;
 import destiny.armoryofdestiny.server.container.SuperheatedBloomingContainer;
 import destiny.armoryofdestiny.server.recipe.SuperheatedBloomingRecipe;
 import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;

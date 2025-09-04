@@ -2,7 +2,6 @@ package destiny.armoryofdestiny.server.item;
 
 import destiny.armoryofdestiny.server.item.utility.TooltipItem;
 import destiny.armoryofdestiny.server.recipe.SmithingRecipe;
-import destiny.armoryofdestiny.server.recipe.TinkeringRecipe;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

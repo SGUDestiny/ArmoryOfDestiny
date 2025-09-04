@@ -1,6 +1,5 @@
 package destiny.armoryofdestiny.server.block;
 
-import destiny.armoryofdestiny.server.block.blockentity.ArmorersTinkeringTableBlockEntity;
 import destiny.armoryofdestiny.server.block.blockentity.BloomeryBottomBlockEntity;
 import destiny.armoryofdestiny.server.block.utility.TooltipBaseEntityBlock;
 import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;

@@ -63,6 +63,10 @@ public class BlockRegistry {
             () -> new HotBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).mapColor(MapColor.COLOR_YELLOW)));
     public static final RegistryObject<Block> HOT_GOLD_BLOCK = BLOCKS.register("hot_gold_block",
             () -> new HotBlock(BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK).mapColor(MapColor.COLOR_YELLOW)));
+    public static final RegistryObject<Block> HOT_DIAMOND_BLOCK = BLOCKS.register("hot_diamond_block",
+            () -> new HotBlock(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK).mapColor(MapColor.COLOR_YELLOW)));
+    public static final RegistryObject<Block> HOT_NETHERITE_BLOCK = BLOCKS.register("hot_netherite_block",
+            () -> new HotBlock(BlockBehaviour.Properties.copy(Blocks.NETHERITE_BLOCK).mapColor(MapColor.COLOR_YELLOW)));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

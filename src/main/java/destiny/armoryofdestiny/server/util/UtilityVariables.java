@@ -31,6 +31,7 @@ public class UtilityVariables {
     public static final String BLOOMERY_TOP = "tooltip.armoryofdestiny.trivia.bloomery_top";
     public static final String BLOOMERY_BOTTOM = "tooltip.armoryofdestiny.trivia.bloomery_bottom";
     public static final String ARMORERS_ANVIL = "tooltip.armoryofdestiny.trivia.armorers_anvil";
+    public static final String TEMPERING_BARREL = "tooltip.armoryofdestiny.trivia.tempering_barrel";
 
     public static int getBlueprintColor(ItemStack stack) {
         if (stack.getTag() != null && stack.getItem() instanceof BlueprintItem blueprint)

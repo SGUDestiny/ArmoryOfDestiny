@@ -6,7 +6,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import destiny.armoryofdestiny.ArmoryOfDestiny;
-import destiny.armoryofdestiny.server.container.BloomingContainer;
 import destiny.armoryofdestiny.server.container.TemperingContainer;
 import destiny.armoryofdestiny.server.util.UtilityCodecs;
 import net.minecraft.core.NonNullList;

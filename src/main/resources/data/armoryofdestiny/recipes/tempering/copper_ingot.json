@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_copper_ingot"
+  },
+  "result": {
+    "item": "minecraft:copper_ingot"
+  }
+}

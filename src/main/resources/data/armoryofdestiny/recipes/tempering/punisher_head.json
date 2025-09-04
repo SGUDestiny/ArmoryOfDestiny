@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:punisher_head"
+  },
+  "result": {
+    "item": "minecraft:hot_punisher_head"
+  }
+}

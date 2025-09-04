@@ -1,0 +1,10 @@
+{
+  "type": "armoryofdestiny:blooming",
+  "ingredient": {
+    "tag": "forge:storage_blocks/diamond"
+  },
+  "melt_time": 200,
+  "result": {
+    "item": "armoryofdestiny:hot_diamond_block"
+  }
+}

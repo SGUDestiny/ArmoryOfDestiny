@@ -39,7 +39,6 @@ import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.Nullable;
 
 import static destiny.armoryofdestiny.server.util.UtilityVariables.BLOOMERY_BOTTOM;
-import static destiny.armoryofdestiny.server.util.UtilityVariables.BLOOMERY_TOP;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class NetherBloomeryBottomBlock extends TooltipBaseEntityBlock {

@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_gold_ingot"
+  },
+  "result": {
+    "item": "minecraft:gold_ingot"
+  }
+}

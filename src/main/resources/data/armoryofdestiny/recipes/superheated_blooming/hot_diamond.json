@@ -1,0 +1,10 @@
+{
+  "type": "armoryofdestiny:blooming",
+  "ingredient": {
+    "tag": "forge:gems/diamond"
+  },
+  "melt_time": 200,
+  "result": {
+    "item": "armoryofdestiny:hot_diamond"
+  }
+}
