@@ -2,6 +2,7 @@ package destiny.armoryofdestiny.server.registry;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
 import destiny.armoryofdestiny.server.item.*;
+import destiny.armoryofdestiny.server.item.weapon.*;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

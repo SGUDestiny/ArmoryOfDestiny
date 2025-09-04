@@ -1,4 +1,4 @@
-package destiny.armoryofdestiny.server.item;
+package destiny.armoryofdestiny.server.item.weapon;
 
 import destiny.armoryofdestiny.server.item.utility.TooltipItem;
 import net.minecraft.sounds.SoundEvents;

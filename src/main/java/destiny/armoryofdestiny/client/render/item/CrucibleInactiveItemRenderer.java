@@ -1,7 +1,7 @@
 package destiny.armoryofdestiny.client.render.item;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
-import destiny.armoryofdestiny.server.item.CrucibleInactiveItem;
+import destiny.armoryofdestiny.server.item.weapon.CrucibleInactiveItem;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.DefaultedItemGeoModel;
 import software.bernie.geckolib.renderer.GeoItemRenderer;

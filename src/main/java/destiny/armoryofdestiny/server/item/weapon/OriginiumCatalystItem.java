@@ -1,4 +1,4 @@
-package destiny.armoryofdestiny.server.item;
+package destiny.armoryofdestiny.server.item.weapon;
 
 import destiny.armoryofdestiny.client.render.item.OriginiumCatalystItemRenderer;
 import destiny.armoryofdestiny.server.item.utility.TooltipItem;
@@ -22,7 +22,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 
-import static destiny.armoryofdestiny.server.item.OriginiumKatanaItem.ANIMATION_TICK;
+import static destiny.armoryofdestiny.server.item.weapon.OriginiumKatanaItem.ANIMATION_TICK;
 
 public class OriginiumCatalystItem extends TooltipItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);

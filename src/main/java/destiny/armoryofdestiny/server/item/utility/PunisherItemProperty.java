@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-import static destiny.armoryofdestiny.server.item.PunisherItem.STRIKES_REMAINING;
+import static destiny.armoryofdestiny.server.item.weapon.PunisherItem.STRIKES_REMAINING;
 
 public class PunisherItemProperty implements ClampedItemPropertyFunction {
     @Override

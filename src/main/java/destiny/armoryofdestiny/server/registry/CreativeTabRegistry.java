@@ -15,9 +15,9 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.List;
 
 import static destiny.armoryofdestiny.server.item.BlueprintItem.RECIPE;
-import static destiny.armoryofdestiny.server.item.SharpIronyItem.AMMO_COUNT;
-import static destiny.armoryofdestiny.server.item.SharpIronyItem.IS_OPEN;
-import static destiny.armoryofdestiny.server.item.CrucibleItem.USAGES;
+import static destiny.armoryofdestiny.server.item.weapon.SharpIronyItem.AMMO_COUNT;
+import static destiny.armoryofdestiny.server.item.weapon.SharpIronyItem.IS_OPEN;
+import static destiny.armoryofdestiny.server.item.weapon.CrucibleItem.USAGES;
 
 public class CreativeTabRegistry {
     public static final DeferredRegister<CreativeModeTab> DEF_REG  = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ArmoryOfDestiny.MODID);

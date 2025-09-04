@@ -1,4 +1,4 @@
-package destiny.armoryofdestiny.server.item;
+package destiny.armoryofdestiny.server.item.weapon;
 
 import destiny.armoryofdestiny.client.render.item.CrucibleInactiveItemRenderer;
 import destiny.armoryofdestiny.server.item.utility.TooltipItem;
@@ -22,7 +22,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 
-import static destiny.armoryofdestiny.server.item.CrucibleItem.USAGES;
+import static destiny.armoryofdestiny.server.item.weapon.CrucibleItem.USAGES;
 import static destiny.armoryofdestiny.server.util.UtilityVariables.GREATSWORD;
 
 public class CrucibleInactiveItem extends TooltipItem implements GeoItem {

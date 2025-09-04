@@ -1,4 +1,4 @@
-package destiny.armoryofdestiny.server.item;
+package destiny.armoryofdestiny.server.item.weapon;
 
 import destiny.armoryofdestiny.server.item.utility.TooltipItem;
 import destiny.armoryofdestiny.server.registry.ItemRegistry;
@@ -25,7 +25,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 
-import static destiny.armoryofdestiny.server.item.MurasamaItem.ABILITY_TICK;
+import static destiny.armoryofdestiny.server.item.weapon.MurasamaItem.ABILITY_TICK;
 import static destiny.armoryofdestiny.server.util.UtilityVariables.KATANA;
 
 public class MurasamaSheathedItem extends TooltipItem implements GeoItem {

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-import static destiny.armoryofdestiny.server.item.MurasamaItem.ABILITY_TICK;
+import static destiny.armoryofdestiny.server.item.weapon.MurasamaItem.ABILITY_TICK;
 
 public class MurasamaItemProperty implements ClampedItemPropertyFunction {
     @Override

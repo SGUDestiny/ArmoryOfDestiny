@@ -1,13 +1,13 @@
 package destiny.armoryofdestiny.client.render.item;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
-import destiny.armoryofdestiny.server.item.SharpIronyItem;
+import destiny.armoryofdestiny.server.item.weapon.SharpIronyItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import software.bernie.geckolib.model.DefaultedItemGeoModel;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 
-import static destiny.armoryofdestiny.server.item.SharpIronyItem.AMMO_COUNT;
+import static destiny.armoryofdestiny.server.item.weapon.SharpIronyItem.AMMO_COUNT;
 
 public class SharpIronyItemRenderer extends GeoItemRenderer<SharpIronyItem> {
     public SharpIronyItemRenderer() {

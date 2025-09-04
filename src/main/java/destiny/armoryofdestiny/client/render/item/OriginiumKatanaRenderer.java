@@ -1,14 +1,14 @@
 package destiny.armoryofdestiny.client.render.item;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
-import destiny.armoryofdestiny.server.item.OriginiumKatanaItem;
+import destiny.armoryofdestiny.server.item.weapon.OriginiumKatanaItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import software.bernie.geckolib.model.DefaultedItemGeoModel;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 
-import static destiny.armoryofdestiny.server.item.OriginiumKatanaItem.ANIMATION_TICK;
+import static destiny.armoryofdestiny.server.item.weapon.OriginiumKatanaItem.ANIMATION_TICK;
 
 public class OriginiumKatanaRenderer extends GeoItemRenderer<OriginiumKatanaItem> {
     public OriginiumKatanaRenderer() {

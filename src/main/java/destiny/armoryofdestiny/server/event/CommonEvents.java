@@ -23,8 +23,8 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import static destiny.armoryofdestiny.server.item.BloodletterItem.*;
-import static destiny.armoryofdestiny.server.item.DragonSlayerItem.DAMAGE_DEALT;
+import static destiny.armoryofdestiny.server.item.weapon.BloodletterItem.*;
+import static destiny.armoryofdestiny.server.item.weapon.DragonSlayerItem.DAMAGE_DEALT;
 
 public class CommonEvents {
     //So sculk sensors don't detect players with effect

@@ -22,19 +22,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 import java.util.*;
 
 import static destiny.armoryofdestiny.server.block.ArmorersTinkeringTableBlock.HAS_BLUEPRINT;
-import static destiny.armoryofdestiny.server.item.SharpIronyItem.AMMO_COUNT;
-import static destiny.armoryofdestiny.server.item.SharpIronyItem.IS_OPEN;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class ArmorersTinkeringTableBlockEntity extends BlockEntity {

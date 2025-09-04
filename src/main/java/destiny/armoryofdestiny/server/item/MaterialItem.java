@@ -78,7 +78,7 @@ public class MaterialItem extends TooltipItem {
             for (int i = 0; ingredientList.size() > i; i++) {
                 MutableComponent blueprint_ingredient = Component.translatable("tooltip.armoryofdestiny.dropdown")
                         .append(Component.translatable(ingredientList.get(i).getItems()[0].getDescriptionId())
-                                .withStyle(ChatFormatting.GRAY));
+                                .withStyle(ChatFormatting.DARK_GRAY));
                 components.add(blueprint_ingredient);
             }
         }

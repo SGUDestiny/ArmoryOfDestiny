@@ -1,6 +1,8 @@
 package destiny.armoryofdestiny.server.item;
 
 import destiny.armoryofdestiny.server.item.utility.TooltipBlockItem;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -34,5 +36,10 @@ public class HotBlockItem extends TooltipBlockItem {
     @Override
     public boolean hasAbilities() {
         return false;
+    }
+
+    @Override
+    public Component getName(ItemStack p_41458_) {
+        return Component.translatable(this.getDescriptionId(p_41458_)).withStyle(ChatFormatting.YELLOW);
     }
 }

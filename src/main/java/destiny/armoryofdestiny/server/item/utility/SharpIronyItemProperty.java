@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-import static destiny.armoryofdestiny.server.item.SharpIronyItem.IS_OPEN;
+import static destiny.armoryofdestiny.server.item.weapon.SharpIronyItem.IS_OPEN;
 
 public class SharpIronyItemProperty implements ClampedItemPropertyFunction {
     @Override
