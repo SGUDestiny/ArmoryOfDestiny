@@ -107,7 +107,7 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
             if (isControl()) {
                 throwAll(level, player, stack, item, hand);
 
-                return InteractionResultHolder.success(stack);
+                return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
             }
 
             if (isShift()) {
@@ -118,6 +118,8 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
 
             if (ammoCount > 0) {
                 throwFeather(level, player, stack, item, hand, player.getXRot(), player.getYRot());
+
+                return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
             } else if (getAmmoCount(player) > 0){
                 reload(level, player, stack, item);
             }
