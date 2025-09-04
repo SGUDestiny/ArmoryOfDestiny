@@ -93,6 +93,7 @@ public class CommonEvents {
             level.playSound(null, attacker.blockPosition(), SoundRegistry.EDGE_OF_EXISTENCE_DEACTIVATE.get(), SoundSource.PLAYERS, 1, 1);
         }
 
+        //If entity has effect, negate damage
         if (attacked instanceof LivingEntity target) {
             if (target.hasEffect(EffectRegistry.NONEXISTENCE.get())) {
                 event.setCanceled(true);
