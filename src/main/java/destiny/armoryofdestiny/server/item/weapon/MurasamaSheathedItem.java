@@ -71,7 +71,7 @@ public class MurasamaSheathedItem extends TooltipItem implements GeoItem {
             shootSword(level, player, stack);
 
             //If player is shifting, launch them
-            if (isShift(player)) {
+            if (isShift()) {
                 double force = 2;
                 Vec3 pushVec = player.getLookAngle().scale(force);
                 pushVec = pushVec.add(0, 0.2, 0);

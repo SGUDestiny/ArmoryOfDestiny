@@ -63,7 +63,7 @@ public class MaterialItem extends TooltipItem {
                         .withStyle(ChatFormatting.RED));
         components.add(blueprint_item_title);
 
-        if (!isShift(level)) {
+        if (!isShift()) {
             MutableComponent blueprint_ingredients_collapsed = Component.translatable("tooltip.armoryofdestiny.collapsed")
                     .append(Component.translatable("tooltip.armoryofdestiny.ability.collapsed")
                             .withStyle(ChatFormatting.DARK_GRAY));

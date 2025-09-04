@@ -1,6 +1,8 @@
 package destiny.armoryofdestiny.server.item.utility;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
@@ -49,7 +51,7 @@ public class TooltipItem extends Item {
 
         //Abilities
         if (hasAbilities()) {
-            if (!isShift(level)) {
+            if (!isShift()) {
                 MutableComponent ability = Component.translatable("tooltip.armoryofdestiny.collapsed")
                         .append(Component.translatable("tooltip.armoryofdestiny.ability.collapsed")
                                 .withStyle(ChatFormatting.DARK_GRAY));
@@ -125,22 +127,16 @@ public class TooltipItem extends Item {
         return i - 1;
     }
 
-    public boolean isShift (Level level) {
-        if (level instanceof ClientLevel) {
-            return Screen.hasShiftDown();
-        }
-        return false;
+    public boolean isShift() {
+        long window = Minecraft.getInstance().getWindow().getWindow();
+
+        return InputConstants.isKeyDown(window, InputConstants.KEY_LSHIFT);
     }
 
-    public boolean isShift (Player player) {
-        return player.isShiftKeyDown();
-    }
+    public boolean isControl() {
+        long window = Minecraft.getInstance().getWindow().getWindow();
 
-    public boolean isControl (Level level) {
-        if (level instanceof ClientLevel) {
-            return Screen.hasControlDown();
-        }
-        return false;
+        return InputConstants.isKeyDown(window, InputConstants.KEY_LCONTROL);
     }
 
     public String getItemName(ItemStack stack) {

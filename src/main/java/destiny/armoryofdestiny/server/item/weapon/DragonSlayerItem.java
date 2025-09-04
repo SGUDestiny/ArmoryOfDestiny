@@ -129,7 +129,7 @@ public class DragonSlayerItem extends TooltipSwordItem implements GeoItem {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
         super.appendHoverText(stack, level, components, flag);
 
-        if (isShift(level) && stack.getTag() != null) {
+        if (isShift() && stack.getTag() != null) {
             MutableComponent damage_total = Component.translatable("tooltip.armoryofdestiny.dropdown")
                     .append(Component.translatable("item.armoryofdestiny.dragon_slayer.ability.1.damage_total")
                             .withStyle(ChatFormatting.GRAY)).append(Component.literal("" + stack.getTag().getInt(DAMAGE_DEALT)).withStyle(ChatFormatting.DARK_GRAY));

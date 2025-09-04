@@ -44,8 +44,6 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
     public static final String AMMO_COUNT = "ammoCount";
     public static final String IS_OPEN = "isOpen";
 
-    private static Boolean firstLoad = true;
-
     public static final Predicate<ItemStack> IS_METALLIC_FEATHER = (stack) -> {
         return stack.getItem() == ItemRegistry.METALLIC_FEATHER.get();
     };
@@ -105,44 +103,35 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
         boolean isOpen = stack.getOrCreateTag().getBoolean(IS_OPEN);
         int ammoCount = getFanAmmo(stack);
 
-        if (isShift(player)) {
-            if (isOpen) {
-                closeFan(level, player, stack, item);
-            } else {
-                if (ammoCount < 5) {
-                    reload(level, player, stack, item);
-                } else {
-                    openFan(level, player, stack, item);
-                }
-            }
-
-            return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
-        } else if (isControl(level)) {
-            if (isOpen){
+        if (isOpen) {
+            if (isControl()) {
                 throwAll(level, player, stack, item, hand);
 
-                return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+                return InteractionResultHolder.success(stack);
             }
+
+            if (isShift()) {
+                closeFan(level, player, stack, item);
+
+                return InteractionResultHolder.success(stack);
+            }
+
+            if (ammoCount > 0) {
+                throwFeather(level, player, stack, item, hand, player.getXRot(), player.getYRot());
+            } else if (getAmmoCount(player) > 0){
+                reload(level, player, stack, item);
+            }
+
         } else {
-            if (isOpen) {
-                if (ammoCount > 0) {
-                    throwFeather(level, player, stack, item, hand, player.getXRot(), player.getYRot());
-                } else {
-                    reload(level, player, stack, item);
-                }
-
-                return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
+            if (ammoCount < 5 && getAmmoCount(player) > 0) {
+                reload(level, player, stack, item);
             } else {
-                if (ammoCount < 5) {
-                    reload(level, player, stack, item);
-
-                    return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
-                } else {
-                    openFan(level, player, stack, item);
-                }
+                openFan(level, player, stack, item);
             }
+
         }
-        return InteractionResultHolder.pass(stack);
+
+        return InteractionResultHolder.success(stack);
     }
 
     public void throwFeather(Level level, Player player, ItemStack stack, Item item, InteractionHand hand, float XRot, float YRot) {
