@@ -1,5 +1,5 @@
 {
-  "parent": "armoryofdestiny:armorers_workshop",
+  "parent": "armoryofdestiny:root",
   "display": {
     "icon": {
       "item": "armoryofdestiny:blueprint"

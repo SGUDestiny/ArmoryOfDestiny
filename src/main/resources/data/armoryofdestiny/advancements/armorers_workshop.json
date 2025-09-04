@@ -1,5 +1,5 @@
 {
-  "parent": "armoryofdestiny:root",
+  "parent": "armoryofdestiny:armorers_forge",
   "display": {
     "icon": {
       "item": "armoryofdestiny:armorers_crafting_table"

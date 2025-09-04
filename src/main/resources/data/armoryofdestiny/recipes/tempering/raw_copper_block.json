@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_raw_copper_block"
+  },
+  "result": {
+    "item": "armoryofdestiny:raw_copper_block"
+  }
+}

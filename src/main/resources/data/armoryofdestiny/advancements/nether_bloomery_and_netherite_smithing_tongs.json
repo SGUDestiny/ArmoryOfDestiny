@@ -1,0 +1,65 @@
+{
+  "parent": "armoryofdestiny:armorers_forge",
+  "display": {
+    "icon": {
+      "item": "armoryofdestiny:nether_bloomery_top"
+    },
+    "title": {
+      "translate": "advancements.armoryofdestiny.nether_bloomery_and_netherite_smithing_tongs.title"
+    },
+    "description": {
+      "translate": "advancements.armoryofdestiny.nether_bloomery_and_netherite_smithing_tongs.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "nether_bloomery_top": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:nether_bloomery_top"
+            ]
+          }
+        ]
+      }
+    },
+    "nether_bloomery_bottom": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:nether_bloomery_bottom"
+            ]
+          }
+        ]
+      }
+    },
+    "netherite_smithing_tongs": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:netherite_smithing_tongs"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["nether_bloomery_top"],
+    ["nether_bloomery_bottom"],
+    ["netherite_smithing_tongs"]
+  ],
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

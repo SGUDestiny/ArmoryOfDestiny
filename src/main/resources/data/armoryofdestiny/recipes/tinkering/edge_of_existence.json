@@ -1,0 +1,15 @@
+{
+  "type": "armoryofdestiny:tinkering",
+  "blueprint_color": 4849664,
+  "ingredients": [
+    {
+      "item": "armoryofdestiny:edge_of_existence_blade"
+    },
+    {
+      "item": "armoryofdestiny:edge_of_existence_handle"
+    }
+  ],
+  "result": {
+    "item": "armoryofdestiny:edge_of_existence"
+  }
+}

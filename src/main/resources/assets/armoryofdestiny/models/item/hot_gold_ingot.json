@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "armoryofdestiny:item/hot_gold_nugget"
+    "layer0": "armoryofdestiny:item/hot_gold_ingot"
   }
 }

@@ -10,7 +10,7 @@
   "item.armoryofdestiny.murasama.ability.1.description.5": "§7stronger§r and §7cover more area§r.",
   "item.armoryofdestiny.murasama.ability.1.description.6": "Hold §7[Shift]§r to additionally §7launch",
   "item.armoryofdestiny.murasama.ability.1.description.7": "§7yourself forward§r.",
-  "item.armoryofdestiny.murasama.ability.1.cooldown": "3 Seconds",
+  "item.armoryofdestiny.murasama.ability.1.cooldown": "1 Second",
 
   "item.armoryofdestiny.gun_sheath": "§7Gun Sheath",
   "item.armoryofdestiny.gun_sheath.ability.1.title": "Sheath",
@@ -53,7 +53,7 @@
   "item.armoryofdestiny.metallic_feather.ability.1.description.1": "Serves as §7ammo§r for §7Sharp Irony§r.",
   "item.armoryofdestiny.metallic_feather.ability.1.description.2": "Deals §710 damage on hit§r.",
   "item.armoryofdestiny.metallic_feather.ability.1.description.3": "Can be §7thrown§r by pressing §7[RMB]§r, but will.",
-  "item.armoryofdestiny.metallic_feather.ability.1.description.4": "§7cut the user§r.",
+  "item.armoryofdestiny.metallic_feather.ability.1.description.4": "§7cut the user§r. Use §7Sharp Irony§r to §7avoid being cut§r.",
 
   "item.armoryofdestiny.dragon_slayer": "§8Dragon Slayer",
   "item.armoryofdestiny.dragon_slayer.ability.1.title": "Berserker's Blessing",
@@ -97,6 +97,10 @@
   "item.armoryofdestiny.punisher_head": "§bPunisher Head",
   "item.armoryofdestiny.punisher_handle": "§bPunisher Handle",
   "item.armoryofdestiny.punisher_engine": "§bPunisher Engine",
+  "item.armoryofdestiny.originium_catalyst_casing": "§6Originium Catalyst Casing",
+  "item.armoryofdestiny.originium": "§6Originium",
+  "item.armoryofdestiny.edge_of_existence_blade": "§7Edge of Existence Blade",
+  "item.armoryofdestiny.edge_of_existence_handle": "§7Edge of Existence Handle",
 
   "item.armoryofdestiny.hot_murasama_blade": "Hot Murasama Blade",
   "item.armoryofdestiny.hot_murasama_hand_guard": "Hot Murasama Guard",
@@ -115,6 +119,11 @@
   "item.armoryofdestiny.hot_punisher_head": "Hot Punisher Head",
   "item.armoryofdestiny.hot_punisher_handle": "Hot Punisher Handle",
   "item.armoryofdestiny.hot_punisher_engine": "Hot Punisher Engine",
+  "item.armoryofdestiny.hot_originium_catalyst_casing": "Hot Originium Catalyst Casing",
+  "item.armoryofdestiny.hot_originium": "Hot Originium",
+  "item.armoryofdestiny.hot_edge_of_existence_blade": "Hot Edge of Existence Blade",
+  "item.armoryofdestiny.hot_edge_of_existence_handle": "Hot Edge of Existence Handle",
+
 
   "item.armoryofdestiny.hot_netherite_ingot": "Hot Netherite Ingot",
   "item.armoryofdestiny.hot_diamond": "Hot Diamond",
@@ -123,6 +132,7 @@
   "item.armoryofdestiny.hot_iron_ingot": "Hot Iron Ingot",
   "item.armoryofdestiny.hot_iron_nugget": "Hot Iron Nugget",
   "item.armoryofdestiny.hot_copper_ingot": "Hot Copper Nugget",
+  "item.armoryofdestiny.hot_amethyst_shard": "Hot Amethyst Shard",
 
   "block.armoryofdestiny.hot_raw_copper_block": "Hot Raw Copper Block",
   "block.armoryofdestiny.hot_raw_iron_block": "Hot Raw Iron Block",
@@ -167,7 +177,7 @@
   "item.armoryofdestiny.crucible.ability.1.description.5": "§7Unbreakable§r, just as the Doom Slayer's will.",
   "item.armoryofdestiny.crucible.ability.1.cooldown": "5 seconds",
 
-  "item.armoryofdestiny.edge_of_existence": "§7Edge of Existence [WIP]",
+  "item.armoryofdestiny.edge_of_existence": "§7Edge of Existence",
   "item.armoryofdestiny.edge_of_existence.ability.1.title": "Face The Oblivion",
   "item.armoryofdestiny.edge_of_existence.ability.1.description.1": "When §7[RMB]§r is pressed, an §7effect§r called §7\"Non-Existence\"§r will be",
   "item.armoryofdestiny.edge_of_existence.ability.1.description.2": "applied for §715 seconds§r. The effect makes the user §7completely",
@@ -176,7 +186,7 @@
   "item.armoryofdestiny.edge_of_existence.ability.1.description.5": "§7block§r, an §7entity§r, or §7taking damage§r. Upon §7running out§r or §7being",
   "item.armoryofdestiny.edge_of_existence.ability.1.description.6": "§7cancelled§r, §76 seconds§r of §7Withering II§r effect will be applied to you.",
   "item.armoryofdestiny.edge_of_existence.ability.1.description.7": "If an §7entity§r was §7hit§r while the §7effect is active§r, they receive",
-  "item.armoryofdestiny.edge_of_existence.ability.1.description.8": "§712 seconds§r of §7Withering II§r.",
+  "item.armoryofdestiny.edge_of_existence.ability.1.description.8": "§712 seconds§r of §7Withering II instead of you§r.",
   "item.armoryofdestiny.edge_of_existence.ability.1.description.9": "Teetering on the edge of existence and Nihility...",
   "item.armoryofdestiny.edge_of_existence.ability.1.cooldown": "16 seconds",
 
@@ -303,7 +313,7 @@
   "_advancements": "Advancements",
   "advancements.armoryofdestiny.root.title": "Armory of Destiny",
   "advancements.armoryofdestiny.root.description": "Forge your own destiny",
-  "advancements.armoryofdestiny.armorers_workshop.title": "Anvil’s Whisper, Iron’s Tale",
+  "advancements.armoryofdestiny.armorers_workshop.title": "With Tooth and Nail",
   "advancements.armoryofdestiny.armorers_workshop.description": "Create a full Armorer's Workshop - Your gateway to the realm of craftsmanship",
   "advancements.armoryofdestiny.murasama.title": "But This Isn't My Sword...",
   "advancements.armoryofdestiny.murasama.description": "Acquire the Katana of the based Brazilian Samurai",
@@ -327,10 +337,14 @@
   "advancements.armoryofdestiny.crucible_inactive.description": "Acquire the Greatsword of the Doom Slayer, powered by the very souls of the damned",
   "advancements.armoryofdestiny.crucible.title": "...Is You",
   "advancements.armoryofdestiny.crucible.description": "Activate the Crucible by fueling it with blaze rods",
-  "advancements.armoryofdestiny.netherite_smithing_hammer.title": "Its Hammer Time!",
-  "advancements.armoryofdestiny.netherite_smithing_hammer.description": "Craft a Netherite Smithing Hammer - The ultimate tool of a smith",
-  "advancements.armoryofdestiny.edge_of_existence.title": "Remains Of A Fire That Never Was",
+  "advancements.armoryofdestiny.netherite_smithing_hammer.title": "Gone Bonkers",
+  "advancements.armoryofdestiny.netherite_smithing_hammer.description": "Craft a Netherite Smithing Hammer - The ultimate tool of a blacksmith",
+  "advancements.armoryofdestiny.edge_of_existence.title": "Remains of a Fire That Never Was",
   "advancements.armoryofdestiny.edge_of_existence.description": "Obtain the Katana of a Decaying Self-Annihilator, the manifestation of pointless violence, doomed to oblivion",
+  "advancements.armoryofdestiny.armorers_forge.title": "Sparks of Sweat",
+  "advancements.armoryofdestiny.armorers_forge.description": "Create a complete Armorer's Forge - A blacksmith's wet dream",
+  "advancements.armoryofdestiny.nether_bloomery_and_netherite_smithing_tongs.title": "Portable Heat of The Nether",
+  "advancements.armoryofdestiny.nether_bloomery_and_netherite_smithing_tongs.description": "Upgrade your Armorer's Workshop to it's full extent",
 
   "_subtitles": "Subtitles",
   "sound.armoryofdestiny.sharp_irony_open": "Sharp Irony opens",

@@ -11,13 +11,13 @@
       "item": "minecraft:echo_shard"
     },
     {
-      "item": "armoryofdestiny:hot_iron_ingot"
-    },
-    {
       "item": "minecraft:echo_shard"
     },
     {
-      "item": "minecraft:amethyst_shard"
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "minecraft:lightning_rod"
     },
     {
       "item": "minecraft:redstone"

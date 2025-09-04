@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_originium"
+  },
+  "result": {
+    "item": "armoryofdestiny:originium"
+  }
+}

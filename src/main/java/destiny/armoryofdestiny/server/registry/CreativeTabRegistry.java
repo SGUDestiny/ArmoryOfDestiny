@@ -81,6 +81,13 @@ public class CreativeTabRegistry {
             .title(Component.translatable("itemGroup.armoryofdestiny.materials"))
             .withTabsBefore(TOOLS.getKey())
             .displayItems((parameters, output) -> {
+                //Blueprints
+                List<TinkeringRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(TinkeringRecipe.Type.INSTANCE);
+                for (TinkeringRecipe recipe : recipes)
+                {
+                    output.accept(createBlueprint(recipe.recipeID));
+                }
+
                 //Components
                 output.accept(ItemRegistry.MURASAMA_BLADE.get());
                 output.accept(ItemRegistry.MURASAMA_HAND_GUARD.get());
@@ -99,6 +106,10 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.PUNISHER_HEAD.get());
                 output.accept(ItemRegistry.PUNISHER_HANDLE.get());
                 output.accept(ItemRegistry.PUNISHER_ENGINE.get());
+                output.accept(ItemRegistry.ORIGINIUM_CATALYST_CASING.get());
+                output.accept(ItemRegistry.ORIGINIUM.get());
+                output.accept(ItemRegistry.EDGE_OF_EXISTENCE_BLADE.get());
+                output.accept(ItemRegistry.EDGE_OF_EXISTENCE_HANDLE.get());
 
                 output.accept(ItemRegistry.HOT_MURASAMA_BLADE.get());
                 output.accept(ItemRegistry.HOT_MURASAMA_HAND_GUARD.get());
@@ -115,8 +126,12 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.HOT_CRUCIBLE_HAND_GUARD.get());
                 output.accept(ItemRegistry.HOT_CRUCIBLE_HANDLE.get());
                 output.accept(ItemRegistry.HOT_PUNISHER_HEAD.get());
-                output.accept(ItemRegistry.HOT_CRUCIBLE_HANDLE.get());
+                output.accept(ItemRegistry.HOT_PUNISHER_HANDLE.get());
                 output.accept(ItemRegistry.HOT_PUNISHER_ENGINE.get());
+                output.accept(ItemRegistry.HOT_ORIGINIUM_CATALYST_CASING.get());
+                output.accept(ItemRegistry.HOT_ORIGINIUM.get());
+                output.accept(ItemRegistry.HOT_EDGE_OF_EXISTENCE_BLADE.get());
+                output.accept(ItemRegistry.HOT_EDGE_OF_EXISTENCE_HANDLE.get());
 
                 output.accept(ItemRegistry.HOT_NETHERITE_INGOT.get());
                 output.accept(ItemRegistry.HOT_DIAMOND.get());
@@ -125,24 +140,19 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.HOT_IRON_INGOT.get());
                 output.accept(ItemRegistry.HOT_IRON_NUGGET.get());
                 output.accept(ItemRegistry.HOT_COPPER_INGOT.get());
+                output.accept(ItemRegistry.HOT_AMETHYST_SHARD.get());
 
                 output.accept(ItemRegistry.HOT_NETHERITE_BLOCK.get());
                 output.accept(ItemRegistry.HOT_DIAMOND_BLOCK.get());
                 output.accept(ItemRegistry.HOT_GOLD_BLOCK.get());
                 output.accept(ItemRegistry.HOT_IRON_BLOCK.get());
-                output.accept(ItemRegistry.HOT_IRON_BARS.get());
                 output.accept(ItemRegistry.HOT_COPPER_BLOCK.get());
+
+                output.accept(ItemRegistry.HOT_IRON_BARS.get());
 
                 output.accept(ItemRegistry.HOT_RAW_GOLD_BLOCK.get());
                 output.accept(ItemRegistry.HOT_RAW_IRON_BLOCK.get());
                 output.accept(ItemRegistry.HOT_RAW_COPPER_BLOCK.get());
-
-                //Blueprints
-                List<TinkeringRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(TinkeringRecipe.Type.INSTANCE);
-                for (TinkeringRecipe recipe : recipes)
-                {
-                    output.accept(createBlueprint(recipe.recipeID));
-                }
             })
             .build()
     );

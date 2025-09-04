@@ -1,0 +1,127 @@
+{
+  "parent": "armoryofdestiny:any_blueprint",
+  "display": {
+    "icon": {
+      "item": "armoryofdestiny:armorers_anvil"
+    },
+    "title": {
+      "translate": "advancements.armoryofdestiny.armorers_forge.title"
+    },
+    "description": {
+      "translate": "advancements.armoryofdestiny.armorers_forge.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "armorers_anvil": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:armorers_anvil"
+            ]
+          }
+        ]
+      }
+    },
+    "tempering_barrel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:tempering_barrel"
+            ]
+          }
+        ]
+      }
+    },
+    "bloomery_top": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:bloomery_top"
+            ]
+          }
+        ]
+      }
+    },
+    "bloomery_bottom": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:bloomery_bottom"
+            ]
+          }
+        ]
+      }
+    },
+    "iron_smithing_tongs": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:iron_smithing_tongs"
+            ]
+          }
+        ]
+      }
+    },
+    "gold_smithing_tongs": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:gold_smithing_tongs"
+            ]
+          }
+        ]
+      }
+    },
+    "diamond_smithing_tongs": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:diamond_smithing_tongs"
+            ]
+          }
+        ]
+      }
+    },
+    "netherite_smithing_tongs": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "armoryofdestiny:netherite_smithing_tongs"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["armorers_anvil"],
+    ["tempering_barrel"],
+    ["bloomery_top"],
+    ["bloomery_bottom"],
+    ["iron_smithing_tongs", "gold_smithing_tongs", "diamond_smithing_tongs", "netherite_smithing_tongs"]
+  ],
+  "rewards": {
+    "experience": 250
+  },
+  "sends_telemetry_event": false
+}

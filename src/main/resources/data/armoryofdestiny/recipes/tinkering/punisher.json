@@ -3,28 +3,22 @@
   "blueprint_color": 5427703,
   "ingredients": [
     {
-      "item": "minecraft:diamond_block"
+      "item": "armoryofdestiny:punisher_head"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "item": "armoryofdestiny:punisher_handle"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "item": "armoryofdestiny:punisher_engine"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "item": "armoryofdestiny:punisher_engine"
     },
     {
-      "item": "minecraft:hopper"
+      "item": "armoryofdestiny:punisher_engine"
     },
     {
-      "item": "minecraft:hopper"
-    },
-    {
-      "item": "minecraft:hopper"
-    },
-    {
-      "item": "minecraft:lever"
+      "item": "armoryofdestiny:punisher_engine"
     }
   ],
   "result": {

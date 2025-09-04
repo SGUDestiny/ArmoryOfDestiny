@@ -11,7 +11,7 @@
       "item": "armoryofdestiny:hot_iron_ingot"
     },
     {
-      "item": "minecraft:oak_button"
+      "tag": "forge:string"
     },
     {
       "item": "armoryofdestiny:hot_iron_ingot"

@@ -11,13 +11,7 @@
       "item": "armoryofdestiny:hot_netherite_ingot"
     },
     {
-      "item": "armoryofdestiny:hot_iron_block"
-    },
-    {
       "item": "armoryofdestiny:hot_iron_ingot"
-    },
-    {
-      "item": "minecraft:redstone_block"
     },
     {
       "item": "minecraft:stick"
@@ -27,6 +21,9 @@
     },
     {
       "tag": "forge:leather"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_block"
     }
   ],
   "hammer_hits": 5,

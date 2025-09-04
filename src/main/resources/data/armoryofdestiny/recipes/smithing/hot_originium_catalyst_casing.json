@@ -1,0 +1,24 @@
+{
+  "type": "armoryofdestiny:smithing",
+  "parent_item": {
+    "item": "armoryofdestiny:originium_catalyst"
+  },
+  "ingredients": [
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_bars"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "minecraft:lever"
+    }
+  ],
+  "hammer_hits": 3,
+  "result": {
+    "item": "armoryofdestiny:hot_originium_catalyst_casing"
+  }
+}

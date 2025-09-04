@@ -109,6 +109,14 @@ public class ItemRegistry {
             () -> new MaterialItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> PUNISHER_ENGINE = ITEMS.register("punisher_engine",
             () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> ORIGINIUM_CATALYST_CASING = ITEMS.register("originium_catalyst_casing",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> ORIGINIUM = ITEMS.register("originium",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> EDGE_OF_EXISTENCE_BLADE = ITEMS.register("edge_of_existence_blade",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> EDGE_OF_EXISTENCE_HANDLE = ITEMS.register("edge_of_existence_handle",
+            () -> new MaterialItem(new Item.Properties().stacksTo(1)));
 
     //Hot materials
     public static final RegistryObject<Item> HOT_MURASAMA_BLADE = ITEMS.register("hot_murasama_blade",
@@ -145,6 +153,14 @@ public class ItemRegistry {
             () -> new HotItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> HOT_PUNISHER_ENGINE = ITEMS.register("hot_punisher_engine",
             () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_ORIGINIUM_CATALYST_CASING = ITEMS.register("hot_originium_catalyst_casing",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_ORIGINIUM = ITEMS.register("hot_originium",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_EDGE_OF_EXISTENCE_BLADE = ITEMS.register("hot_edge_of_existence_blade",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_EDGE_OF_EXISTENCE_HANDLE = ITEMS.register("hot_edge_of_existence_handle",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> HOT_NETHERITE_INGOT = ITEMS.register("hot_netherite_ingot",
             () -> new HotItem(new Item.Properties().stacksTo(1)));
@@ -158,7 +174,9 @@ public class ItemRegistry {
             () -> new HotItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> HOT_IRON_NUGGET = ITEMS.register("hot_iron_nugget",
             () -> new HotItem(new Item.Properties().stacksTo(1)));
-    public static final RegistryObject<Item> HOT_COPPER_INGOT = ITEMS.register("hot_copper_nugget",
+    public static final RegistryObject<Item> HOT_COPPER_INGOT = ITEMS.register("hot_copper_ingot",
+            () -> new HotItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> HOT_AMETHYST_SHARD = ITEMS.register("hot_amethyst_shard",
             () -> new HotItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> HOT_IRON_BARS = ITEMS.register("hot_iron_bars",

@@ -3,37 +3,13 @@
   "blueprint_color": 15909190,
   "ingredients": [
     {
-      "item": "minecraft:blaze_powder"
+      "item": "armoryofdestiny:originium_catalyst_casing"
     },
     {
-      "item": "minecraft:blaze_powder"
+      "item": "armoryofdestiny:originium"
     },
     {
-      "item": "minecraft:blaze_powder"
-    },
-    {
-      "item": "minecraft:amethyst_shard"
-    },
-    {
-      "item": "minecraft:amethyst_shard"
-    },
-    {
-      "item": "minecraft:amethyst_shard"
-    },
-    {
-      "item": "minecraft:iron_nugget"
-    },
-    {
-      "item": "minecraft:iron_nugget"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
+      "item": "armoryofdestiny:originium"
     }
   ],
   "result": {

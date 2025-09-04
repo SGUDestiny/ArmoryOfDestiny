@@ -11,19 +11,13 @@
       "item": "armoryofdestiny:hot_iron_ingot"
     },
     {
-      "item": "armoryofdestiny:hot_iron_ingot"
-    },
-    {
       "item": "armoryofdestiny:hot_iron_nugget"
     },
     {
       "item": "minecraft:tripwire_hook"
-    },
-    {
-      "tag": "forge:string"
     }
   ],
-  "hammer_hits": 5,
+  "hammer_hits": 3,
   "result": {
     "item": "armoryofdestiny:hot_sharp_irony_wing"
   }

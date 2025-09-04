@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_originium_catalyst_casing"
+  },
+  "result": {
+    "item": "armoryofdestiny:originium_catalyst_casing"
+  }
+}

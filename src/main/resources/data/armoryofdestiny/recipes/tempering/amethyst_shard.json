@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_amethyst_shard"
+  },
+  "result": {
+    "item": "minecraft:amethyst_shard"
+  }
+}

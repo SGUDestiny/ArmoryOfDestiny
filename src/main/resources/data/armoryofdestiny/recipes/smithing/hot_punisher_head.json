@@ -1,0 +1,27 @@
+{
+  "type": "armoryofdestiny:smithing",
+  "parent_item": {
+    "item": "armoryofdestiny:punisher"
+  },
+  "ingredients": [
+    {
+      "item": "armoryofdestiny:hot_diamond_block"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
+    }
+  ],
+  "hammer_hits": 6,
+  "result": {
+    "item": "armoryofdestiny:hot_punisher_head"
+  }
+}

@@ -28,7 +28,7 @@ public abstract class TooltipBlock extends Block {
                     .withStyle(ChatFormatting.DARK_GRAY);
             components.add(trivia);
             MutableComponent trivia_title = Component.translatable("tooltip.armoryofdestiny.dropdown")
-                    .append(Component.translatable("tooltip.armoryofdestiny.trivia." + itemTrivia + ".title")
+                    .append(Component.translatable(itemTrivia + ".title")
                             .withStyle(ChatFormatting.GRAY));
             components.add(trivia_title);
 
@@ -36,7 +36,7 @@ public abstract class TooltipBlock extends Block {
             //Print trivia
             for (int i = 1; i <= triviaLines; i++) {
                 MutableComponent trivia_description = Component.translatable("tooltip.armoryofdestiny.dropdown")
-                        .append(Component.translatable("tooltip.armoryofdestiny.trivia." + itemTrivia + ".description." + i)
+                        .append(Component.translatable(itemTrivia + ".description." + i)
                                 .withStyle(ChatFormatting.DARK_GRAY));
                 components.add(trivia_description);
             }
@@ -45,7 +45,7 @@ public abstract class TooltipBlock extends Block {
 
     public int getTriviaLines(String trivia) {
         int i = 1;
-        String baseKey = "tooltip.armoryofdestiny.trivia." + trivia + ".description.";
+        String baseKey = trivia + ".description.";
 
         while (true) {
             String key = baseKey + i;

@@ -1,5 +1,5 @@
 {
-  "parent": "armoryofdestiny:armorers_workshop",
+  "parent": "armoryofdestiny:netherite_smithing_hammer",
   "display": {
     "icon": {
       "item": "armoryofdestiny:gold_smithing_hammer"
@@ -126,15 +126,15 @@
     }
   },
   "requirements": [
-    ["dragon_slayer"],
     ["murasama"],
-    ["originium_katana"],
-    ["punisher"],
-    ["sharp_irony"],
     ["gun_sheath"],
+    ["edge_of_existence"],
     ["bloodletter"],
     ["crucible"],
-    ["edge_of_existence"]
+    ["dragon_slayer"],
+    ["originium_katana"],
+    ["punisher"],
+    ["sharp_irony"]
   ],
   "rewards": {
     "experience": 250

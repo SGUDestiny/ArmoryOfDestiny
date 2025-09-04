@@ -8,16 +8,16 @@
       "item": "armoryofdestiny:hot_iron_ingot"
     },
     {
-      "item": "minecraft:stick"
-    },
-    {
-      "item": "armoryofdestiny:hot_iron_ingot"
+      "item": "minecraft:redstone_block"
     },
     {
       "item": "minecraft:lever"
     },
     {
-      "item": "minecraft:redstone"
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "armoryofdestiny:hot_iron_ingot"
     }
   ],
   "hammer_hits": 4,

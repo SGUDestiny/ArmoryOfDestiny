@@ -1,5 +1,5 @@
 {
-  "parent": "armoryofdestiny:any_blueprint",
+  "parent": "armoryofdestiny:armorers_workshop",
   "display": {
     "icon": {
       "item": "armoryofdestiny:originium_katana"

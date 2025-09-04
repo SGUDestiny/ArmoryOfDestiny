@@ -1,0 +1,9 @@
+{
+  "type": "armoryofdestiny:tempering",
+  "ingredient": {
+    "item": "armoryofdestiny:hot_edge_of_existence_blade"
+  },
+  "result": {
+    "item": "armoryofdestiny:edge_of_existence_blade"
+  }
+}

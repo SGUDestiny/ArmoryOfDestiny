@@ -8,9 +8,6 @@
       "item": "armoryofdestiny:hot_iron_ingot"
     },
     {
-      "item": "armoryofdestiny:hot_iron_block"
-    },
-    {
       "item": "minecraft:flint_and_steel"
     },
     {
@@ -23,7 +20,7 @@
       "item": "minecraft:lever"
     },
     {
-      "item": "armoryofdestiny:hot_iron_bars"
+      "item": "armoryofdestiny:hot_iron_nugget"
     }
   ],
   "hammer_hits": 5,

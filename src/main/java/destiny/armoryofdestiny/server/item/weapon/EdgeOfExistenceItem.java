@@ -45,8 +45,8 @@ public class EdgeOfExistenceItem extends TooltipSwordItem implements GeoItem {
     public EdgeOfExistenceItem(Item.Properties build) {
         super(Tiers.NETHERITE, 0, 0.0F, build);
         this.attackDamage = 11.0F;
-        this.attackSpeed = -0.4F;
-        this.attackKnockback = -2.6F;
+        this.attackSpeed = -0.2F;
+        this.attackKnockback = -1.0F;
         this.entityReach = 1;
 
         // Register our item as server-side handled.

@@ -1,0 +1,27 @@
+{
+  "type": "armoryofdestiny:smithing",
+  "parent_item": {
+    "item": "armoryofdestiny:originium_catalyst"
+  },
+  "ingredients": [
+    {
+      "item": "armoryofdestiny:hot_amethyst_shard"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "armoryofdestiny:hot_gold_ingot"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+    {
+      "item": "armoryofdestiny:hot_amethyst_shard"
+    }
+  ],
+  "hammer_hits": 3,
+  "result": {
+    "item": "armoryofdestiny:hot_originium"
+  }
+}
