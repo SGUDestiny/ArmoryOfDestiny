@@ -108,19 +108,19 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
 
                         return InteractionResult.SUCCESS;
                     }
+                }
 
-                    //Take tongs
-                    if (stack.isEmpty()) {
-                        if (!anvil.getTongs().isEmpty()) {
-                            player.addItem(anvil.getTongs().copy());
-                            anvil.setTongs(ItemStack.EMPTY);
+                //Take tongs
+                if (stack.isEmpty()) {
+                    if (!anvil.getTongs().isEmpty()) {
+                        player.addItem(anvil.getTongs().copy());
+                        anvil.setTongs(ItemStack.EMPTY);
 
-                            level.setBlockAndUpdate(pos, state);
+                        level.setBlockAndUpdate(pos, state);
 
-                            level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
+                        level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
 
-                            return InteractionResult.SUCCESS;
-                        }
+                        return InteractionResult.SUCCESS;
                     }
                 }
             }
