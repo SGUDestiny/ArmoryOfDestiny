@@ -33,11 +33,13 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
     private static final String HAMMER_HITS = "hammer_hits";
     private static final String BLUEPRINT = "blueprint";
     private static final String TONGS_SLOT = "tongs_slot";
+    private static final String RANDOM_ROTATION = "random_rotation";
 
     private final List<ItemStack> storedItems = new ArrayList<>();
     private int hammer_hits = -1;
     private ItemStack blueprint = ItemStack.EMPTY;
     private ItemStack tongs_slot = ItemStack.EMPTY;
+    public List<Integer> randomRotationList = new ArrayList<>();;
 
     public ArmorersAnvilBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.ARMORERS_ANVIL.get(), pos, state);

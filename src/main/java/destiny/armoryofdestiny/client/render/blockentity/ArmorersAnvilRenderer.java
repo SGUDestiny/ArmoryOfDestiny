@@ -22,8 +22,6 @@ import java.util.Random;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class ArmorersAnvilRenderer implements BlockEntityRenderer<ArmorersAnvilBlockEntity> {
-    List<Integer> randomRotationList = new ArrayList<>();
-
     public ArmorersAnvilRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
 
     }
@@ -34,6 +32,7 @@ public class ArmorersAnvilRenderer implements BlockEntityRenderer<ArmorersAnvilB
         Level level = anvil.getLevel();
         List<ItemStack> storedItems = anvil.getAllStoredItems();
         Random random = new Random();
+        List<Integer> randomRotationList = anvil.randomRotationList;
 
         if (anvil.getStoredItemAmount() > 0) {
             double itemWidth = 0.03;
