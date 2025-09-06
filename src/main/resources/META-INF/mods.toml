@@ -33,3 +33,10 @@ description='''§oArmory of Destiny is a mod that adds various weapons, both ful
     versionRange="[4.4.9, )"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.armoryofdestiny]]
+    modId="jei"
+    mandatory=false
+    versionRange="[15.20.0.112, )"
+    ordering="NONE"
+    side="BOTH"
