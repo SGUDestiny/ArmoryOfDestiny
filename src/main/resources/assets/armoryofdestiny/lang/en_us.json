@@ -204,6 +204,7 @@
   "tooltip.armoryofdestiny.dropdown": "|  ",
   "tooltip.armoryofdestiny.cooldown": "⧗ ",
   "tooltip.armoryofdestiny.none": "None",
+  "tooltip.armoryofdestiny.engraving": "Forged by: ",
 
   "_trivia": "Trivia",
   "tooltip.armoryofdestiny.trivia": "✱ Item Trivia",
@@ -380,5 +381,12 @@
   "_misc": "Misc",
   "itemGroup.armoryofdestiny.weapons": "§nArmory of Destiny - Weapons",
   "itemGroup.armoryofdestiny.tools": "§nArmory of Destiny - Tools",
-  "itemGroup.armoryofdestiny.materials": "§nArmory of Destiny - Materials"
+  "itemGroup.armoryofdestiny.materials": "§nArmory of Destiny - Materials",
+
+  "jei.armoryofdestiny.smithing.hits": "Hits",
+  "jei.armoryofdestiny.blooming": "Blooming",
+  "jei.armoryofdestiny.superheated_blooming": "Superheated Blooming",
+  "jei.armoryofdestiny.smithing": "Smithing",
+  "jei.armoryofdestiny.tempering": "Tempering",
+  "jei.armoryofdestiny.tinkering": "Tinkering"
 }

@@ -4,7 +4,7 @@ import destiny.armoryofdestiny.server.block.utility.TooltipBlock;
 import destiny.armoryofdestiny.server.container.TemperingContainer;
 import destiny.armoryofdestiny.server.item.SmithingTongsItem;
 import destiny.armoryofdestiny.server.recipe.TemperingRecipe;
-import destiny.armoryofdestiny.server.util.MathUtil;
+import destiny.armoryofdestiny.server.util.ModUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -32,7 +32,7 @@ import static destiny.armoryofdestiny.server.item.SmithingTongsItem.HELD_ITEM;
 import static destiny.armoryofdestiny.server.util.UtilityVariables.TEMPERING_BARREL;
 
 public class TemperingBarrelBlock extends TooltipBlock {
-    private static final VoxelShape SHAPE = MathUtil.buildShape(
+    private static final VoxelShape SHAPE = ModUtil.buildShape(
             Block.box(2, 1, 2, 3, 16, 14),
             Block.box(13, 1, 2, 14, 16, 14),
             Block.box(2, 0, 2, 14, 1, 14),

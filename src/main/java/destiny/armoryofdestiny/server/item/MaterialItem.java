@@ -2,6 +2,7 @@ package destiny.armoryofdestiny.server.item;
 
 import destiny.armoryofdestiny.server.item.utility.TooltipItem;
 import destiny.armoryofdestiny.server.recipe.SmithingRecipe;
+import destiny.armoryofdestiny.server.util.ModUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -41,10 +42,7 @@ public class MaterialItem extends TooltipItem {
 
         String itemKey = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
 
-        int colonIndex = itemKey.indexOf(':');
-        String firstPart = itemKey.substring(0, colonIndex + 1);
-        String secondPart = itemKey.substring(colonIndex + 1);
-        ResourceLocation recipeID = ResourceLocation.tryParse(firstPart + "smithing/hot_" + secondPart);
+        ResourceLocation recipeID = ModUtil.stitchResourceLocationFromItem(itemKey, "smithing/hot_");
         SmithingRecipe craftingRecipe = null;
 
         Optional<? extends Recipe<?>> optionalRecipe = level.getRecipeManager().byKey(recipeID);

@@ -1,4 +1,4 @@
-package destiny.armoryofdestiny.server.compatibility.jei;
+package destiny.armoryofdestiny.compat.jei;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
 import destiny.armoryofdestiny.server.recipe.SuperheatedBloomingRecipe;
@@ -29,7 +29,7 @@ public class SuperheatedBloomingCategory implements IRecipeCategory<SuperheatedB
     private final IDrawable icon;
 
     public SuperheatedBloomingCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 76, 75);
+        this.background = helper.createDrawable(TEXTURE, 0, 0, 78, 77);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.NETHER_BLOOMERY_TOP.get()));
     }
 
@@ -40,7 +40,7 @@ public class SuperheatedBloomingCategory implements IRecipeCategory<SuperheatedB
 
     @Override
     public Component getTitle() {
-        return Component.translatable("jei.armory_of_destiny.superheated_blooming");
+        return Component.translatable("jei.armoryofdestiny.superheated_blooming");
     }
 
     @Override
@@ -55,8 +55,8 @@ public class SuperheatedBloomingCategory implements IRecipeCategory<SuperheatedB
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, SuperheatedBloomingRecipe recipe, IFocusGroup iFocusGroup) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 11, 21).addIngredients(recipe.getIngredient());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 58, 21).addItemStack(recipe.getResult());
+        builder.addSlot(RecipeIngredientRole.INPUT, 11, 23).addIngredients(recipe.getIngredient());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 59, 23).addItemStack(recipe.getResult());
     }
 
     @Override

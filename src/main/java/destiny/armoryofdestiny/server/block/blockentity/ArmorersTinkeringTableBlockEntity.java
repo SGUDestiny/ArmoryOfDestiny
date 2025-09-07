@@ -125,7 +125,9 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         TinkeringContainer container = new TinkeringContainer(storedItems);
         if (craftingRecipe.matches(container, level))
         {
-            input = craftingRecipe.assemble(container, level.registryAccess());
+            ItemStack result = craftingRecipe.assemble(container, level.registryAccess());
+            result.getOrCreateTag().putString("engraving", player.getName().getString());
+            input = result.copy();
             this.setBlueprintItem(ItemStack.EMPTY);
             clearTable();
             this.doHammerStuff(player, pos, heldItem);

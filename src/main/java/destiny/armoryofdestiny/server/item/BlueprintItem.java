@@ -3,6 +3,7 @@ package destiny.armoryofdestiny.server.item;
 import destiny.armoryofdestiny.server.item.utility.TooltipItem;
 import destiny.armoryofdestiny.server.recipe.SmithingRecipe;
 import destiny.armoryofdestiny.server.recipe.TinkeringRecipe;
+import destiny.armoryofdestiny.server.util.ModUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -108,10 +109,7 @@ public class BlueprintItem extends TooltipItem {
 
                 String itemKey = ForgeRegistries.ITEMS.getKey(ingredientList.get(i).getItems()[0].getItem()).toString();
 
-                int colonIndex = itemKey.indexOf(':');
-                String firstPart = itemKey.substring(0, colonIndex + 1);
-                String secondPart = itemKey.substring(colonIndex + 1);
-                ResourceLocation recipeIDMaterial = ResourceLocation.tryParse(firstPart + "smithing/hot_" + secondPart);
+                ResourceLocation recipeIDMaterial = ModUtil.stitchResourceLocationFromItem(itemKey, "smithing/hot_");
                 SmithingRecipe craftingRecipeMaterial = null;
 
                 Optional<? extends Recipe<?>> craftingRecipeMaterialOptional = level.getRecipeManager().byKey(recipeIDMaterial);

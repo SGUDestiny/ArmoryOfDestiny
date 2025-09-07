@@ -6,7 +6,7 @@ import destiny.armoryofdestiny.server.item.BlueprintItem;
 import destiny.armoryofdestiny.server.item.SmithingHammerItem;
 import destiny.armoryofdestiny.server.item.SmithingTongsItem;
 import destiny.armoryofdestiny.server.registry.BlockEntityRegistry;
-import destiny.armoryofdestiny.server.util.MathUtil;
+import destiny.armoryofdestiny.server.util.ModUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -38,7 +38,7 @@ import static destiny.armoryofdestiny.server.util.UtilityVariables.ARMORERS_ANVI
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
-    private static final VoxelShape SHAPE_NORTH = MathUtil.buildShape(
+    private static final VoxelShape SHAPE_NORTH = ModUtil.buildShape(
             Block.box(0, 9, 3, 16, 16, 13),
             Block.box(3, 4, 5, 13, 9, 11),
             Block.box(2, 3, 4, 14, 4, 12),
@@ -46,7 +46,7 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
             Block.box(-7, 13, 4, 0, 16, 12),
             Block.box(16, 11, 5, 24, 16, 11)
     );
-    private static final VoxelShape SHAPE_SOUTH = MathUtil.buildShape(
+    private static final VoxelShape SHAPE_SOUTH = ModUtil.buildShape(
             Block.box(0, 9, 3, 16, 16, 13),
             Block.box(3, 4, 5, 13, 9, 11),
             Block.box(2, 3, 4, 14, 4, 12),
@@ -54,7 +54,7 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
             Block.box(16, 13, 4, 23, 16, 12),
             Block.box(-8, 11, 5, 0, 16, 11)
     );
-    private static final VoxelShape SHAPE_WEST = MathUtil.buildShape(
+    private static final VoxelShape SHAPE_WEST = ModUtil.buildShape(
             Block.box(3, 9, 0, 13, 16, 16),
             Block.box(5, 4, 3, 11, 9, 13),
             Block.box(4, 3, 2, 12, 4, 14),
@@ -62,7 +62,7 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
             Block.box(4, 13, 16, 12, 16, 23),
             Block.box(5, 11, -8, 11, 16, 0)
     );
-    private static final VoxelShape SHAPE_EAST = MathUtil.buildShape(
+    private static final VoxelShape SHAPE_EAST = ModUtil.buildShape(
             Block.box(3, 9, 0, 13, 16, 16),
             Block.box(5, 4, 3, 11, 9, 13),
             Block.box(4, 3, 2, 12, 4, 14),

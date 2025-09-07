@@ -1,4 +1,4 @@
-package destiny.armoryofdestiny.server.compatibility.jei;
+package destiny.armoryofdestiny.compat.jei;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
 import destiny.armoryofdestiny.server.recipe.BloomingRecipe;
@@ -29,7 +29,7 @@ public class BloomingCategory implements IRecipeCategory<BloomingRecipe> {
     private final IDrawable icon;
 
     public BloomingCategory(IGuiHelper helper) {
-        this.background = helper.createDrawable(TEXTURE, 0, 0, 76, 75);
+        this.background = helper.createDrawable(TEXTURE, 0, 0, 78, 77);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(BlockRegistry.BLOOMERY_TOP.get()));
     }
 
@@ -40,7 +40,7 @@ public class BloomingCategory implements IRecipeCategory<BloomingRecipe> {
 
     @Override
     public Component getTitle() {
-        return Component.translatable("jei.armory_of_destiny.blooming");
+        return Component.translatable("jei.armoryofdestiny.blooming");
     }
 
     @Override
@@ -55,8 +55,8 @@ public class BloomingCategory implements IRecipeCategory<BloomingRecipe> {
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, BloomingRecipe recipe, IFocusGroup iFocusGroup) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 11, 21).addIngredients(recipe.getIngredient());
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 58, 21).addItemStack(recipe.getResult());
+        builder.addSlot(RecipeIngredientRole.INPUT, 11, 23).addIngredients(recipe.getIngredient());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 59, 23).addItemStack(recipe.getResult());
     }
 
     @Override
