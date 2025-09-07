@@ -1,9 +1,9 @@
 {
-  "type": "armoryofdestiny:blooming",
+  "type": "armoryofdestiny:superheated_blooming",
   "ingredient": {
     "tag": "forge:gems/amethyst"
   },
-  "melt_time": 200,
+  "melt_time": 100,
   "result": {
     "item": "armoryofdestiny:hot_amethyst_shard"
   }
