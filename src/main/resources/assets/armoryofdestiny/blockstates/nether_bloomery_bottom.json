@@ -109,9 +109,21 @@
         "y": 180
       }
     ],
+    "facing=south,lit=true,logs=0,open=false": [
+      {
+        "model": "armoryofdestiny:block/nether_bloomery_bottom_lit",
+        "y": 180
+      }
+    ],
     "facing=south,lit=false,logs=0,open=true": [
       {
         "model": "armoryofdestiny:block/nether_bloomery_bottom_open",
+        "y": 180
+      }
+    ],
+    "facing=south,lit=true,logs=0,open=true": [
+      {
+        "model": "armoryofdestiny:block/nether_bloomery_bottom_open_lit",
         "y": 180
       }
     ],
@@ -220,9 +232,21 @@
         "y": 270
       }
     ],
+    "facing=west,lit=true,logs=0,open=false": [
+      {
+        "model": "armoryofdestiny:block/nether_bloomery_bottom_lit",
+        "y": 270
+      }
+    ],
     "facing=west,lit=false,logs=0,open=true": [
       {
         "model": "armoryofdestiny:block/nether_bloomery_bottom_open",
+        "y": 270
+      }
+    ],
+    "facing=west,lit=true,logs=0,open=true": [
+      {
+        "model": "armoryofdestiny:block/nether_bloomery_bottom_open_lit",
         "y": 270
       }
     ],
@@ -331,9 +355,21 @@
         "y": 90
       }
     ],
+    "facing=east,lit=true,logs=0,open=false": [
+      {
+        "model": "armoryofdestiny:block/nether_bloomery_bottom_lit",
+        "y": 90
+      }
+    ],
     "facing=east,lit=false,logs=0,open=true": [
       {
         "model": "armoryofdestiny:block/nether_bloomery_bottom_open",
+        "y": 90
+      }
+    ],
+    "facing=east,lit=true,logs=0,open=true": [
+      {
+        "model": "armoryofdestiny:block/nether_bloomery_bottom_open_lit",
         "y": 90
       }
     ],
