@@ -41,6 +41,10 @@ public class SmithingTongsItem extends TooltipItem implements GeoItem {
         ItemStack mainStack = player.getItemInHand(InteractionHand.MAIN_HAND);
         ItemStack secondaryStack = player.getItemInHand(InteractionHand.OFF_HAND);
 
+        if (secondaryStack.getItem() instanceof SmithingTongsItem) {
+            return InteractionResultHolder.pass(secondaryStack);
+        }
+
         if (player.isCrouching()) {
             if (mainStack.getTag() != null && mainStack.getTag().get(HELD_ITEM) != null) {
                 ItemStack held_item = ItemStack.of(mainStack.getTag().getCompound(HELD_ITEM));
