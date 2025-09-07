@@ -209,7 +209,7 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
         super.appendHoverText(stack, level, components, flag);
 
         if (isShift(level) && stack.getTag() != null) {
-            MutableComponent damage_total = Component.translatable("tooltip.line.dropdown")
+            MutableComponent damage_total = Component.translatable("tooltip.armoryofdestiny.dropdown")
                     .append(Component.translatable("item.armoryofdestiny.bloodletter.ability.1.stored_blood")
                             .withStyle(ChatFormatting.GRAY)).append(Component.literal("" + stack.getTag().getInt(STORED_BLOOD)).withStyle(ChatFormatting.DARK_GRAY));
             components.add(damage_total);
