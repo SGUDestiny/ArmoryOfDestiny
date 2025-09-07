@@ -3,12 +3,8 @@ package destiny.armoryofdestiny.server.item.utility;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
@@ -29,6 +25,10 @@ public class TooltipSwordItem extends SwordItem {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
         String itemName = getItemName(stack);
         String triviaTranslatable = getTriviaTranslatable();
+        boolean hasEngraving = false;
+        if (stack.getTag() != null) {
+            hasEngraving = stack.getTag().get("engraving") != null;
+        }
 
         //Trivia
         if (!triviaTranslatable.equals(NONE) && hasTrivia()) {
@@ -49,6 +49,16 @@ public class TooltipSwordItem extends SwordItem {
                                 .withStyle(ChatFormatting.DARK_GRAY));
                 components.add(trivia_description);
             }
+        }
+
+        //Engraving
+        if (hasEngraving) {
+            MutableComponent engraving = Component.translatable("tooltip.armoryofdestiny.dropdown")
+                    .append(Component.translatable("tooltip.armoryofdestiny.engraving")
+                            .withStyle(ChatFormatting.DARK_GRAY)
+                            .append(Component.literal(stack.getTag().getString("engraving"))
+                                    .withStyle(ChatFormatting.GRAY)));
+            components.add(engraving);
         }
 
         //Abilities

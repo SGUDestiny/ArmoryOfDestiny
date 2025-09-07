@@ -26,6 +26,10 @@ public class TooltipAxeItem extends AxeItem {
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
         String itemName = getItemName(stack);
         String triviaTranslatable = getTriviaTranslatable();
+        boolean hasEngraving = false;
+        if (stack.getTag() != null) {
+            hasEngraving = stack.getTag().get("engraving") != null;
+        }
 
         //Trivia
         if (!triviaTranslatable.equals(NONE) && hasTrivia()) {
@@ -46,6 +50,16 @@ public class TooltipAxeItem extends AxeItem {
                                 .withStyle(ChatFormatting.DARK_GRAY));
                 components.add(trivia_description);
             }
+        }
+
+        //Engraving
+        if (hasEngraving) {
+            MutableComponent engraving = Component.translatable("tooltip.armoryofdestiny.dropdown")
+                    .append(Component.translatable("tooltip.armoryofdestiny.engraving")
+                            .withStyle(ChatFormatting.DARK_RED)
+                    .append(Component.literal(stack.getTag().getString("engraving"))
+                            .withStyle(ChatFormatting.GRAY)));
+            components.add(engraving);
         }
 
         //Abilities
