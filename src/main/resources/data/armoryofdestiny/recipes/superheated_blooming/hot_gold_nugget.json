@@ -1,0 +1,10 @@
+{
+  "type": "armoryofdestiny:superheated_blooming",
+  "ingredient": {
+    "tag": "forge:nuggets/gold"
+  },
+  "melt_time": 100,
+  "result": {
+    "item": "armoryofdestiny:hot_gold_nugget"
+  }
+}
