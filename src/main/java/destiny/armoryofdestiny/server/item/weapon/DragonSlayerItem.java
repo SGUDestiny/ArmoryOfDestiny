@@ -89,8 +89,7 @@ public class DragonSlayerItem extends TooltipSwordItem implements GeoItem {
             if (stack.getTag() != null) {
                 float damageDealt = stack.getOrCreateTag().getFloat(DAMAGE_DEALT);
                 attackDamageAbility = Math.min(24, 24 * (damageDealt / damageDealtCap));
-                System.out.println("damageDealt " + damageDealt);
-                System.out.println("attackDamageAbility " + attackDamageAbility);
+
                 if (damageDealt > 0) {
                     builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ABILITY_MULTIPLIER_UUID, "Active ability", attackDamageAbility, AttributeModifier.Operation.ADDITION));
                 }
@@ -113,7 +112,7 @@ public class DragonSlayerItem extends TooltipSwordItem implements GeoItem {
 
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack stack1) {
-        return stack1.is(Items.NETHERITE_INGOT);
+        return stack1.is(Items.IRON_BLOCK);
     }
 
     @Override
