@@ -48,7 +48,7 @@ public class DragonSlayerItem extends TooltipSwordItem implements GeoItem {
     private final double entityReach;
 
     public float attackDamageAbility;
-    public int damageDealtCap = 10240;
+    public float damageDealtCap = 10240;
 
     public DragonSlayerItem(Item.Properties build) {
         super(Tiers.NETHERITE, 0, 0, build);
@@ -87,9 +87,10 @@ public class DragonSlayerItem extends TooltipSwordItem implements GeoItem {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 
             if (stack.getTag() != null) {
-                int damageDealt = stack.getOrCreateTag().getInt(DAMAGE_DEALT);
+                float damageDealt = stack.getOrCreateTag().getFloat(DAMAGE_DEALT);
                 attackDamageAbility = Math.min(24, 24 * (damageDealt / damageDealtCap));
-
+                System.out.println("damageDealt " + damageDealt);
+                System.out.println("attackDamageAbility " + attackDamageAbility);
                 if (damageDealt > 0) {
                     builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ABILITY_MULTIPLIER_UUID, "Active ability", attackDamageAbility, AttributeModifier.Operation.ADDITION));
                 }

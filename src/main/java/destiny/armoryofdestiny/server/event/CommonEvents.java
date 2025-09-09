@@ -127,10 +127,10 @@ public class CommonEvents {
     private void dragonSlayerDamageEvent(LivingHurtEvent event, ItemStack stack) {
         if (stack.getItem() == ItemRegistry.DRAGON_SLAYER.get()) {
             if (stack.getTag() != null) {
-                int damageStored = stack.getOrCreateTag().getInt(DAMAGE_DEALT);
-                stack.getOrCreateTag().putInt(DAMAGE_DEALT, (int) (damageStored + event.getAmount()));
+                float damageStored = stack.getOrCreateTag().getFloat(DAMAGE_DEALT);
+                stack.getOrCreateTag().putFloat(DAMAGE_DEALT, damageStored + event.getAmount());
             } else {
-                stack.getOrCreateTag().putInt(DAMAGE_DEALT, (int) event.getAmount());
+                stack.getOrCreateTag().putFloat(DAMAGE_DEALT, event.getAmount());
             }
         }
     }
