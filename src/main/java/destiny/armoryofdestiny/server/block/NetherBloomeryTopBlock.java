@@ -61,6 +61,10 @@ public class NetherBloomeryTopBlock extends TooltipBaseEntityBlock {
         ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 
         if (level.getBlockEntity(pos) instanceof NetherBloomeryTopBlockEntity bloomery) {
+            if (player.getCooldowns().isOnCooldown(stack.getItem())) {
+                return InteractionResult.PASS;
+            }
+
             if (hitResult.getDirection() == state.getValue(HORIZONTAL_FACING)) {
                 if (stack.getItem() instanceof SmithingTongsItem) {
                     //Put item using tongs

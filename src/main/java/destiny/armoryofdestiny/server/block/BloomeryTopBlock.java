@@ -62,6 +62,10 @@ public class BloomeryTopBlock extends TooltipBaseEntityBlock {
 
         if (level.getBlockEntity(pos) instanceof BloomeryTopBlockEntity bloomery) {
             if (hitResult.getDirection() == state.getValue(HORIZONTAL_FACING)) {
+                if (player.getCooldowns().isOnCooldown(stack.getItem())) {
+                    return InteractionResult.PASS;
+                }
+
                 if (stack.getItem() instanceof SmithingTongsItem) {
                     //Put item using tongs
                     if (bloomery.getInput().isEmpty()) {

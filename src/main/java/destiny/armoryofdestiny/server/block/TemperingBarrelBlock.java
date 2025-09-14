@@ -51,6 +51,10 @@ public class TemperingBarrelBlock extends TooltipBlock {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
         ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 
+        if (player.getCooldowns().isOnCooldown(stack.getItem())) {
+            return InteractionResult.PASS;
+        }
+
         if (stack.getItem() == Items.WATER_BUCKET) {
             level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1, 1);
             level.setBlockAndUpdate(pos, state.setValue(WATER, 6));

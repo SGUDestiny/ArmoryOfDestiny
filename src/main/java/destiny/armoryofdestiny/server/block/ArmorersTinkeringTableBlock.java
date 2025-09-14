@@ -72,6 +72,10 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
 
         if (hit.getDirection() == Direction.UP) {
             if (level.getBlockEntity(pos) instanceof ArmorersTinkeringTableBlockEntity table) {
+                if (player.getCooldowns().isOnCooldown(heldItem.getItem())) {
+                    return InteractionResult.PASS;
+                }
+
                 if (heldItem.getItem() instanceof SmithingTongsItem) {
                     //Take item using tongs
                     if (!table.getInputItem().isEmpty()) {

@@ -95,6 +95,10 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
 
         if (level.getBlockEntity(pos) instanceof ArmorersAnvilBlockEntity anvil) {
             if (hitResult.getDirection() == state.getValue(HORIZONTAL_FACING)) {
+                if (player.getCooldowns().isOnCooldown(stack.getItem())) {
+                    return InteractionResult.PASS;
+                }
+
                 if (stack.getItem() instanceof SmithingTongsItem) {
                     //Put tongs
                     if (anvil.getTongs().isEmpty()) {
