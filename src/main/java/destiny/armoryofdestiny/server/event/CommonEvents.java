@@ -14,6 +14,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.event.VanillaGameEvent;
 import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -70,7 +71,7 @@ public class CommonEvents {
     //If player interacts, remove effect
     @SubscribeEvent
     public void playerInteract(PlayerInteractEvent event) {
-        if (event.getEntity().hasEffect(EffectRegistry.NONEXISTENCE.get())) {
+        if (!event.getLevel().getBlockState(event.getPos()).isAir() && event.getEntity().hasEffect(EffectRegistry.NONEXISTENCE.get())) {
             Level level = event.getEntity().level();
             LivingEntity entity = event.getEntity();
 
