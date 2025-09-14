@@ -168,7 +168,7 @@ public class BloodletterItem extends TooltipAxeItem implements GeoItem {
 
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack stack1) {
-        return stack1.is(Items.NETHERITE_INGOT);
+        return stack1.is(Items.LODESTONE);
     }
 
     @Override

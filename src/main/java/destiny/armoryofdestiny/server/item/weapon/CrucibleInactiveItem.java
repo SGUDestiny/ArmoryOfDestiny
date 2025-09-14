@@ -130,4 +130,9 @@ public class CrucibleInactiveItem extends TooltipItem implements GeoItem {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 20, state -> PlayState.STOP));
     }
+
+    @Override
+    public boolean isValidRepairItem(ItemStack stack, ItemStack stack1) {
+        return stack1.is(Items.NETHERITE_INGOT);
+    }
 }

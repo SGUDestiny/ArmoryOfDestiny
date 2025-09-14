@@ -278,7 +278,7 @@ public class SharpIronyItem extends TooltipSwordItem implements GeoItem {
 
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack stack1) {
-        return stack1.is(Items.NETHERITE_SCRAP);
+        return stack1.is(Items.IRON_INGOT);
     }
 
     @Override

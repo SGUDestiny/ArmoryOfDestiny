@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -48,6 +49,11 @@ public class GunSheathItem extends TooltipItem implements GeoItem {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "controller", 20, state -> PlayState.STOP));
+    }
+
+    @Override
+    public boolean isValidRepairItem(ItemStack stack, ItemStack stack1) {
+        return stack1.is(Items.NETHERITE_INGOT);
     }
 
     @Override

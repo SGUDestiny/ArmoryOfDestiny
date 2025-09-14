@@ -19,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
@@ -114,6 +115,11 @@ public class EdgeOfExistenceItem extends TooltipSwordItem implements GeoItem {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean isValidRepairItem(ItemStack stack, ItemStack stack1) {
+        return stack1.is(Items.NETHERITE_INGOT);
     }
 
     @Override
