@@ -11,6 +11,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -36,6 +37,8 @@ import static destiny.armoryofdestiny.server.util.UtilityVariables.KATANA;
 
 public class EdgeOfExistenceItem extends TooltipSwordItem implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    public static final String ABILITY_TICK = "abilityTick";
 
     private float attackDamage;
     private double attackSpeed;
@@ -92,6 +95,25 @@ public class EdgeOfExistenceItem extends TooltipSwordItem implements GeoItem {
             return builder.build();
         }
         return super.getAttributeModifiers(slot, stack);
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean b) {
+        if (entity instanceof Player player) {
+            if (stack.getTag() == null || stack.getTag().get(ABILITY_TICK) == null) {
+                stack.getOrCreateTag().putInt(ABILITY_TICK, 0);
+            }
+
+            if (player.hasEffect(EffectRegistry.NONEXISTENCE.get())) {
+                if (stack.getTag() != null && stack.getTag().getInt(ABILITY_TICK) != 1) {
+                    stack.getOrCreateTag().putInt(ABILITY_TICK, 1);
+                }
+            } else {
+                if (stack.getTag() != null && stack.getTag().getInt(ABILITY_TICK) != 0) {
+                    stack.getOrCreateTag().putInt(ABILITY_TICK, 0);
+                }
+            }
+        }
     }
 
     @Override

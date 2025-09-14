@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import software.bernie.geckolib.model.DefaultedItemGeoModel;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 
-import static destiny.armoryofdestiny.server.item.weapon.MurasamaItem.ABILITY_TICK;
+import static destiny.armoryofdestiny.server.item.weapon.EdgeOfExistenceItem.ABILITY_TICK;
 
 public class EdgeOfExistenceItemRenderer extends GeoItemRenderer<EdgeOfExistenceItem> {
     public EdgeOfExistenceItemRenderer() {
@@ -21,9 +21,9 @@ public class EdgeOfExistenceItemRenderer extends GeoItemRenderer<EdgeOfExistence
         CompoundTag tag = stack.getTag();
 
         if (tag != null) {
-            int animationFrame = tag.getInt(ABILITY_TICK);
+            int abilityTick = stack.getTag().getInt(ABILITY_TICK);
 
-            return new ResourceLocation(ArmoryOfDestiny.MODID, "textures/item/edge_of_existence/edge_of_existence_" + animationFrame + ".png");
+            return new ResourceLocation(ArmoryOfDestiny.MODID, "textures/item/edge_of_existence/edge_of_existence_" + abilityTick + ".png");
         }
         return new ResourceLocation(ArmoryOfDestiny.MODID, "textures/item/edge_of_existence/edge_of_existence_0.png");
     }

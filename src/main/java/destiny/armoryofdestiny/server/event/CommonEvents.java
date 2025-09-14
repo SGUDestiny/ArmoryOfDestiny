@@ -75,6 +75,7 @@ public class CommonEvents {
             LivingEntity entity = event.getEntity();
 
             event.getEntity().addEffect(new MobEffectInstance(MobEffects.WITHER, 120, 0));
+            entity.removeEffect(EffectRegistry.NONEXISTENCE.get());
             level.playSound(null, entity.blockPosition(), SoundRegistry.EDGE_OF_EXISTENCE_DEACTIVATE.get(), SoundSource.PLAYERS, 1, 1);
         }
     }
@@ -89,8 +90,9 @@ public class CommonEvents {
         if (attacker.hasEffect(EffectRegistry.NONEXISTENCE.get())) {
             if (attacked instanceof LivingEntity target) {
                 target.addEffect(new MobEffectInstance(MobEffects.WITHER, 240, 1));
+                attacker.removeEffect(EffectRegistry.NONEXISTENCE.get());
+                level.playSound(null, attacker.blockPosition(), SoundRegistry.EDGE_OF_EXISTENCE_DEACTIVATE.get(), SoundSource.PLAYERS, 1, 1);
             }
-            level.playSound(null, attacker.blockPosition(), SoundRegistry.EDGE_OF_EXISTENCE_DEACTIVATE.get(), SoundSource.PLAYERS, 1, 1);
         }
 
         //If entity has effect, negate damage
