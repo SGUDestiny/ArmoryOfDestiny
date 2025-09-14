@@ -121,9 +121,10 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
                         return InteractionResult.SUCCESS;
                     } else if (heldItem.getItem() instanceof WritableBookItem) {
                         Containers.dropItemStack(level, pos.getX(), pos.above().getY(), pos.getZ(), table.getBlueprintItem().copy());
-                        Containers.dropItemStack(level, pos.getX(), pos.above().getY(), pos.getZ(), table.getBlueprintItem().copy());
 
-                            Containers.dropContents(level, pos.above(), table.getDroppableInventory());
+                        Containers.dropContents(level, pos.above(), table.getDroppableInventory());
+
+                        table.clearTable();
 
                         if (!player.isCreative()) {
                             heldItem.shrink(1);

@@ -128,7 +128,6 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
             ItemStack result = craftingRecipe.assemble(container, level.registryAccess());
             result.getOrCreateTag().putString("engraving", player.getName().getString());
             input = result.copy();
-            this.setBlueprintItem(ItemStack.EMPTY);
             clearTable();
             this.doHammerStuff(player, pos, heldItem);
             level.setBlockAndUpdate(pos, getBlockState().setValue(HAS_BLUEPRINT, false));
@@ -142,6 +141,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         this.setDesired(Ingredient.EMPTY);
         storedItems.clear();
         craftingRecipe = null;
+        blueprint = ItemStack.EMPTY;
     }
 
     public void doHammerStuff(Player player, BlockPos pos, ItemStack heldItem) {
