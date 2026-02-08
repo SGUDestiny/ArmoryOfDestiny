@@ -1,5 +1,6 @@
 package destiny.armoryofdestiny.server.util;
 
+import destiny.armoryofdestiny.client.ClientUtils;
 import destiny.armoryofdestiny.server.block.blockentity.ArmorersAnvilBlockEntity;
 import destiny.armoryofdestiny.server.block.blockentity.ArmorersTinkeringTableBlockEntity;
 import destiny.armoryofdestiny.server.item.BlueprintItem;
@@ -35,7 +36,7 @@ public class UtilityVariables {
 
     public static int getBlueprintColor(ItemStack stack) {
         if (stack.getTag() != null && stack.getItem() instanceof BlueprintItem blueprint)
-            return blueprint.getRecipeColor(stack);
+            return ClientUtils.getBlueprintRecipeColor(stack);
         return 0xFFFFFF;
     }
 

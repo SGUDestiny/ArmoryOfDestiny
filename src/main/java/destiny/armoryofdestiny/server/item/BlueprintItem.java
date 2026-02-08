@@ -39,19 +39,6 @@ public class BlueprintItem extends TooltipItem {
         return false;
     }
 
-    public int getRecipeColor(ItemStack stack)
-    {
-        Level level = Minecraft.getInstance().level;
-        ResourceLocation recipeKey = getRecipeKey(stack);
-        if(level == null || recipeKey == null)
-            return 0xFFFFFF;
-        Optional<? extends Recipe<?>> recipeOptional = level.getRecipeManager().byKey(recipeKey);
-        if(recipeOptional.isPresent() && recipeOptional.get() instanceof TinkeringRecipe recipe)
-            return recipe.getBlueprintColor();
-
-        return 0xFFFFFF;
-    }
-
     @Nullable
     public ResourceLocation getRecipeKey(ItemStack stack)
     {

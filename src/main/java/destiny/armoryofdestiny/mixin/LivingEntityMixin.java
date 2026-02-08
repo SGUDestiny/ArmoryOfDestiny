@@ -32,12 +32,10 @@ public abstract class LivingEntityMixin {
     @Shadow
     public abstract boolean hasEffect(@NotNull MobEffect mobEffect);
 
-    @SuppressWarnings("UnresolvedMixinReference")
     @WrapOperation(
             method = "checkFallDamage",
             at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/world/level/block/state/BlockState;addLandingEffects(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/entity/LivingEntity;I)Z")
-    )
+                    target = "Lnet/minecraft/world/level/block/state/BlockState;addLandingEffects(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/entity/LivingEntity;I)Z"))
     boolean checkForEffect(BlockState instance, ServerLevel serverLevel, BlockPos pos, BlockState state, LivingEntity entity, int i, Operation<Boolean> original) {
         return entity.hasEffect(EffectRegistry.NONEXISTENCE.get()) || original.call(instance, serverLevel, pos, state, entity, i);
     }
