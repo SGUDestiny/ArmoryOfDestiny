@@ -1,6 +1,7 @@
 package destiny.armoryofdestiny.server.registry;
 
 import destiny.armoryofdestiny.ArmoryOfDestiny;
+import destiny.armoryofdestiny.client.ClientUtils;
 import destiny.armoryofdestiny.server.recipe.TinkeringRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -9,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -82,10 +84,10 @@ public class CreativeTabRegistry {
             .withTabsBefore(TOOLS.getKey())
             .displayItems((parameters, output) -> {
                 //Blueprints
-                List<TinkeringRecipe> recipes = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(TinkeringRecipe.Type.INSTANCE);
-                for (TinkeringRecipe recipe : recipes)
+                if(FMLEnvironment.dist.isClient())
                 {
-                    output.accept(createBlueprint(recipe.recipeID));
+                    for(TinkeringRecipe recipe : ClientUtils.getTinkeringRecipes())
+                        output.accept(createBlueprint(recipe.recipeID));
                 }
 
                 //Components

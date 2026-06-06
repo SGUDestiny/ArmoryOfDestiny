@@ -2,12 +2,15 @@ package destiny.armoryofdestiny.client;
 
 import destiny.armoryofdestiny.server.item.BlueprintItem;
 import destiny.armoryofdestiny.server.recipe.TinkeringRecipe;
+import destiny.armoryofdestiny.server.registry.RecipeRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class ClientUtils
@@ -25,5 +28,14 @@ public class ClientUtils
 
 		}
 		return 0xFFFFFF;
+	}
+
+	public static List<TinkeringRecipe> getTinkeringRecipes()
+	{
+		Level level = Minecraft.getInstance().level;
+		if(level != null)
+			return level.getRecipeManager().getAllRecipesFor(TinkeringRecipe.Type.INSTANCE);
+
+		return new ArrayList<>();
 	}
 }
