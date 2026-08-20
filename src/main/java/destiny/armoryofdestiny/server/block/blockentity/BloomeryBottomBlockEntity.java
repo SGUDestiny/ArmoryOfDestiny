@@ -45,6 +45,7 @@ public class BloomeryBottomBlockEntity extends BlockEntity {
 
                     bloomery.burnTick = bloomery.burnTimePerLog;
                     bloomery.logs.remove(bloomery.logs.size() - 1);
+                    bloomery.markUpdated();
                     level.setBlockAndUpdate(pos, state.setValue(LOGS, state.getValue(LOGS) - 1));
                 } else {
                     level.setBlockAndUpdate(pos, state.setValue(LIT, false));
@@ -65,6 +66,7 @@ public class BloomeryBottomBlockEntity extends BlockEntity {
         ItemStack log = logs.get(logs.size() - 1).copy();
         log.setCount(1);
         logs.remove(logs.size() - 1);
+        markUpdated();
 
         return log;
     }
@@ -72,11 +74,13 @@ public class BloomeryBottomBlockEntity extends BlockEntity {
     public void putLog(ItemStack log) {
         log.setCount(1);
         logs.add(log);
+        markUpdated();
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
+        logs.clear();
         ListTag logsTag = tag.getList(STORED_LOGS, Tag.TAG_COMPOUND);
         logsTag.forEach(compound -> {
             CompoundTag compoundTag = ((CompoundTag) compound);

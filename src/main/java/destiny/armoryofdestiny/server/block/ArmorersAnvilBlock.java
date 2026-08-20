@@ -102,29 +102,31 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
                 if (stack.getItem() instanceof SmithingTongsItem) {
                     //Put tongs
                     if (anvil.getTongs().isEmpty()) {
-                        anvil.setTongs(stack.copy());
+                        if (!level.isClientSide) {
+                            anvil.setTongs(stack.copy());
 
-                        if (!player.isCreative()) {
-                            stack.shrink(1);
+                            if (!player.isCreative()) {
+                                stack.shrink(1);
+                            }
+
+                            level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
                         }
 
-                        level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
-
-                        return InteractionResult.SUCCESS;
+                        return InteractionResult.sidedSuccess(level.isClientSide);
                     }
                 }
 
                 //Take tongs
                 if (stack.isEmpty()) {
                     if (!anvil.getTongs().isEmpty()) {
-                        player.addItem(anvil.getTongs().copy());
-                        anvil.setTongs(ItemStack.EMPTY);
+                        if (!level.isClientSide) {
+                            player.addItem(anvil.getTongs().copy());
+                            anvil.setTongs(ItemStack.EMPTY);
 
-                        level.setBlockAndUpdate(pos, state);
+                            level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
+                        }
 
-                        level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
-
-                        return InteractionResult.SUCCESS;
+                        return InteractionResult.sidedSuccess(level.isClientSide);
                     }
                 }
             }
@@ -136,12 +138,14 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
                         ItemStack held_item = ItemStack.of(stack.getTag().getCompound(HELD_ITEM).copy());
 
                         if (!held_item.isEmpty()) {
-                            anvil.addStoredItem(held_item);
-                            stack.getOrCreateTag().put(HELD_ITEM, ItemStack.EMPTY.serializeNBT());
+                            if (!level.isClientSide) {
+                                anvil.addStoredItem(held_item);
+                                stack.getOrCreateTag().put(HELD_ITEM, ItemStack.EMPTY.serializeNBT());
 
-                            level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_BREAK, SoundSource.BLOCKS, 1, 1);
+                                level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_BREAK, SoundSource.BLOCKS, 1, 1);
+                            }
 
-                            return InteractionResult.SUCCESS;
+                            return InteractionResult.sidedSuccess(level.isClientSide);
                         }
                     }
                 }
@@ -152,18 +156,18 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
                         ItemStack held_item = ItemStack.of(stack.getTag().getCompound(HELD_ITEM).copy());
 
                         if (held_item.isEmpty()) {
-                            stack.getOrCreateTag().put(HELD_ITEM, anvil.getLastStoredItem().copy().serializeNBT());
-                            anvil.removeLastStoredItem();
+                            if (!level.isClientSide) {
+                                stack.getOrCreateTag().put(HELD_ITEM, anvil.getLastStoredItem().copy().serializeNBT());
+                                anvil.removeLastStoredItem();
 
-                            level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 1, 1);
+                                level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 1, 1);
 
-                            level.setBlockAndUpdate(pos, state);
-
-                            if (!player.isCreative()) {
-                                stack.setDamageValue(stack.getDamageValue() + 1);
+                                if (!player.isCreative()) {
+                                    stack.setDamageValue(stack.getDamageValue() + 1);
+                                }
                             }
 
-                            return InteractionResult.SUCCESS;
+                            return InteractionResult.sidedSuccess(level.isClientSide);
                         }
                     }
                 }
@@ -173,22 +177,24 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
                 //Take blueprint
                 if (stack.isEmpty()) {
                     if (!anvil.getBlueprint().isEmpty()) {
-                        int size = anvil.getStoredItemAmount();
+                        if (!level.isClientSide) {
+                            int size = anvil.getStoredItemAmount();
 
-                        for (int i = 0; i < size; i++) {
-                            ItemStack copy = anvil.getLastStoredItem().copy();
-                            copy.setCount(1);
+                            for (int i = 0; i < size; i++) {
+                                ItemStack copy = anvil.getLastStoredItem().copy();
+                                copy.setCount(1);
 
-                            player.addItem(copy);
-                            anvil.removeLastStoredItem();
+                                player.addItem(copy);
+                                anvil.removeLastStoredItem();
+                            }
+
+                            player.addItem(anvil.getBlueprint().copy());
+                            anvil.setBlueprint(ItemStack.EMPTY);
+                            level.setBlockAndUpdate(pos, state.setValue(HAS_BLUEPRINT, false));
+                            level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS);
                         }
 
-                        player.addItem(anvil.getBlueprint().copy());
-                        anvil.setBlueprint(ItemStack.EMPTY);
-                        level.setBlockAndUpdate(pos, state.setValue(HAS_BLUEPRINT, false));
-                        level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS);
-
-                        return InteractionResult.SUCCESS;
+                        return InteractionResult.sidedSuccess(level.isClientSide);
                     }
                 }
             }
@@ -197,64 +203,67 @@ public class ArmorersAnvilBlock extends TooltipBaseEntityBlock {
             if (stack.getItem() instanceof BlueprintItem) {
                 if (anvil.getStoredItemAmount() == 0) {
                     if (anvil.getBlueprint().isEmpty()) {
-                        anvil.setBlueprint(stack);
+                        if (!level.isClientSide) {
+                            anvil.setBlueprint(stack);
 
-                        if (!player.isCreative()) {
-                            stack.shrink(1);
+                            if (!player.isCreative()) {
+                                stack.shrink(1);
+                            }
+
+                            level.setBlockAndUpdate(pos, state.setValue(HAS_BLUEPRINT, true));
+                            level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
                         }
 
-                        level.setBlockAndUpdate(pos, state.setValue(HAS_BLUEPRINT, true));
-                        level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
-
-                        return InteractionResult.SUCCESS;
+                        return InteractionResult.sidedSuccess(level.isClientSide);
                     }
                 }
             }
 
             //Advance crafting with hammer
             if (stack.getItem() instanceof SmithingHammerItem) {
-                if (anvil.advanceCrafting(level, pos, player)) {
-                    level.setBlockAndUpdate(pos, state);
-                    return InteractionResult.SUCCESS;
-                } else {
+                if (!level.isClientSide) {
+                    if (anvil.advanceCrafting(level, pos, player)) {
+                        return InteractionResult.SUCCESS;
+                    }
                     return InteractionResult.PASS;
                 }
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
 
             //Take item from anvil
             if (stack.isEmpty()) {
                 if (anvil.getStoredItemAmount() > 0) {
-                    ItemStack copy = anvil.getLastStoredItem().copy();
-                    copy.setCount(1);
+                    if (!level.isClientSide) {
+                        ItemStack copy = anvil.getLastStoredItem().copy();
+                        copy.setCount(1);
 
-                    player.addItem(copy);
-                    anvil.removeLastStoredItem();
+                        player.addItem(copy);
+                        anvil.removeLastStoredItem();
 
-                    level.setBlockAndUpdate(pos, state);
+                        level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
+                    }
 
-                    level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
-
-                    return InteractionResult.SUCCESS;
+                    return InteractionResult.sidedSuccess(level.isClientSide);
                 }
             }
 
             //Add item to anvil
             if (!stack.isEmpty()) {
                 if (anvil.getStoredItemAmount() < 8) {
-                    ItemStack copy = stack.copy();
-                    copy.setCount(1);
+                    if (!level.isClientSide) {
+                        ItemStack copy = stack.copy();
+                        copy.setCount(1);
 
-                    anvil.addStoredItem(copy);
+                        anvil.addStoredItem(copy);
 
-                    if (!player.isCreative()) {
-                        stack.shrink(1);
+                        if (!player.isCreative()) {
+                            stack.shrink(1);
+                        }
+
+                        level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
                     }
 
-                    level.setBlockAndUpdate(pos, state);
-
-                    level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
-
-                    return InteractionResult.SUCCESS;
+                    return InteractionResult.sidedSuccess(level.isClientSide);
                 }
             }
         }

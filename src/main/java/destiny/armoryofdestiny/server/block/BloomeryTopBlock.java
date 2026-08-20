@@ -73,12 +73,14 @@ public class BloomeryTopBlock extends TooltipBaseEntityBlock {
                             ItemStack held_item = ItemStack.of(stack.getTag().getCompound(HELD_ITEM).copy());
 
                             if (!held_item.isEmpty()) {
-                                bloomery.setInput(held_item);
-                                stack.getOrCreateTag().put(HELD_ITEM, ItemStack.EMPTY.serializeNBT());
+                                if (!level.isClientSide) {
+                                    bloomery.setInput(held_item);
+                                    stack.getOrCreateTag().put(HELD_ITEM, ItemStack.EMPTY.serializeNBT());
 
-                                level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_BREAK, SoundSource.BLOCKS, 1, 1);
+                                    level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_BREAK, SoundSource.BLOCKS, 1, 1);
+                                }
 
-                                return InteractionResult.SUCCESS;
+                                return InteractionResult.sidedSuccess(level.isClientSide);
                             }
                         }
                     }
@@ -89,16 +91,18 @@ public class BloomeryTopBlock extends TooltipBaseEntityBlock {
                             ItemStack held_item = ItemStack.of(stack.getTag().getCompound(HELD_ITEM).copy());
 
                             if (held_item.isEmpty()) {
-                                stack.getOrCreateTag().put(HELD_ITEM, bloomery.getInput().serializeNBT());
-                                bloomery.setInput(ItemStack.EMPTY);
+                                if (!level.isClientSide) {
+                                    stack.getOrCreateTag().put(HELD_ITEM, bloomery.getInput().serializeNBT());
+                                    bloomery.setInput(ItemStack.EMPTY);
 
-                                level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 1, 1);
+                                    level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 1, 1);
 
-                                if (!player.isCreative()) {
-                                    stack.setDamageValue(stack.getDamageValue() + 1);
+                                    if (!player.isCreative()) {
+                                        stack.setDamageValue(stack.getDamageValue() + 1);
+                                    }
                                 }
 
-                                return InteractionResult.SUCCESS;
+                                return InteractionResult.sidedSuccess(level.isClientSide);
                             }
                         }
                     }
@@ -107,29 +111,33 @@ public class BloomeryTopBlock extends TooltipBaseEntityBlock {
                 //Put item into bloomery
                 if (!stack.isEmpty()) {
                     if (bloomery.getInput().isEmpty()) {
-                        ItemStack input = stack.copy();
-                        input.setCount(1);
-                        bloomery.setInput(input);
+                        if (!level.isClientSide) {
+                            ItemStack input = stack.copy();
+                            input.setCount(1);
+                            bloomery.setInput(input);
 
-                        if (!player.isCreative()) {
-                            stack.shrink(1);
+                            if (!player.isCreative()) {
+                                stack.shrink(1);
+                            }
+
+                            level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
                         }
 
-                        level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
-
-                        return InteractionResult.SUCCESS;
+                        return InteractionResult.sidedSuccess(level.isClientSide);
                     }
                 }
 
                 if (stack.isEmpty()) {
                     //Take item from bloomery
                     if (!bloomery.getInput().isEmpty()) {
-                        player.addItem(bloomery.getInput());
-                        bloomery.setInput(ItemStack.EMPTY);
+                        if (!level.isClientSide) {
+                            player.addItem(bloomery.getInput());
+                            bloomery.setInput(ItemStack.EMPTY);
 
-                        level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
+                            level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS);
+                        }
 
-                        return InteractionResult.SUCCESS;
+                        return InteractionResult.sidedSuccess(level.isClientSide);
                     }
                 }
             }

@@ -83,16 +83,18 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
                             ItemStack held_item = ItemStack.of(heldItem.getTag().getCompound(HELD_ITEM).copy());
 
                             if (held_item.isEmpty()) {
-                                heldItem.getOrCreateTag().put(HELD_ITEM, table.getInputItem().serializeNBT());
-                                table.setInputItem(ItemStack.EMPTY);
+                                if (!level.isClientSide) {
+                                    heldItem.getOrCreateTag().put(HELD_ITEM, table.getInputItem().serializeNBT());
+                                    table.setInputItem(ItemStack.EMPTY);
 
-                                level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 1, 1);
+                                    level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_PLACE, SoundSource.BLOCKS, 1, 1);
 
-                                if (!player.isCreative()) {
-                                    heldItem.setDamageValue(heldItem.getDamageValue() + 1);
+                                    if (!player.isCreative()) {
+                                        heldItem.setDamageValue(heldItem.getDamageValue() + 1);
+                                    }
                                 }
 
-                                return InteractionResult.SUCCESS;
+                                return InteractionResult.sidedSuccess(level.isClientSide);
                             }
                         }
                     }
@@ -103,12 +105,14 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
                             ItemStack held_item = ItemStack.of(heldItem.getTag().getCompound(HELD_ITEM).copy());
 
                             if (!held_item.isEmpty()) {
-                                table.setInputItem(held_item);
-                                heldItem.getOrCreateTag().put(HELD_ITEM, ItemStack.EMPTY.serializeNBT());
+                                if (!level.isClientSide) {
+                                    table.setInputItem(held_item);
+                                    heldItem.getOrCreateTag().put(HELD_ITEM, ItemStack.EMPTY.serializeNBT());
 
-                                level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_BREAK, SoundSource.BLOCKS, 1, 1);
+                                    level.playSound(null, player.blockPosition().above(), SoundEvents.CHAIN_BREAK, SoundSource.BLOCKS, 1, 1);
+                                }
 
-                                return InteractionResult.SUCCESS;
+                                return InteractionResult.sidedSuccess(level.isClientSide);
                             }
                         }
                     }
@@ -116,61 +120,77 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
 
                 if (table.hasBlueprint()) {
                     if (heldItem.getItem() instanceof SmithingHammerItem) {
-                        table.advanceCrafting(level, pos, player, heldItem);
-
-                        return InteractionResult.SUCCESS;
-                    } else if (heldItem.getItem() instanceof WritableBookItem) {
-                        Containers.dropItemStack(level, pos.getX(), pos.above().getY(), pos.getZ(), table.getBlueprintItem().copy());
-
-                        Containers.dropContents(level, pos.above(), table.getDroppableInventory());
-
-                        table.clearTable();
-
-                        if (!player.isCreative()) {
-                            heldItem.shrink(1);
+                        if (!level.isClientSide) {
+                            table.advanceCrafting(level, pos, player, heldItem);
                         }
-                        level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
 
-                        level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
+                        return InteractionResult.sidedSuccess(level.isClientSide);
+                    } else if (heldItem.getItem() instanceof WritableBookItem) {
+                        if (!level.isClientSide) {
+                            Containers.dropItemStack(level, pos.getX(), pos.above().getY(), pos.getZ(), table.getBlueprintItem().copy());
 
-                        return InteractionResult.SUCCESS;
-                    } else if (player.getMainHandItem().isEmpty() && player.isShiftKeyDown()) {
-                        Containers.dropContents(level, pos.above(), table.getDroppableInventory());
-                        table.clearTable();
+                            Containers.dropContents(level, pos.above(), table.getDroppableInventory());
 
-                        level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
-                        level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
+                            table.clearTable();
 
-                        return InteractionResult.SUCCESS;
-                    } else if (table.getInputItem().isEmpty() && !player.getMainHandItem().isEmpty()) {
-                        putInputItem(table, level, player, pos, heldItem);
+                            if (!player.isCreative()) {
+                                heldItem.shrink(1);
+                            }
+                            level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
 
-                        return InteractionResult.SUCCESS;
-                    } else if (!table.getInputItem().isEmpty() && player.getMainHandItem().isEmpty()) {
-                        takeInputItem(table, level, player, pos);
+                            level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
+                        }
 
-                        return InteractionResult.SUCCESS;
+                        return InteractionResult.sidedSuccess(level.isClientSide);
+                    } else if (heldItem.isEmpty() && player.isShiftKeyDown()) {
+                        if (!level.isClientSide) {
+                            Containers.dropContents(level, pos.above(), table.getDroppableInventory());
+                            table.clearTable();
+
+                            level.playSound(null, pos, SoundEvents.BOOK_PAGE_TURN, SoundSource.BLOCKS, 1, 1);
+                            level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, false));
+                        }
+
+                        return InteractionResult.sidedSuccess(level.isClientSide);
+                    } else if (table.getInputItem().isEmpty() && !heldItem.isEmpty()) {
+                        if (!level.isClientSide) {
+                            putInputItem(table, level, player, pos, heldItem);
+                        }
+
+                        return InteractionResult.sidedSuccess(level.isClientSide);
+                    } else if (!table.getInputItem().isEmpty() && heldItem.isEmpty()) {
+                        if (!level.isClientSide) {
+                            takeInputItem(table, level, player, pos);
+                        }
+
+                        return InteractionResult.sidedSuccess(level.isClientSide);
                     }
                 } else {
                     if (heldItem.getItem() instanceof BlueprintItem) {
-                        table.setBlueprintItem(heldItem);
+                        if (!level.isClientSide) {
+                            table.setBlueprintItem(heldItem);
 
-                        if (!player.isCreative()) {
-                            heldItem.shrink(1);
+                            if (!player.isCreative()) {
+                                heldItem.shrink(1);
+                            }
+
+                            level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS, 1, 1);
+                            level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, true));
                         }
 
-                        level.playSound(null, pos, SoundEvents.BOOK_PUT, SoundSource.BLOCKS, 1, 1);
-                        level.setBlockAndUpdate(table.getBlockPos(), table.getBlockState().setValue(HAS_BLUEPRINT, true));
+                        return InteractionResult.sidedSuccess(level.isClientSide);
+                    } else if (table.getInputItem().isEmpty() && !heldItem.isEmpty()) {
+                        if (!level.isClientSide) {
+                            putInputItem(table, level, player, pos, heldItem);
+                        }
 
-                        return InteractionResult.SUCCESS;
-                    } else if (table.getInputItem().isEmpty() && !player.getMainHandItem().isEmpty()) {
-                        putInputItem(table, level, player, pos, heldItem);
+                        return InteractionResult.sidedSuccess(level.isClientSide);
+                    } else if (!table.getInputItem().isEmpty() && heldItem.isEmpty()) {
+                        if (!level.isClientSide) {
+                            takeInputItem(table, level, player, pos);
+                        }
 
-                        return InteractionResult.SUCCESS;
-                    } else if (!table.getInputItem().isEmpty() && player.getMainHandItem().isEmpty()) {
-                        takeInputItem(table, level, player, pos);
-
-                        return InteractionResult.SUCCESS;
+                        return InteractionResult.sidedSuccess(level.isClientSide);
                     }
                 }
             }
@@ -178,27 +198,31 @@ public class ArmorersTinkeringTableBlock extends TooltipBaseEntityBlock {
             if (level.getBlockEntity(pos) instanceof ArmorersTinkeringTableBlockEntity table) {
                 if (table.getHammerSlot().isEmpty()) {
                     if (heldItem.getItem() instanceof SmithingHammerItem) {
-                        ItemStack stack = heldItem.copy();
-                        stack.setCount(1);
+                        if (!level.isClientSide) {
+                            ItemStack stack = heldItem.copy();
+                            stack.setCount(1);
 
-                        table.setHammerSlot(stack);
+                            table.setHammerSlot(stack);
 
-                        if (!player.isCreative()) {
-                            heldItem.shrink(1);
+                            if (!player.isCreative()) {
+                                heldItem.shrink(1);
+                            }
+
+                            level.playSound(null, pos, SoundEvents.ITEM_FRAME_ROTATE_ITEM, SoundSource.BLOCKS, 1, 1);
                         }
 
-                        level.playSound(null, pos, SoundEvents.ITEM_FRAME_ROTATE_ITEM, SoundSource.BLOCKS, 1, 1);
-
-                        return InteractionResult.SUCCESS;
+                        return InteractionResult.sidedSuccess(level.isClientSide);
                     }
-                } else if (player.getMainHandItem().isEmpty()) {
-                    ItemStack stack = table.getHammerSlot().copy();
-                    player.addItem(stack);
-                    table.setHammerSlot(ItemStack.EMPTY);
+                } else if (heldItem.isEmpty()) {
+                    if (!level.isClientSide) {
+                        ItemStack stack = table.getHammerSlot().copy();
+                        player.addItem(stack);
+                        table.setHammerSlot(ItemStack.EMPTY);
 
-                    level.playSound(null, pos, SoundEvents.ITEM_FRAME_ROTATE_ITEM, SoundSource.BLOCKS, 1, 1);
+                        level.playSound(null, pos, SoundEvents.ITEM_FRAME_ROTATE_ITEM, SoundSource.BLOCKS, 1, 1);
+                    }
 
-                    return InteractionResult.SUCCESS;
+                    return InteractionResult.sidedSuccess(level.isClientSide);
                 }
             }
         }

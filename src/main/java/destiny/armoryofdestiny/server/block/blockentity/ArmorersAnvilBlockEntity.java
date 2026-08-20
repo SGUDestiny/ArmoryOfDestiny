@@ -92,6 +92,7 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
                         level.playSound(null, pos, SoundRegistry.ARMORERS_ANVIL_HIT.get(), SoundSource.BLOCKS, 1, 1);
                     }
                     doHammerStuff(player, pos, player.getItemInHand(InteractionHand.MAIN_HAND));
+                    markUpdated();
 
                     return true;
                 }
@@ -126,6 +127,7 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
                         level.playSound(null, pos, SoundRegistry.ARMORERS_ANVIL_HIT.get(), SoundSource.BLOCKS, 1, 1);
                     }
                     doHammerStuff(player, pos, player.getItemInHand(InteractionHand.MAIN_HAND));
+                    markUpdated();
 
                     return true;
                 }
@@ -152,6 +154,7 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
 
     public void setTongs(ItemStack stack) {
         tongs_slot = stack.copy();
+        markUpdated();
     }
 
     public ItemStack getTongs() {
@@ -164,6 +167,7 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
 
     public void setBlueprint(ItemStack blueprint) {
         this.blueprint = blueprint.copy();
+        markUpdated();
     }
 
     public int getStoredItemAmount() {
@@ -176,10 +180,12 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
 
     public void addStoredItem(ItemStack stack) {
         this.storedItems.add(stack.copy());
+        markUpdated();
     }
 
     public void removeLastStoredItem() {
         storedItems.remove(storedItems.size() - 1);
+        markUpdated();
     }
 
     public ItemStack getLastStoredItem() {
@@ -189,6 +195,7 @@ public class ArmorersAnvilBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
+        storedItems.clear();
         ListTag storedItemsTag = tag.getList(STORED_ITEMS, Tag.TAG_COMPOUND);
         storedItemsTag.forEach(compound -> {
             CompoundTag compoundTag = ((CompoundTag) compound);

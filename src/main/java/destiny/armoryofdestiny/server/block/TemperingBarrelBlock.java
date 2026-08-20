@@ -56,28 +56,32 @@ public class TemperingBarrelBlock extends TooltipBlock {
         }
 
         if (stack.getItem() == Items.WATER_BUCKET) {
-            level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1, 1);
-            level.setBlockAndUpdate(pos, state.setValue(WATER, 6));
+            if (!level.isClientSide) {
+                level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1, 1);
+                level.setBlockAndUpdate(pos, state.setValue(WATER, 6));
 
-            if (!player.isCreative()) {
-                stack.shrink(1);
-                player.addItem(new ItemStack(Items.BUCKET));
+                if (!player.isCreative()) {
+                    stack.shrink(1);
+                    player.addItem(new ItemStack(Items.BUCKET));
+                }
             }
 
-            return InteractionResult.SUCCESS;
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
         if (stack.getItem() == Items.BUCKET) {
             if (state.getValue(WATER) == 6) {
-                level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1, 1);
-                level.setBlockAndUpdate(pos, state.setValue(WATER, 0));
+                if (!level.isClientSide) {
+                    level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1, 1);
+                    level.setBlockAndUpdate(pos, state.setValue(WATER, 0));
 
-                if (!player.isCreative()) {
-                    stack.shrink(1);
-                    player.addItem(new ItemStack(Items.WATER_BUCKET));
+                    if (!player.isCreative()) {
+                        stack.shrink(1);
+                        player.addItem(new ItemStack(Items.WATER_BUCKET));
+                    }
                 }
 
-                return InteractionResult.SUCCESS;
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }
 
@@ -97,17 +101,19 @@ public class TemperingBarrelBlock extends TooltipBlock {
                     }
 
                     if (craftingRecipe.matches(container, level)) {
-                        level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1, 1);
-                        level.playSound(null, pos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 1, 1);
+                        if (!level.isClientSide) {
+                            level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1, 1);
+                            level.playSound(null, pos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 1, 1);
 
-                        stack.getOrCreateTag().put(HELD_ITEM, craftingRecipe.getResult().serializeNBT());
-                        level.setBlockAndUpdate(pos, state.setValue(WATER, state.getValue(WATER) - 1));
+                            stack.getOrCreateTag().put(HELD_ITEM, craftingRecipe.getResult().serializeNBT());
+                            level.setBlockAndUpdate(pos, state.setValue(WATER, state.getValue(WATER) - 1));
 
-                        if (!player.isCreative()) {
-                            stack.setDamageValue(stack.getDamageValue() + 1);
+                            if (!player.isCreative()) {
+                                stack.setDamageValue(stack.getDamageValue() + 1);
+                            }
                         }
 
-                        return InteractionResult.SUCCESS;
+                        return InteractionResult.sidedSuccess(level.isClientSide);
                     }
                 }
             }
@@ -126,14 +132,16 @@ public class TemperingBarrelBlock extends TooltipBlock {
                 }
 
                 if (craftingRecipe.matches(container, level)) {
-                    level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1, 1);
-                    level.playSound(null, pos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 1, 1);
+                    if (!level.isClientSide) {
+                        level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1, 1);
+                        level.playSound(null, pos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS, 1, 1);
 
-                    stack.shrink(1);
-                    player.addItem(craftingRecipe.getResult().copy());
-                    level.setBlockAndUpdate(pos, state.setValue(WATER, state.getValue(WATER) - 1));
+                        stack.shrink(1);
+                        player.addItem(craftingRecipe.getResult().copy());
+                        level.setBlockAndUpdate(pos, state.setValue(WATER, state.getValue(WATER) - 1));
+                    }
 
-                    return InteractionResult.SUCCESS;
+                    return InteractionResult.sidedSuccess(level.isClientSide);
                 }
             }
         }

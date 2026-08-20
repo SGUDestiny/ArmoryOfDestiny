@@ -32,8 +32,8 @@ public class ArmorersTinkeringTableRenderer implements BlockEntityRenderer<Armor
         Level level = table.getLevel();
 
         //Check if blueprint is present
-        if (table.getBlueprintItem() != ItemStack.EMPTY) {
-            if (table.getInputItem() != ItemStack.EMPTY) {
+        if (!table.getBlueprintItem().isEmpty()) {
+            if (!table.getInputItem().isEmpty()) {
                 ItemStack currentItem = table.getInputItem();
 
                 poseStack.pushPose();
@@ -47,20 +47,20 @@ public class ArmorersTinkeringTableRenderer implements BlockEntityRenderer<Armor
                     renderLyingItem(level, poseStack, currentItem, bufferIn, combinedLightIn, direction, table);
                 }
             }
-            if (table.getWantStack() != ItemStack.EMPTY && table.getInputItem().isEmpty())
+            if (!table.getWantStack().isEmpty() && table.getInputItem().isEmpty())
             {
                 ItemStack wantItem = table.getWantStack();
 
                 renderSpinningItem(level, wantItem, poseStack, partialTicks, bufferIn, combinedLightIn);
             }
             //Else if result item is present, render result item
-        } else if (table.getInputItem() != ItemStack.EMPTY) {
+        } else if (!table.getInputItem().isEmpty()) {
             ItemStack resultItem = table.getInputItem();
 
             renderSpinningItem(level, resultItem, poseStack, partialTicks, bufferIn, combinedLightIn);
         }
 
-        if (table.getHammerSlot() != ItemStack.EMPTY) {
+        if (!table.getHammerSlot().isEmpty()) {
             ItemStack hammer = table.getHammerSlot();
 
             renderHungHammer(level, poseStack, hammer, bufferIn, combinedLightIn, direction, table);

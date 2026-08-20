@@ -82,15 +82,17 @@ public class BloomeryBottomBlock extends TooltipBaseEntityBlock {
                     if (stack.getItem() == Items.FLINT_AND_STEEL) {
                         if (!state.getValue(LIT)) {
                             if (state.getValue(LOGS) > 0) {
-                                level.setBlockAndUpdate(pos, state.setValue(LIT, true));
+                                if (!level.isClientSide) {
+                                    level.setBlockAndUpdate(pos, state.setValue(LIT, true));
 
-                                if (!player.isCreative()) {
-                                    stack.setDamageValue(stack.getDamageValue() + 1);
+                                    if (!player.isCreative()) {
+                                        stack.setDamageValue(stack.getDamageValue() + 1);
+                                    }
+
+                                    level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS);
                                 }
 
-                                level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS);
-
-                                return InteractionResult.SUCCESS;
+                                return InteractionResult.sidedSuccess(level.isClientSide);
                             } else {
                                 return InteractionResult.CONSUME;
                             }
@@ -100,35 +102,39 @@ public class BloomeryBottomBlock extends TooltipBaseEntityBlock {
                     //Extinguish bloomery
                     if (stack.canPerformAction(ToolActions.SHOVEL_DIG)) {
                         if (state.getValue(LIT)) {
-                            level.setBlockAndUpdate(pos, state.setValue(LIT, false));
-                            bloomery.setBurnTick(0);
+                            if (!level.isClientSide) {
+                                level.setBlockAndUpdate(pos, state.setValue(LIT, false));
+                                bloomery.setBurnTick(0);
 
-                            if (!player.isCreative()) {
-                                stack.setDamageValue(stack.getDamageValue() + 1);
+                                if (!player.isCreative()) {
+                                    stack.setDamageValue(stack.getDamageValue() + 1);
+                                }
+
+                                level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS);
                             }
 
-                            level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS);
-
-                            return InteractionResult.SUCCESS;
+                            return InteractionResult.sidedSuccess(level.isClientSide);
                         }
                     }
 
                     //Put a log
                     if (stack.is(LOGS_TAG)) {
                         if (state.getValue(LOGS) < 4) {
-                            ItemStack log = stack.copy();
-                            log.setCount(1);
+                            if (!level.isClientSide) {
+                                ItemStack log = stack.copy();
+                                log.setCount(1);
 
-                            if (!player.isCreative()) {
-                                stack.shrink(1);
+                                if (!player.isCreative()) {
+                                    stack.shrink(1);
+                                }
+
+                                bloomery.putLog(log);
+                                level.setBlockAndUpdate(pos, state.setValue(LOGS, state.getValue(LOGS) + 1));
+
+                                level.playSound(null, pos, SoundEvents.WOOD_PLACE, SoundSource.BLOCKS);
                             }
 
-                            bloomery.putLog(log);
-                            level.setBlockAndUpdate(pos, state.setValue(LOGS, state.getValue(LOGS) + 1));
-
-                            level.playSound(null, pos, SoundEvents.WOOD_PLACE, SoundSource.BLOCKS);
-
-                            return InteractionResult.SUCCESS;
+                            return InteractionResult.sidedSuccess(level.isClientSide);
                         }
                     }
 
@@ -137,12 +143,14 @@ public class BloomeryBottomBlock extends TooltipBaseEntityBlock {
                         if (player.isCrouching()) {
                             if (!state.getValue(LIT)) {
                                 if (state.getValue(LOGS) > 0) {
-                                    player.addItem(bloomery.takeLog());
-                                    level.setBlockAndUpdate(pos, state.setValue(LOGS, state.getValue(LOGS) - 1));
+                                    if (!level.isClientSide) {
+                                        player.addItem(bloomery.takeLog());
+                                        level.setBlockAndUpdate(pos, state.setValue(LOGS, state.getValue(LOGS) - 1));
 
-                                    level.playSound(null, pos, SoundEvents.WOOD_HIT, SoundSource.BLOCKS);
+                                        level.playSound(null, pos, SoundEvents.WOOD_HIT, SoundSource.BLOCKS);
+                                    }
 
-                                    return InteractionResult.SUCCESS;
+                                    return InteractionResult.sidedSuccess(level.isClientSide);
                                 }
                             }
                         }
@@ -152,15 +160,17 @@ public class BloomeryBottomBlock extends TooltipBaseEntityBlock {
                 //Open or close bloomery
                 if (stack.getItem() == Items.AIR) {
                     if (!player.isCrouching()) {
-                        level.setBlockAndUpdate(pos, state.cycle(OPEN));
+                        if (!level.isClientSide) {
+                            level.setBlockAndUpdate(pos, state.cycle(OPEN));
 
-                        if (state.getValue(OPEN)) {
-                            level.playSound(null, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.BLOCKS);
-                        } else {
-                            level.playSound(null, pos, SoundEvents.IRON_TRAPDOOR_OPEN, SoundSource.BLOCKS);
+                            if (state.getValue(OPEN)) {
+                                level.playSound(null, pos, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundSource.BLOCKS);
+                            } else {
+                                level.playSound(null, pos, SoundEvents.IRON_TRAPDOOR_OPEN, SoundSource.BLOCKS);
+                            }
                         }
 
-                        return InteractionResult.SUCCESS;
+                        return InteractionResult.sidedSuccess(level.isClientSide);
                     }
                 }
             }

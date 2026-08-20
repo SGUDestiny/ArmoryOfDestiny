@@ -95,6 +95,7 @@ public class NetherBloomeryTopBlockEntity extends BlockEntity {
 
     public void setInput(ItemStack stack) {
         input = stack.copy();
+        markUpdated();
     }
 
     @Override

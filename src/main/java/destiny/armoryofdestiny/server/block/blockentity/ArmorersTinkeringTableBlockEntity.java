@@ -118,7 +118,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         {
             this.setDesired(Ingredient.EMPTY);
             this.storedItems.add(getInputItem());
-            this.input = ItemStack.EMPTY;
+            this.setInputItem(ItemStack.EMPTY);
             this.doHammerStuff(player, pos, heldItem);
         }
 
@@ -138,10 +138,12 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
     }
 
     public void clearTable() {
-        this.setDesired(Ingredient.EMPTY);
+        desired = Ingredient.EMPTY;
+        wantStack = ItemStack.EMPTY;
         storedItems.clear();
         craftingRecipe = null;
         blueprint = ItemStack.EMPTY;
+        markUpdated();
     }
 
     public void doHammerStuff(Player player, BlockPos pos, ItemStack heldItem) {
@@ -164,6 +166,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
 
     public void setInputItem(ItemStack stack) {
         this.input = stack.copy();
+        markUpdated();
     }
 
     public ItemStack getBlueprintItem() {
@@ -172,6 +175,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
 
     public void setBlueprintItem(ItemStack stack) {
         this.blueprint = stack.copy();
+        markUpdated();
     }
 
     public ItemStack getHammerSlot() {
@@ -180,6 +184,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
 
     public void setHammerSlot(ItemStack stack) {
         this.hammer = stack.copy();
+        markUpdated();
     }
 
     public boolean hasBlueprint() {
@@ -208,6 +213,7 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
+        storedItems.clear();
         ListTag storedItemsTag = tag.getList(STORED_ITEMS, Tag.TAG_COMPOUND);
         storedItemsTag.forEach(compound -> {
             CompoundTag compoundTag = ((CompoundTag) compound);
@@ -243,7 +249,6 @@ public class ArmorersTinkeringTableBlockEntity extends BlockEntity {
         if (level != null) {
             Direction facing = getBlockState().getValue(HORIZONTAL_FACING);
             BlockPos pos = worldPosition.relative(facing.getClockWise());
-            pos.north(1);
 
             return level.getBlockState(pos).getBlock() == BlockRegistry.ARMORERS_CRAFTING_TABLE.get() && facing == level.getBlockState(pos).getValue(HORIZONTAL_FACING);
         }
