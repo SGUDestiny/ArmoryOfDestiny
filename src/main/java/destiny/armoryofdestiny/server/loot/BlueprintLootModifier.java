@@ -1,7 +1,6 @@
 package destiny.armoryofdestiny.server.loot;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import destiny.armoryofdestiny.server.registry.ItemRegistry;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -14,30 +13,34 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemConditions;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import static destiny.armoryofdestiny.server.item.BlueprintItem.RECIPE;
 
 public class BlueprintLootModifier implements IGlobalLootModifier {
-    private static final MapCodec<ResourceLocation> ENTRY_CODEC = ResourceLocation.CODEC.fieldOf("recipeID");
-
     public static final Supplier<Codec<BlueprintLootModifier>> CODEC = () ->
             RecordCodecBuilder.create(inst ->
                     inst.group(
-                                    ENTRY_CODEC.forGetter((configuration) -> configuration.recipeID),
+                                    Codec.FLOAT.fieldOf("baseChance").forGetter(lm -> lm.baseChance),
+                                    Codec.FLOAT.fieldOf("decrementalChance").forGetter(lm -> lm.decrementalChance),
+                                    ResourceLocation.CODEC.listOf().fieldOf("recipes").forGetter(lm -> lm.recipes),
                                     LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter(lm -> lm.conditions)
                             )
                             .apply(inst, BlueprintLootModifier::new));
 
-
+    private final float baseChance;
+    private final float decrementalChance;
+    private final List<ResourceLocation> recipes;
     private final LootItemCondition[] conditions;
     private final Predicate<LootContext> orConditions;
-    private final ResourceLocation recipeID;
 
-    public BlueprintLootModifier(ResourceLocation recipeID, LootItemCondition[] conditionsIn) {
-        this.recipeID = recipeID;
+    public BlueprintLootModifier(float baseChance, float decrementalChance, List<ResourceLocation> recipes, LootItemCondition[] conditionsIn) {
+        this.baseChance = baseChance;
+        this.decrementalChance = decrementalChance;
+        this.recipes = recipes;
         this.conditions = conditionsIn;
         this.orConditions = LootItemConditions.orConditions(conditionsIn);
     }
@@ -48,21 +51,34 @@ public class BlueprintLootModifier implements IGlobalLootModifier {
         return this.orConditions.test(context) ? this.doApply(generatedLoot, context) : generatedLoot;
     }
 
-    @Nonnull
+    @NotNull
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        if (context.getRandom().nextFloat() < 0.15) {
-            generatedLoot.add(getBlueprint());
+        if (recipes.isEmpty()) {
+            return generatedLoot;
         }
+
+        List<ResourceLocation> pool = new ArrayList<>(recipes);
+        float step = decrementalChance / pool.size();
+        int added = 0;
+
+        while (!pool.isEmpty()) {
+            float chance = baseChance - step * added;
+            if (context.getRandom().nextFloat() >= chance) {
+                break;
+            }
+
+            int index = context.getRandom().nextInt(pool.size());
+            ResourceLocation recipeID = pool.remove(index);
+            generatedLoot.add(getBlueprint(recipeID));
+            added++;
+        }
+
         return generatedLoot;
     }
 
-    private ItemStack getBlueprint() {
+    private ItemStack getBlueprint(ResourceLocation recipeID) {
         CompoundTag tag = new CompoundTag();
-        ResourceLocation location = ResourceLocation.tryParse("");
-        if (recipeID != null) {
-            location = recipeID;
-        }
-        tag.putString(RECIPE, location.toString());
+        tag.putString(RECIPE, recipeID.toString());
         ItemStack stack = new ItemStack(ItemRegistry.BLUEPRINT.get());
         stack.setTag(tag);
         return stack;
